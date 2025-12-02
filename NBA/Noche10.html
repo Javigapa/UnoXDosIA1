@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Predicciones Noche 10| Uno X Dos IA</title>
+  <link rel="stylesheet" href="../index.css">
+  <style>
+    body {
+      background-color: #c1731f;
+    }
+    /* Estilos específicos para la página de artículo */
+    .article-container {
+      max-width: 1000px;
+      /* Aumentamos el ancho para que las 3 columnas quepan bien */
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #cf914e;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .article-container h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 2.2em;
+    }
+    .article-meta {
+      color: #7f8c8d;
+      font-style: italic;
+      margin-bottom: 25px;
+      display: block;
+    }
+    .PartidosDelDia {
+      color: black;
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+    /* Contenedor de las Tres Columnas (Para el ANÁLISIS) */
+    .tres-columnas {
+      display: grid;
+      /* Define 3 columnas de igual ancho */
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      /* Espacio entre las columnas */
+      margin: 30px 0;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+
+    /* Contenedor de las Dos Columnas (CLAVE para RESULTADOS) - Añadido */
+    .dos-columnas {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* Define 2 columnas de igual ancho */
+      gap: 15px;
+      /* Espacio entre las columnas */
+      margin: 30px auto;
+      max-width: 98%;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+
+    /* Estilo para los Títulos de las Columnas */
+    .col-title {
+      background-color: #34495e;
+      /* Gris Azulado */
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 0;
+      /* Asegura que no haya espacio extra sobre el contenido */
+      height: fit-content;
+    }
+
+    /* Estilo para el Texto de las Columnas */
+    .col-text {
+      background-color: #ecf0f1;
+      /* Gris Claro */
+      padding: 15px;
+      border-radius: 0 0 5px 5px;
+      border: 1px solid #bdc3c7;
+      margin-top: 0;
+      /* Pega el texto al título */
+    }
+    .col-text p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* --- Estilos para la Tabla de Resultados (7 columnas) - Modificado para responsividad --- */
+    .results-table-container {
+      margin: 5px auto;
+      /* Reducido para ahorrar espacio vertical */
+      width: 100%;
+      /* Ocupa el 100% de su contenedor (col-text) */
+      overflow-x: auto;
+      /* Permite desplazamiento horizontal si la tabla es muy ancha */
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      /* Une los bordes de las celdas */
+      text-align: center;
+      font-size: 1em;
+      /* Ligeramente más pequeña la fuente */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .results-table th, .results-table td {
+      padding: 6px 4px;
+      /* Reducción drástica del padding para que quepa */
+      border: 1px solid #ddd;
+      white-space: nowrap;
+      /* Evita que los números se rompan en varias líneas */
+    }
+
+    .results-table thead th {
+      background-color: #34495e;
+      /* Encabezado Oscuro */
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    /* Columna de Equipos (Primera columna) */
+    .results-table tbody tr td:first-child {
+      background-color: #ecf0f1;
+      /* Fondo claro */
+      font-weight: bold;
+      text-align: left;
+      padding-left: 8px;
+      /* Reducido */
+      color: #2c3e50;
+    }
+
+    /* Columna de Resultado Final (Columna más grande y destacada) */
+    .final-score {
+      background-color: #e74c3c;
+      /* Rojo Destacado */
+      color: white;
+      font-size: 1.2em;
+      /* Ligeramente más pequeña */
+      font-weight: 900;
+      width: 15%;
+    }
+
+    /* --- MEDIA QUERY para MOVILES: Las columnas se apilan en 1 --- */
+    @media (max-width: 768px) {
+      .tres-columnas, .dos-columnas {
+        /* Aplica a ambos tipos de columna */
+        grid-template-columns: 1fr;
+        /* Una sola columna en móvil */
+      }
+      .article-container {
+        padding: 15px;
+        /* Reducir padding en móvil */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
+
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="index.html">Inicio</a>
+        <a href="#">NBA</a>
+        <a href="#">Liga EA Sports</a>
+        <a href="#">Liga Hypermotion</a>
+        <a href="#">Otras Ligas</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="article-container">
+    <div class="PartidosDelDia">
+      <h1>🏀 Partidos Noche 10:</h1>
+      <p>
+        00:00 Hornets vs Magic Orlando<br><br>
+        01:00 Milwaukee Bucks vs Golden State Warriors<br><br>
+        01:00 Oklahoma City Thunder vs Washington Wizards<br><br>
+        01:30 San Antonio Spurs vs Miami Heat<br><br>
+      </p>
+    </div>
+    <div class="tres-columnas">
+      <h3 class="col-title">1. Chat GPT</h3>
+      <h3 class="col-title">2. Gemini</h3>
+      <h3 class="col-title">3. Copilot (IA)</h3>
+    </div>
+
+    <div class="tres-columnas">
+      <div class="col-text">
+        <section>
+          <strong><h2>1:</h2></strong>
+        </section>
+        <p>
+          1️⃣ Hornets vs Magic<br><br><br>
+          Gana Magic Orlando  <br><br>
+          📌 Razones:<br><br>
+
+          Mejor defensa perimetral<br><br>
+
+          Más talento en creación ofensiva<br><br>
+
+          Hornets muy irregulares y mala eficiencia<br><br>
+
+
+          Probabilidades: Magic 62% – Hornets 38%<br><br><br><br>
+
+        </p>
+        ---
+
+        <p>
+          2️⃣ Milwaukee Bucks vs Golden State Warriors<br><br><br>
+
+          ✅ Gana Milwaukee Bucks<br><br>
+          📌 Razones:<br><br>
+
+          Ventaja física con Giannis<br><br>
+
+          Warriors sufren cuando no mandan en ritmo<br><br>
+
+          Milwaukee mejor defensa en interior y rebote<br><br>
+
+
+          Probabilidades: Bucks 58% – Warriors 42%<br><br>
+
+          Partido muy competido<br><br><br>
+
+        </p>
+        ---
+        <p>
+          3️⃣ Oklahoma City Thunder vs Washington Wizards    <br> <br> <br>
+
+          ✅ Gana OKC Thunder (muy favoritos)  <br><br>
+          📌 Razones:<br><br>
+
+          Mucho más talento y profundidad<br><br>
+
+          Defensa de Wizards es de las peores de la liga<br><br>
+
+          OKC ritmo alto y eficiencia muy superior<br><br>
+
+
+          Probabilidades: Thunder 78% – Wizards 22%<br><br><br><br>
+
+        </p>
+        ---
+        <p>
+          4️⃣ San Antonio Spurs vs Miami Heat<br><br><br>
+
+          ✅ Gana Miami Heat <br><br>
+          📌 Razones:<br><br>
+
+          Spurs aún muy verdes defensivamente<br><br>
+
+          Heat ejecuta mejor finales y media pista<br><br>
+
+          Ventaja importante en experiencia<br><br>
+
+
+          Probabilidades: Heat 65% – Spurs 35%<br><br><br><br>
+        </p>
+
+      </div>
+      <div class="col-text">
+        <section>
+          <strong><h2>2:</h2></strong>
+        </section>
+        <p>
+          <p>
+            <strong>Equipo Favorito:</strong> <span class="winner">Orlando Magic</span>
+          </p>
+          <br><br>
+          <p>
+            <strong>Probabilidad de Victoria:</strong> Magic (Aprox. 65%) / Hornets (Aprox. 35%)<br><br>
+          </p>
+          <p>
+            <strong>Razón Principal:</strong> El **Orlando Magic** tiene una estructura defensiva más sólida y una mayor consistencia en su juego interior, lo cual debería ser clave para superar a los Hornets, que son más volátiles, incluso jugando fuera de casa.
+          </p>
+          <br><br><br><br>
+
+          <p>
+            <strong>Equipo Favorito:</strong> <span class="winner">Milwaukee Bucks</span><br><br>
+          </p>
+          <p>
+            <strong>Probabilidad de Victoria:</strong> Bucks (Aprox. 60%) / Warriors (Aprox. 40%)<br><br>
+          </p>
+          <p>
+            <strong>Razón Principal:</strong> Los **Bucks** son ligeramente favoritos por el **factor cancha** y el gran desempeño que se espera de Giannis Antetokounmpo. Su superioridad en la pintura y el control del rebote son vitales contra el estilo rápido de Golden State.
+          </p>
+          <br><br><br><br>
+
+          <p>
+            <strong>Equipo Favorito:</strong> <span class="winner">Oklahoma City Thunder</span><br><br>
+          </p>
+          <p>
+            <strong>Probabilidad de Victoria:</strong> Thunder (Aprox. 75%-80%) / Wizards (Aprox. 20%-25%)<br><br>
+          </p>
+          <p>
+            <strong>Razón Principal:</strong> El **Thunder** es muy superior en talento, dináminca y récord. Con Shai Gilgeous-Alexander en gran forma, y jugando en casa, tienen una **ventaja clara** sobre los Wizards, un equipo en plena reconstrucción.
+          </p>
+          <br><br><br><br>
+
+          <p>
+            <strong>Equipo Favorito:</strong> <span class="winner">Miami Heat</span><br><br>
+          </p>
+          <p>
+            <strong>Probabilidad de Victoria:</strong> Heat (Aprox. 70%) / Spurs (Aprox. 30%)<br><br>
+          </p>
+          <p>
+            <strong>Razón Principal:</strong> El **Miami Heat** es un equipo muy superior en **experiencia, profundidad y estructura defensiva** a los Spurs, que son un equipo muy joven. Se espera que el Heat controle el partido, incluso jugando de visitante.
+          </p>
+
+        </div>
+        <div class="col-text">
+          <section>
+          <strong><h2>3:</h2></strong>
+        </section>
+          <p>
+            Hornets vs Magic <br><br> Orlando Magic 60%<br><br>  Mejor defensa, historial reciente favorable, Hornets con bajas <br><br><br><br>
+            Bucks vs Warriors <br><br> Milwaukee Bucks 55% <br><br> Dominio en la pintura con Giannis, mejor balance defensivo <br><br><br><br>
+            Thunder vs Wizards <br><br> Oklahoma City Thunder 87% <br><br> Invictos (5-0), línea de -15.5, Wizards en reconstrucción <br><br><br><br>
+            Spurs vs Heat <br><br> San Antonio Spurs 65% <br><br> Racha de 4 victorias, Wembanyama en gran forma, juegan en casa <br><br><br><br>
+          </p>
+        </div>
+      </div>
+      <h3>Conclusión Final</h3>
+      <p>
+        Esta noche las tres IA coinciden menos copilot que le da la victoria a Spurs mientras que Chat GPT y Gemini dan la victoria a Miami. Siguen fallando mucho en cuanto a partidos de la noche, se inventa los partidos si no le pongo claro quien va a jugar. Veremos si aciertan esta noche.
+      </p>
+      <h3>Resultado</h3>
+      <h3 class="col-title">Partidos y resultados</h3>
+
+      <div class="dos-columnas">
+        <div class="col-text">
+          <div class="results-table-container">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>Equipo</th>
+                  <th>1er C.</th>
+                  <th>2do C.</th>
+                  <th>3er C.</th>
+                  <th>4to C.</th>
+                  <th class="final-score">TOTAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Magic</td>
+                  <td>38</td>
+                  <td>33</td>
+                  <td>21</td>
+                  <td>31</td>
+                  <td class="final-score">123</td>
+                </tr>
+                <tr>
+                  <td>Hornets</td>
+                  <td>31</td>
+                  <td>27</td>
+                  <td>27</td>
+                  <td>22</td>
+                  <td class="final-score">107</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+            </p>
+          </div>
+        </div>
+        <div class="col-text">
+          <div class="results-table-container">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>Equipo</th>
+                  <th>1er C.</th>
+                  <th>2do C.</th>
+                  <th>3er C.</th>
+                  <th>4to C.</th>
+                  <th class="final-score">TOTAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Wariors</td>
+                  <td>25</td>
+                  <td>33</td>
+                  <td>26</td>
+                  <td>26</td>
+                  <td class="final-score">110</td>
+                </tr>
+                <tr>
+                  <td>Bucks</td>
+                  <td>34</td>
+                  <td>26</td>
+                  <td>27</td>
+                  <td>33</td>
+                  <td class="final-score">120</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+            </p>
+          </div>
+        </div>
+        <div class="col-text">
+          <div class="results-table-container">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>Equipo</th>
+                  <th>1er C.</th>
+                  <th>2do C.</th>
+                  <th>3er C.</th>
+                  <th>4to C.</th>
+                  <th class="final-score">TOTAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Wizards</td>
+                  <td>20</td>
+                  <td>29</td>
+                  <td>35</td>
+                  <td>24</td>
+                  <td class="final-score">108</td>
+                </tr>
+                <tr>
+                  <td>Thunders</td>
+                  <td>28</td>
+                  <td>31</td>
+                  <td>33</td>
+                  <td>35</td>
+                  <td class="final-score">127</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+            </p>
+          </div>
+        </div>
+        <div class="col-text">
+          <div class="results-table-container">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>Equipo</th>
+                  <th>1er C.</th>
+                  <th>2do C.</th>
+                  <th>3er C.</th>
+                  <th>4to C.</th>
+                  <th class="final-score">TOTAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Miami</td>
+                  <td>31</td>
+                  <td>27</td>
+                  <td>14</td>
+                  <td>29</td>
+                  <td class="final-score">101</td>
+                </tr>
+                <tr>
+                  <td>Spurs</td>
+                  <td>33</td>
+                  <td>26</td>
+                  <td>28</td>
+                  <td>20</td>
+                  <td class="final-score">107</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+            </p>
+          </div>
+        </div>
+      </div>
+      <h3>Conclusión Final después de jugar</h3>
+      <p>
+        En el día de hoy copilot es el que ha echo el pleno, el primer día que una de las tres acierta todos los partidos. Tnato Chat GPT como Gemini han fallado dando ganador al equipo de Miami.
+      </p>
+    <div class="volver">
+      <p>
+        <a href="../index.html">← Volver a la página principal de NBA</a>
+      </p>
+    </div>
+    </div>
+
+    <script>
+      function toggleDropdown() {
+        document.getElementById("myDropdown").classList.toggle("show");
+      }
+
+      // Cierra el menú si el usuario hace clic fuera de él
+      window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+          var dropdowns = document.getElementsByClassName("dropdown-content");
+          for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+              openDropdown.classList.remove('show');
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

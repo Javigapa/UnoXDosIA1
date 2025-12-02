@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Predicciones Noche 8| Uno X Dos IA</title>
+  <link rel="stylesheet" href="../index.css">
+  <style>
+    body {
+      background-color: #c1731f;
+    }
+    /* Estilos específicos para la página de artículo */
+    .article-container {
+      max-width: 1000px;
+      /* Aumentamos el ancho para que las 3 columnas quepan bien */
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #cf914e;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .article-container h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 2.2em;
+    }
+    .article-meta {
+      color: #7f8c8d;
+      font-style: italic;
+      margin-bottom: 25px;
+      display: block;
+    }
+    .PartidosDelDia {
+      color: black;
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+    /* Contenedor de las Tres Columnas (Para el ANÁLISIS) */
+    .tres-columnas {
+      display: grid;
+      /* Define 3 columnas de igual ancho */
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      /* Espacio entre las columnas */
+      margin: 30px 0;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+
+    /* Contenedor de las Dos Columnas (CLAVE para RESULTADOS) - Añadido */
+    .dos-columnas {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* Define 2 columnas de igual ancho */
+      gap: 15px;
+      /* Espacio entre las columnas */
+      margin: 30px auto;
+      max-width: 98%;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+
+    /* Estilo para los Títulos de las Columnas */
+    .col-title {
+      background-color: #34495e;
+      /* Gris Azulado */
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 0;
+      /* Asegura que no haya espacio extra sobre el contenido */
+      height: fit-content;
+      /* Se ajusta a la altura del texto */
+    }
+
+    /* Estilo para el Texto de las Columnas */
+    .col-text {
+      background-color: #ecf0f1;
+      /* Gris Claro */
+      padding: 15px;
+      border-radius: 0 0 5px 5px;
+      border: 1px solid #bdc3c7;
+      margin-top: 0;
+      /* Pega el texto al título */
+    }
+    .col-text p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* --- Estilos para la Tabla de Resultados (7 columnas) - Modificado para responsividad --- */
+    .results-table-container {
+      margin: 5px auto;
+      /* Reducido para ahorrar espacio vertical */
+      width: 100%;
+      /* Ocupa el 100% de su contenedor (col-text) */
+      overflow-x: auto;
+      /* Permite desplazamiento horizontal si la tabla es muy ancha */
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      /* Une los bordes de las celdas */
+      text-align: center;
+      font-size: 1em;
+      /* Ligeramente más pequeña la fuente */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .results-table th, .results-table td {
+      padding: 6px 4px;
+      /* Reducción drástica del padding para que quepa */
+      border: 1px solid #ddd;
+      white-space: nowrap;
+      /* Evita que los números se rompan en varias líneas */
+    }
+
+    .results-table thead th {
+      background-color: #34495e;
+      /* Encabezado Oscuro */
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    /* Columna de Equipos (Primera columna) */
+    .results-table tbody tr td:first-child {
+      background-color: #ecf0f1;
+      /* Fondo claro */
+      font-weight: bold;
+      text-align: left;
+      padding-left: 8px;
+      /* Reducido */
+      color: #2c3e50;
+    }
+
+    /* Columna de Resultado Final (Columna más grande y destacada) */
+    .final-score {
+      background-color: #e74c3c;
+      /* Rojo Destacado */
+      color: white;
+      font-size: 1.2em;
+      /* Ligeramente más pequeña */
+      font-weight: 900;
+      width: 15%;
+      /* Le da más ancho que a las otras columnas de tiempo */
+    }
+
+    /* --- MEDIA QUERY para MOVILES: Las columnas se apilan en 1 --- */
+    @media (max-width: 768px) {
+      .tres-columnas, .dos-columnas {
+        /* Aplica a ambos tipos de columna */
+        grid-template-columns: 1fr;
+        /* Una sola columna en móvil */
+      }
+      .article-container {
+        padding: 15px;
+        /* Reducir padding en móvil */
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
+
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="index.html">Inicio</a>
+        <a href="#">NBA</a>
+        <a href="#">Liga EA Sports</a>
+        <a href="#">Liga Hypermotion</a>
+        <a href="#">Otras Ligas</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="article-container">
+    <div class="PartidosDelDia">
+      <h1>🏀 Partidos Noche 8:</h1>
+      <p>
+        00:00 Wizards vs. Philadelphia  76ers<br>
+        00:30 Heat vs. Hornets<br>
+        01:00 Thunder vs. Kings<br>
+        01:00 Bucks vs. Knicks<br>
+        04:00 Warriors vs. Clippers<br>
+      </p>
+    </div>
+    <div class="tres-columnas">
+      <h3 class="col-title">1. Chat GPT</h3>
+      <h3 class="col-title">2. Gemini</h3>
+      <h3 class="col-title">3. Copilot (IA)</h3>
+    </div>
+
+    <div class="tres-columnas">
+      <div class="col-text">
+        <section>
+          <strong><h2>1:</h2></strong>
+        </section>
+        <p>
+          70 % 76ers / 30 % Wizards	Los 76ers suelen estar en mejor forma, tienen mayor plantilla, mayor experiencia; los Wizards juegan en casa pero parecen tener desventaja.
+        </p>
+        <br><br>
+        <p>
+          60 % Heat / 40 % Hornets	El Heat es un equipo más consolidado en situaciones de presión; los Hornets pueden sorprender, pero están en situación más vulnerable.
+        </p>
+        <br><br>
+        <p>
+          55 % Thunder / 45 % Kings	Es un partido más parejo; los Thunder quizá tienen ligera ventaja por plantilla o ritmo, pero los Kings podrían pelear fuerte.
+        </p>
+        <br><br>
+        <p>
+          65 % Bucks / 35 % Knicks	Los Bucks tienen más experiencia, quizá ventaja en talento; los Knicks pueden dar guerra en casa o en circunstancias específicas.
+        </p>
+        <br><br>
+        <p>
+          Los Angeles Clippers vs Golden State Warriors	50 % / 50 % (prácticamente empate)	Este podría ser un duelo muy equilibrado; ambos equipos tienen fortalezas y debilidades, lo que hace difícil inclinar la balanza mucho.
+        </p>
+        <br><br>
+
+      </div>
+      <div class="col-text">
+        <section>
+          <strong><h2>2:</h2></strong>
+        </section>
+        <p>
+          Philadelphia 76ers (Aprox. 75%)
+          <br><br>
+        </p>
+        <p>
+          Los 76ers son el equipo con mejor récord y una estructura más sólida. A pesar de que los Wizards juegan en casa, Philadelphia es consistentemente superior, especialmente si su estrella, Joel Embiid, está activo.
+        </p>
+        <br><br><br>
+        <p>
+          Miami Heat (Aprox. 60%)
+          <br><br>
+        </p>
+        <p>
+          El Heat suele ser un equipo fuerte en casa (Kaseya Center) y tiene una ventaja histórica reciente sobre los Hornets (4-1 en los últimos 5 encuentros). Charlotte, aunque con buen ataque, tiene menos solidez.
+        </p>
+        <br><br><br>
+        <p>
+          Oklahoma City Thunder (Aprox. 70%)
+          <br><br>
+        </p>
+        <p>
+          El Thunder tiene un comienzo de temporada invicto y una racha de 5 victorias consecutivas en enfrentamientos directos contra los Kings. Liderados por Shai Gilgeous-Alexander, son el equipo en mejor forma.
+        </p>
+        <br><br><br>
+        <p>
+          New York Knicks (Aprox. 55%)
+          <br><br>
+        </p>
+        <p>
+          Sorprendentemente, los Knicks son ligeramente favoritos debido a su dominio reciente sobre los Bucks, ganando los últimos 5 enfrentamientos. Milwaukee está lidiando con problemas de rotación, dándole la ventaja al talento colectivo y el gran momento de Jalen Brunson.
+        </p>
+        <br><br><br>
+        <p>
+          Golden State Warriors (Aprox. 75%)
+          <br><br>
+        </p>
+        <p>
+          Los Warriors son favoritos principalmente por el contexto físico; los Clippers están en la segunda noche de un back-to-back y su quinto partido en siete días. Golden State tiene una ventaja de descanso significativo y el factor cancha.
+        </p>
+        <br><br><br>
+      </div>
+      <div class="col-text">
+        <section>
+          <strong><h2>3:</h2></strong>
+        </section>
+        <p>
+          Philadelphia 76ers| 67% | Invictos (3-0), mejor tiro exterior, más profundidad de plantilla
+        </p>
+        <br><br>
+        <p>
+          Heat | 69% | Juegan en casa, experiencia en partidos cerrados, mejor defensa
+        </p>
+        <br><br>
+        <p>
+          Knicks | 55% | Mejor racha reciente vs. Bucks, ofensiva más consistente
+        </p>
+        <br><br>
+        <p>
+          Thunder| 80% | Invictos (4-0), campeones vigentes, Kings irregulares y sin Keegan Murray
+        </p>
+        <br><br>
+        <p>
+          Warriors |54% | Mejor récord (3-1), juegan en casa, aunque Clippers tienen buen ataque
+        </p>
+        <br><br>
+      </p>
+    </div>
+  </div>
+  <h3>Conclusión Final</h3>
+  <p>
+    Esta noche las 3 IA coinciden aunque con difefrentes porcentajes en los ganadores de cada partido, menos chat gpt en el Warriors vs Clippers que le da un empate.
+  </p>
+  <h3>Resultado</h3>
+  <h3 class="col-title">Partidos y resultados</h3>
+
+  <div class="dos-columnas">
+    <div class="col-text">
+      <div class="results-table-container">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Equipo</th>
+              <th>1er C.</th>
+              <th>2do C.</th>
+              <th>3er C.</th>
+              <th>4to C.</th>
+              <th>PRÓR.</th>
+              <th class="final-score">TOTAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>76ers</td>
+              <td>32</td>
+              <td>36</td>
+              <td>26</td>
+              <td>32</td>
+              <td>13</td>
+              <td class="final-score">139</td>
+            </tr>
+            <tr>
+              <td>Wizards</td>
+              <td>40</td>
+              <td>32</td>
+              <td>38</td>
+              <td>16</td>
+              <td>8</td>
+              <td class="final-score">134</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        </p>
+      </div>
+    </div>
+    <div class="col-text">
+      <div class="results-table-container">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Equipo</th>
+              <th>1er C.</th>
+              <th>2do C.</th>
+              <th>3er C.</th>
+              <th>4to C.</th>
+              <th class="final-score">TOTAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hornets</td>
+              <td>34</td>
+              <td>26</td>
+              <td>28</td>
+              <td>29</td>
+              <td class="final-score">117</td>
+            </tr>
+            <tr>
+              <td>Heat</td>
+              <td>37</td>
+              <td>39</td>
+              <td>29</td>
+              <td>39</td>
+              <td class="final-score">144</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        </p>
+      </div>
+    </div>
+    <div class="col-text">
+      <div class="results-table-container">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Equipo</th>
+              <th>1er C.</th>
+              <th>2do C.</th>
+              <th>3er C.</th>
+              <th>4to C.</th>
+              <th class="final-score">TOTAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Knicks</td>
+              <td>26</td>
+              <td>45</td>
+              <td>20</td>
+              <td>20</td>
+              <td class="final-score">111</td>
+            </tr>
+            <tr>
+              <td>Bucks</td>
+              <td>27</td>
+              <td>32</td>
+              <td>35</td>
+              <td>27</td>
+              <td class="final-score">121</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        </p>
+      </div>
+    </div>
+    <div class="col-text">
+      <div class="results-table-container">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Equipo</th>
+              <th>1er C.</th>
+              <th>2do C.</th>
+              <th>3er C.</th>
+              <th>4to C.</th>
+              <th class="final-score">TOTAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Kings</td>
+              <td>29</td>
+              <td>33</td>
+              <td>21</td>
+              <td>18</td>
+              <td class="final-score">101</td>
+            </tr>
+            <tr>
+              <td>Thunder</td>
+              <td>24</td>
+              <td>34</td>
+              <td>22</td>
+              <td>27</td>
+              <td class="final-score">107</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        </p>
+      </div>
+    </div>
+    <div class="col-text">
+      <div class="results-table-container">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Equipo</th>
+              <th>1er C.</th>
+              <th>2do C.</th>
+              <th>3er C.</th>
+              <th>4to C.</th>
+              <th class="final-score">TOTAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Clippers</td>
+              <td>25</td>
+              <td>24</td>
+              <td>14</td>
+              <td>16</td>
+              <td class="final-score">79</td>
+            </tr>
+            <tr>
+              <td>Warriors</td>
+              <td>33</td>
+              <td>13</td>
+              <td>32</td>
+              <td>20</td>
+              <td class="final-score">98</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        </p>
+      </div>
+    </div>
+  </div>
+  <h3>Conclusión Final después de jugar</h3>
+  <p>
+    Todas las IA han fallado en el partido Knicks vs Bucks menos Chat GPT. Ha sido la noche de Antetokounmpo con 37 puntos frustrando la racha de los Knicks.<br>
+    Chat GPT ha acertado todos menos el partido de Clippers vs Warriors que o ha dado una predicción de victoria, ha pronosticado un empate.<br>
+    Gemini y Copilot han fallado con los Knicks.<br>
+    Podriamos decir que esta noche las 3 han ganado fallando solo un partido.
+    
+  </p>
+    <div class="volver">
+      <p>
+        <a href="../index.html">← Volver a la página principal de NBA</a>
+      </p>
+    </div>
+</div>
+
+<script>
+  function toggleDropdown() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+
+  // Cierra el menú si el usuario hace clic fuera de él
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      for (var i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
+</script>
+</body>
+</html>

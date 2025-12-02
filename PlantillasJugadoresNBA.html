@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uno X Dos IA - Predicciones Deportivas Avanzadas</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
+
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="index.html">Inicio</a>
+        <a href="nba-lakers-celtics.html">NBA</a>
+        <a href="#">Liga EA Sports</a>
+        <a href="#">Liga Hypermotion</a>
+        <a href="#">Otras Ligas</a>
+      </div>
+    </div>
+  </nav>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 40px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    input[type="text"] {
+      width: 300px;
+      padding: 8px;
+      font-size: 16px;
+    }
+    button {
+      padding: 8px 12px;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+    .logo {
+      width: 60px;
+      height: auto;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+    h2 {
+      display: flex;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Plantillas NBA 2025/2026</h1>
+
+  <h2>🔍 Buscador de Jugadores</h2>
+  <p>
+    Escribe el nombre de un jugador para saber en qué equipo juega:
+  </p>
+  <input type="text" id="jugador" placeholder="Ejemplo: LeBron James">
+  <button onclick="buscarJugador()">Buscar</button>
+  <div id="resultado"></div>
+
+  <script>
+    const jugadores = {
+      "LeBron James": "Los Angeles Lakers",
+      "Stephen Curry": "Golden State Warriors",
+      "Giannis Antetokounmpo": "Milwaukee Bucks",
+      "Thanasis Antetokounmpo": "Milwaukee Bucks",
+      "Zion Williamson": "New Orleans Pelicans",
+      "Joel Embiid": "Philadelphia 76ers",
+      "Victor Wembanyama": "San Antonio Spurs",
+      "Shai Gilgeous-Alexander": "Oklahoma City Thunder",
+      "LaMelo Ball": "Charlotte Hornets",
+      "Cade Cunningham": "Detroit Pistons",
+      "Fred VanVleet": "Houston Rockets",
+      "Nikola Jokic": "Denver Nuggets",
+      "Trae Young": "Atlanta Hawks",
+      "Scottie Barnes": "Toronto Raptors",
+      "Donovan Mitchell": "Cleveland Cavaliers"
+      "Jayson Tatum": "Boston Celtics",
+      "Jaylen Brown": "Boston Celtics",
+      "Derrick White": "Boston Celtics",
+      "Payton Pritchard": "Boston Celtics",
+      "Neemias Queta": "Boston Celtics",
+      "Hugo González": "Boston Celtics",
+      "Ron Harper Jr.": "Boston Celtics",
+      "Amari Williams": "Boston Celtics",
+      "Jordan Walsh": "Boston Celtics",
+      "Anfernee Simons": "Boston Celtics",
+      "Max Shulga": "Boston Celtics",
+      "Luka Garza": "Boston Celtics",
+      "Baylor Scheierman": "Boston Celtics",
+      "Josh Minott": "Boston Celtics",
+      "Sam Hauser": "Boston Celtics",
+      "Xavier Tillman": "Boston Celtics",
+      "Chris Boucher": "Boston Celtics",
+    };
+
+    function buscarJugador() {
+      const entrada = document.getElementById("jugador").value.trim().toLowerCase();
+      const resultado = document.getElementById("resultado");
+      let encontrado = false;
+
+      for (const nombre in jugadores) {
+        const nombreLower = nombre.toLowerCase();
+        if (nombreLower.includes(entrada)) {
+          resultado.innerHTML = `<strong>${nombre}</strong> juega en <strong>${jugadores[nombre]}</strong>.`;
+          encontrado = true;
+          break;
+        }
+      }
+
+      if (!encontrado) {
+        resultado.innerHTML = `No se encontró el jugador <strong>${entrada}</strong>.`;
+      }
+    }
+  </script>
+
+  <h1>Plantillas NBA 2025/2026</h1>
+
+  <h2>
+    <img src="Imagenes/Boston Celtics.png" alt="Boston Celtics" class="logo">
+    Boston Celtics
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Jayson Tatum</td><td>Ala-Pívot</td><td>27</td><td>2.03 m</td></tr>
+    <tr><td>Jaylen Brown</td><td>Alero</td><td>29</td><td>1.98 m</td></tr>
+    <tr><td>Derrick White</td><td>Escolta</td><td>31</td><td>1.93 m</td></tr>
+    <tr><td>Payton Pritchard</td><td>Base</td><td>27</td><td>1.85 m</td></tr>
+    <tr><td>Neemias Queta</td><td>Pívot</td><td>26</td><td>2.13 m</td></tr>
+    <tr><td>Hugo González</td><td>Escolta</td><td>19</td><td>1.98 m</td></tr>
+    <tr><td>Ron Harper Jr.</td><td>Alero</td><td>25</td><td>1.96 m</td></tr>
+    <tr><td>Amari Williams</td><td>Ala-Pívot</td><td>23</td><td>2.08 m</td></tr>
+    <tr><td>Jordan Walsh</td><td>Ala-Pívot</td><td>21</td><td>2.01 m</td></tr>
+    <tr><td>Anfernee Simons</td><td>Escolta</td><td>26</td><td>1.91 m</td></tr>
+    <tr><td>Max Shulga</td><td>Escolta</td><td>23</td><td>1.93 m</td></tr>
+    <tr><td>Luka Garza</td><td>Pívot</td><td>27</td><td>2.08 m</td></tr>
+    <tr><td>Baylor Scheierman</td><td>Escolta</td><td>25</td><td>1.98 m</td></tr>
+    <tr><td>Josh Minott</td><td>Ala-Pívot</td><td>23</td><td>2.03 m</td></tr>
+    <tr><td>Sam Hauser</td><td>Alero</td><td>27</td><td>2.01 m</td></tr>
+    <tr><td>Xavier Tillman</td><td>Ala-Pívot</td><td>26</td><td>2.03 m</td></tr>
+    <tr><td>Chris Boucher</td><td>Ala-Pívot</td><td>32</td><td>2.03 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Golden State Warriors.png" alt="Golden State Warriors" class="logo">
+    Golden State Warriors
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Stephen Curry</td><td>Base</td><td>37</td><td>1.88 m</td></tr>
+    <tr><td>Draymond Green</td><td>Ala-Pívot</td><td>35</td><td>1.98 m</td></tr>
+    <tr><td>Jimmy Butler</td><td>Alero</td><td>36</td><td>1.98 m</td></tr>
+    <tr><td>Buddy Hield</td><td>Escolta</td><td>33</td><td>1.93 m</td></tr>
+    <tr><td>Trayce Jackson-Davis</td><td>Pívot</td><td>25</td><td>2.06 m</td></tr>
+    <tr><td>Gary Payton II</td><td>Escolta</td><td>33</td><td>1.88 m</td></tr>
+    <tr><td>Brandin Podziemski</td><td>Escolta</td><td>22</td><td>1.93 m</td></tr>
+    <tr><td>De'Anthony Melton</td><td>Base</td><td>27</td><td>1.88 m</td></tr>
+    <tr><td>Jonathan Kuminga</td><td>Ala-Pívot</td><td>23</td><td>2.01 m</td></tr>
+    <tr><td>Quinten Post</td><td>Pívot</td><td>25</td><td>2.13 m</td></tr>
+    <tr><td>Alex Toohey</td><td>Ala-Pívot</td><td>21</td><td>2.06 m</td></tr>
+    <tr><td>Moses Moody</td><td>Escolta</td><td>23</td><td>1.96 m</td></tr>
+    <tr><td>Al Horford</td><td>Ala-Pívot</td><td>39</td><td>2.03 m</td></tr>
+    <tr><td>Will Richard</td><td>Base</td><td>22</td><td>1.91 m</td></tr>
+    <tr><td>Jackson Rowe</td><td>Ala-Pívot</td><td>28</td><td>1.98 m</td></tr>
+    <tr><td>Gui Santos</td><td>Ala-Pívot</td><td>23</td><td>2.01 m</td></tr>
+    <tr><td>Pat Spence</td><td>Base</td><td>29</td><td>1.88 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Milwaukee Bucks.png" alt="Milwaukee Bucks" class="logo">
+    Milwaukee Bucks
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Giannis Antetokounmpo</td><td>Ala-Pívot</td><td>31</td><td>2.11 m</td></tr>
+    <tr><td>Thanasis Antetokounmpo</td><td>Alero</td><td>33</td><td>2.01 m</td></tr>
+    <tr><td>Alex Antetokounmpo</td><td>Alero</td><td>25</td><td>2.03 m</td></tr>
+    <tr><td>Cole Anthony</td><td>Base</td><td>25</td><td>1.88 m</td></tr>
+    <tr><td>Kyle Kuzma</td><td>Ala-Pívot</td><td>30</td><td>2.03 m</td></tr>
+    <tr><td>Gary Harris</td><td>Escolta</td><td>31</td><td>1.93 m</td></tr>
+    <tr><td>Ryan Rollins</td><td>Base</td><td>23</td><td>1.91 m</td></tr>
+    <tr><td>Taurean Prince</td><td>Alero</td><td>31</td><td>1.98 m</td></tr>
+    <tr><td>Bobby Portis</td><td>Ala-Pívot</td><td>30</td><td>2.06 m</td></tr>
+    <tr><td>Myles Turner</td><td>Pívot</td><td>29</td><td>2.11 m</td></tr>
+    <tr><td>Amir Coffey</td><td>Escolta</td><td>28</td><td>2.01 m</td></tr>
+    <tr><td>AJ Green</td><td>Escolta</td><td>26</td><td>1.93 m</td></tr>
+    <tr><td>Andre Jackson</td><td>Escolta</td><td>23</td><td>1.98 m</td></tr>
+    <tr><td>Pete Nance</td><td>Pívot</td><td>25</td><td>2.06 m</td></tr>
+    <tr><td>Kevin Porter</td><td>Base</td><td>25</td><td>1.96 m</td></tr>
+    <tr><td>Mark Sears</td><td>Base</td><td>23</td><td>1.83 m</td></tr>
+    <tr><td>Gary Trent</td><td>Alero</td><td>26</td><td>1.96 m</td></tr>
+    <tr><td>Jericho Sims</td><td>Pívot</td><td>27</td><td>2.08 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/New Orleans Pelicans.png" alt="New Orleans Pelicans" class="logo">
+    New Orleans Pelicans
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Zion Williamson</td><td>Ala-Pívot</td><td>25</td><td>2.01 m</td></tr>
+    <tr><td>Jose Alvarado</td><td>Base</td><td>27</td><td>1.83 m</td></tr>
+    <tr><td>Jordan Poole</td><td>Escolta</td><td>26</td><td>1.93 m</td></tr>
+    <tr><td>DeAndre Jordan</td><td>Pívot</td><td>37</td><td>2.11 m</td></tr>
+    <tr><td>Herbert Jones</td><td>Alero</td><td>27</td><td>2.01 m</td></tr>
+    <tr><td>Jordan Hawkins</td><td>Escolta</td><td>23</td><td>1.96 m</td></tr>
+    <tr><td>Trey Murphy III</td><td>Alero</td><td>25</td><td>2.03 m</td></tr>
+    <tr><td>Yves Missi</td><td>Pívot</td><td>21</td><td>2.11 m</td></tr>
+    <tr><td>Jeremiah Fears</td><td>Base</td><td>19</td><td>1.91 m</td></tr>
+    <tr><td>Trey Alexander</td><td>Escolta</td><td>23</td><td>1.96 m</td></tr>
+    <tr><td>Saddiq Bey</td><td>Ala-Pívot</td><td>26</td><td>2.03 m</td></tr>
+    <tr><td>Hunter Dickinson</td><td>Ala-Pívot</td><td>24</td><td>2.16 m</td></tr>
+    <tr><td>Kevon Looney</td><td>Pívot</td><td>22</td><td>2.06 m</td></tr>
+    <tr><td>Karlo Matkovic</td><td>Ala-Pívot</td><td>24</td><td>2.08 m</td></tr>
+    <tr><td>Bryce McGowens</td><td>Alero</td><td>22</td><td>1.98 m</td></tr>
+    <tr><td>Trey Murphy III</td><td>Escolta</td><td>25</td><td>1.98 m</td></tr>
+    <tr><td>Dejounte Murray</td><td>Pívot</td><td>29</td><td>1.93 m</td></tr>
+    <tr><td>Micah Peavy</td><td>Escolta</td><td>24</td><td>2.01 m</td></tr>
+    <tr><td>Derik Queen</td><td>Ala-Pívot</td><td>20</td><td>2.06 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Miami Heat.png" alt="Miami Heat" class="logo">
+    Miami Heat
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Bam Adebayo</td><td>Pívot</td><td>28</td><td>2.06 m</td></tr>
+    <tr><td>Tyler Herro</td><td>Escolta</td><td>26</td><td>1.96 m</td></tr>
+    <tr><td>Davion Mitchell</td><td>Base</td><td>27</td><td>1.83 m</td></tr>
+    <tr><td>Jaime Jaquez Jr.</td><td>Alero</td><td>24</td><td>1.98 m</td></tr>
+    <tr><td>Kel'el Ware</td><td>Pívot</td><td>21</td><td>2.13 m</td></tr>
+    <tr><td>Andrew Wiggins</td><td>Alero</td><td>30</td><td>1.98 m</td></tr>
+    <tr><td>Kasparas Jakucionis</td><td>Escolta</td><td>19</td><td>1.96 m</td></tr>
+    <tr><td>Terry Rozier</td><td>Base</td><td>31</td><td>1.85 m</td></tr>
+    <tr><td>Simone Fontecchio</td><td>Alero</td><td>29</td><td>2.01 m</td></tr>
+    <tr><td>Myron Gardner</td><td>Escolta</td><td>24</td><td>1.96 m</td></tr>
+    <tr><td>Vladislav Goldin</td><td>Ala-Pívot</td><td>24</td><td>2.13 m</td></tr>
+    <tr><td>Keshad Johnson</td><td>Alero</td><td>24</td><td>1.98 m</td></tr>
+    <tr><td>Nikola Jovic</td><td>Ala-Pívot</td><td>22</td><td>2.08 m</td></tr>
+    <tr><td>Pelle Larsson</td><td>Alero</td><td>24</td><td>1.96 m</td></tr>
+    <tr><td>Norman Powell</td><td>Escolta</td><td>32</td><td>1.93 m</td></tr>
+    <tr><td>Dru Smith </td><td>Escolta</td><td>27</td><td>1.88 m</td></tr>
+    <tr><td>Jahmir Young</td><td>Base</td><td>25</td><td>1.83 m</td></tr>
+
+  </table>
+
+  <h2>
+    <img src="Imagenes/Los Angeles Lakers.png" alt="Los Angeles Lakers" class="logo">
+    Los Angeles Lakers
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>LeBron James</td><td>Alero</td><td>41</td><td>2.06 m</td></tr>
+    <tr><td>Jarred Vanderbilt</td><td>Ala-Pívot</td><td>26</td><td>2.06 m</td></tr>
+    <tr><td>Gabe Vincent</td><td>Base</td><td>29</td><td>1.91 m</td></tr>
+    <tr><td>Chris Mañon</td><td>Escolta</td><td>24</td><td>1.93 m</td></tr>
+    <tr><td>Jaxson Hayes</td><td>Pívot</td><td>25</td><td>2.13 m</td></tr>
+    <tr><td>Rui Hachimura</td><td>Ala-Pívot</td><td>27</td><td>2.03 m</td></tr>
+    <tr><td>Deandre Ayton</td><td>Pívot</td><td>27</td><td>2.13 m</td></tr>
+    <tr><td>Luka Doncic</td><td>Base</td><td>26</td><td>2.03 m</td></tr>
+    <tr><td>Marcus Smart</td><td>Base</td><td>31</td><td>1.91 m</td></tr>
+    <tr><td>Adou Thiero</td><td>Alero</td><td>21</td><td>1.98 m</td></tr>
+    <tr><td>Nick Smith Jr.</td><td>Base</td><td>21</td><td>1.88 m</td></tr>
+    <tr><td>Austin Reaves</td><td>Escolta</td><td>27</td><td>1.96 m</td></tr>
+    <tr><td>Bronny James</td><td>Base</td><td>21</td><td>1.88 m</td></tr>
+    <tr><td>Jake LaRavia</td><td>Alero</td><td>24</td><td>2.01 m</td></tr>
+    <tr><td>Chris Manon</td><td>Escolta</td><td>23</td><td>1.93 m</td></tr>
+    <tr><td>Christian Koloko</td><td>Ala-Pívot</td><td>25</td><td>2.11 m</td></tr>
+    <tr><td>Dalton Knecht</td><td>Pívot</td><td>24</td><td>1.98 m</td></tr>
+  </table>
+
+
+  <h2>
+    <img src="Imagenes/Phoenix Suns.png" alt="Phoenix Suns" class="logo">
+    Phoenix Suns
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Jordan Goodwin</td><td>Base</td><td>27</td><td>1.91 m</td></tr>
+    <tr><td>CJ Huntley</td><td>Alero</td><td>24</td><td>2.06 m</td></tr>
+    <tr><td>Devin Booker</td><td>Escolta</td><td>29</td><td>1.96 m</td></tr>
+    <tr><td>Royce O'Neale</td><td>Alero</td><td>32</td><td>1.98 m</td></tr>
+    <tr><td>Koby Brea</td><td>Escolta</td><td>23</td><td>1.96 m</td></tr>
+    <tr><td>Nigel Hayes-Davis</td><td>Alero</td><td>31</td><td>2.01 m</td></tr>
+    <tr><td>Collin Gillespie</td><td>Base</td><td>26</td><td>1.85 m</td></tr>
+    <tr><td>Oso Ighodaro</td><td>Ala-Pívot</td><td>23</td><td>2.11 m</td></tr>
+    <tr><td>Dillon Brooks</td><td>Alero</td><td>30</td><td>2.01 m</td></tr>
+    <tr><td>Ryan Dunn</td><td>Alero</td><td>23</td><td>2.01 m</td></tr>
+    <tr><td>Nick Richards</td><td>Pívot</td><td>28</td><td>2.13 m</td></tr>
+    <tr><td>Jalen Green</td><td>Escolta</td><td>23</td><td>1.93 m</td></tr>
+    <tr><td>Mark Williams</td><td>Pívot</td><td>24</td><td>2.13 m</td></tr>
+    <tr><td>Grayson Allen</td><td>Escolta</td><td>30</td><td>1.91 m</td></tr>
+    <tr><td>Rasheer Fleming</td><td>Alero</td><td>21</td><td>2.06 m</td></tr>
+    <tr><td>Isaiah Livers</td><td>Escolta</td><td>27</td><td>1.98 m</td></tr>
+    <tr><td>Khaman Maluach</td><td>Pívot</td><td>19</td><td>2.16 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Chicago Bulls.png" alt="Chicago Bulls" class="logo">
+    Chicago Bulls
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Tre Jones</td><td>Base</td><td>26</td><td>1.85 m</td></tr>
+    <tr><td>Dalen Terry</td><td>Escolta</td><td>23</td><td>1.98 m</td></tr>
+    <tr><td>Noa Essengue</td><td>Ala-Pívot</td><td>19</td><td>2.03 m</td></tr>
+    <tr><td>Josh Giddey</td><td>Base</td><td>23</td><td>2.01 m</td></tr>
+    <tr><td>Patrick Williams</td><td>Ala-Pívot</td><td>24</td><td>2.01 m</td></tr>
+    <tr><td>Jalen Smith</td><td>Pívot</td><td>25</td><td>2.08 m</td></tr>
+    <tr><td>Emanuel Miller</td><td>Ala-Pívot</td><td>25</td><td>1.96 m</td></tr>
+    <tr><td>Nikola Vucevic</td><td>Pívot</td><td>35</td><td>2.13 m</td></tr>
+    <tr><td>Lachlan Olbrich</td><td>Pívot</td><td>22</td><td>2.03 m</td></tr>
+    <tr><td>Jevon Carter</td><td>Base</td><td>30</td><td>1.83 m</td></tr>
+    <tr><td>Kevin Huerter</td><td>Escolta</td><td>27</td><td>1.98 m</td></tr>
+    <tr><td>Julian Phillips</td><td>Alero</td><td>22</td><td>1.98 m</td></tr>
+    <tr><td>Coby White</td><td>Escolta</td><td>25</td><td>1.96 m</td></tr>
+    <tr><td>Matas Buzelis</td><td>Ala-Pívot</td><td>21</td><td>2.03 m</td></tr>
+    <tr><td>Zach Collins</td><td>Pívot</td><td>27</td><td>2.06 m</td></tr>
+    <tr><td>Ayo Dosunmu</td><td>Escolta</td><td>25</td><td>1.93 m</td></tr>
+    <tr><td>Trentyn Flowers</td><td>Escolta</td><td>20</td><td>2.06 m</td></tr>
+    <tr><td>Isaac Okoro</td><td>Alero</td><td>24</td><td>1.93 m</td></tr>
+  </table>
+
+
+  <h2>
+    <img src="Imagenes/Dallas Mavericks.png" alt="Dallas Mavericks" class="logo">
+    Dallas Mavericks
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Dante Exum</td><td>Base</td><td>30</td><td>1.96 m</td></tr>
+    <tr><td>Dereck Lively II</td><td>Pívot</td><td>21</td><td>2.16 m</td></tr>
+    <tr><td>Cooper Flagg</td><td>Alero</td><td>19</td><td>2.06 m</td></tr>
+    <tr><td>Miles Kelly</td><td>Base</td><td>22</td><td>1.93 m</td></tr>
+    <tr><td>Moussa Cisse</td><td>Pívot</td><td>23</td><td>2.11 m</td></tr>
+    <tr><td>Klay Thompson</td><td>Alero</td><td>36</td><td>1.98 m</td></tr>
+    <tr><td>Daniel Gafford</td><td>Pívot</td><td>27</td><td>2.08 m</td></tr>
+    <tr><td>Caleb Martin</td><td>Alero</td><td>30</td><td>1.96 m</td></tr>
+    <tr><td>Ryan Nembhard</td><td>Base</td><td>22</td><td>1.80 m</td></tr>
+    <tr><td>P.J. Washington</td><td>Ala-Pívot</td><td>27</td><td>2.06 m</td></tr>
+    <tr><td>Max Christie</td><td>Escolta</td><td>22</td><td>1.96 m</td></tr>
+    <tr><td>Anthony Davis</td><td>Ala-Pívot</td><td>32</td><td>2.08 m</td></tr>
+    <tr><td>Jaden Hardy</td><td>Base</td><td>23</td><td>1.91 m</td></tr>
+    <tr><td>Kyrie Irving</td><td>Base</td><td>33</td><td>1.88 m</td></tr>
+    <tr><td>Naji Marshall</td><td>Ala-Pívot</td><td>27</td><td>1.98 m</td></tr>
+    <tr><td>Dwight Powell</td><td>Pívot</td><td>34</td><td>2.08 m</td></tr>
+    <tr><td>D'Angelo Russell</td><td>Base</td><td>29</td><td>1.91 m</td></tr>
+    <tr><td>Brandon Williams</td><td>Base</td><td>25</td><td>1.85 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/New York Knicks.png" alt="New York Knicks" class="logo">
+    New York Knicks
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Jalen Brunson</td><td>Base</td><td>29</td><td>1.88 m</td></tr>
+    <tr><td>OG Anunoby</td><td>Ala-Pívot</td><td>28</td><td>2.01 m</td></tr>
+    <tr><td>Mikal Bridges</td><td>Alero</td><td>29</td><td>1.98 m</td></tr>
+    <tr><td>Jordan Clarkson</td><td>Escolta</td><td>33</td><td>1.96 m</td></tr>
+    <tr><td>Pacome Dadiet</td><td>Ala-Pívot</td><td>20</td><td>2.06 m</td></tr>
+    <tr><td>Mohamed Diawara</td><td>Ala-Pívot</td><td>20</td><td>2.06 m</td></tr>
+    <tr><td>Tosan Evbuomwan</td><td>Ala-Pívot</td><td>24</td><td>2.03 m</td></tr>
+    <tr><td>Josh Hart</td><td>Escolta</td><td>30</td><td>1.96 m</td></tr>
+    <tr><td>Ariel Hukporti</td><td>Pívot</td><td>23</td><td>2.13 m</td></tr>
+    <tr><td>Trey Jemison III</td><td>Ala-Pívot</td><td>25</td><td>2.08 m</td></tr>
+    <tr><td>Tyler Kolek</td><td>Base</td><td>24</td><td>1.88 m</td></tr>
+    <tr><td>Miles McBride</td><td>Escolta</td><td>25</td><td>1.88 m</td></tr>
+    <tr><td>Kevin McCullar Jr.</td><td>Escolta</td><td>24</td><td>1.98 m</td></tr>
+    <tr><td>Mitchell Robinson</td><td>Pívot</td><td>27</td><td>2.13 m</td></tr>
+    <tr><td>Landry Shamet</td><td>Escolta</td><td>28</td><td>1.96 m</td></tr>
+    <tr><td>Karl-Anthony Towns</td><td>Ala-Pívot</td><td>29</td><td>2.13 m</td></tr>
+    <tr><td>Guerschon Yabusele</td><td>Pívot</td><td>29</td><td>2.01 m</td></tr>
+  </table>
+
+
+  <h2>
+    <img src="Imagenes/Denver Nuggets.png" alt="Denver Nuggets" class="logo">
+    Denver Nuggets
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Nikola Jokic</td><td>Pívot</td><td>30</td><td>2.11 m</td></tr>
+    <tr><td>Jamal Murray</td><td>Base</td><td>28</td><td>1.93 m</td></tr>
+    <tr><td>Aaron Gordon</td><td>Ala-Pívot</td><td>30</td><td>2.03 m</td></tr>
+    <tr><td>Christian Braun</td><td>Escolta</td><td>24</td><td>1.98 m</td></tr>
+    <tr><td>Tim Hardaway Jr.</td><td>Escolta</td><td>33</td><td>1.96 m</td></tr>
+    <tr><td>Julian Strawther</td><td>Escolta</td><td>23</td><td>1.98 m</td></tr>
+    <tr><td>Jalen Pickett</td><td>Escolta</td><td>26</td><td>1.88 m</td></tr>
+    <tr><td>Zeke Nnaji</td><td>Ala-Pívot</td><td>25</td><td>2.08 m</td></tr>
+    <tr><td>Tamar Bates</td><td>Escolta</td><td>22</td><td>1.93 m</td></tr>
+    <tr><td>Peyton Watson</td><td>Alero</td><td>23</td><td>2.01 m</td></tr>
+    <tr><td>Jonas Valanciunas</td><td>Pívot</td><td>33</td><td>2.13 m</td></tr>
+    <tr><td>Spencer Jones</td><td>Alero</td><td>24</td><td>2.01 m</td></tr>
+    <tr><td>Cameron Johnson</td><td>Alero</td><td>29</td><td>2.03 m</td></tr>
+    <tr><td>Bruce Brown</td><td>Pívot</td><td>23</td><td>2.06 m</td></tr>
+    <tr><td>Curtis Jones</td><td>Base</td><td>24</td><td>1.91 m</td></tr>
+    <tr><td>Hunter Tyson</td><td>Ala-Pívot</td><td>25</td><td>2.03 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Atlanta Hawks.png" alt="Atlanta Hawks" class="logo">
+    Atlanta Hawks
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Trae Young</td><td>Base</td><td>27</td><td>1.89 m</td></tr>
+    <tr><td>Jalen Johnson</td><td>Ala-Pívot</td><td>24</td><td>2.06 m</td></tr>
+    <tr><td>Kristaps Porzingis</td><td>Pívot</td><td>30</td><td>2.18 m</td></tr>
+    <tr><td>Dyson Daniels</td><td>Escolta</td><td>22</td><td>2.01 m</td></tr>
+    <tr><td>Nickeil Alexander-Walker</td><td>Escolta</td><td>27</td><td>1.96 m</td></tr>
+    <tr><td>Caleb Houstan</td><td>Alero</td><td>23</td><td>2.03 m</td></tr>
+    <tr><td>Luke Kennard</td><td>Escolta</td><td>29</td><td>1.96 m</td></tr>
+    <tr><td>Vit Krejci</td><td>Base</td><td>25</td><td>2.03 m</td></tr>
+    <tr><td>Onyeka Okongwu</td><td>Pívot</td><td>25</td><td>2.08 m</td></tr>
+    <tr><td>Zaccharie Risacher</td><td>Alero</td><td>20</td><td>2.03 m</td></tr>
+    <tr><td>Jacob Toppin</td><td>Alero</td><td>25</td><td>2.06 m</td></tr>
+    <tr><td>Mouhamed Gueye</td><td>Ala-Pívot</td><td>23</td><td>2.11 m</td></tr>
+    <tr><td>N'Faly Dante</td><td>Pívot</td><td>24</td><td>2.11 m</td></tr>
+    <tr><td>Nikola Durisic</td><td>Alero</td><td>21</td><td>2.03 m</td></tr>
+    <tr><td>Eli John N'Diaye</td><td>Pívot</td><td>21</td><td>2.03 m</td></tr>
+    <tr><td>Asa Newell</td><td>Ala-Pívot</td><td>20</td><td>2.08 m</td></tr>
+    <tr><td>Keaton Wallace</td><td>Escolta</td><td>26</td><td>1.91 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Philadelphia 76ers.png" alt="Philadelphia 76ers" class="logo">
+    Philadelphia 76ers
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Joel Embiid</td><td>Pívot</td><td>31</td><td>2.13 m</td></tr>
+    <tr><td>Tyrese Maxey</td><td>Base</td><td>25</td><td>1.91 m</td></tr>
+    <tr><td>Paul George</td><td>Alero</td><td>35</td><td>2.03 m</td></tr>
+    <tr><td>Kelly Oubre Jr.</td><td>Alero</td><td>30</td><td>2.03 m</td></tr>
+    <tr><td>Kyle Lowry</td><td>Base</td><td>39</td><td>1.83 m</td></tr>
+    <tr><td>Andre Drummond</td><td>Pívot</td><td>32</td><td>2.11 m</td></tr>
+    <tr><td>Dominick Barlow</td><td>Alero</td><td>22</td><td>2.06 m</td></tr>
+    <tr><td>Adem Bona</td><td>Pívot</td><td>22</td><td>2.08 m</td></tr>
+    <tr><td>Jared McCain</td><td>Escolta</td><td>21</td><td>1.91 m</td></tr>
+    <tr><td>Hunter Sallis</td><td>Escolta</td><td>22</td><td>1.96 m</td></tr>
+    <tr><td>VJ Edgecombe</td><td>Escolta</td><td>20</td><td>1.93 m</td></tr>
+    <tr><td>Justin Edwards</td><td>Alero</td><td>22</td><td>2.01 m</td></tr>
+    <tr><td>Johni Broome</td><td>Ala-Pívot</td><td>23</td><td>2.08 m</td></tr>
+    <tr><td>Eric Gordon</td><td>Escolta</td><td>36</td><td>1.91 m</td></tr>
+    <tr><td>Quentin Grimes</td><td>Escolta</td><td>25</td><td>1.93 m</td></tr>
+    <tr><td>Jabari Walker</td><td>Ala-Pívot</td><td>23</td><td>2.01 m</td></tr>
+    <tr><td>Trendon Watford</td><td>Ala-Pívot</td><td>25</td><td>2.03 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Toronto Raptors.png" alt="Toronto Raptors" class="logo">
+    Toronto Raptors
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Scottie Barnes</td><td>Ala-Pívot</td><td>24</td><td>2.03 m</td></tr>
+    <tr><td>Ja'Kobe Walter</td><td>Escolta</td><td>21</td><td>1.96 m</td></tr>
+    <tr><td>RJ Barrett</td><td>Alero</td><td>25</td><td>1.98 m</td></tr>
+    <tr><td>Chucky Hepburn</td><td>Base</td><td>22</td><td>1.83 m</td></tr>
+    <tr><td>Gradey Dick</td><td>Escolta</td><td>22</td><td>2.01 m</td></tr>
+    <tr><td>A.J. Lawson</td><td>Escolta</td><td>25</td><td>1.98 m</td></tr>
+    <tr><td>Collin Murray-Boyles</td><td>Ala-Pívot</td><td>20</td><td>2.01 m</td></tr>
+    <tr><td>Brandon Ingram</td><td>Alero</td><td>28</td><td>2.03 m</td></tr>
+    <tr><td>Ochai Agbaji</td><td>Escolta</td><td>25</td><td>1.96 m</td></tr>
+    <tr><td>Jamison Battle</td><td>Alero</td><td>24</td><td>2.01 m</td></tr>
+    <tr><td>Jonathan Mogbo</td><td>Ala-Pívot</td><td>24</td><td>2.06 m</td></tr>
+    <tr><td>Alijah Martin</td><td>Escolta</td><td>23</td><td>1.88 m</td></tr>
+    <tr><td>Jamal Shead</td><td>Base</td><td>23</td><td>1.88 m</td></tr>
+    <tr><td>Jakob Poeltl</td><td>Pívot</td><td>30</td><td>2.13 m</td></tr>
+    <tr><td>Immanuel Quickley</td><td>Base</td><td>26</td><td>1.88 m</td></tr>
+    <tr><td>Sandro Mamukelashvili</td><td>Pívot</td><td>26</td><td>2.06 m</td></tr>
+    <tr><td>Garrett Temple</td><td>Escolta</td><td>39</td><td>1.96 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Cleveland Cavaliers.png" alt="Cleveland Cavaliers" class="logo">
+    Cleveland Cavaliers
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Jarrett Allen</td><td>Pívot</td><td>27</td><td>2.06 m</td></tr>
+    <tr><td>Lonzo Ball</td><td>Escolta</td><td>28</td><td>1.96 m</td></tr>
+    <tr><td>Thomas Bryant</td><td>Pívot</td><td>28</td><td>2.06 m</td></tr>
+    <tr><td>Darius Garland</td><td>Escolta</td><td>25</td><td>1.85 m</td></tr>
+    <tr><td>De'Andre Hunter</td><td>Alero</td><td>27</td><td>2.01 m</td></tr>
+    <tr><td>Sam Merrill</td><td>Escolta</td><td>29</td><td>1.93 m</td></tr>
+    <tr><td>Donovan Mitchell</td><td>Escolta</td><td>29</td><td>1.88 m</td></tr>
+    <tr><td>Evan Mobley</td><td>Pívot</td><td>24</td><td>2.11 m</td></tr>
+    <tr><td>Larry Nance Jr.</td><td>Ala-Pívot</td><td>32</td><td>1.98 m</td></tr>
+    <tr><td>Craig Porter Jr.</td><td>Escolta</td><td>25</td><td>1.85 m</td></tr>
+    <tr><td>Tyrese Proctor</td><td>Escolta</td><td>21</td><td>1.93 m</td></tr>
+    <tr><td>Max Strus</td><td>Escolta</td><td>29</td><td>1.96 m</td></tr>
+    <tr><td>Nae'Qwan Tomlin</td><td>Ala-Pívot</td><td>24</td><td>2.03 m</td></tr>
+    <tr><td>Luke Travers</td><td>Ala-Pívot</td><td>23</td><td>2.01 m</td></tr>
+    <tr><td>Chris Livingston</td><td>Ala-Pívot</td><td>22</td><td>1.98 m</td></tr>
+    <tr><td>Jaylon Tyson</td><td>Ala-Pívot</td><td>22</td><td>1.98 m</td></tr>
+    <tr><td>Dean Wade</td><td>Ala-Pívot</td><td>29</td><td>2.06 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Orlando Magic.png" alt="Orlando Magic" class="logo">
+    Orlando Magic
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Anthony Black</td><td>Base</td><td>21</td><td>2.01 m</td></tr>
+    <tr><td>Goga Bitadze</td><td>Pívot</td><td>26</td><td>2.11 m</td></tr>
+    <tr><td>Jase Richardson</td><td>Escolta</td><td>20</td><td>1.85 m</td></tr>
+    <tr><td>Desmond Bane</td><td>Escolta</td><td>27</td><td>1.98 m</td></tr>
+    <tr><td>Paolo Banchero</td><td>Ala-Pívot</td><td>23</td><td>2.08 m</td></tr>
+    <tr><td>Noah Penda</td><td>Alero</td><td>21</td><td>2.01 m</td></tr>
+    <tr><td>Franz Wagner</td><td>Alero</td><td>24</td><td>2.05 m</td></tr>
+    <tr><td>Jalen Suggs</td><td>Base</td><td>24</td><td>1.96 m</td></tr>
+    <tr><td>Wendell Carter Jr.</td><td>Pívot</td><td>26</td><td>2.08 m</td></tr>
+    <tr><td>Jonathan Isaac</td><td>Ala-Pívot</td><td>28</td><td>2.08 m</td></tr>
+    <tr><td>Tristan da Silva</td><td>Alero</td><td>24</td><td>2.03 m</td></tr>
+    <tr><td>Jamal Cain</td><td>Alero</td><td>26</td><td>2.01 m</td></tr>
+    <tr><td>Colin Castleton</td><td>Pívot</td><td>25</td><td>2.08 m</td></tr>
+    <tr><td>Jett Howard</td><td>Escolta</td><td>22</td><td>2.03 m</td></tr>
+    <tr><td>Tyus Jones</td><td>Base</td><td>29</td><td>1.83 m</td></tr>
+    <tr><td>Orlando Robinson</td><td>Pívot</td><td>25</td><td>2.08 m</td></tr>
+    <tr><td>Moritz Wagner</td><td>Pívot</td><td>28</td><td>2.11 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Indiana Pacers.png" alt="Indiana Pacers" class="logo">
+    Indiana Pacers
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Andrew Nembhard</td><td>Escolta</td><td>26</td><td>1.93 m</td></tr>
+    <tr><td>Isaiah Jackson</td><td>Pívot</td><td>24</td><td>2.03 m</td></tr>
+    <tr><td>Jay Huff</td><td>Pívot</td><td>28</td><td>2.16 m</td></tr>
+    <tr><td>Johnny Furphy</td><td>Escolta</td><td>21</td><td>2.03 m</td></tr>
+    <tr><td>Tyrese Haliburton</td><td>Base</td><td>25</td><td>1.96 m</td></tr>
+    <tr><td>Ben Sheppard</td><td>Escolta</td><td>24</td><td>1.96 m</td></tr>
+    <tr><td>Pascal Siakam</td><td>Ala-Pívot</td><td>31</td><td>2.06 m</td></tr>
+    <tr><td>Bennedict Mathurin</td><td>Alero</td><td>23</td><td>2.01 m</td></tr>
+    <tr><td>Tony Bradley</td><td>Pívot</td><td>28</td><td>2.08 m</td></tr>
+    <tr><td>Jarace Walker</td><td>Ala-Pívot</td><td>22</td><td>2.06 m</td></tr>
+    <tr><td>Jeremiah Robinson-Earl</td><td>Ala-Pívot</td><td>25</td><td>2.06 m</td></tr>
+    <tr><td>Quenton Jackson</td><td>Base</td><td>27</td><td>1.93 m</td></tr>
+    <tr><td>Aaron Nesmith</td><td>Alero</td><td>26</td><td>1.96 m</td></tr>
+    <tr><td>RayJ Dennis</td><td>Alero</td><td>24</td><td>1.88 m</td></tr>
+    <tr><td>Kam Jones</td><td>Alero</td><td>23</td><td>1.93 m</td></tr>
+    <tr><td>Garrison Mathews</td><td>Alero</td><td>29</td><td>1.98 m</td></tr>
+    <tr><td>T.J. McConnell</td><td>Alero</td><td>33</td><td>1.85 m</td></tr>
+    <tr><td>Taelon Peter</td><td>Alero</td><td>23</td><td>1.91 m</td></tr>
+    <tr><td>Taelon Peter</td><td>Alero</td><td>27</td><td>2.06 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Minnesota Timberwolves.png" alt="Minnesota Timberwolves" class="logo">
+    Minnesota Timberwolves
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Joan Beringer</td><td>Ala-Pívot</td><td>19</td><td>2.11 m</td></tr>
+    <tr><td>Julius Randle</td><td>Ala-Pívot</td><td>31</td><td>2.06 m</td></tr>
+    <tr><td>Terrence Shannon Jr.</td><td>Escolta</td><td>25</td><td>1.96 m</td></tr>
+    <tr><td>Rudy Gobert</td><td>Pívot</td><td>33</td><td>2.16 m</td></tr>
+    <tr><td>Mike Conley</td><td>Base</td><td>38</td><td>1.85 m</td></tr>
+    <tr><td>Joe Ingles</td><td>Alero</td><td>38</td><td>2.03 m</td></tr>
+    <tr><td>Johnny Juzang</td><td>Escolta</td><td>24</td><td>2.01 m</td></tr>
+    <tr><td>Rocco Zikarsky</td><td>Pívot</td><td>19</td><td>2.18 m</td></tr>
+    <tr><td>Nah'Shon Hyland</td><td>Base</td><td>25</td><td>1.88 m</td></tr>
+    <tr><td>Leonard Miller</td><td>Alero</td><td>22</td><td>2.08 m</td></tr>
+    <tr><td>Naz Reid</td><td>Pívot</td><td>26</td><td>2.06 m</td></tr>
+    <tr><td>Enrique Freeman</td><td>Ala-Pívot</td><td>25</td><td>2.06 m</td></tr>
+    <tr><td>Rob Dillingham</td><td>Base</td><td>21</td><td>1.88 m</td></tr>
+    <tr><td>Donte DiVincenzo</td><td>Escolta</td><td>28</td><td>1.93 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Brooklyn Nets.png" alt="Brooklyn Nets" class="logo">
+    Brooklyn Nets
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Day'Ron Sharpe</td><td>Pívot</td><td>24</td><td>2.08 m</td></tr>
+    <tr><td>Ziaire Williams</td><td>Alero</td><td>24</td><td>2.01 m</td></tr>
+    <tr><td>Nicolas Claxton</td><td>Pívot</td><td>26</td><td>2.11 m</td></tr>
+    <tr><td>Michael Porter Jr.</td><td>Alero</td><td>27</td><td>2.08 m</td></tr>
+    <tr><td>Nolan Traore</td><td>Base</td><td>19</td><td>1.91 m</td></tr>
+    <tr><td>Tyson Etienne</td><td>Base</td><td>26</td><td>1.83 m</td></tr>
+    <tr><td>Danny Wolf</td><td>Ala-Pívot</td><td>21</td><td>2.08 m</td></tr>
+    <tr><td>Jalen Wilson</td><td>Ala-Pívot</td><td>25</td><td>2.01 m</td></tr>
+    <tr><td>Haywood Highsmith</td><td>Alero</td><td>29</td><td>1.96 m</td></tr>
+    <tr><td>Terance Mann</td><td>Escolta</td><td>29</td><td>1.98 m</td></tr>
+    <tr><td>Egor Demin</td><td>Base</td><td>19</td><td>2.03 m</td></tr>
+    <tr><td>Drake Powell</td><td>Escolta</td><td>20</td><td>1.96 m</td></tr>
+    <tr><td>Ben Saraf</td><td>Escolta</td><td>19</td><td>1.98 m</td></tr>
+    <tr><td>Cam Thomas</td><td>Escolta</td><td>24</td><td>1.91 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Portland Trail Blazers.png" alt="Portland Trail Blazers" class="logo">
+    Portland Trail Blazers
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Rayan Rupert</td><td>Escolta</td><td>21</td><td>2.01 m</td></tr>
+    <tr><td>Toumani Camara</td><td>Ala-Pívot</td><td>25</td><td>2.01 m</td></tr>
+    <tr><td>Blake Wesley</td><td>Escolta</td><td>22</td><td>1.93 m</td></tr>
+    <tr><td>Deni Avdija</td><td>Alero</td><td>25</td><td>2.03 m</td></tr>
+    <tr><td>Damian Lillard</td><td>Base</td><td>35</td><td>1.88 m</td></tr>
+    <tr><td>Jerami Grant</td><td>Ala-Pívot</td><td>31</td><td>2.01 m</td></tr>
+    <tr><td>Jrue Holiday</td><td>Base</td><td>35</td><td>1.93 m</td></tr>
+    <tr><td>Javonte Cooke</td><td>Escolta</td><td>26</td><td>1.98 m</td></tr>
+    <tr><td>Sidy Cissoko</td><td>Alero</td><td>21</td><td>1.98 m</td></tr>
+    <tr><td>Matisse Thybulle</td><td>Escolta</td><td>28</td><td>1.96 m</td></tr>
+    <tr><td>Caleb Love</td><td>Escolta</td><td>24</td><td>1.91 m</td></tr>
+    <tr><td>Scoot Henderson</td><td>Base</td><td>21</td><td>1.91 m</td></tr>
+    <tr><td>Kris Murray</td><td>Alero</td><td>25</td><td>2.03 m</td></tr>
+    <tr><td>Donovan Clingan</td><td>Pívot</td><td>21</td><td>2.18 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Sacramento Kings.png" alt="Sacramento Kings" class="logo">
+    Sacramento Kings
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Devin Carter</td><td>Base</td><td>23</td><td>1.88 m</td></tr>
+    <tr><td>Dario Saric</td><td>Pívot</td><td>31</td><td>2.08 m</td></tr>
+    <tr><td>Drew Eubanks</td><td>Pívot</td><td>29</td><td>2.08 m</td></tr>
+    <tr><td>Domantas Sabonis</td><td>Pívot</td><td>29</td><td>2.11 m</td></tr>
+    <tr><td>Malik Monk</td><td>Escolta</td><td>27</td><td>1.91 m</td></tr>
+    <tr><td>Dylan Cardwell</td><td>Pívot</td><td>24</td><td>2.08 m</td></tr>
+    <tr><td>Precious Achiuwa</td><td>Pívot</td><td>26</td><td>2.06 m</td></tr>
+    <tr><td>Isaiah Stevens</td><td>Base</td><td>25</td><td>1.83 m</td></tr>
+    <tr><td>DeMar DeRozan</td><td>Alero</td><td>36</td><td>1.98 m</td></tr>
+    <tr><td>Doug McDermott</td><td>Alero</td><td>34</td><td>2.01 m</td></tr>
+    <tr><td>Keon Ellis</td><td>Escolta</td><td>26</td><td>1.93 m</td></tr>
+    <tr><td>Keegan Murray</td><td>Ala-Pívot</td><td>25</td><td>2.03 m</td></tr>
+    <tr><td>Russell Westbrook</td><td>Base</td><td>37</td><td>1.91 m</td></tr>
+    <tr><td>Dennis Schroder</td><td>Base</td><td>32</td><td>1.85 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Utah Jazz.png" alt="Utah Jazz" class="logo">
+    Utah Jazz
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Keyonte George</td><td>Base</td><td>22</td><td>1.88 m</td></tr>
+    <tr><td>Collin Sexton</td><td>Escolta</td><td>26</td><td>1.85 m</td></tr>
+    <tr><td>John Collins</td><td>Ala-Pívot</td><td>28</td><td>2.06 m</td></tr>
+    <tr><td>Walker Kessler</td><td>Pívot</td><td>24</td><td>2.13 m</td></tr>
+    <tr><td>Brice Sensabaugh</td><td>Alero</td><td>22</td><td>1.98 m</td></tr>
+    <tr><td>Ochai Agbaji</td><td>Escolta</td><td>25</td><td>1.96 m</td></tr>
+    <tr><td>Taylor Hendricks</td><td>Ala-Pívot</td><td>22</td><td>2.06 m</td></tr>
+    <tr><td>Isaiah Collier</td><td>Base</td><td>20</td><td>1.91 m</td></tr>
+    <tr><td>Filip Petrusev</td><td>Pívot</td><td>24</td><td>2.11 m</td></tr>
+    <tr><td>Micah Peavy</td><td>Alero</td><td>24</td><td>2.01 m</td></tr>
+    <tr><td>Jalen Lecque</td><td>Escolta</td><td>25</td><td>1.91 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Oklahoma City Thunder.png" alt="Oklahoma City Thunder" class="logo">
+    Oklahoma City Thunder
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Shai Gilgeous-Alexander</td><td>Base</td><td>27</td><td>1.98 m</td></tr>
+    <tr><td>Josh Giddey</td><td>Base</td><td>23</td><td>2.01 m</td></tr>
+    <tr><td>Chet Holmgren</td><td>Pívot</td><td>23</td><td>2.16 m</td></tr>
+    <tr><td>Jalen Williams</td><td>Alero</td><td>24</td><td>1.98 m</td></tr>
+    <tr><td>Lu Dort</td><td>Escolta</td><td>26</td><td>1.93 m</td></tr>
+    <tr><td>Isaiah Joe</td><td>Escolta</td><td>25</td><td>1.91 m</td></tr>
+    <tr><td>Jaylin Williams</td><td>Pívot</td><td>23</td><td>2.06 m</td></tr>
+    <tr><td>Tre Mann</td><td>Base</td><td>24</td><td>1.91 m</td></tr>
+    <tr><td>Ousmane Dieng</td><td>Alero</td><td>22</td><td>2.06 m</td></tr>
+    <tr><td>Carson Wallace</td><td>Base</td><td>21</td><td>1.91 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/San Antonio Spurs.png" alt="San Antonio Spurs" class="logo">
+    San Antonio Spurs
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Victor Wembanyama</td><td>Pívot</td><td>21</td><td>2.24 m</td></tr>
+    <tr><td>Jeremy Sochan</td><td>Ala-Pívot</td><td>22</td><td>2.06 m</td></tr>
+    <tr><td>Devin Vassell</td><td>Escolta</td><td>25</td><td>1.96 m</td></tr>
+    <tr><td>Keldon Johnson</td><td>Alero</td><td>26</td><td>1.96 m</td></tr>
+    <tr><td>Tre Jones</td><td>Base</td><td>26</td><td>1.85 m</td></tr>
+    <tr><td>Blake Wesley</td><td>Escolta</td><td>22</td><td>1.93 m</td></tr>
+    <tr><td>Dominick Barlow</td><td>Ala-Pívot</td><td>22</td><td>2.06 m</td></tr>
+    <tr><td>Julian Champagnie</td><td>Alero</td><td>24</td><td>2.01 m</td></tr>
+    <tr><td>Sidy Cissoko</td><td>Alero</td><td>21</td><td>1.98 m</td></tr>
+    <tr><td>Harrison Ingram</td><td>Alero</td><td>22</td><td>2.01 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Charlotte Hornets.png" alt="Charlotte Hornets" class="logo">
+    Charlotte Hornets
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>LaMelo Ball</td><td>Base</td><td>24</td><td>2.01 m</td></tr>
+    <tr><td>Brandon Miller</td><td>Alero</td><td>22</td><td>2.06 m</td></tr>
+    <tr><td>Mark Williams</td><td>Pívot</td><td>24</td><td>2.13 m</td></tr>
+    <tr><td>Nick Smith Jr.</td><td>Escolta</td><td>21</td><td>1.88 m</td></tr>
+    <tr><td>James Bouknight</td><td>Escolta</td><td>25</td><td>1.93 m</td></tr>
+    <tr><td>JT Thor</td><td>Ala-Pívot</td><td>23</td><td>2.06 m</td></tr>
+    <tr><td>Leaky Black</td><td>Alero</td><td>24</td><td>2.01 m</td></tr>
+    <tr><td>Amari Bailey</td><td>Escolta</td><td>22</td><td>1.96 m</td></tr>
+    <tr><td>Vasilije Micić</td><td>Base</td><td>31</td><td>1.96 m</td></tr>
+    <tr><td>Grant Williams</td><td>Ala-Pívot</td><td>26</td><td>1.98 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Detroit Pistons.png" alt="Detroit Pistons" class="logo">
+    Detroit Pistons
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Cade Cunningham</td><td>Base</td><td>24</td><td>1.98 m</td></tr>
+    <tr><td>Jaden Ivey</td><td>Escolta</td><td>23</td><td>1.93 m</td></tr>
+    <tr><td>Ausar Thompson</td><td>Alero</td><td>22</td><td>2.01 m</td></tr>
+    <tr><td>Jalen Duren</td><td>Pívot</td><td>22</td><td>2.11 m</td></tr>
+    <tr><td>Marcus Sasser</td><td>Base</td><td>24</td><td>1.88 m</td></tr>
+    <tr><td>Isaiah Stewart</td><td>Ala-Pívot</td><td>25</td><td>2.06 m</td></tr>
+    <tr><td>Killian Hayes</td><td>Base</td><td>24</td><td>1.96 m</td></tr>
+    <tr><td>James Wiseman</td><td>Pívot</td><td>24</td><td>2.13 m</td></tr>
+    <tr><td>Simone Fontecchio</td><td>Alero</td><td>30</td><td>2.01 m</td></tr>
+    <tr><td>Malachi Flynn</td><td>Base</td><td>26</td><td>1.85 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Houston Rockets.png" alt="Houston Rockets" class="logo">
+    Houston Rockets
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td>Fred VanVleet</td><td>Base</td><td>31</td><td>1.85 m</td></tr>
+    <tr><td>Jalen Green</td><td>Escolta</td><td>23</td><td>1.93 m</td></tr>
+    <tr><td>Jabari Smith Jr.</td><td>Ala-Pívot</td><td>22</td><td>2.08 m</td></tr>
+    <tr><td>Alperen Şengün</td><td>Pívot</td><td>23</td><td>2.11 m</td></tr>
+    <tr><td>Tari Eason</td><td>Alero</td><td>23</td><td>2.03 m</td></tr>
+    <tr><td>Amen Thompson</td><td>Base</td><td>21</td><td>2.01 m</td></tr>
+    <tr><td>Cam Whitmore</td><td>Alero</td><td>21</td><td>2.01 m</td></tr>
+    <tr><td>Dillon Brooks</td><td>Alero</td><td>30</td><td>2.01 m</td></tr>
+    <tr><td>Steven Adams</td><td>Pívot</td><td>32</td><td>2.13 m</td></tr>
+    <tr><td>Reggie Bullock</td><td>Escolta</td><td>34</td><td>1.98 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/LA Clippers.png" alt="Los Angeles Clippers" class="logo">
+    Los Angeles Clippers
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td></td><td>Base</td><td>31</td><td>1.85 m</td></tr>
+    <tr><td>Jalen Green</td><td>Escolta</td><td>23</td><td>1.93 m</td></tr>
+    <tr><td>Jabari Smith Jr.</td><td>Ala-Pívot</td><td>22</td><td>2.08 m</td></tr>
+    <tr><td>Alperen Şengün</td><td>Pívot</td><td>23</td><td>2.11 m</td></tr>
+    <tr><td>Tari Eason</td><td>Alero</td><td>23</td><td>2.03 m</td></tr>
+    <tr><td>Amen Thompson</td><td>Base</td><td>21</td><td>2.01 m</td></tr>
+    <tr><td>Cam Whitmore</td><td>Alero</td><td>21</td><td>2.01 m</td></tr>
+    <tr><td>Dillon Brooks</td><td>Alero</td><td>30</td><td>2.01 m</td></tr>
+    <tr><td>Steven Adams</td><td>Pívot</td><td>32</td><td>2.13 m</td></tr>
+    <tr><td>Reggie Bullock</td><td>Escolta</td><td>34</td><td>1.98 m</td></tr>
+  </table>
+
+  <h2>
+    <img src="Imagenes/Washington Wizards.png" alt="Washington Wizards" class="logo">
+    Washington Wizards
+  </h2>
+  <table>
+    <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
+    <tr><td></td><td>Base</td><td>31</td><td>1.85 m</td></tr>
+    <tr><td>Jalen Green</td><td>Escolta</td><td>23</td><td>1.93 m</td></tr>
+    <tr><td>Jabari Smith Jr.</td><td>Ala-Pívot</td><td>22</td><td>2.08 m</td></tr>
+    <tr><td>Alperen Şengün</td><td>Pívot</td><td>23</td><td>2.11 m</td></tr>
+    <tr><td>Tari Eason</td><td>Alero</td><td>23</td><td>2.03 m</td></tr>
+    <tr><td>Amen Thompson</td><td>Base</td><td>21</td><td>2.01 m</td></tr>
+    <tr><td>Cam Whitmore</td><td>Alero</td><td>21</td><td>2.01 m</td></tr>
+    <tr><td>Dillon Brooks</td><td>Alero</td><td>30</td><td>2.01 m</td></tr>
+    <tr><td>Steven Adams</td><td>Pívot</td><td>32</td><td>2.13 m</td></tr>
+    <tr><td>Reggie Bullock</td><td>Escolta</td><td>34</td><td>1.98 m</td></tr>
+  </table>
+
+</body>
+</html>

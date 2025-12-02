@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jornada 12 LALIGA EA SPORTS 2025/2026</title>
+  <link rel="stylesheet" href="../index.css">
+  <style>
+    /* Estilos generales de cuerpo y contenedor de artículo */
+    body {
+      background-color: #26580f;
+      font-family: Arial, sans-serif;
+    }
+    .article-container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #3b8a16;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .article-container h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 2.2em;
+    }
+    .article-meta {
+      color: #7f8c8d;
+      font-style: italic;
+      margin-bottom: 25px;
+      display: block;
+    }
+    .PartidosDelDia {
+      color: black;
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+
+    /* Contenedor de las Tres Columnas de Análisis IA */
+    .tres-columnas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin: 30px 0;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+
+    /* Estilo para los Títulos de las Columnas */
+    .col-title {
+      background-color: #34495e;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 0;
+      height: fit-content;
+    }
+
+    /* Estilo para el Texto de las Columnas */
+    .col-text {
+      background-color: #ecf0f1;
+      padding: 15px;
+      border-radius: 0 0 5px 5px;
+      border: 1px solid #bdc3c7;
+      margin-top: 0;
+    }
+    .col-text p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* --- Estilos para la Tabla de Resultados (Fútbol) --- */
+    .results-section {
+      margin-top: 40px;
+      border-top: 2px solid #e74c3c;
+      padding-top: 20px;
+    }
+
+    .match-title {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-size: 1.5em;
+      border-bottom: 1px dashed #bdc3c7;
+      padding-bottom: 5px;
+    }
+
+    /* Contenedor de todas las tablas de resultados */
+    .all-results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* 2 tablas por línea */
+      gap: 20px;
+      /* Espacio entre las tablas */
+      margin-bottom: 30px;
+    }
+
+    .results-table-container {
+      width: 100%;
+      margin: 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border: 1px solid #bdc3c7;
+      border-radius: 5px;
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 1.1em;
+    }
+
+    .results-table th, .results-table td {
+      padding: 10px 5px;
+      border: 1px solid #ddd;
+    }
+
+    .results-table thead th {
+      background-color: #2980b9;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    .results-table tbody tr td:first-child {
+      background-color: #d9e9f1;
+      font-weight: bold;
+      text-align: left;
+      padding-left: 15px;
+      color: #2c3e50;
+      white-space: nowrap;
+    }
+
+    /* Columna de Resultado Final */
+    .final-score {
+      background-color: #27ae60;
+      color: white;
+      font-size: 1.4em;
+      font-weight: 900;
+      width: 15%;
+    }
+
+    /* Ocultar las columnas adicionales en todas las resoluciones (Escritorio/Móvil) */
+    .results-table thead th:not(:first-child):not(.final-score),
+    .results-table tbody tr td:nth-child(2),
+    .results-table tbody tr td:nth-child(3),
+    .results-table tbody tr td:nth-child(4),
+    .results-table tbody tr td:nth-child(5),
+    .results-table tbody tr td:nth-child(6) {
+      display: none;
+    }
+
+    /* --- Media Query para Móviles: Asegura el diseño responsivo --- */
+    @media (max-width: 768px) {
+      .article-container {
+        padding: 15px;
+        margin: 10px auto;
+      }
+      .article-container h1 {
+        font-size: 1.8em;
+      }
+
+      /* Diseño de una columna para el análisis IA */
+      .tres-columnas {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      .col-title {
+        font-size: 1.1em;
+        padding: 10px;
+      }
+
+      /* Diseño de dos columnas para las tablas de resultados */
+      .all-results-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .results-table-container {
+        margin-bottom: 10px;
+      }
+
+      h4 {
+        font-size: 1.2em;
+        text-align: center;
+        margin-bottom: 5px;
+      }
+
+      /* Ajustes de tamaño de fuente para las tablas */
+      .results-table {
+        font-size: 0.9em;
+      }
+      .results-table th, .results-table td {
+        padding: 8px 3px;
+      }
+      .final-score {
+        font-size: 1.2em;
+      }
+      .results-table tbody tr td:first-child {
+        padding-left: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
+
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="index.html">Inicio</a>
+        <a href="nba-lakers-celtics.html">NBA</a>
+        <a href="#">Liga EA Sports</a>
+        <a href="#">Liga Hypermotion</a>
+        <a href="#">Otras Ligas</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="article-container">
+    <div class="PartidosDelDia">
+      <h1> Partidos Jornada 12:</h1>
+      <p>
+        📅 Jornada de LaLiga (7–9 de noviembre)<br><br>
+        🔵 Viernes 7 de noviembre <br>
+        Elche vs R. Sociedad — 21:00 (CET)<br><br>
+
+        🔵 Sábado 8 de noviembre <br>
+        Girona vs Alavés — 14:00 (CET)<br>
+        Sevilla vs Osasuna — 16:15 (CET)<br>
+        Atlético vs Levante — 18:30 (Movistar LaLiga)<br>
+        Espanyol vs Villarreal — 21:00 (CET)<br><br>
+
+        🔵 Domingo 9 de noviembre <br>
+        Athletic vs Oviedo — 14:00 (CET)<br>
+        Rayo vs Real Madrid — 16:15 (CET) <br>
+        Valencia vs Real Betis — 18:30 (DAZN)<br>
+        Celta vs Barcelona — 21:00 (CET) <br>
+        Valencia vs Real Betis — 18:30 (DAZN)<br>
+      </p>
+    </div>
+    <div class="tres-columnas">
+      <h3 class="col-title">1. ChatGPT</h3>
+      <h3 class="col-title">2. Gemini</h3>
+      <h3 class="col-title">3. Copilot</h3>
+    </div>
+
+    <div class="tres-columnas">
+      <div class="col-text">
+
+        <section>
+          <strong><h2>1:</h2></strong>
+        </section>
+        <section class="jornada-12-pronosticos">
+
+          <article>
+            <h3>Elche CF vs Real Sociedad – 21:00 (V)</h3><br>
+            <p>
+              <strong>Ganador:</strong> Real Sociedad 62% – Elche 18% – Empate 20%
+            </p>
+            <br>
+            <p class="reason">
+              <br>
+              La Real viene con mayor solidez defensiva y dominio en medio campo, mientras Elche sufre para crear ocasiones claras.
+            </p>
+          </article>
+          <br><br>
+          <article>
+            <h3>Girona FC vs Deportivo Alavés – 14:00 (S)</h3>
+            <p>
+              <br>
+              <strong>Ganador:</strong> Girona 55% – Alavés 22% – Empate 23%
+            </p>
+            <br>
+            <p class="reason">
+              Girona mantiene una dinámica positiva en casa con presión alta y gran efectividad.
+            </p>
+            <br><br>
+          </article>
+
+          <article>
+            <h3>Sevilla FC vs CA Osasuna – 16:15 (S)</h3>
+            <p>
+              <br>
+              <strong>Ganador:</strong> Sevilla 50% – Osasuna 25% – Empate 25%
+            </p>
+            <br>
+            <p class="reason">
+              Sevilla mejora en Nervión con un bloque más ordenado, aunque Osasuna es difícil de romper.
+            </p>
+            <br>
+          </article>
+          <br><br>
+          <article>
+            <h3>Atlético de Madrid vs Levante UD – 18:30 (S)</h3>
+            <p>
+              <br>
+              <strong>Ganador:</strong> Atlético 70% – Levante 12% – Empate 18%
+            </p>
+            <br>
+            <p class="reason">
+              Superioridad en plantilla, estilo competitivo y fortaleza en casa del Atleti.
+            </p>
+            <br><br>
+          </article>
+
+          <article>
+            <h3>RCD Espanyol vs Villarreal CF – 21:00 (S)</h3>
+            <p>
+              <br>
+              <strong>Ganador:</strong> Villarreal 48% – Espanyol 30% – Empate 22%
+            </p>
+            <br>
+            <p class="reason">
+              Villarreal ofrece mayor talento ofensivo, pero Espanyol compite fuertes en su estadio.
+            </p>
+            <br><br>
+          </article>
+
+          <article>
+            <h3>Athletic Club vs Real Oviedo – 14:00 (D)</h3>
+            <p>
+              <br>
+              <strong>Ganador:</strong> Athletic 65% – Oviedo 14% – Empate 21%
+            </p>
+            <br>
+            <p class="reason">
+              San Mamés y la intensidad del Athletic marcan la diferencia ante un recién ascendido que compite pero le falta punch.
+            </p>
+            <br><br>
+          </article>
+
+          <article>
+            <h3>Rayo Vallecano vs Real Madrid CF – 16:15 (D)</h3>
+            <p>
+              <br>
+              <strong>Ganador:</strong> Real Madrid 68% – Rayo 10% – Empate 22%
+            </p>
+            <br>
+            <p class="reason">
+              El Madrid llega con mayor pegada y alternativas individuales para decidir el partido.
+            </p>
+            <br><br>
+          </article>
+
+          <article>
+            <h3>Valencia CF vs Real Betis Balompié – 18:30 (D)</h3>
+            <p>
+              <br>
+              <strong>Ganador:</strong> Betis 40% – Valencia 35% – Empate 25%
+            </p>
+            <br>
+            <p class="reason">
+              Encuentro muy parejo; Betis algo más equilibrado en transición ofensiva.
+            </p>
+            <br><br>
+          </article>
+
+          <article>
+            <h3>RCD Mallorca vs Getafe CF – 18:30 (D)</h3>
+            <p>
+              <br>
+              <strong>Ganador:</strong> Mallorca 39% – Getafe 32% – Empate 29%
+            </p>
+            <br>
+            <p class="reason">
+              Duelo táctico y cerrado; Mallorca aprovecha su fortaleza en Son Moix.
+            </p>
+            <br><br>
+          </article>
+
+          <article>
+            <h3>RC Celta de Vigo vs FC Barcelona – 21:00 (D)</h3>
+            <p>
+              <br>
+              <strong>Ganador:</strong> Barcelona 60% – Celta 16% – Empate 24%
+            </p>
+            <br>
+            <p class="reason">
+              Mayor calidad individual del Barça, aunque Balaídos históricamente complica a los culés.
+            </p>
+            <br><br>
+          </article>
+        </section>
+      </div>
+      <div class="col-text">
+        <section>
+          <strong><h2>2:</h2></strong>
+        </section>
+
+        <div class="partido-viernes" style="margin-bottom: 25px;">
+          <h3 style="color: #333;">🗓️ Viernes, 21:00</h3>
+          <b>Elche CF vs Real Sociedad</b><br><br>
+          Predicción: <b>Empate o Victoria Local (Elche)</b><br><br>
+          % Ganador Elche: 40% | % Empate: 35% | % Ganador Real Sociedad: 25%<br><br>
+          Justificación: El Elche es sólido en casa (9º) y puede aprovechar la inconsistencia de la Real Sociedad (14º).
+        </div>
+        <br>
+
+        <hr style="border: 0; height: 1px; background-color: #ddd; margin: 15px 0;">
+
+        <div class="partidos-sabado" style="margin-bottom: 25px;">
+          <h3 style="color: #333;">🗓️ Sábado</h3>
+
+          <b>14:00 - Girona FC vs Deportivo Alavés</b><br><br>
+          Predicción: <b>Victoria Visitante (Alavés)</b><br><br>
+          % Ganador Girona: 30% | % Empate: 30% | % Ganador Alavés: 40%<br><br>
+          Justificación: El Alavés (8º) está en mejor forma que el colista Girona (20º), que tiene la defensa más goleada.<br><br>
+          <br><br>
+          <b>16:15 - Sevilla FC vs CA Osasuna</b><br><br>
+          Predicción: <b>Victoria Local (Sevilla)</b><br><br>
+          % Ganador Sevilla: 55% | % Empate: 30% | % Ganador Osasuna: 15%<br><br>
+          Justificación: El Sevilla (13º) buscará la victoria en casa ante un Osasuna (15º) que sufre fuera.<br><br>
+          <br><br>
+          <b>18:30 - Atlético de Madrid vs Levante UD</b><br><br>
+          Predicción: <b>Victoria Local (At. Madrid)</b><br><br>
+          % Ganador At. Madrid: 75% | % Empate: 20% | % Ganador Levante: 5%<br><br>
+          Justificación: El Atlético (4º) es muy superior en calidad y jugará en su estadio contra el Levante (17º), en puestos de descenso.<br><br>
+          <br><br>
+          <b>21:00 - RCD Espanyol vs Villarreal CF</b><br>
+          Predicción: <b>Empate</b><br><br>
+          % Ganador Espanyol: 35% | % Empate: 30% | % Ganador Villarreal: 35%<br>
+          Justificación: Duelo muy igualado en la zona alta de la tabla entre dos equipos en buena racha.
+        </div>
+
+        <hr style="border: 0; height: 1px; background-color: #ddd; margin: 15px 0;">
+
+        <div class="partidos-domingo" style="margin-bottom: 25px;">
+          <h3 style="color: #333;">🗓️ Domingo</h3>
+
+          <b>14:00 - Athletic Club vs Real Oviedo</b><br><br>
+          Predicción: <b>Victoria Local (Athletic)</b><br><br>
+          % Ganador Athletic: 60% | % Empate: 25% | % Ganador Oviedo: 15%<br><br>
+          Justificación: El Athletic (11º) es muy fuerte en San Mamés ante el recién ascendido Oviedo (19º).<br><br>
+          <br><br>
+          <b>16:15 - Rayo Vallecano vs Real Madrid CF</b><br><br>
+          Predicción: <b>Victoria Visitante (Real Madrid)</b><br><br>
+          % Ganador Rayo: 10% | % Empate: 15% | % Ganador Real Madrid: 75%<br><br>
+          Justificación: El Real Madrid (1º) es el líder y claro favorito por su gran diferencia de nivel.<br><br>
+          <br><br>
+          <b>18:30 - Valencia CF vs Real Betis Balompié</b><br><br>
+          Predicción: <b>Victoria Visitante (Betis)</b><br><br>
+          % Ganador Valencia: 30% | % Empate: 30% | % Ganador Betis: 40%<br><br>
+          Justificación: El Betis (5º) está en puestos europeos frente a un Valencia (18º) en crisis.<br><br>
+          <br><br>
+          <b>18:30 - RCD Mallorca vs Getafe CF</b><br><br>
+          Predicción: <b>Empate</b><br><br>
+          % Ganador Mallorca: 35% | % Empate: 30% | % Ganador Getafe: 35%<br><br>
+          Justificación: Ambos equipos son defensivos y un empate con pocos goles es el resultado más probable.<br><br>
+          <br><br>
+          <b>21:00 - RC Celta de Vigo vs FC Barcelona</b><br><br>
+          Predicción: <b>Victoria Visitante (Barcelona)</b><br><br>
+          % Ganador Celta: 15% | % Empate: 20% | % Ganador Barcelona: 65%<br><br>
+          Justificación: El Barcelona (2º) tiene la calidad ofensiva necesaria para llevarse los tres puntos de Balaídos.
+        </div>
+      </section>
+
+    </div>
+    <div class="col-text">
+      <section>
+        <strong><h2>3:</h2></strong>
+      </section>
+      <strong>V 21:00 - Elche CF vs Real Sociedad</strong><br><br>
+      <em>Elche 30% - Empate 35% - Real Sociedad 35%</em><br><br>
+      Elche ha sido fuerte en casa, pero la Real llega con buena racha de victorias recientes. Partido muy igualado.
+    </li><br><br><br>
+    <li>
+      <strong>S 14:00 - Girona FC vs Deportivo Alavés</strong><br><br>
+      <em>Girona 36% - Empate 25% - Alavés 39%</em><br><br>
+      Girona es colista y muy irregular, mientras que Alavés llega con mejor dinámica y solidez defensiva.
+    </li><br><br><br>
+    <li>
+      <strong>S 16:15 - Sevilla FC vs CA Osasuna</strong><br><br>
+      <em>Sevilla 47% - Empate 27% - Osasuna 26%</em><br><br>
+      A pesar de su mal momento, el Sevilla tiene ventaja en casa. Osasuna sufre fuera de casa.
+    </li><br><br><br>
+    <li>
+      <strong>S 18:30 - Atlético de Madrid vs Levante UD</strong><br><br>
+      <em>Atlético 80% - Empate 15% - Levante 5%</em><br><br>
+      El Atleti está en gran forma y no ha encajado goles en los últimos partidos. Levante llega con dudas
+    </li><br><br><br>
+    <li>
+      <strong>S 21:00 - RCD Espanyol vs Villarreal CF</strong><br><br>
+      <em>Espanyol 33% - Empate 27% - Villarreal 40%</em><br><br>
+      Villarreal es más sólido y llega mejor posicionado, aunque Espanyol es competitivo en casa.
+    </li><br><br><br>
+    <li>
+      <strong>D 14:00 - Athletic Club vs Real Oviedo</strong><br><br>
+      <em>Athletic 67% - Empate 24% - Oviedo 9%</em><br><br>
+      El Athletic es muy fuerte en San Mamés y Oviedo está en zona de descenso con problemas ofensivos.
+    </li><br><br><br>
+    <li>
+      <strong>D 16:15 - Rayo Vallecano vs Real Madrid CF</strong><br><br>
+      <em>Rayo 24% - Empate 23% - Real Madrid 52%</em><br><br>
+      El Madrid llega líder y con Mbappé en gran forma. Rayo podría acusar el desgaste europeo.
+    </li><br><br><br>
+    <li>
+      <strong>D 18:30 - Valencia CF vs Real Betis Balompié</strong><br><br>
+      <em>Valencia 29% - Empate 25% - Betis 46%</em><br><br>
+      Betis está en mejor forma y Valencia viene de una dura derrota. Los verdiblancos son favoritos.
+    </li><br><br><br>
+    <li>
+      <strong>D 18:30 - RCD Mallorca vs Getafe CF</strong><br><br>
+      <em>Mallorca 40% - Empate 28% - Getafe 31%</em><br><br>
+      Mallorca mejora en casa, pero Getafe lucha por Europa y tiene más regularidad.
+    </li><br><br><br>
+    <li>
+      <strong>D 21:00 - RC Celta de Vigo vs FC Barcelona</strong><br><br>
+      <em>Celta 19% - Empate 21% - Barcelona 59%</em><br><br>
+      El Barça es claro favorito pese a la resistencia del Celta en Balaídos. Los culés buscan seguir en la pelea por el liderato-
+    </li>
+  </ul>
+</section>
+
+</div>
+</div>
+<section class="results-section">
+<h2 class="match-title">Conclusiones Jornada 12</h2>
+<p style="margin-bottom: 30px;">
+Empezamos este ánalisis de las IAs con Chat GPT, Gemini y Copilot, veremos cuanto aprenden, si aciertan, si tienen datos precisos y si con el tiempo van mejorando.<br>
+Esta jornada Chat GPT da favoritos a Real Sociedad, Girona, Sevilla, Atlético, Villarreal, Athleti, Real Madrid, Betis, Mallorca y Barcelona.<br>
+Gemini por su parte da favorito a Elche, Alavés, Sevilla, Atlético, Athleti, Real Madrid, Betis y Barcelona y pronostica un empate entre Español vs Villarreal y entre Mallorca vs Getafe.<br>
+Copilot le da favoritos a Alavés, Sevilla, Atlético, Villarreal, Athleti, Real Madrid, Betis, Mallorca y Barcelona y le da un empate a Elche vs Real Sociedad.<br>
+Parece que esta jornada no hemos tenido que corregir a ninguna IA de las predicciones, Parece mas fiable que por ejemplo la NBA que nos da datos erroneas casi cada noche.<br>
+Veremos quien acierta.
+</p>
+<section class="results-section">
+<h2 class="match-title">Resultados Jornada 12</h2>
+
+<div class="all-results-grid">
+
+<div class="results-table-container">
+<h4>Elche CF vs Real Sociedad</h4>
+<table class="results-table">
+<thead>
+<tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+</thead>
+<tbody>
+<tr><td>Elche CF</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">1</td></tr>
+<tr><td>Real Sociedad</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">1</td></tr>
+</tbody>
+</table>
+<p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+</p>
+</div>
+
+<div class="results-table-container">
+<h4>Girona FC vs Deportivo Alavés</h4>
+<table class="results-table">
+<thead>
+<tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+</thead>
+<tbody>
+<tr><td>Girona FC</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">1</td></tr>
+<tr><td>Deportivo Alavés</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+</tbody>
+</table>
+<p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+</p>
+</div>
+
+<div class="results-table-container">
+<h4>Sevilla FC vs CA Osasuna</h4>
+<table class="results-table">
+<thead>
+<tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+</thead>
+<tbody>
+<tr><td>Sevilla FC</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">1</td></tr>
+<tr><td>CA Osasuna</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+</tbody>
+</table>
+<p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+</p>
+</div>
+
+<div class="results-table-container">
+<h4>Atlético de Madrid vs Levante UD</h4>
+<table class="results-table">
+<thead>
+<tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+</thead>
+<tbody>
+<tr><td>Atlético de Madrid</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">3</td></tr>
+<tr><td>Levante UD</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">1</td></tr>
+</tbody>
+</table>
+<p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+</p>
+</div>
+
+<div class="results-table-container">
+<h4>RCD Espanyol vs Villarreal CF</h4>
+<table class="results-table">
+<thead>
+<tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+</thead>
+<tbody>
+<tr><td>RCD Espanyol</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+<tr><td>Villarreal CF</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">2</td></tr>
+</tbody>
+</table>
+<p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+</p>
+</div>
+
+<div class="results-table-container">
+<h4>Athletic Club vs Real Oviedo</h4>
+<table class="results-table">
+<thead>
+<tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+</thead>
+<tbody>
+<tr><td>Athletic Club</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">1</td></tr>
+<tr><td>Real Oviedo</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+</tbody>
+</table>
+<p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+</p>
+</div>
+
+<div class="results-table-container">
+<h4>Rayo Vallecano vs Real Madrid CF</h4>
+<table class="results-table">
+<thead>
+<tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+</thead>
+<tbody>
+<tr><td>Rayo Vallecano</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+<tr><td>Real Madrid CF</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+</tbody>
+</table>
+<p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+</p>
+</div>
+
+<div class="results-table-container">
+<h4>Valencia CF vs Real Betis</h4>
+<table class="results-table">
+<thead>
+<tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+</thead>
+<tbody>
+<tr><td>Valencia CF</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">1</td></tr>
+<tr><td>Real Betis</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">1</td></tr>
+</tbody>
+</table>
+<p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+</p>
+</div>
+
+<div class="results-table-container">
+<h4>RCD Mallorca vs Getafe CF</h4>
+<table class="results-table">
+<thead>
+<tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+</thead>
+<tbody>
+<tr><td>RCD Mallorca</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">1</td></tr>
+<tr><td>Getafe CF</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+</tbody>
+</table>
+<p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+</p>
+</div>
+
+<div class="results-table-container">
+<h4>RC Celta de Vigo vs FC Barcelona</h4>
+<table class="results-table">
+<thead>
+<tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+</thead>
+<tbody>
+<tr><td>RC Celta de Vigo</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">2</td></tr>
+<tr><td>FC Barcelona</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">4</td></tr>
+</tbody>
+</table>
+<p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+</p>
+</div>
+
+</div>
+</section>
+<h3>Conclusión Final</h3>
+<p>
+Chat GPT esta jornada a fallado en los partidos de la Real Sociedad, Real Madrid y Betis ya que todos ellos han empatado.<br>
+Por su parte Gemini solo ha acertado 4 partidos, dando ganadores a Sevilla, Atletico, Athletic y Barcelona.<br>
+Copilot ha acertado todos los partidos menos dando como ganadores a Alavés, Real Madrid y Betis.<br>
+Esta jornada Chat GPT y Copilot son los que mas han acertado, solo fallando 3 partidos, daría algo de ventaja a Copilot ya que ha acertado el empate entre Elche vs Real Sociedad.
+</p>
+
+<div class="volver">
+<p>
+<a href="../index.html">← Volver a la página principal de Primera EA Sports</a>
+</p>
+</div>
+</div>
+
+<script>
+function toggleDropdown() {
+document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Cierra el menú si el usuario hace clic fuera de él
+window.onclick = function(event) {
+if (!event.target.matches('.dropbtn')) {
+var dropdowns = document.getElementsByClassName("dropdown-content");
+for (var i = 0; i < dropdowns.length; i++) {
+var openDropdown = dropdowns[i];
+if (openDropdown.classList.contains('show')) {
+openDropdown.classList.remove('show');
+}
+}
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uno X Dos IA - Predicciones Deportivas Avanzadas</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
+
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="index.html">Inicio</a>
+        <a href="nba-lakers-celtics.html">NBA</a>
+        <a href="#">Liga EA Sports</a>
+        <a href="#">Liga Hypermotion</a>
+        <a href="#">Otras Ligas</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <aside class="sidebar">
+      <h2>🔎 Resultados de la IA</h2>
+      <div class="sidebar-section">
+        <h3>📊 Modelo: Tasa de Acierto</h3>
+        <p>
+          Nuestro algoritmo registra un **72.5%** de acierto en el último mes para pronósticos 1X2.
+        </p>
+      </div>
+      <div class="sidebar-section">
+        <h3>🔥 Predicciones del Día (Top 3)</h3>
+        <p>
+          Los 3 pronósticos con mayor probabilidad de victoria y +EV según nuestra IA para hoy.
+        </p>
+      </div>
+      <div class="sidebar-section">
+        <h3>🚨 Noticias que Mueven Cuotas</h3>
+        <p>
+          Lesiones de última hora o cambios de técnico que afectan la predicción del modelo.
+        </p>
+      </div>
+      <div class="sidebar-section">
+        <h3>📅 Próximos Partidos Clave</h3>
+        <p>
+          Listado de los eventos más importantes con la probabilidad de resultado calculada.
+        </p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <h2>📰 Artículos de Estrategia y Algoritmos</h2>
+      <div class="articles-grid">
+
+        <article class="article-card">
+          <h3>¿Es Real el Efecto Nuevo Entrenador?</h3>
+          <p>
+            Un estudio de IA sobre cómo el modelo ajusta las probabilidades tras un cambio de dirección técnica.
+          </p>
+          <a href="#">Leer más...</a>
+        </article>
+
+        <article class="article-card">
+          <h3>Desviación Estándar: ¿Qué Equipos Son Más Estables?</h3>
+          <p>
+            Uso de estadística avanzada para identificar equipos predecibles o impredecibles en la liga.
+          </p>
+          <a href="#">Leer más...</a>
+        </article>
+
+        <article class="article-card">
+          <h3>Comparativa: IA vs. Casa de Apuestas</h3>
+          <p>
+            Identificando desfases y oportunidades de valor donde nuestro modelo difiere del mercado.
+          </p>
+          <a href="#">Leer más...</a>
+        </article>
+      </div>
+
+      <section class="ranking-section">
+        <h2>🤖 El Podio de la IA 📊</h2>
+
+        <div class="ranking-grid">
+          <div class="ranking-sport">
+            <h3>🏀 Predicciones NBA</h3>
+            <table class="ranking-table" id="ranking-nba">
+              <thead>
+                <tr>
+                  <th>Modelo</th>
+                  <th>Jornadas</th>
+                  <th>Aciertos</th>
+                  <th>Tasa de Éxito</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-ia="chatgpt">
+                  <td>Chat GPT</td>
+                  <td data-jornadas>36</td>
+                  <td data-aciertos>7</td>
+                  <td data-tasa>75.0%</td>
+                </tr>
+                <tr data-ia="gemini">
+                  <td>Gemini</td>
+                  <td data-jornadas>36</td>
+                  <td data-aciertos>16</td>
+                  <td data-tasa>66.7%</td>
+                </tr>
+                <tr data-ia="copilot">
+                  <td>Copilot</td>
+                  <td data-jornadas>36</td>
+                  <td data-aciertos>19</td>
+                  <td data-tasa>58.3%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="ranking-sport">
+            <h3>⚽ Liga EA Sports</h3>
+            <table class="ranking-table" id="ranking-ea">
+              <thead>
+                <tr>
+                  <th>Modelo</th>
+                  <th>Jornadas</th>
+                  <th>Aciertos</th>
+                  <th>Tasa de Éxito</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-ia="gemini">
+                  <td>Gemini</td>
+                  <td data-jornadas>3</td>
+                  <td data-aciertos>1</td>
+                  <td data-tasa>73.3%</td>
+                </tr>
+                <tr data-ia="chatgpt">
+                  <td>Chat GPT</td>
+                  <td data-jornadas>3</td>
+                  <td data-aciertos>1</td>
+                  <td data-tasa>66.7%</td>
+                </tr>
+                <tr data-ia="copilot">
+                  <td>Copilot</td>
+                  <td data-jornadas>3</td>
+                  <td data-aciertos>3</td>
+                  <td data-tasa>60.0%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="ranking-sport">
+            <h3>📈 Liga Hypermotion</h3>
+            <table class="ranking-table" id="ranking-hyper">
+              <thead>
+                <tr>
+                  <th>Modelo</th>
+                  <th>Jornadas</th>
+                  <th>Aciertos</th>
+                  <th>Tasa de Éxito</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-ia="copilot">
+                  <td>Copilot</td>
+                  <td data-jornadas>0</td>
+                  <td data-aciertos>0</td>
+                  <td data-tasa>72.2%</td>
+                </tr>
+                <tr data-ia="gemini">
+                  <td>Gemini</td>
+                  <td data-jornadas>0</td>
+                  <td data-aciertos>0</td>
+                  <td data-tasa>66.7%</td>
+                </tr>
+                <tr data-ia="chatgpt">
+                  <td>Chat GPT</td>
+                  <td data-jornadas>0</td>
+                  <td data-aciertos>0</td>
+                  <td data-tasa>61.1%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    // ========================================
+    // 1. FUNCIONALIDAD DEL MENÚ DESPLEGABLE
+    // ========================================
+
+    function toggleDropdown() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Cierra el menú si el usuario hace clic fuera de él
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+
+
+    // ========================================
+    // 2. FUNCIONALIDAD DEL RANKING DINÁMICO
+    // ========================================
+
+    /**
+    * Calcula la tasa de éxito de cada modelo y ordena la tabla.
+    * La tabla se ordena basándose en el atributo data-tasa-numerica.
+    * @param {string} tableId - El ID de la tabla a actualizar (ej. 'ranking-nba').
+    */
+    function updateRankingTable(tableId) {
+      const tableBody = document.getElementById(tableId).querySelector('tbody');
+      if (!tableBody) return;
+
+      // Convertir las filas (tr) a un Array para poder ordenarlas
+      const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+      // --- Paso A: Calcular y actualizar la Tasa de Éxito ---
+      rows.forEach(row => {
+        // Obtener valores de los atributos data-*
+        const jornadas = parseInt(row.querySelector('[data-jornadas]').textContent);
+        const aciertos = parseInt(row.querySelector('[data-aciertos]').textContent);
+        const tasaCell = row.querySelector('[data-tasa]');
+
+        let tasa = 0;
+        if (jornadas > 0) {
+          tasa = (aciertos / jornadas) * 100;
+        }
+
+        // Almacenar el valor numérico para la ordenación
+        row.dataset.tasaNumerica = tasa.toFixed(2);
+
+        // Mostrar el valor formateado al 1 decimal en la celda
+        tasaCell.textContent = `${tasa.toFixed(1)}%`;
+      });
+
+      // --- Paso B: Ordenar las filas ---
+      rows.sort((a, b) => {
+        // Comparar las tasas numéricas almacenadas
+        const tasaA = parseFloat(a.dataset.tasaNumerica);
+        const tasaB = parseFloat(b.dataset.tasaNumerica);
+
+        // Orden descendente (b - a)
+        return tasaB - tasaA;
+      });
+
+      // --- Paso C: Re-añadir las filas ordenadas al cuerpo de la tabla ---
+      // Esto borra las filas actuales y las añade en el nuevo orden
+      tableBody.innerHTML = '';
+      rows.forEach(row => {
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Ejecutar la actualización para todas las tablas una vez que la página esté cargada
+    document.addEventListener('DOMContentLoaded', () => {
+      updateRankingTable('ranking-nba');
+      updateRankingTable('ranking-ea');
+      updateRankingTable('ranking-hyper');
+    });
+
+  </script>
+
+</body>
+</html>

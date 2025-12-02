@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jornada 17 LALIGA Hypermotion 2025/2026 | Uno X Dos IA</title>
+  <link rel="stylesheet" href="../index.css">
+  <style>
+    /* Estilos generales de cuerpo y contenedor de artículo */
+    body {
+      background-color: #26580f;
+      font-family: Arial, sans-serif;
+    }
+    .article-container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #927641;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .article-container h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 2.2em;
+    }
+    .article-meta {
+      color: #7f8c8d;
+      font-style: italic;
+      margin-bottom: 25px;
+      display: block;
+    }
+    .PartidosDelDia {
+      color: black;
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+    /* Contenedor de las Tres Columnas de Análisis IA */
+    .tres-columnas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin: 30px 0;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+
+    /* Estilo para los Títulos de las Columnas */
+    .col-title {
+      background-color: #34495e;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 0;
+      height: fit-content;
+    }
+
+    /* Estilo para el Texto de las Columnas */
+    .col-text {
+      background-color: #ecf0f1;
+      padding: 15px;
+      border-radius: 0 0 5px 5px;
+      border: 1px solid #bdc3c7;
+      margin-top: 0;
+    }
+    .col-text p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* --- Estilos para la Tabla de Resultados (Fútbol) --- */
+    .results-section {
+      margin-top: 40px;
+      border-top: 2px solid #e74c3c;
+      padding-top: 20px;
+    }
+
+    .match-title {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-size: 1.5em;
+      border-bottom: 1px dashed #bdc3c7;
+      padding-bottom: 5px;
+    }
+
+    /* Contenedor de todas las tablas de resultados */
+    .all-results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* 2 tablas por línea */
+      gap: 20px;
+      /* Espacio entre las tablas */
+      margin-bottom: 30px;
+    }
+
+    .results-table-container {
+      width: 100%;
+      margin: 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border: 1px solid #bdc3c7;
+      border-radius: 5px;
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 1.1em;
+    }
+
+    .results-table th, .results-table td {
+      padding: 10px 5px;
+      border: 1px solid #ddd;
+    }
+
+    .results-table thead th {
+      background-color: #2980b9;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    .results-table tbody tr td:first-child {
+      background-color: #d9e9f1;
+      font-weight: bold;
+      text-align: left;
+      padding-left: 15px;
+      color: #2c3e50;
+      white-space: nowrap;
+    }
+
+    /* Columna de Resultado Final */
+    .final-score {
+      background-color: #27ae60;
+      color: white;
+      font-size: 1.4em;
+      font-weight: 900;
+      width: 15%;
+    }
+
+    /* Ocultar las columnas adicionales en todas las resoluciones */
+    .results-table thead th:not(:first-child):not(.final-score),
+    .results-table tbody tr td:nth-child(2),
+    .results-table tbody tr td:nth-child(3),
+    .results-table tbody tr td:nth-child(4),
+    .results-table tbody tr td:nth-child(5),
+    .results-table tbody tr td:nth-child(6) {
+      display: none;
+    }
+
+    /* --- Media Query para Móviles: Sobreescribe solo lo necesario para el diseño de 2 columnas --- */
+    @media (max-width: 768px) {
+      .article-container {
+        padding: 15px;
+        margin: 10px auto;
+      }
+      .article-container h1 {
+        font-size: 1.8em;
+      }
+
+      /* Diseño de una columna para el análisis IA */
+      .tres-columnas {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      .col-title {
+        font-size: 1.1em;
+        padding: 10px;
+      }
+
+      /* Diseño de dos columnas para las tablas de resultados */
+      .all-results-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .results-table-container {
+        margin-bottom: 10px;
+      }
+
+      h4 {
+        font-size: 1.2em;
+        text-align: center;
+        margin-bottom: 5px;
+      }
+
+      /* Ajustes de tamaño de fuente para las tablas */
+      .results-table {
+        font-size: 0.9em;
+      }
+      .results-table th, .results-table td {
+        padding: 8px 3px;
+      }
+      .final-score {
+        font-size: 1.2em;
+      }
+      .results-table tbody tr td:first-child {
+        padding-left: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
+
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="index.html">Inicio</a>
+        <a href="nba-lakers-celtics.html">NBA</a>
+        <a href="#">Liga EA Sports</a>
+        <a href="#">Liga Hypermotion</a>
+        <a href="#">Otras Ligas</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="article-container">
+    <div class="PartidosDelDia">
+      <h1> Partidos Jornada 17:</h1><br><br>
+       📅 Jornada de LaLiga (6 de Diciembre a 8 de Diciembre)</p><br>
+
+   <p><b>★ Sábado 6 de Diciembre</b></p>
+  <p>14:00 CET - Andorra vs Almería</p>
+  <p>16:15 CET - Huesca vs Real Valladolid</p>
+  <p>18:30 CET - R. Sociedad B vs Sporting</p>
+
+  <br>
+
+  <p><b>★ Domingo 7 de Diciembre</b></p>
+  <p>14:00 CET - Cádiz vs Racing</p>
+  <p>16:15 CET - Leganés vs Córdoba</p>
+  <p>18:30 CET - Eibar vs Cultural</p>
+  <p>18:30 CET - Deportivo vs Castellón</p>
+  <p>21:00 CET - Granada vs A. D. Ceuta</p>
+
+  <br>
+
+  <p><b>★ Lunes 8 de Diciembre</b></p>
+  <p>16:15 CET - Burgos CF vs Albacete</p>
+  <p>18:30 CET - Las Palmas vs Mirandés</p>
+  <p>20:30 CET - Málaga vs Real Zaragoza</p>
+    </div>
+    <div class="tres-columnas">
+      <h3 class="col-title">1. ChatGPT</h3>
+      <h3 class="col-title">2. Gemini</h3>
+      <h3 class="col-title">3. Copilot</h3>
+    </div>
+
+    <div class="tres-columnas">
+      <div class="col-text">
+        <section>
+          <strong><h2>1:</h2></strong>
+        </section>
+<h3><p><b>★ Sábado 6 de Diciembre</b></p></h3>
+  <h3><p>14:00 CET - Andorra vs Almería  <br><br></h3>
+  Predicción: Andorra 25% | Empate 30% | Almería 45%  <br><br>
+  Motivo: Almería está peleando por ascenso directo, mientras que Andorra sufre en la zona baja.</p>
+<br><br><br>
+  <h3><p>16:15 CET - Huesca vs Real Valladolid  <br><br></h3>
+  Predicción: Huesca 28% | Empate 32% | Valladolid 40%<br><br>  
+  Motivo: Valladolid mantiene mejor dinámica, Huesca lucha por evitar descenso.</p><br><br>
+
+  <h3><p>18:30 CET - R. Sociedad B vs Sporting <br><br> </h3>
+  Predicción: R. Sociedad B 30% | Empate 35% | Sporting 35%<br><br>  
+  Motivo: Ambos equipos irregulares, duelo muy igualado.</p><br><br>
+
+  <br><br>
+
+  <h3><p><b>★ Domingo 7 de Diciembre</b></p><br><br></h3>
+  <p>14:00 CET - Cádiz vs Racing  <br><br>
+  Predicción: Cádiz 33% | Empate 30% | Racing 37%  <br><br>
+  Motivo: Racing cuenta con el máximo goleador Villalibre y está en la parte alta.</p><br><br>
+
+  <h3><p>16:15 CET - Leganés vs Córdoba  <br><br></h3>
+  Predicción: Leganés 30% | Empate 33% | Córdoba 37%  <br><br>
+  Motivo: Córdoba pelea por playoff, Leganés irregular en mitad de tabla.</p><br><br>
+
+  <h3><p>18:30 CET - Eibar vs Cultural <br><br> </h3>
+  Predicción: Eibar 35% | Empate 30% | Cultural 35%  <br><br>
+  Motivo: Eibar busca salir de la zona baja, Cultural sólido en defensa.</p><br><br>
+
+  <h3><p>18:30 CET - Deportivo vs Castellón  <br><br></h3>
+  Predicción: Deportivo 50% | Empate 28% | Castellón 22%  <br><br>
+  Motivo: Deportivo es líder y el equipo más fuerte de la competición.</p><br><br>
+
+  <h3><p>21:00 CET - Granada vs A. D. Ceuta  <br><br></h3>
+  Predicción: Granada 32% | Empate 30% | Ceuta 38%  <br><br>
+  Motivo: Ceuta está en puestos de playoff, Granada sigue en lucha por salir del descenso.</p>
+  <br><br>
+
+  <h3><p><b>★ Lunes 8 de Diciembre</b></p><br><br></h3>
+  <p>16:15 CET - Burgos CF vs Albacete  <br><br>
+  Predicción: Burgos 36% | Empate 34% | Albacete 30%  <br><br>
+  Motivo: Burgos en zona alta, Albacete con problemas ofensivos.</p>
+<br><br>
+ <h3> <p>18:30 CET - Las Palmas vs Mirandés  <br><br></h3>
+  Predicción: Las Palmas 48% | Empate 30% | Mirandés 22%  <br><br>
+  Motivo: Las Palmas es uno de los líderes, Mirandés en descenso.</p><br><br>
+
+  <h3><p>20:30 CET - Málaga vs Real Zaragoza  <br><br></h3>
+  Predicción: Málaga 34% | Empate 31% | Zaragoza 35%  <br><br>
+  Motivo: Zaragoza viene de tres victorias seguidas, Málaga irregular.</p><br><br>
+      </div>
+      <div class="col-text">
+        <section>
+          <strong><h2>2:</h2></strong>
+        </section>
+  <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+
+    <h3 style="color: #003366; border-bottom: 2px solid #ffcc00; padding-bottom: 5px;">★ Sábado 6 de Diciembre</h3>
+    
+    <div style="margin-bottom: 15px; border-left: 3px solid #003366; padding-left: 10px;">
+        <strong style="color: #cc0000;">14:00 CET - Andorra vs Almería</strong><br><br>
+        <p><strong>Andorra (45% Victoria) vs Almería (25% Victoria) | Empate (30%)</strong></p><br><br>
+        <p>El <strong>Andorra</strong> se beneficia considerablemente de jugar como local, donde históricamente ha demostrado mayor solidez y capacidad ofensiva. El <strong>Almería</strong>, a pesar de tener una plantilla de nivel, a menudo tiene problemas para mantener la consistencia fuera de casa. Por lo tanto, el factor campo inclina la balanza a favor del equipo local en un partido que se prevé de pocos goles y mucha táctica.</p>
+    </div><br><br>
+
+    <div style="margin-bottom: 15px; border-left: 3px solid #003366; padding-left: 10px;">
+        <strong style="color: #cc0000;">16:15 CET - Huesca vs Real Valladolid</strong><br><br>
+        <p><strong>Huesca (30% Victoria) vs Real Valladolid (35% Victoria) | Empate (35%)</strong></p><br><br>
+        <p>Este es un choque de **máxima igualdad**. El <strong>Huesca</strong> es un equipo conocido por su disciplina defensiva, especialmente en su estadio. El <strong>Real Valladolid</strong> suele ser más vertical y tiene jugadores con mayor calidad individual para desequilibrar. El alto porcentaje de empate refleja la tendencia de ambos a neutralizarse, pero se da una ligera ventaja al Valladolid por su pegada en el ataque.</p>
+    </div><br><br>
+
+    <div style="margin-bottom: 15px; border-left: 3px solid #003366; padding-left: 10px;">
+        <strong style="color: #cc0000;">18:30 CET - R. Sociedad B vs Sporting</strong><br><br>
+        <p><strong>R. Sociedad B (20% Victoria) vs Sporting (55% Victoria) | Empate (25%)</strong></p><br><br>
+        <p>El <strong>Sporting</strong> es un aspirante a la parte alta de la tabla, con una estructura de equipo más asentada y experiencia en la categoría. El <strong>R. Sociedad B</strong>, como filial, es impredecible pero carece de la consistencia necesaria para superar a un rival de este calibre. La necesidad de puntos del Sporting para mantenerse en la pelea por el ascenso le otorga el rol de claro favorito.</p>
+    </div><br><br>
+    
+    <hr style="border: 0; border-top: 1px dashed #cccccc;">
+
+    <h3 style="color: #003366; border-bottom: 2px solid #ffcc00; padding-bottom: 5px;">★ Domingo 7 de Diciembre</h3>
+    
+    <div style="margin-bottom: 15px; border-left: 3px solid #003366; padding-left: 10px;">
+        <strong style="color: #cc0000;">14:00 CET - Cádiz vs Racing</strong><br><br>
+        <p><strong>Cádiz (50% Victoria) vs Racing (20% Victoria) | Empate (30%)</strong></p><br><br>
+        <p>El <strong>Cádiz</strong> es un equipo que basa gran parte de su éxito en la intensidad y el apoyo de su afición. En casa, suelen ser muy difíciles de batir. El <strong>Racing</strong>, aunque competitivo, no tiene el mismo poder ofensivo fuera de su estadio. Se espera una victoria del equipo local por la fortaleza de su sistema defensivo y la presión ambiental.</p>
+    </div><br><br>
+    
+    <div style="margin-bottom: 15px; border-left: 3px solid #003366; padding-left: 10px;">
+        <strong style="color: #cc0000;">16:15 CET - Leganés vs Córdoba</strong><br><br>
+        <p><strong>Leganés (40% Victoria) vs Córdoba (25% Victoria) | Empate (35%)</strong></p><br><br>
+        <p>El <strong>Leganés</strong>, con aspiraciones de playoff, necesita consolidar su posición en casa. El <strong>Córdoba</strong> es un equipo con capacidad para sumar puntos, pero suele ser más vulnerable a domicilio. La predicción se inclina hacia una victoria local o un empate, reflejando que el Leganés tendrá la iniciativa, pero el Córdoba podría ser un hueso duro de roer.</p>
+    </div><br><br>
+
+    <div style="margin-bottom: 15px; border-left: 3px solid #003366; padding-left: 10px;">
+        <strong style="color: #cc0000;">18:30 CET - Eibar vs Cultural</strong><br><br>
+        <p><strong>Eibar (60% Victoria) vs Cultural (15% Victoria) | Empate (25%)</strong></p><br><br>
+        <p>El <strong>Eibar</strong> es uno de los equipos más sólidos de la categoría, y su estadio es un fortín. Su sistema de juego presionante y ofensivo es difícil de contrarrestar. La <strong>Cultural</strong> tiene pocas opciones de resistir el asedio en Ipurua. Es uno de los partidos con mayor probabilidad de victoria local de la jornada, basándose en la diferencia de rendimiento y el factor campo.</p>
+    </div><br><br>
+
+    <div style="margin-bottom: 15px; border-left: 3px solid #003366; padding-left: 10px;">
+        <strong style="color: #cc0000;">18:30 CET - Deportivo vs Castellón</strong><br><br>
+        <p><strong>Deportivo (35% Victoria) vs Castellón (35% Victoria) | Empate (30%)</strong></p><br><br>
+        <p>Este es un duelo que enfrenta a dos equipos con necesidad de sumar. El <strong>Deportivo</strong>, jugando en Riazor, cuenta con el apoyo masivo de su afición. El <strong>Castellón</strong> ha demostrado ser un rival rocoso y con capacidad para puntuar fuera. Las fuerzas están muy equilibradas en este encuentro, por lo que las probabilidades de victoria están repartidas casi a partes iguales.</p>
+    </div><br><br>
+    
+    <div style="margin-bottom: 15px; border-left: 3px solid #003366; padding-left: 10px;">
+        <strong style="color: #cc0000;">21:00 CET - Granada vs A. D. Ceuta</strong><br><br>
+        <p><strong>Granada (70% Victoria) vs A. D. Ceuta (10% Victoria) | Empate (20%)</strong></p><br><br>
+        <p>El <strong>Granada</strong> es, probablemente, el equipo con mayor calidad y potencial de la jornada y se enfrentará al <strong>A. D. Ceuta</strong>. La diferencia de nivel de plantilla, sumado a la ventaja de jugar en casa, hace del Granada el claro favorito, con el porcentaje de victoria más alto de la jornada. Se espera un control total del partido por parte de los locales.</p>
+    </div><br><br>
+    
+    <hr style="border: 0; border-top: 1px dashed #cccccc;">
+
+    <h3 style="color: #003366; border-bottom: 2px solid #ffcc00; padding-bottom: 5px;">★ Lunes 8 de Diciembre</h3>
+
+    <div style="margin-bottom: 15px; border-left: 3px solid #003366; padding-left: 10px;">
+        <strong style="color: #cc0000;">16:15 CET - Burgos CF vs Albacete</strong><br><br>
+        <p><strong>Burgos CF (40% Victoria) vs Albacete (30% Victoria) | Empate (30%)</strong></p><br><br>
+        <p>El <strong>Burgos CF</strong> es un equipo fuerte en su campo y basa su juego en la solidez defensiva. El <strong>Albacete</strong> es un rival directo y aguerrido. La predicción se decanta por el Burgos debido al factor local, pero con un porcentaje de empate alto, dado que el Albacete es capaz de competir y cerrarse bien en defensa.</p>
+    </div><br><br>
+
+    <div style="margin-bottom: 15px; border-left: 3px solid #003366; padding-left: 10px;">
+        <strong style="color: #cc0000;">18:30 CET - Las Palmas vs Mirandés</strong><br><br>
+        <p><strong>Las Palmas (55% Victoria) vs Mirandés (20% Victoria) | Empate (25%)</strong></p><br><br>
+        <p><strong>Las Palmas</strong> tiene uno de los mejores ataques y un estilo de juego muy dominante, especialmente en su casa. El <strong>Mirandés</strong>, aunque puede dar sorpresas, probablemente sufrirá para contener el ritmo y la posesión del equipo canario. Las Palmas es claro favorito para sumar los tres puntos.</p>
+    </div><br><br>
+
+    <div style="margin-bottom: 15px; border-left: 3px solid #003366; padding-left: 10px;">
+        <strong style="color: #cc0000;">20:30 CET - Málaga vs Real Zaragoza</strong><br><br>
+        <p><strong>Málaga (35% Victoria) vs Real Zaragoza (30% Victoria) | Empate (35%)</strong></p><br><br>
+        <p>Duelo con sabor a Primera División. Ambos equipos suelen ser irregulares y han mostrado dificultad para cerrar los partidos. El <strong>Málaga</strong> tiene la ventaja de jugar en La Rosaleda, pero el <strong>Real Zaragoza</strong> siempre es un rival que compite bien a domicilio. Las fuerzas y la tendencia a la inestabilidad de ambos llevan a que el empate sea el resultado más probable en esta predicción.</p>
+    </div>
+
+</div>
+      </div>
+      <div class="col-text">
+        <section>
+          <strong><h2>3:</h2></strong>
+        </section>
+
+  <h3><p><b>★ Sábado 6 de Diciembre</b></p></h3>
+ <h3> <p>14:00 CET - Andorra vs Almería  </h3>
+  Predicción: Andorra 25% | Empate 30% | Almería 45%  <br><br>
+  Motivo: Almería está peleando por ascenso directo, mientras que Andorra sufre en la zona baja.</p>
+
+  <h3><p>16:15 CET - Huesca vs Real Valladolid  </h3>
+  Predicción: Huesca 28% | Empate 32% | Valladolid 40%  <br><br>
+  Motivo: Valladolid mantiene mejor dinámica, Huesca lucha por evitar descenso.</p>
+
+ <h3> <p>18:30 CET - R. Sociedad B vs Sporting  </h3>
+  Predicción: R. Sociedad B 30% | Empate 35% | Sporting 35%  <br><br>
+  Motivo: Ambos equipos irregulares, duelo muy igualado.</p>
+
+  <br><br>
+
+  <h3><p><b>★ Domingo 7 de Diciembre</b></p></h3>
+  <p>14:00 CET - Cádiz vs Racing  
+  Predicción: Cádiz 33% | Empate 30% | Racing 37%  <br><br>
+  Motivo: Racing cuenta con el máximo goleador Villalibre y está en la parte alta.</p>
+
+ <h3> <p>16:15 CET - Leganés vs Córdoba</h3>  
+  Predicción: Leganés 30% | Empate 33% | Córdoba 37%  <br><br>
+  Motivo: Córdoba pelea por playoff, Leganés irregular en mitad de tabla.</p>
+
+  <h3><p>18:30 CET - Eibar vs Cultural</h3>  
+  Predicción: Eibar 35% | Empate 30% | Cultural 35%  <br><br>
+  Motivo: Eibar busca salir de la zona baja, Cultural sólido en defensa.</p>
+
+  <h3><p>18:30 CET - Deportivo vs Castellón</h3>  
+  Predicción: Deportivo 50% | Empate 28% | Castellón 22%  <br><br>
+  Motivo: Deportivo es líder y el equipo más fuerte de la competición.</p>
+
+  <h3><p>21:00 CET - Granada vs A. D. Ceuta  </h3>
+  Predicción: Granada 32% | Empate 30% | Ceuta 38%  <br><br>
+  Motivo: Ceuta está en puestos de playoff, Granada sigue en lucha por salir del descenso.</p>
+
+  <br><br>
+
+ <h3> <p><b>★ Lunes 8 de Diciembre</b></p></h3>
+  <h3><p>16:15 CET - Burgos CF vs Albacete </h3> 
+  Predicción: Burgos 36% | Empate 34% | Albacete 30%  <br><br>
+  Motivo: Burgos en zona alta, Albacete con problemas ofensivos.</p>
+
+  <h3><p>18:30 CET - Las Palmas vs Mirandés  </h3>
+  Predicción: Las Palmas 48% | Empate 30% | Mirandés 22%  <br><br>
+  Motivo: Las Palmas es uno de los líderes, Mirandés en descenso.</p>
+
+  <h3><p>20:30 CET - Málaga vs Real Zaragoza </h3> 
+  Predicción: Málaga 34% | Empate 31% | Zaragoza 35%  <br><br>
+  Motivo: Zaragoza viene de tres victorias seguidas, Málaga irregular.</p>
+
+      </div>
+    </div>
+    <section class="results-section">
+      <h2 class="match-title">Resultados Detallados de la Jornada X (IA Predictor)</h2>
+      <p style="margin-bottom: 30px;">
+Empezamos estas predicciones de la liga Hypermotion con las 3 IAs clásicas de esta página web, ChatGPT, Gemini y Copilot. Las 3 IAs son gratuitas y queremos saber igual que en las otras secciones de esta web si las IAs gratuitas sirven para apostar o predicir resultados, si son fiables, si tienen información actualizada, si son capaces de aprernder y ir adaptandose cada jornada y cual de ellas es mejor.<br><br>
+Esta jornada 17 con Chat GPT dando como favoritos y ganadores a Almería, Valladolid, Racing, Córdoba, Deportivo, Ceuta, Burgos, Las Palmas y Zaragoza. Predice como empates los partidos de R. Sociedad B vs Sporting y R. Sociedad B vs Sporting.<br>
+Gemini da como ganadores esta noche a Andorra, Sporting, Cádiz, Leganés, Eibar, Granada, Burgos y Las Palmas. Da como empates los siguientes partidos, Huesca vs Real Valladolid, Deportivo vs Castellón y  Málaga vs Real Zaragoza.<br>
+Copilot esta primera vez da como ganadores a Almería, Valladolid, Racing, Córdoba, Deportivo, Ceuta, Burgos, Las Palmas y Zaragoza. Da como empate el Eibar vs Cultural. <br>
+Primera jornada de predicciones y de momento las 3 IAs discrepan bastante en resultados. Veremos quien gana esta jornada, iremos mejorando cada jornada.
+      </p>
+
+      <div class="all-results-grid">
+
+        <div class="results-table-container">
+          <h4>Equipo Local A vs Equipo Visitante B</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Andorra</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Almería</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+            *Predicción (0-0).
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local C vs Equipo Visitante D</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Huesca</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Real Valladolid</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+            *Predicción (0-0).
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local E vs Equipo Visitante F</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>R. Sociedad B</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Sporting</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+            *Predicción (0-0).
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local G vs Equipo Visitante H</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Cádiz</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Racing</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+            *Predicción (0-0).
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local I vs Equipo Visitante J</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Leganés</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Córdoba</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+            *Predicción (0-0).
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local K vs Equipo Visitante L</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Eibar</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Cultural</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+            *Predicción (0-0).
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local M vs Equipo Visitante N</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Deportivo</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Castellón</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+            *Predicción (0-0).
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local O vs Equipo Visitante P</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Granada</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Ceuta</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+            *Predicción (0-0).
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local Q vs Equipo Visitante R</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Burgos</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Albacete</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+            *Predicción (0-0).
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local S vs Equipo Visitante T</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Las Palmas</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Mirandés</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+            *Predicción (0-0).
+          </p>
+        </div>
+<div class="results-table-container">
+          <h4>Equipo Local S vs Equipo Visitante T</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Malaga</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Zaragoza</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+            *Predicción (0-0).
+          </p>
+        </div>
+
+      </div>
+    </section>
+    <h3>Conclusión del Modelo IA</h3>
+    <p>
+      El análisis de la Jornada X está pendiente de la inserción de datos de las IA. Actualmente, la plantilla está lista para recibir las predicciones, resultados de la simulación y las conclusiones finales sobre el riesgo de la quiniela.
+    </p>
+
+<div class="volver">
+<p>
+<a href="../index.html">← Volver a la página principal de Segunda Hipermotion</a>
+</p>
+</div>
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Cierra el menú si el usuario hace clic fuera de él
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>

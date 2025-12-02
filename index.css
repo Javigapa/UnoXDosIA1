@@ -1,0 +1,326 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7f9;
+  color: #333;
+  /* --- LÍNEA CLAVE PARA QUITAR EL SCROLL LATERAL --- */
+  overflow-x: hidden;
+}
+
+/* Encabezado */
+header {
+  background-color: #1a2a47;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.2em;
+}
+
+/* Navegación (Dropdown) */
+nav {
+  background-color: #2b4162;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.dropbtn {
+  background-color: #4a6fa5;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #3a5b8f;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 5px;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+}
+
+/* Contenedor Principal */
+.container {
+  display: flex;
+  max-width: 1200px;
+  margin: 25px auto;
+  padding: 0 20px;
+}
+a {
+  color: white;
+}
+.volver {
+  background-color: #2b4162;
+  padding: 10px 0;
+  text-align: center;
+}
+/* Sidebar (Barra Lateral) */
+.sidebar {
+  width: 280px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-right: 25px;
+  height: fit-content;
+}
+
+.sidebar h2 {
+  color: #4a6fa5;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+  margin-top: 0;
+}
+
+.sidebar-section {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-left: 3px solid #1a2a47;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.sidebar-section h3 {
+  margin-top: 0;
+  color: #1a2a47;
+  font-size: 1.1em;
+}
+
+/* Contenido Principal */
+.main-content {
+  flex-grow: 1;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.main-content h2 {
+  color: #1a2a47;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.article-card {
+  background-color: #eaf1f7;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.article-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.article-card h3 {
+  color: #2b4162;
+  margin-top: 0;
+}
+
+.article-card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #4a6fa5;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.article-card a:hover {
+  text-decoration: underline;
+}
+
+
+/* ======================================== */
+/* --- ESTILOS PARA EL RANKING (CORREGIDO) --- */
+/* ======================================== */
+
+.ranking-section {
+  padding: 25px 20px;
+  background-color: #f0f3f6;
+  border-radius: 8px;
+  margin-top: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.ranking-section h2 {
+  color: #1a2a47;
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 25px;
+  border-bottom: 3px solid #d3dce6;
+  padding-bottom: 10px;
+}
+
+/* Disposición en 3 columnas (APLICADO EN ESCRITORIO Y TABLETS) */
+.ranking-grid {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-direction: row;
+  /* Asegura la fila horizontal por defecto */
+}
+
+.ranking-sport {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid #c0c6cc;
+  border-radius: 6px;
+  background-color: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.ranking-sport h3 {
+  color: #4a6fa5;
+  font-size: 1.2em;
+  text-align: center;
+  padding: 12px 0;
+  margin: 0;
+  background-color: #eaf1f7;
+  border-bottom: 1px solid #d3dce6;
+}
+
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ranking-table th, .ranking-table td {
+  padding: 10px 5px;
+  text-align: center;
+  border-right: 1px solid #f3f4f6;
+  font-size: 0.85em;
+  /* Fuente reducida para que quepan 4 columnas */
+}
+.ranking-table th:last-child, .ranking-table td:last-child {
+  border-right: none;
+}
+
+.ranking-table thead th {
+  background-color: #2b4162;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75em;
+}
+
+.ranking-table tbody tr:nth-child(even) {
+  background-color: #fcfcfc;
+}
+
+.ranking-table tbody tr:hover {
+  background-color: #e0e5ea;
+}
+
+.ranking-table tbody tr:first-child td {
+  font-weight: bold;
+  color: #1a2a47;
+  background-color: #eaf1f7;
+}
+
+
+/* Media Query para pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+  /* 1. Adaptación de la navegación (Menú) */
+  .dropbtn {
+    width: 100%;
+  }
+  .dropdown-content {
+    position: static;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* 2. Adaptación del Contenedor Principal (Cambio de Disposición) */
+  .container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  /* 3. Adaptación de la Barra Lateral (Sidebar) */
+  .sidebar {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
+    order: -1;
+  }
+  .sidebar h2 {
+    text-align: center;
+  }
+
+  /* 4. Adaptación del Contenido Principal (Main Content) */
+  .main-content {
+    width: 90%;
+  }
+
+  /* 5. Adaptación de las Tarjetas de Artículo (Articles Grid) */
+  .articles-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .article-card {
+    padding: 15px;
+  }
+
+  /* 6. Ajustes generales (Encabezado) */
+  header h1 {
+    font-size: 1.8em;
+    padding: 15px 10px;
+  }
+
+  /* 7. Ranking en móviles */
+  .ranking-grid {
+    flex-direction: column;
+    /* Apila las columnas en vertical en móviles */
+    gap: 20px;
+  }
+  .ranking-table th, .ranking-table td {
+    font-size: 0.9em;
+  }
+}
