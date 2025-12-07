@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jornada 16 LALIGA EA SPORTS 2025/2026 | Uno X Dos IA</title>
+  <link rel="stylesheet" href="../index.css">
+  <style>
+    /* Estilos generales de cuerpo y contenedor de artículo */
+    body {
+      background-color: #26580f;
+      font-family: Arial, sans-serif;
+    }
+    .article-container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #3b8a16;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .article-container h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 2.2em;
+    }
+    .article-meta {
+      color: #7f8c8d;
+      font-style: italic;
+      margin-bottom: 25px;
+      display: block;
+    }
+    .PartidosDelDia {
+      color: black;
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+    /* Contenedor de las Tres Columnas de Análisis IA */
+    .tres-columnas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin: 30px 0;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+
+    /* Estilo para los Títulos de las Columnas */
+    .col-title {
+      background-color: #34495e;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 0;
+      height: fit-content;
+    }
+
+    /* Estilo para el Texto de las Columnas */
+    .col-text {
+      background-color: #ecf0f1;
+      padding: 15px;
+      border-radius: 0 0 5px 5px;
+      border: 1px solid #bdc3c7;
+      margin-top: 0;
+    }
+    .col-text p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* --- Estilos para la Tabla de Resultados (Fútbol) --- */
+    .results-section {
+      margin-top: 40px;
+      border-top: 2px solid #e74c3c;
+      padding-top: 20px;
+    }
+
+    .match-title {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-size: 1.5em;
+      border-bottom: 1px dashed #bdc3c7;
+      padding-bottom: 5px;
+    }
+
+    /* Contenedor de todas las tablas de resultados */
+    .all-results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* 2 tablas por línea */
+      gap: 20px;
+      /* Espacio entre las tablas */
+      margin-bottom: 30px;
+    }
+
+    .results-table-container {
+      width: 100%;
+      margin: 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border: 1px solid #bdc3c7;
+      border-radius: 5px;
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 1.1em;
+    }
+
+    .results-table th, .results-table td {
+      padding: 10px 5px;
+      border: 1px solid #ddd;
+    }
+
+    .results-table thead th {
+      background-color: #2980b9;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    .results-table tbody tr td:first-child {
+      background-color: #d9e9f1;
+      font-weight: bold;
+      text-align: left;
+      padding-left: 15px;
+      color: #2c3e50;
+      white-space: nowrap;
+    }
+
+    /* Columna de Resultado Final */
+    .final-score {
+      background-color: #27ae60;
+      color: white;
+      font-size: 1.4em;
+      font-weight: 900;
+      width: 15%;
+    }
+
+    /* Ocultar las columnas adicionales en todas las resoluciones */
+    .results-table thead th:not(:first-child):not(.final-score),
+    .results-table tbody tr td:nth-child(2),
+    .results-table tbody tr td:nth-child(3),
+    .results-table tbody tr td:nth-child(4),
+    .results-table tbody tr td:nth-child(5),
+    .results-table tbody tr td:nth-child(6) {
+      display: none;
+    }
+
+    /* --- Media Query para Móviles: Sobreescribe solo lo necesario para el diseño de 2 columnas --- */
+    @media (max-width: 768px) {
+      .article-container {
+        padding: 15px;
+        margin: 10px auto;
+      }
+      .article-container h1 {
+        font-size: 1.8em;
+      }
+
+      /* Diseño de una columna para el análisis IA */
+      .tres-columnas {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      .col-title {
+        font-size: 1.1em;
+        padding: 10px;
+      }
+
+      /* Diseño de dos columnas para las tablas de resultados */
+      .all-results-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .results-table-container {
+        margin-bottom: 10px;
+      }
+
+      h4 {
+        font-size: 1.2em;
+        text-align: center;
+        margin-bottom: 5px;
+      }
+
+      /* Ajustes de tamaño de fuente para las tablas */
+      .results-table {
+        font-size: 0.9em;
+      }
+      .results-table th, .results-table td {
+        padding: 8px 3px;
+      }
+      .final-score {
+        font-size: 1.2em;
+      }
+      .results-table tbody tr td:first-child {
+        padding-left: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
+
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="index.html">Inicio</a>
+        <a href="nba-lakers-celtics.html">NBA</a>
+        <a href="#">Liga EA Sports</a>
+        <a href="#">Liga Hypermotion</a>
+        <a href="#">Otras Ligas</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="article-container">
+    <div class="PartidosDelDia">
+      <h1> Partidos Jornada 16:</h1>
+      <p>
+📅 Jornada de LaLiga (12 de Diciembre a 15 de Diciembre)<br><br><br>
+
+
+
+<b>🔵 Viernes 12 de Diciembre</b><br><br><br>
+
+R. Sociedad VS Girona - 21:00 (CET)<br><br><br>
+
+
+<b>🔵 Sábado 13 de Diciembre</b><br>
+Atlético VS Valencia - 14:00 (CET)<br>
+Mallorca VS Elche - 16:15 (CET)<br>
+Barcelona VS Osasuna - 18:30 (CET)<br>
+Getafe VS Español - 21:00 (CET)<br><br><br>
+
+ <b>🔵 Domingo 13 de Diciembre</b><br>
+Sevilla VS Oviedo — 14:00 (CET)<br>
+        Celta VS Athelic — 16:15 (CET)<br>
+        Levante VS Villarreal — 18:30 (CET)<br>
+        Alaves VS Real Madrid — 21:00 (CET)<br><br><br>
+
+        <b>🔵 LLunes 14 de Diciembre</b><br>
+       Rayo VS Betis - 21:00(CET)
+
+      </p>
+    </div>
+    <div class="tres-columnas">
+      <h3 class="col-title">1. ChatGPT</h3>
+      <h3 class="col-title">2. Gemini</h3>
+      <h3 class="col-title">3. Copilot</h3>
+    </div>
+
+    <div class="tres-columnas">
+      <div class="col-text">
+        <section>
+          <strong><h2>1:</h2></strong>
+        </section>
+        <p>
+          Análisis preliminar de la jornada. Se espera que el factor **localía** influya fuertemente, especialmente en los equipos que vienen de viajes largos o competiciones europeas. Se recomienda cautela en los pronósticos.
+        </p>
+      </div>
+      <div class="col-text">
+        <section>
+          <strong><h2>2:</h2></strong>
+        </section>
+        <p>
+          El algoritmo sugiere que el control de la **posesión** y la eficacia en el **último tercio** serán determinantes. Los equipos con una media de goles esperados (xG) alta tienen una ligera ventaja en las simulaciones iniciales.
+        </p>
+      </div>
+      <div class="col-text">
+        <section>
+          <strong><h2>3:</h2></strong>
+        </section>
+        <p>
+          Las probabilidades iniciales indican un rango de **40% a 55%** para la victoria local en la mayoría de los encuentros, con un porcentaje de empate que se sitúa entre el **20% y el 30%**. Se buscan las sorpresas de la jornada.
+        </p>
+      </div>
+    </div>
+    <section class="results-section">
+      <h2 class="match-title">Resultados Detallados de la Jornada X (IA Predictor)</h2>
+      <p style="margin-bottom: 30px;">
+        Plantilla vacía para la inserción de las predicciones de la Jornada X.
+      </p>
+
+      <div class="all-results-grid">
+
+        <div class="results-table-container">
+          <h4>Equipo Local A vs Equipo Visitante B</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Real Sociedad</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Girona</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local C vs Equipo Visitante D</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Atlético</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Valencia</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local E vs Equipo Visitante F</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Mallorca</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Elche</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local G vs Equipo Visitante H</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Barcelona</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Osasuna</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local I vs Equipo Visitante J</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Getafe</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Español</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local K vs Equipo Visitante L</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Sevilla</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Oviedo</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local M vs Equipo Visitante N</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Celta</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Athletic</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local O vs Equipo Visitante P</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Levante</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Villarreal</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local Q vs Equipo Visitante R</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Alaves</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Real Madrid</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <h4>Equipo Local S vs Equipo Visitante T</h4>
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Rayo</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Betis</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+      </div>
+    </section>
+    <h3>Conclusión del Modelo IA</h3>
+    <p>
+      El análisis de la Jornada X está pendiente de la inserción de datos de las IA. Actualmente, la plantilla está lista para recibir las predicciones, resultados de la simulación y las conclusiones finales sobre el riesgo de la quiniela.
+    </p>
+
+    <div class="volver">
+      <p>
+        <a href="../index.html">← Volver a la página principal de Primera EA Sports</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Cierra el menú si el usuario hace clic fuera de él
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>
