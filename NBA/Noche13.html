@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Predicciones Noche 13| Uno X Dos IA</title>
   <link rel="stylesheet" href="../index.css">
-  <style>
+ <style>
     body {
       background-color: #c1731f;
-      /* Fondo Naranja/Marrón */
     }
+    /* Estilos específicos para la página de artículo */
     .article-container {
       max-width: 1000px;
+      /* Aumentamos el ancho para que las 3 columnas quepan bien */
       margin: 20px auto;
       padding: 30px;
       background-color: #cf914e;
-      /* Fondo del Contenedor más claro */
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      }
-      .article-container h1 {
+    }
+    .article-container h1 {
       color: #2c3e50;
       border-bottom: 3px solid #e74c3c;
       padding-bottom: 10px;
@@ -37,110 +37,115 @@
       font-size: 1.2em;
       text-align: center;
     }
-    /* Contenedor de las Tres Columnas (CLAVE para el ANÁLISIS) */
-      .tres-columnas {
+    /* Contenedor de las Tres Columnas (Para el ANÁLISIS) */
+    .tres-columnas {
       display: grid;
+      /* Define 3 columnas de igual ancho */
       grid-template-columns: repeat(3, 1fr);
       gap: 30px;
+      /* Espacio entre las columnas */
       margin: 30px 0;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+    /* Contenedor de las Dos Columnas (CLAVE para RESULTADOS) */
+    .dos-columnas {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* Define 2 columnas de igual ancho */
+      gap: 15px;
+      /* Reducimos el gap para ganar espacio */
+      margin: 30px auto;
+      /* Usamos margin auto para centrar el contenedor */
+      max-width: 98%;
+      /* Le damos un ancho máximo grande */
       padding-top: 10px;
       border-top: 2px solid #ecf0f1;
     }
 
-    /* Contenedor de las Dos Columnas (NUEVO, CLAVE para RESULTADOS) */
-      .dos-columnas {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      /* Define 2 columnas de igual ancho */
-      gap: 30px;
-      margin: 30px 0;
-      padding-top: 10px;
-      border-top: 2px solid #ecf0f1;
-    }
 
     /* Estilo para los Títulos de las Columnas */
     .col-title {
       background-color: #34495e;
+      /* Gris Azulado */
       color: white;
       padding: 15px;
       text-align: center;
       font-size: 1.2em;
       border-radius: 5px 5px 0 0;
       margin-bottom: 0;
+      /* Asegura que no haya espacio extra sobre el contenido */
       height: fit-content;
+      /* Se ajusta a la altura del texto */
     }
 
-    /* Estilo para el Texto de las Columnas (Se usa también para la tabla de resultados) */
-      .col-text {
+    /* Estilo para el Texto de las Columnas */
+    .col-text {
       background-color: #ecf0f1;
+      /* Gris Claro */
       padding: 15px;
       border-radius: 0 0 5px 5px;
       border: 1px solid #bdc3c7;
       margin-top: 0;
-      /* Ajuste para las tablas de resultados */
-      display: flex;
-      /* Asegura que la columna se vea bien incluso con una tabla corta */
-      flex-direction: column;
+      /* Pega el texto al título */
     }
     .col-text p {
       margin: 0;
       line-height: 1.5;
     }
-
-    /* ---------------------------------------------------------------------- */
-    /* ESTILOS DE TABLA Y RESPONSIVE (Ajustados) */
-      /* ---------------------------------------------------------------------- */
-    .results-section h3 {
-      color: #e74c3c;
-      margin-top: 0;
-      margin-bottom: 15px;
-      font-size: 1.2em;
-      text-align: center;
-    }
+    /* --- Estilos para la Tabla de Resultados (7 columnas) --- */
     .results-table-container {
-      margin: 0 auto;
-      /* Sin margen arriba/abajo si ya está en col-text */
+      margin: 5px auto;
+      /* Reducido para ahorrar espacio vertical */
       width: 100%;
+      /* Ocupa el 100% de su contenedor (col-text) */
       overflow-x: auto;
-      /* CLAVE para el responsive en móviles */
+      /* Permite desplazamiento horizontal si la tabla es muy ancha */
     }
 
     .results-table {
       width: 100%;
-      min-width: 400px;
-      /* Asegura que la tabla no sea demasiado estrecha en móvil */
       border-collapse: collapse;
+      /* Une los bordes de las celdas */
       text-align: center;
-      font-size: 1.1em;
+      font-size: 1em;
+      /* Ligeramente más pequeña la fuente */
       box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      }
+    }
 
-      .results-table th, .results-table td {
-      padding: 12px 8px;
+    .results-table th, .results-table td {
+      padding: 6px 4px;
+      /* Reducción drástica del padding para que quepa */
       border: 1px solid #ddd;
       white-space: nowrap;
-      /* Evita saltos de línea en las celdas de números */
     }
 
     .results-table thead th {
       background-color: #34495e;
+      /* Encabezado Oscuro */
       color: white;
       text-transform: uppercase;
       font-weight: bold;
     }
 
+    /* Columna de Equipos (Primera columna) */
     .results-table tbody tr td:first-child {
       background-color: #ecf0f1;
+      /* Fondo claro */
       font-weight: bold;
       text-align: left;
-      padding-left: 15px;
+      padding-left: 8px;
+      /* Reducido */
       color: #2c3e50;
     }
 
+    /* Columna de Resultado Final (Columna más grande y destacada) */
     .final-score {
       background-color: #e74c3c;
+      /* Rojo Destacado */
       color: white;
-      font-size: 1.4em;
+      font-size: 1.2em;
+      /* Ligeramente más pequeña */
       font-weight: 900;
       width: 15%;
     }
@@ -152,27 +157,31 @@
         grid-template-columns: 1fr;
         /* Una sola columna en móvil */
       }
+      .article-container {
+        padding: 15px;
+        /* Reducir padding en móvil */
+      }
     }
-    </style>
-  </head>
-  <body>
+  </style>
+</head>
+<body>
 
-    <header>
-      <h1>🏀 Uno X Dos IA 🧠</h1>
-    </header>
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
 
-    <nav>
-      <div class="dropdown">
-        <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
-        <div class="dropdown-content" id="myDropdown">
-          <a href="index.html">Inicio</a>
-          <a href="#">NBA</a>
-          <a href="#">Liga EA Sports</a>
-          <a href="#">Liga Hypermotion</a>
-          <a href="#">Otras Ligas</a>
-        </div>
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="index.html">Inicio</a>
+        <a href="#">NBA</a>
+        <a href="#">Liga EA Sports</a>
+        <a href="#">Liga Hypermotion</a>
+        <a href="#">Otras Ligas</a>
       </div>
-    </nav>
+    </div>
+  </nav>
 
     <div class="article-container">
       <div class="PartidosDelDia">
@@ -452,141 +461,313 @@
 
       <hr>
       <h3>Conclusión Final</h3>
-      <p>
+    <p>
         Todas las IA coinciden en todos los partidos, menos Cleveland y Grizzlies.<br>
-        Chat GPT y Gemini apuestan por Cavaliers menos Gemini que apuesta por Hawks<br>
-        Gemini y Copilot apuestan por Memphis mientras que Chat GPT por Raptors.<br>
-        Veremos si esta noche hay mas suerte y alguna se queda cerca de acertar todas o acierta todas. También vemos como Copilot ya ha comprendido que Luka juega en Lakers junto a Lebron, pero falla con DeRozan que ya no está en chicago y con Durant que ya no está en los Suns. Gemini por su parte nos dice que Anthony Davis juega en Lakers, lo corregimos y entonces cambia su apuesta y nos da de ganador a Miami. corregimos también a Copilot pero no cambia su predicción.
-      </p>
+        ChatGPT y Gemini apuestan por Cavaliers, menos Gemini que apuesta por Hawks.<br>
+        Gemini y Copilot apuestan por Memphis, mientras que ChatGPT por Raptors.<br>
+        Veremos si esta noche hay más suerte y alguna se queda cerca de acertar todas o acierta todas. También vemos cómo Copilot ya ha comprendido que Luka juega en Lakers junto a LeBron, pero falla con DeRozan, que ya no está en Chicago, y con Durant, que ya no está en los Suns. Gemini, por su parte, nos dice que Anthony Davis juega en Lakers; lo corregimos y entonces cambia su apuesta y nos da como ganador a Miami. Corregimos también a Copilot, pero no cambia su predicción.
+</p>
 
-      <h3>Resultados de la Noche (Tablas por Cuartos)</h3>
+
+          <h3>Resultado</h3>
+    <h3 class="col-title" style="margin-top: 20px; border-radius: 5px;">Partidos y resultados</h3>
+
       <div class="dos-columnas">
         <div class="col-text">
-          <h3 class="match-title">Pelicans vs Thunder</h3>
-          <div class="results-table-container">
-            <table class="results-table">
-              <thead>
-                <tr><th>Equipo</th><th>1er C.</th><th>2do C.</th><th>3er C.</th><th>4to C.</th><th class="final-score">TOTAL</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Pelicans</td><td>22</td><td>30</td><td>30</td><td>24</td><td class="final-score">106</td></tr>
-                <tr><td>Thunder</td><td>39</td><td>36</td><td>33</td><td>29</td><td class="final-score">137</td></tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Equipo</th>
+                <th>1er C.</th>
+                <th>2do C.</th>
+                <th>3er C.</th>
+                <th>4to C.</th>
+                <th class="final-score">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Pelicans</td>
+                <td>22</td>
+                <td>30</td>
+                <td>30</td>
+                <td>24</td>
+                <td class="final-score">106</td>
+              </tr>
+              <tr>
+                <td>Thunders</td>
+                <td>39</td>
+                <td>36</td>
+                <td>33</td>
+                <td>29</td>
+                <td class="final-score">137</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+          </p>
         </div>
-
-        <div class="col-text">
-          <h3 class="match-title">76ers vs Nets</h3>
-          <div class="results-table-container">
-            <table class="results-table">
-              <thead>
-                <tr><th>Equipo</th><th>1er C.</th><th>2do C.</th><th>3er C.</th><th>4to C.</th><th class="final-score">TOTAL</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>76ers</td><td>40</td><td>33</td><td>17</td><td>39</td><td class="final-score">129</td></tr>
-                <tr><td>Nets</td><td>37</td><td>18</td><td>23</td><td>27</td><td class="final-score">105</td></tr>
-              </tbody>
-            </table>
-          </div>
+      </div>
+<div class="col-text">
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Equipo</th>
+                <th>1er C.</th>
+                <th>2do C.</th>
+                <th>3er C.</th>
+                <th>4to C.</th>
+                <th class="final-score">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>76ers</td>
+                <td>40</td>
+                <td>33</td>
+                <td>17</td>
+                <td>39</td>
+                <td class="final-score">129</td>
+              </tr>
+              <tr>
+                <td>Nets</td>
+                <td>37</td>
+                <td>18</td>
+                <td>23</td>
+                <td>27</td>
+                <td class="final-score">105</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+          </p>
         </div>
-
-        <div class="col-text">
-          <h3 class="match-title">Jazz vs Hornets</h3>
-          <div class="results-table-container">
-            <table class="results-table">
-              <thead>
-                <tr><th>Equipo</th><th>1er C.</th><th>2do C.</th><th>3er C.</th><th>4to C.</th><th class="final-score">TOTAL</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Jazz</td><td>25</td><td>23</td><td>38</td><td>17</td><td class="final-score">103</td></tr>
-                <tr><td>Hornets</td><td>39</td><td>32</td><td>33</td><td>22</td><td class="final-score">126</td></tr>
-              </tbody>
-            </table>
-          </div>
+      </div>
+     <div class="col-text">
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Equipo</th>
+                <th>1er C.</th>
+                <th>2do C.</th>
+                <th>3er C.</th>
+                <th>4to C.</th>
+                <th class="final-score">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Jazz</td>
+                <td>25</td>
+                <td>23</td>
+                <td>38</td>
+                <td>17</td>
+                <td class="final-score">103</td>
+              </tr>
+              <tr>
+                <td>Hornets</td>
+                <td>39</td>
+                <td>32</td>
+                <td>33</td>
+                <td>22</td>
+                <td class="final-score">126</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+          </p>
         </div>
+      </div>
 
-        <div class="col-text">
-          <h3 class="match-title">Hawks vs Cavaliers</h3>
-          <div class="results-table-container">
-            <table class="results-table">
-              <thead>
-                <tr><th>Equipo</th><th>1er C.</th><th>2do C.</th><th>3er C.</th><th>4to C.</th><th class="final-score">TOTAL</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Hawks</td><td>22</td><td>30</td><td>24/td><td>33</td><td class="final-score">109</td></tr>
-                <tr><td>Cavaliers</td><td>31</td><td>19</td><td>28</td><td>39</td><td class="final-score">117</td></tr>
-              </tbody>
-            </table>
-          </div>
+       <div class="col-text">
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Equipo</th>
+                <th>1er C.</th>
+                <th>2do C.</th>
+                <th>3er C.</th>
+                <th>4to C.</th>
+                <th class="final-score">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Hawks</td>
+                <td>22</td>
+                <td>30</td>
+                <td>24</td>
+                <td>33</td>
+                <td class="final-score">109</td>
+              </tr>
+              <tr>
+                <td>Cavaliers</td>
+                <td>31</td>
+                <td>19</td>
+                <td>28</td>
+                <td>39</td>
+                <td class="final-score">117</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+          </p>
         </div>
-
-        <div class="col-text">
-          <h3 class="match-title">Grizzlies vs Raptors</h3>
-          <div class="results-table-container">
-            <table class="results-table">
-              <thead>
-                <tr><th>Equipo</th><th>1er C.</th><th>2do C.</th><th>3er C.</th><th>4to C.</th><th class="final-score">TOTAL</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Grizzlies</td><td>23</td><td>24</td><td>24</td><td>33</td><td class="final-score">104</td></tr>
-                <tr><td>Raptors</td><td>26</td><td>27</td><td>31</td><td>33</td><td class="final-score">117</td></tr>
-              </tbody>
-            </table>
-          </div>
+      </div>
+      <div class="col-text">
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Equipo</th>
+                <th>1er C.</th>
+                <th>2do C.</th>
+                <th>3er C.</th>
+                <th>4to C.</th>
+                <th class="final-score">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Grizzlies</td>
+                <td>23</td>
+                <td>24</td>
+                <td>24</td>
+                <td>33</td>
+                <td class="final-score">104</td>
+              </tr>
+              <tr>
+                <td>Raptors</td>
+                <td>26</td>
+                <td>27</td>
+                <td>31</td>
+                <td>33</td>
+                <td class="final-score">117</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+          </p>
         </div>
-
-        <div class="col-text">
-          <h3 class="match-title">Bulls vs Knicks</h3>
-          <div class="results-table-container">
-            <table class="results-table">
-              <thead>
-                <tr><th>Equipo</th><th>1er C.</th><th>2do C.</th><th>3er C.</th><th>4to C.</th><th class="final-score">TOTAL</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Bulls</td><td>24</td><td>36</td><td>29</td><td>27</td><td class="final-score">116</td></tr>
-                <tr><td>Knicks</td><td>34</td><td>34</td><td>37</td><td>23</td><td class="final-score">128</td></tr>
-              </tbody>
-            </table>
-          </div>
+      </div>
+      <div class="col-text">
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Equipo</th>
+                <th>1er C.</th>
+                <th>2do C.</th>
+                <th>3er C.</th>
+                <th>4to C.</th>
+                <th class="final-score">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Bulls</td>
+                <td>24</td>
+                <td>36</td>
+                <td>29</td>
+                <td>27</td>
+                <td class="final-score">116</td>
+              </tr>
+              <tr>
+                <td>Knicks</td>
+                <td>34</td>
+                <td>34</td>
+                <td>37</td>
+                <td>23</td>
+                <td class="final-score">128</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+          </p>
         </div>
-
-        <div class="col-text">
-          <h3 class="match-title">Spurs vs Suns</h3>
-          <div class="results-table-container">
-            <table class="results-table">
-              <thead>
-                <tr><th>Equipo</th><th>1er C.</th><th>2do C.</th><th>3er C.</th><th>4to C.</th><th class="final-score">TOTAL</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Spurs</td><td>24</td><td>28</td><td>26</td><td>40</td><td class="final-score">118</td></tr>
-                <tr><td>Suns</td><td>31</td><td>39</td><td>32</td><td>28</td><td class="final-score">130</td></tr>
-              </tbody>
-            </table>
-          </div>
+      </div>
+<div class="col-text">
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Equipo</th>
+                <th>1er C.</th>
+                <th>2do C.</th>
+                <th>3er C.</th>
+                <th>4to C.</th>
+                <th class="final-score">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Spurs</td>
+                <td>24</td>
+                <td>28</td>
+                <td>26</td>
+                <td>40</td>
+                <td class="final-score">118</td>
+              </tr>
+              <tr>
+                <td>Suns</td>
+                <td>31</td>
+                <td>39</td>
+                <td>32</td>
+                <td>28</td>
+                <td class="final-score">130</td>
+              </tr>
+            </tbody>
+          </table>
+           <p style="text-align: center; font-size: 0.9em; margin-top: 10px;"></p>
+        
         </div>
-
-        <div class="col-text">
-          <h3 class="match-title">Heat vs Lakers</h3>
-          <div class="results-table-container">
-            <table class="results-table">
-              <thead>
-                <tr><th>Equipo</th><th>1er C.</th><th>2do C.</th><th>3er C.</th><th>4to C.</th><th class="final-score">TOTAL</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Heat</td><td>36</td><td>27</td><td>35</td><td>22</td><td class="final-score">120</td></tr>
-                <tr><td>Lakers</td><td>43</td><td>34</td><td>25</td><td>28</td><td class="final-score">130</td></tr>
-              </tbody>
-            </table>
-          </div>
+      </div>
+       <div class="col-text">
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Equipo</th>
+                <th>1er C.</th>
+                <th>2do C.</th>
+                <th>3er C.</th>
+                <th>4to C.</th>
+                <th class="final-score">TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Heat</td>
+                <td>36</td>
+                <td>27</td>
+                <td>35</td>
+                <td>22</td>
+                <td class="final-score">120</td>
+              </tr>
+              <tr>
+                <td>Lakers</td>
+                <td>43</td>
+                <td>34</td>
+                <td>25</td>
+                <td>28</td>
+                <td class="final-score">130</td>
+              </tr>
+            </tbody>
+          </table>
+           <p style="text-align: center; font-size: 0.9em; margin-top: 10px;"></p>
+        
         </div>
-
+      </div>
       </div>
       <hr>
 
       <h3>Conclusión Final después de jugar</h3>
       <p>
-        Las 3 fallan con Utah Jazz, Gemini falla dando ganador a Hawks y Grizzlies y falla en segunda instancia después de decirle que Anthony Davis ya no esta en Lakers y da ganador a Miami, sino hubiera acertado. Chat GPT el mejor solo fallando con Utah. Por su parte Copilot Falla en Utah y Memphis. 
+Las 3 fallan con Utah Jazz. Gemini falla dando ganador a Hawks y Grizzlies y falla en segunda instancia después de decirle que Anthony Davis ya no está en Lakers y da ganador a Miami; si no, hubiera acertado. ChatGPT, el mejor, solo fallando con Utah. Por su parte, Copilot falla en Utah y Memphis.
       </p>
     <div class="volver">
       <p>
