@@ -7,7 +7,7 @@ body {
   padding: 0;
   background-color: #f7f3e8; /* Base color crema/papel viejo */
   color: #1a1a1a;
-  overflow-x: hidden;
+  overflow-x: hidden; /* ¡CLAVE! Oculta el scroll horizontal */
 }
 
 /* Colores Base */
@@ -35,47 +35,65 @@ header h1 {
 
 /* Navegación (Dropdown) */
 nav {
-  background-color: var(--color-dark);
+  /* Mantenido tu color de fondo */
+  background-color: #636442a7; 
   padding: 10px 0;
   text-align: center;
 }
 
 .dropbtn {
-  background-color: var(--color-secondary);
-  color: var(--color-dark);
-  padding: 12px 25px;
-  font-size: 1.1em;
-  border: 2px solid var(--color-dark);
+  /* Mantenidos tus estilos de botón */
+  background-color: #ffc400;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
   cursor: pointer;
-  border-radius: 8px;
-  box-shadow: 0 3px 0 var(--color-dark);
-  transition: all 0.1s;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
 .dropbtn:hover, .dropbtn:focus {
-  background-color: #ffd700;
-  transform: translateY(1px);
-  box-shadow: 0 2px 0 var(--color-dark);
+  /* Mantenido tu estilo hover */
+  background-color: #ddec3a;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
 }
 
 .dropdown-content {
-    background-color: #fff8e8;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 5px;
 }
 
 .dropdown-content a {
-  color: var(--color-dark);
-  border-bottom: 1px solid #f0e0c0;
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
 }
+
 .dropdown-content a:hover {
-    background-color: #ffe082;
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
 }
 
 
 /* Contenedor Principal */
 .container {
   display: flex;
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 25px auto;
   padding: 0 20px;
 }
@@ -124,6 +142,8 @@ a {
 /* Contenido Principal */
 .main-content {
   flex-grow: 1;
+  /* Añadido para ayudar a la responsividad */
+  min-width: 0; 
   background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
@@ -177,165 +197,303 @@ a {
 /* ======================================== */
 
 .ranking-section {
-    padding: 25px 20px;
-    background: radial-gradient(circle at 10% 20%, #ffc400, #b8860b); /* Fondo con efecto metálico/oro */
-    border-radius: 12px;
-    margin-top: 35px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-    border: 3px solid white;
+  padding: 25px 20px;
+  background: radial-gradient(circle at 10% 20%, #ffc400, #b8860b); /* Fondo con efecto metálico/oro */
+  border-radius: 12px;
+  margin-top: 35px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  border: 3px solid white;
 }
 
 .ranking-section h2 {
-    color: white;
-    text-align: center;
-    font-size: 2em;
-    margin-bottom: 25px;
-    border-bottom: 4px double white;
-    padding-bottom: 10px;
-    text-shadow: 1px 1px 2px var(--color-dark);
+  color: white;
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 25px;
+  border-bottom: 4px double white;
+  padding-bottom: 10px;
+  text-shadow: 1px 1px 2px var(--color-dark);
 }
 
 .ranking-grid {
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
-    flex-direction: row;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-direction: row;
 }
 
 .ranking-sport {
-    flex: 1;
-    min-width: 0;
-    padding: 0;
-    border: 2px solid var(--color-dark);
-    border-radius: 6px;
-    background-color: #f7f7f7; /* Fondo de tabla claro */
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  flex: 1;
+  min-width: 0; /* Añadido para evitar desbordamiento */
+  padding: 0;
+  border: 2px solid var(--color-dark);
+  border-radius: 6px;
+  background-color: #f7f7f7; /* Fondo de tabla claro */
+  overflow: hidden; /* Evita que la tabla interna se salga del contenedor */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .ranking-sport h3 {
-    color: var(--color-dark);
-    font-size: 1.3em;
-    text-align: center;
-    padding: 12px 0;
-    margin: 0;
-    background-color: var(--color-secondary); /* Título en color oro */
-    border-bottom: 2px solid var(--color-dark);
+  color: var(--color-dark);
+  font-size: 1.3em;
+  text-align: center;
+  padding: 12px 0;
+  margin: 0;
+  background-color: var(--color-secondary); /* Título en color oro */
+  border-bottom: 2px solid var(--color-dark);
 }
 
 .ranking-table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .ranking-table th, .ranking-table td {
-    padding: 10px 5px;
-    text-align: center;
-    border-right: 1px solid #e0e0e0;
-    font-size: 0.85em; 
+  padding: 10px 5px;
+  text-align: center;
+  border-right: 1px solid #e0e0e0;
+  font-size: 0.85em; 
 }
 .ranking-table th:last-child, .ranking-table td:last-child {
-    border-right: none;
+  border-right: none;
 }
 
 .ranking-table thead th {
-    background-color: var(--color-dark);
-    color: white;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 0.75em;
+  background-color: var(--color-dark);
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  /* Ajuste para 5 columnas (Ganancia Total) */
+  font-size: 0.70em; 
 }
 
 .ranking-table tbody tr:nth-child(even) {
-    background-color: #fff9e0; /* Fila par con toque amarillo */
+  background-color: #fff9e0; /* Fila par con toque amarillo */
 }
 
 .ranking-table tbody tr:hover {
-    background-color: #ffe082; /* Resaltado amarillo fuerte */
+  background-color: #ffe082; /* Resaltado amarillo fuerte */
 }
 
 .ranking-table tbody tr:first-child td {
-    font-weight: bold;
-    color: var(--color-main);
-    background-color: #fff0b3; /* Fondo extra claro para el líder */
+  font-weight: bold;
+  color: var(--color-main);
+  background-color: #fff0b3; /* Fondo extra claro para el líder */
+}
+/* Estilo específico para la columna de Ganancia */
+.ranking-table tbody tr td[data-ganancia] {
+  font-weight: bold;
+  color: var(--color-accent); /* Usamos el verde billete */
 }
 
 
 /* --- Panel de Control (Administración) --- */
 .control-panel {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-    padding: 10px 15px;
-    background-color: #fff8e8; /* Fondo claro para el panel */
-    border-bottom: 1px solid var(--color-secondary);
-    margin-bottom: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #fff8e8; /* Fondo claro para el panel */
+  border-bottom: 1px solid var(--color-secondary);
+  margin-bottom: 5px;
 }
 
 .control-panel h4 {
-    color: var(--color-dark);
-    font-weight: bold;
-    flex-basis: 100%;
-    margin-top: 0;
+  color: var(--color-dark);
+  font-weight: bold;
+  flex-basis: 100%;
+  margin-top: 0;
 }
 
 .control-panel select {
-    padding: 8px;
-    border: 1px solid var(--color-dark);
-    border-radius: 4px;
-    font-size: 0.9em;
+  padding: 8px;
+  border: 1px solid var(--color-dark);
+  border-radius: 4px;
+  font-size: 0.9em;
 }
 
 .control-panel button {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    color: white;
-    transition: background-color 0.2s;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+  transition: background-color 0.2s;
 }
 
 /* Botón Acertó (Verde Billete) */
 .control-panel button:nth-of-type(1) {
-    background-color: var(--color-accent); 
+  background-color: var(--color-accent); 
 }
 
 /* Botón Falló (Rojo Suave) */
 .control-panel button:nth-of-type(2) {
-    background-color: var(--color-main); 
+  background-color: var(--color-main); 
 }
 
 /* ======================================== */
 /* --- MEDIA QUERIES (Responsividad) --- */
 /* ======================================== */
-@media (max-width: 768px) {
-    /* MÓVILES */
-    .container {
-      flex-direction: column;
-      padding: 10px;
-    }
-    .sidebar {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: 20px;
-      order: -1;
-    }
-    .main-content {
-      width: 100%;
-    }
-    .articles-grid {
-      grid-template-columns: 1fr;
-    }
+
+/* Se añaden ajustes responsivos para pantallas de tablet o más pequeñas */
+@media (max-width: 900px) {
+    /* El ranking grid se apila para evitar desbordamiento */
     .ranking-grid {
-        flex-direction: column; /* Apila las columnas */
+        flex-direction: column; 
         gap: 20px;
     }
-    .control-panel {
-        justify-content: center;
-    }
-    .control-panel h4 {
-        text-align: center;
+}
+
+@media (max-width: 768px) {
+  /* MÓVILES */
+  .container {
+    flex-direction: column;
+    padding: 10px;
+  }
+  .sidebar {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
+    order: -1;
+  }
+  .main-content {
+    /* min-width: 0 ya está aplicado arriba, pero es bueno repetirlo */
+    width: 100%; 
+  }
+  .articles-grid {
+    grid-template-columns: 1fr;
+  }
+  /* El ranking grid ya se apila en 900px, lo cual ayuda mucho */
+  
+  .control-panel {
+      justify-content: center;
+  }
+  .control-panel h4 {
+      text-align: center;
+  }
+  
+  /* Reducir aún más el tamaño del texto de la tabla en pantallas pequeñas */
+  .ranking-table th, .ranking-table td {
+      padding: 8px 3px;
+      font-size: 0.75em; 
+  }
+}
+/* ======================================== */
+/* --- ESTILOS ESPECÍFICOS DE PREDICCIONES --- */
+/* ======================================== */
+
+.prediction-section {
+    border: 3px solid var(--color-main);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 30px;
+    background-color: #fffaf0; /* Fondo de papel/boleto claro */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.prediction-section .header-sorteo {
+    text-align: center;
+    border-bottom: 2px dashed var(--color-secondary);
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+
+.prediction-section h3 {
+    color: var(--color-dark);
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.data-row {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #fcfcfc;
+}
+.data-row h4 {
+    color: var(--color-main);
+    margin-top: 0;
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 5px;
+}
+
+/* Estilo de los Números (Bolas) */
+.numbers-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.ball, .star-ball {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-weight: bold;
+    color: white;
+    font-size: 1.1em;
+    border: 2px solid var(--color-dark);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Bolas de números principales */
+.ball {
+    background-color: #008000; /* Verde Billete */
+}
+
+/* Bolas de estrellas/reintegro */
+.star-ball {
+    background-color: var(--color-secondary); /* Dorado */
+    color: var(--color-dark);
+}
+.complementario {
+    font-weight: bold;
+    color: var(--color-main);
+    padding: 5px 10px;
+    border: 1px solid var(--color-main);
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+/* Resultado Final (Para resaltarlo) */
+.final-result {
+    padding: 15px;
+    background-color: var(--color-main);
+    border-radius: 5px;
+    border: 2px solid var(--color-secondary);
+    box-shadow: 0 0 10px rgba(196, 47, 39, 0.5); /* Sombra roja */
+}
+.final-result .ball {
+    background-color: #005600; /* Verde más oscuro */
+}
+.final-result .star-ball {
+    background-color: #ffd700; /* Dorado más brillante */
+}
+
+.result-analysis {
+    margin-top: 10px;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: var(--color-dark);
+}
+
+.ia-prediction-list p {
+    margin: 5px 0;
+    padding-left: 15px;
+    border-left: 3px solid var(--color-secondary);
+}
+
+/* Ajuste Responsivo para números pequeños */
+@media (max-width: 480px) {
+    .ball, .star-ball {
+        width: 30px;
+        height: 30px;
+        font-size: 1em;
     }
 }
