@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uno X Dos IA - Predicciones Loterías y Deportes</title>
+  <link rel="stylesheet" href="loterias.css"> </head>
+<body>
+
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
+
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="index.html">Inicio</a>
+        <a href="nba-lakers-celtics.html">NBA</a>
+        <a href="#">Liga EA Sports</a>
+        <a href="#">Liga Hypermotion</a>
+        <a href="#">Loterías</a> </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <aside class="sidebar">
+      <h2>✨ Pronóstico IA</h2>
+      <div class="sidebar-section">
+        <h3>💰 Bote Estimado</h3>
+        <p>
+          El modelo predice un bote en el próximo sorteo de **42 millones de euros** (Probabilidad Alta).
+        </p>
+      </div>
+      <div class="sidebar-section">
+        <h3>🔢 Números de Alta Frecuencia</h3>
+        <p>
+          Los 3 números con mayor probabilidad de aparición según el algoritmo de la semana: **17, 34, 49**.
+        </p>
+      </div>
+      <div class="sidebar-section">
+        <h3>📉 Números Fríos (Baja Frecuencia)</h3>
+        <p>
+          Números que el modelo ha descartado por patrones anómalos: **02, 11, 50**.
+        </p>
+      </div>
+      <div class="sidebar-section">
+        <h3>📅 Próximo Sorteo Clave</h3>
+        <p>
+          Detalles del próximo sorteo analizado por nuestra IA.
+        </p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <h2>📰 Estrategias y Análisis Estadístico</h2>
+      <div class="articles-grid">
+
+        <article class="article-card">
+          <h3>La Ley del Tercio: ¿Una Realidad?</h3>
+          <p>
+            Análisis de la inteligencia artificial sobre la teoría de que un tercio de los números premiados repite.
+          </p>
+          <a href="#">Leer análisis...</a>
+        </article>
+
+        <article class="article-card">
+          <h3>Filtros de Paridad: Pares vs. Impares</h3>
+          <p>
+            Estudio de la IA para determinar si existe un sesgo en la aparición de números pares o impares.
+          </p>
+          <a href="#">Leer análisis...</a>
+        </article>
+
+        <article class="article-card">
+          <h3>La Probabilidad Condicional en el Sorteo</h3>
+          <p>
+            Cómo la IA ajusta la probabilidad del último número basándose en los números extraídos previamente.
+          </p>
+          <a href="#">Leer análisis...</a>
+        </article>
+      </div>
+      
+      <section class="ranking-section">
+        <h2>🥇 Ranking de Aciertos por Modelo 🎯</h2>
+
+        <div class="ranking-grid">
+            <div class="ranking-sport">
+                <h3>💶 Euromillones</h3>
+                <div class="control-panel">
+                    <h4>Actualizar Sorteo</h4>
+                    <select id="euromillones-ia-select">
+                        <option value="gemini">Gemini</option>
+                        <option value="chatgpt">Chat GPT</option>
+                        <option value="copilot">Copilot</option>
+                    </select>
+                    <button onclick="updateStats('ranking-euromillones', 'acierto')">✔ Acertó</button>
+                    <button onclick="updateStats('ranking-euromillones', 'fallo')">❌ Falló</button>
+                </div>
+                <table class="ranking-table" id="ranking-euromillones">
+                    <thead>
+                        <tr>
+                            <th>Modelo</th>
+                            <th>Sorteos</th>
+                            <th>Aciertos</th>
+                            <th>Tasa de Éxito</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ia="gemini">
+                            <td>**Gemini**</td>
+                            <td data-jornadas>15</td>
+                            <td data-aciertos>11</td>
+                            <td data-tasa>73.3%</td>
+                        </tr>
+                        <tr data-ia="chatgpt">
+                            <td>**Chat GPT**</td>
+                            <td data-jornadas>15</td>
+                            <td data-aciertos>10</td>
+                            <td data-tasa>66.7%</td>
+                        </tr>
+                        <tr data-ia="copilot">
+                            <td>**Copilot**</td>
+                            <td data-jornadas>15</td>
+                            <td data-aciertos>9</td>
+                            <td data-tasa>60.0%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="ranking-sport">
+                <h3>🍀 La Primitiva</h3>
+                <div class="control-panel">
+                    <h4>Actualizar Sorteo</h4>
+                    <select id="primitiva-ia-select">
+                        <option value="chatgpt">Chat GPT</option>
+                        <option value="gemini">Gemini</option>
+                        <option value="copilot">Copilot</option>
+                    </select>
+                    <button onclick="updateStats('ranking-primitiva', 'acierto')">✔ Acertó</button>
+                    <button onclick="updateStats('ranking-primitiva', 'fallo')">❌ Falló</button>
+                </div>
+                <table class="ranking-table" id="ranking-primitiva">
+                    <thead>
+                        <tr>
+                            <th>Modelo</th>
+                            <th>Sorteos</th>
+                            <th>Aciertos</th>
+                            <th>Tasa de Éxito</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ia="chatgpt">
+                            <td>**Chat GPT**</td>
+                            <td data-jornadas>12</td>
+                            <td data-aciertos>9</td>
+                            <td data-tasa>75.0%</td>
+                        </tr>
+                        <tr data-ia="gemini">
+                            <td>**Gemini**</td>
+                            <td data-jornadas>12</td>
+                            <td data-aciertos>8</td>
+                            <td data-tasa>66.7%</td>
+                        </tr>
+                        <tr data-ia="copilot">
+                            <td>**Copilot**</td>
+                            <td data-jornadas>12</td>
+                            <td data-aciertos>7</td>
+                            <td data-tasa>58.3%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="ranking-sport">
+                <h3>🔢 Bonoloto</h3>
+                <div class="control-panel">
+                    <h4>Actualizar Sorteo</h4>
+                    <select id="bonoloto-ia-select">
+                        <option value="copilot">Copilot</option>
+                        <option value="gemini">Gemini</option>
+                        <option value="chatgpt">Chat GPT</option>
+                    </select>
+                    <button onclick="updateStats('ranking-bonoloto', 'acierto')">✔ Acertó</button>
+                    <button onclick="updateStats('ranking-bonoloto', 'fallo')">❌ Falló</button>
+                </div>
+                <table class="ranking-table" id="ranking-bonoloto">
+                    <thead>
+                        <tr>
+                            <th>Modelo</th>
+                            <th>Sorteos</th>
+                            <th>Aciertos</th>
+                            <th>Tasa de Éxito</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ia="copilot">
+                            <td>**Copilot**</td>
+                            <td data-jornadas>18</td>
+                            <td data-aciertos>13</td>
+                            <td data-tasa>72.2%</td>
+                        </tr>
+                        <tr data-ia="gemini">
+                            <td>**Gemini**</td>
+                            <td data-jornadas>18</td>
+                            <td data-aciertos>12</td>
+                            <td data-tasa>66.7%</td>
+                        </tr>
+                        <tr data-ia="chatgpt">
+                            <td>**Chat GPT**</td>
+                            <td data-jornadas>18</td>
+                            <td data-aciertos>11</td>
+                            <td data-tasa>61.1%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </section>
+      </main>
+  </div> <script>
+    function toggleDropdown() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Cierra el menú si el usuario hace clic fuera de él
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+
+    function updateRankingTable(tableId) {
+      const tableBody = document.getElementById(tableId).querySelector('tbody');
+      if (!tableBody) return;
+
+      const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+      rows.forEach(row => {
+        const jornadas = parseInt(row.querySelector('[data-jornadas]').textContent);
+        const aciertos = parseInt(row.querySelector('[data-aciertos]').textContent);
+        const tasaCell = row.querySelector('[data-tasa]');
+
+        let tasa = 0;
+        if (jornadas > 0) {
+          tasa = (aciertos / jornadas) * 100;
+        }
+
+        row.dataset.tasaNumerica = tasa.toFixed(2);
+        tasaCell.textContent = `${tasa.toFixed(1)}%`;
+      });
+
+      rows.sort((a, b) => {
+        const tasaA = parseFloat(a.dataset.tasaNumerica);
+        const tasaB = parseFloat(b.dataset.tasaNumerica);
+        return tasaB - tasaA;
+      });
+
+      tableBody.innerHTML = '';
+      rows.forEach(row => {
+        tableBody.appendChild(row);
+      });
+    }
+
+    function updateStats(tableId, resultado) {
+      const selectId = tableId.replace('ranking-', '') + '-ia-select';
+      const iaSeleccionada = document.getElementById(selectId).value;
+
+      const tableBody = document.getElementById(tableId).querySelector('tbody');
+      const row = tableBody.querySelector(`tr[data-ia="${iaSeleccionada}"]`);
+
+      if (!row) {
+        console.error('Fila de IA no encontrada:', iaSeleccionada);
+        return;
+      }
+
+      const jornadasCell = row.querySelector('[data-jornadas]');
+      const aciertosCell = row.querySelector('[data-aciertos]');
+      
+      let currentJornadas = parseInt(jornadasCell.textContent);
+      let currentAciertos = parseInt(aciertosCell.textContent);
+
+      currentJornadas += 1;
+      if (resultado === 'acierto') {
+        currentAciertos += 1;
+      }
+
+      jornadasCell.textContent = currentJornadas;
+      aciertosCell.textContent = currentAciertos;
+
+      updateRankingTable(tableId);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateRankingTable('ranking-euromillones');
+      updateRankingTable('ranking-primitiva');
+      updateRankingTable('ranking-bonoloto');
+    });
+
+  </script>
+</body>
+</html>
