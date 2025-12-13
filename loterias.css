@@ -454,7 +454,15 @@ a {
 }
 .complementario {
     font-weight: bold;
-    color: var(--color-main);
+    color: rgb(219, 248, 33);
+    padding: 5px 10px;
+    border: 1px solid var(--color-main);
+    border-radius: 4px;
+    margin-left: 10px;
+}
+.complementario1 {
+    font-weight: bold;
+    color: var(--color-media);
     padding: 5px 10px;
     border: 1px solid var(--color-main);
     border-radius: 4px;
