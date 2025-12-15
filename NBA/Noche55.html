@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Predicciones Noche 55 Uno X Dos IA</title>
+  <link rel="stylesheet" href="../index.css">
+  <style>
+    body {
+      background-color: #c1731f;
+    }
+    /* Estilos específicos para la página de artículo */
+    .article-container {
+      max-width: 1000px;
+      /* Aumentamos el ancho para que las 3 columnas quepan bien */
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #cf914e;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .article-container h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 2.2em;
+    }
+    .article-meta {
+      color: #7f8c8d;
+      font-style: italic;
+      margin-bottom: 25px;
+      display: block;
+    }
+    .PartidosDelDia {
+      color: black;
+      font-size: 1.2em;
+      text-align: center;
+    }
+    /* Contenedor de las Tres Columnas (Para el ANÁLISIS) */
+    .tres-columnas {
+      display: grid;
+      /* Define 3 columnas de igual ancho */
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      /* Espacio entre las columnas */
+      margin: 30px 0;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+    /* Contenedor de las Dos Columnas (CLAVE para RESULTADOS) */
+    .dos-columnas {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* Define 2 columnas de igual ancho */
+      gap: 15px;
+      /* Reducimos el gap para ganar espacio */
+      margin: 30px auto;
+      /* Usamos margin auto para centrar el contenedor */
+      max-width: 98%;
+      /* Le damos un ancho máximo grande */
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+
+
+    /* Estilo para los Títulos de las Columnas */
+    .col-title {
+      background-color: #34495e;
+      /* Gris Azulado */
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 0;
+      /* Asegura que no haya espacio extra sobre el contenido */
+      height: fit-content;
+      /* Se ajusta a la altura del texto */
+    }
+
+    /* Estilo para el Texto de las Columnas */
+    .col-text {
+      background-color: #ecf0f1;
+      /* Gris Claro */
+      padding: 15px;
+      border-radius: 0 0 5px 5px;
+      border: 1px solid #bdc3c7;
+      margin-top: 0;
+      /* Pega el texto al título */
+    }
+    .col-text p {
+      margin: 0;
+      line-height: 1.5;
+    }
+    /* --- Estilos para la Tabla de Resultados (7 columnas) --- */
+    .results-table-container {
+      margin: 5px auto;
+      /* Reducido para ahorrar espacio vertical */
+      width: 100%;
+      /* Ocupa el 100% de su contenedor (col-text) */
+      overflow-x: auto;
+      /* Permite desplazamiento horizontal si la tabla es muy ancha */
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      /* Une los bordes de las celdas */
+      text-align: center;
+      font-size: 1em;
+      /* Ligeramente más pequeña la fuente */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .results-table th, .results-table td {
+      padding: 6px 4px;
+      /* Reducción drástica del padding para que quepa */
+      border: 1px solid #ddd;
+      white-space: nowrap;
+    }
+
+    .results-table thead th {
+      background-color: #34495e;
+      /* Encabezado Oscuro */
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    /* Columna de Equipos (Primera columna) */
+    .results-table tbody tr td:first-child {
+      background-color: #ecf0f1;
+      /* Fondo claro */
+      font-weight: bold;
+      text-align: left;
+      padding-left: 8px;
+      /* Reducido */
+      color: #2c3e50;
+    }
+
+    /* Columna de Resultado Final (Columna más grande y destacada) */
+    .final-score {
+      background-color: #e74c3c;
+      /* Rojo Destacado */
+      color: white;
+      font-size: 1.2em;
+      /* Ligeramente más pequeña */
+      font-weight: 900;
+      width: 15%;
+    }
+
+    /* --- MEDIA QUERY para MOVILES: Las columnas se apilan en 1 --- */
+    @media (max-width: 768px) {
+      .tres-columnas, .dos-columnas {
+        /* Aplica a ambos tipos de columna */
+        grid-template-columns: 1fr;
+        /* Una sola columna en móvil */
+      }
+      .article-container {
+        padding: 15px;
+        /* Reducir padding en móvil */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
+
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="index.html">Inicio</a>
+        <a href="#">NBA</a>
+        <a href="#">Liga EA Sports</a>
+        <a href="#">Liga Hypermotion</a>
+        <a href="#">Loterías</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="article-container">
+    <div class="PartidosDelDia">
+      <h1>🏀 Partidos Noche 55:</h1>
+      <p>
+        1:00 Pistons VS Celtics<br>
+
+1:30 Raptors VS Heat<br>
+
+3:00 Mavericks VS Jazz<br>
+
+3:30 Rockets VS Nuggets<br>
+
+4:30 Grizzlies VS Clippers<br>
+
+
+      </p>
+    </div>
+    <div class="tres-columnas">
+      <h3 class="col-title">1. Chat GPT</h3>
+      <h3 class="col-title">2. Gemini</h3>
+      <h3 class="col-title">3. Copilot </h3>
+    </div>
+
+    <div class="tres-columnas">
+      <div class="col-text">
+        <section>
+          <strong><h2>1:</h2></strong>
+        </section>
+        <article>
+          <p>
+<article>
+  <section>
+    <h3>1:00 – Pistons vs Celtics</h3>
+    <p><strong>Favorito:</strong> Celtics – 76%<br>Pistons – 24%</p>
+    <p>Boston es claramente superior en ambos lados de la cancha y llega con mayor profundidad y consistencia que Detroit.</p>
+  </section>
+
+  <section>
+    <h3>1:30 – Raptors vs Heat</h3>
+    <p><strong>Favorito:</strong> Heat – 55%<br>Raptors – 45%</p>
+    <p>Miami suele gestionar mejor los partidos cerrados y presenta una defensa más fiable. Toronto necesitará un alto acierto exterior.</p>
+  </section>
+
+  <section>
+    <h3>3:00 – Mavericks vs Jazz</h3>
+    <p><strong>Favorito:</strong> Mavericks – 59%<br>Jazz – 41%</p>
+    <p>Dallas cuenta con mayor talento ofensivo y mejores opciones en el cierre. Utah es competitivo, pero irregular defensivamente.</p>
+  </section>
+
+  <section>
+    <h3>3:30 – Rockets vs Nuggets</h3>
+    <p><strong>Favorito:</strong> Nuggets – 63%<br>Rockets – 37%</p>
+    <p>Denver impone su experiencia y eficiencia, especialmente con Jokic controlando el ritmo. Houston es intenso, pero comete errores clave.</p>
+  </section>
+
+  <section>
+    <h3>4:30 – Grizzlies vs Clippers</h3>
+    <p><strong>Favorito:</strong> Clippers – 56%<br>Grizzlies – 44%</p>
+    <p>Los Clippers tienen más recursos ofensivos y experiencia en partidos importantes. Memphis compite fuerte, pero sufre en ataque posicional.</p>
+  </section>
+
+</article>
+    
+          </p>
+      </div>
+
+      <div class="col-text">
+        <section>
+          <strong><h2>2:</h2></strong>
+        </section>
+                  <p>
+<div class="card">
+    <div class="match-title"><span class="time">01:00 CET:</span> <strong>Detroit Pistons</strong> vs. <strong>Boston Celtics</strong></div>
+    <div class="prediction"><br><br>
+        <p><strong>Equipo Favorito:</strong> <span class="winner"><strong>Detroit Pistons</strong></span><br><br>
+        <strong>Probabilidad de Victoria:</strong> Pistons (Aprox. 55%) / Celtics (Aprox. 45%)<br><br>
+        <strong>Razón Principal:</strong> Puede parecer arriesgado apostar contra los Celtics en Boston, pero los <strong>Pistons</strong> (20-5) son la realidad más sólida de esta temporada. Vienen de aplastar a los Hawks (+27) y su físico está abrumando a los rivales. Los Celtics mostraron grietas perdiendo contra Milwaukee y podrían sufrir contra la intensidad de Detroit.</p>
+    </div><br><br><br>
+</div>
+
+<div class="card">
+    <div class="match-title"><span class="time">01:30 CET:</span> <strong>Toronto Raptors</strong> vs. <strong>Miami Heat</strong></div>
+    <div class="prediction"><br><br>
+        <p><strong>Equipo Favorito:</strong> <span class="winner"><strong>Miami Heat</strong></span><br><br>
+        <strong>Probabilidad de Victoria:</strong> Heat (Aprox. 60%) / Raptors (Aprox. 40%)<br><br>
+        <strong>Razón Principal:</strong> El "Heat Culture" suele hacerse fuerte en casa (Kaseya Center). Los Raptors son un equipo combativo, pero en duelo de defensas y ritmo lento, Miami tiene más experiencia para cerrar el partido en el último cuarto.</p>
+    </div><br><br><br>
+</div>
+
+<div class="card">
+    <div class="match-title"><span class="time">03:00 CET:</span> <strong>Dallas Mavericks</strong> vs. <strong>Utah Jazz</strong></div>
+    <div class="prediction"><br><br>
+        <p><strong>Equipo Favorito:</strong> <span class="winner"><strong>Utah Jazz</strong></span><br><br>
+        <strong>Probabilidad de Victoria:</strong> Jazz (Aprox. 52%) / Mavericks (Aprox. 48%)<br><br>
+        <strong>Razón Principal:</strong> Duelo de la parte baja del Oeste. Los <strong>Mavericks</strong> (10-16) ganaron a los Nets, pero los <strong>Jazz</strong> (9-15) vienen de anotar 130 puntos contra los Grizzlies. Jugando en la altura de Salt Lake City y con la capacidad anotadora que mostraron anoche, Utah tiene una ligera ventaja.</p>
+    </div><br><br><br>
+</div>
+
+<div class="card" style="border: 2px solid #ffd700;">
+    <div class="match-title"><span class="time">03:30 CET:</span> <strong>Houston Rockets</strong> vs. <strong>Denver Nuggets</strong> <span style="color:#ffd700; float:right;">★ PARTIDO DE LA NOCHE</span></div>
+    <div class="prediction"><br><br>
+        <p><strong>Equipo Favorito:</strong> <span class="winner"><strong>Denver Nuggets</strong></span><br><br>
+        <strong>Probabilidad de Victoria:</strong> Nuggets (Aprox. 55%) / Rockets (Aprox. 45%)<br><br>
+        <strong>Razón Principal:</strong> Choque de trenes. Los <strong>Rockets</strong> (16-6) son la sensación joven, pero los <strong>Nuggets</strong> (18-6) juegan en casa y cuentan con la ventaja de la altura y la química de Jokic. Será un partido muy ofensivo, pero Denver rara vez pierde estos duelos directos por la cima del Oeste en su estadio.</p>
+    </div><br><br><br>
+</div>
+
+<div class="card">
+    <div class="match-title"><span class="time">04:30 CET:</span> <strong>Memphis Grizzlies</strong> vs. <strong>Los Angeles Clippers</strong></div>
+    <div class="prediction"><br><br>
+        <p><strong>Equipo Favorito:</strong> <span class="winner"><strong>Memphis Grizzlies</strong></span><br><br>
+        <strong>Probabilidad de Victoria:</strong> Grizzlies (Aprox. 65%) / Clippers (Aprox. 35%)<br><br>
+        <strong>Razón Principal:</strong> Los <strong>Clippers</strong> (6-19) están en caída libre y tienen uno de los peores récords de la liga. Aunque los <strong>Grizzlies</strong> vienen de perder un tiroteo contra Utah, son un equipo mucho más estructurado y competitivo ahora mismo. Memphis debería llevarse la victoria en Los Ángeles.</p>
+    </div><br><br><br>
+</div>
+          </p>
+      </div>
+
+
+      <div class="col-text">
+        <section>
+          <strong><h2>3:</h2></strong>
+        </section>
+                 <p>
+<article>
+  <ul>
+    <li><strong>01:00 – Pistons vs Celtics</strong><br><br>
+      <strong>Favorito:</strong> Boston Celtics<br><br>
+      <strong>Probabilidad:</strong> 60%<br><br>
+      <strong>Clave:</strong> Tatum y Brown dan mayor consistencia en ambos lados; Pistons compiten con físico y ritmo, pero sufren en cierres ante defensas élite.
+    </li><br><br><br>
+    <li><strong>01:30 – Raptors vs Heat</strong><br><br>
+      <strong>Favorito:</strong> Miami Heat<br><br>
+      <strong>Probabilidad:</strong> 55%<br><br>
+      <strong>Clave:</strong> Butler y Adebayo sostienen el plan defensivo; Raptors con Brandon Ingram y Barnes tienen talento, pero el Heat ejecuta mejor en partidos cerrados.
+    </li><br><br>
+    <strong><p>Butler no está en Miami, le digo</p></strong><br><br>
+    <strong>Favorito:</strong> Toronto Raptors<br><br>
+      <strong>Probabilidad:</strong> 56%<br><br>
+          <strong>Clave:</strong> Raptors con Brandon Ingram y Scottie Barnes como referentes ofensivos. Heat sin Butler dependen de Bam Adebayo y Tyler Herro, pero pierden poder en partidos cerrados.<br><br><br>
+    <li><strong>03:00 – Mavericks vs Jazz</strong><br><br>
+      <strong>Favorito:</strong> Dallas Mavericks<br><br>
+      <strong>Probabilidad:</strong> 62%<br><br>
+      <strong>Clave:</strong> Anthony Davis + Kyrie ofrecen ventaja en interior y perímetro; Jazz irregulares en rebote y defensa de pick-and-roll.
+    </li><br><br><br>
+    <li><strong>03:30 – Rockets vs Nuggets</strong><br><br>
+      <strong>Favorito:</strong> Denver Nuggets<br><br>
+      <strong>Probabilidad:</strong> 60%<br><br>
+      <strong>Clave:</strong> Jokic impone en creación y rebote; Rockets con Jalen Green y Sengun compiten, pero pierden eficacia en media cancha contra Denver.
+    </li><br><br>
+    <strong><p>Jalen Green no está en Rockets, le digo</p></strong><br><br>
+          <strong>Clave:</strong> Raptors con Brandon Ingram y Scottie Barnes como referentes ofensivos. Heat sin Butler dependen de Bam Adebayo y Tyler Herro, pero pierden poder en partidos cerrados.<br><br><br>
+    <li><strong>04:30 – Grizzlies vs Clippers</strong><br><br>
+      <strong>Favorito:</strong> Memphis Grizzlies<br><br>
+      <strong>Probabilidad:</strong> 57%<br><br>
+      <strong>Clave:</strong> Mejora defensiva y mayor solidez colectiva; Clippers siguen irregulares en ataque y sufren en transición.
+    </li><br><br>
+  </ul>
+</article>
+
+          </p>
+      </div>
+    </div>
+    <h3>Conclusión Inicial</h3>
+<p>
+      Mal Copilot esta noche: ha vuelto a poner a Jimmy Butler en Miami y a Jalen Green en Rockets. Espero que ya se haya guardado este cambio en su memoria.<br>
+      ChatGPT ha dado como ganadores esta noche a Celtics, Miami, Dallas, Nuggets y Clippers.<br>
+      Gemini, por su parte, da como favoritos esta noche a Pistons, Miami, Utah, Nuggets y Memphis.<br>
+      Copilot, esta noche, da como ganadores a Celtics, Raptors (después de la corrección), Dallas, Nuggets y Memphis.<br>
+      Veremos esta noche: Copilot y Gemini vuelven a estar empatados, veremos qué pasa.<br>
+</p>
+
+
+    <h3>Resultado</h3>
+    <h3 class="col-title" style="margin-top: 20px; border-radius: 5px;">Partidos y resultados</h3>
+
+
+    <div class="dos-columnas">
+
+<div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Detroit Pistons</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="final-score">0</td>
+          </tr>
+          <tr>
+            <td>Boston Celtics</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="final-score">0</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+         01:00 CET (Pistons VS Celtics)
+      </p>
+    </div>
+</div>
+
+<div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Toronto Raptors</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="final-score">0</td>
+          </tr>
+          <tr>
+            <td>Miami Heat</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="final-score">0</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+         01:30 CET (Raptors VS Heat)
+      </p>
+    </div>
+</div>
+
+<div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dallas Mavericks</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="final-score">0</td>
+          </tr>
+          <tr>
+            <td>Utah Jazz</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="final-score">0</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+         03:00 CET (Mavericks VS Jazz)
+      </p>
+    </div>
+</div>
+
+<div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Houston Rockets</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="final-score">0</td>
+          </tr>
+          <tr>
+            <td>Denver Nuggets</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="final-score">0</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+         03:30 CET (Rockets VS Nuggets)
+      </p>
+    </div>
+</div>
+
+<div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Memphis Grizzlies</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="final-score">0</td>
+          </tr>
+          <tr>
+            <td>Los Angeles Clippers</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td class="final-score">0</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+         04:30 CET (Grizzlies VS Clippers)
+      </p>
+    </div>
+</div>
+</div>
+
+    <h3>Conclusión Final después de jugar</h3>
+    <p>
+      [Escribe aquí tu conclusión sobre los resultados de los partidos y si las IAs acertaron.]
+    </p>
+    <div class="volver">
+      <p>
+        <a href="../index.html">← Volver a la página principal de NBA</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Cierra el menú si el usuario hace clic fuera de él
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>
