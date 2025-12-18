@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uno X Dos IA - Hypermotion Hub</title>
+    <link rel="stylesheet" href="loterias.css">
+    <style>
+        /* ESTILOS ESPECÍFICOS TEMÁTICA SEGUNDA DIVISIÓN (EL BARRO) */
+        :root {
+            --hyper-charcoal: #333333;
+            --hyper-silver: #a6a6a6;
+            --mud-green: #4b5320; /* Verde militar / barro */
+            --grass-dead: #8b864e; /* Tono de césped seco */
+        }
+
+        body {
+            /* Fondo de césped descuidado: mezcla de verde oscuro, ocre y textura de tierra */
+            background-color: var(--mud-green);
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(139, 134, 78, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(101, 67, 33, 0.3) 0%, transparent 40%),
+                url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Textura rugosa */
+            background-blend-mode: overlay;
+        }
+
+        header {
+            background-color: var(--hyper-charcoal);
+            border-bottom: 5px solid var(--hyper-silver);
+        }
+
+        .hyper-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Título con estilo de placa de metal / industrial */
+        .industrial-title {
+            background: linear-gradient(to right, #444, #222);
+            color: #efefef;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid var(--hyper-silver);
+            border-radius: 0; /* Más cuadrado, más rudo */
+            margin-bottom: 30px;
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .industrial-title h2 {
+            margin: 0;
+            font-family: 'Impact', sans-serif;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Grid de Jornadas */
+        .jornadas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* Tarjeta de Jornada (Estilo Entrada Antigua de Estadio) */
+        .jornada-card {
+            background: #f0e6d2; /* Papel viejo / amarillento */
+            border-radius: 0;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid #555;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
+        }
+
+        .jornada-card:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 12px 12px 0px rgba(0,0,0,0.3);
+            background-color: #fff;
+        }
+
+        .card-header {
+            background-color: #333;
+            color: white;
+            width: 100%;
+            padding: 10px 0;
+            font-size: 0.9em;
+            text-align: center;
+            border-bottom: 2px dashed #f0e6d2;
+        }
+
+        .jornada-card .content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .jornada-card h3 {
+            color: #1a1a1a;
+            margin: 10px 0;
+            font-size: 1.5em;
+            text-decoration: underline;
+        }
+
+        .jornada-card .mud-label {
+            display: inline-block;
+            background: #654321; /* Color barro */
+            color: white;
+            padding: 5px 12px;
+            font-size: 0.7em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        /* Balones de fútbol antiguos (estilo cuero) */
+        .vintage-ball-bg {
+            position: fixed;
+            opacity: 0.1;
+            z-index: -1;
+            filter: sepia(1);
+        }
+    </style>
+</head>
+<body>
+
+    <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" class="vintage-ball-bg" style="top: 20%; left: 10%; width: 150px;">
+    <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" class="vintage-ball-bg" style="top: 65%; left: 75%; width: 220px;">
+
+    <header>
+        <h1>⚔️ LIGA HYPERMOTION IA ⚔️</h1>
+    </header>
+
+    <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="index.html">Inicio</a>
+        <a href="#">NBA</a>
+        <a href="#">Liga EA Sports</a>
+        <a href="#">Liga Hypermotion</a>
+        <a href="#">Loterías</a>
+      </div>
+    </div>
+  </nav>
+
+    <div class="hyper-container">
+        <div class="industrial-title">
+            <h2>Predicciones de Segunda - Jornada a Jornada</h2>
+        </div>
+
+        <div class="jornadas-grid">
+            
+            <a href="/Segunda/Jornada17Segunda.html" class="jornada-card">
+                <div class="card-header">JORNADA 17</div>
+                <div class="content">
+                    <div class="mud-label">Próximos Partidos</div>
+                    <h3>Duelos Directos</h3>
+                    <p>Análisis de los campos más difíciles de la categoría.</p>
+                    <small style="color: #444; font-weight: bold;">IA: Gemini + GPT-4</small>
+                </div>
+            </a>
+
+            <a href="/Segunda/Jornada18Segunda.html" class="jornada-card">
+                <div class="card-header">JORNADA 18</div>
+                <div class="content">
+                    <div class="mud-label">Archivo de Datos</div>
+                    <h3>Lucha por el Playoff</h3>
+                    <p>Predicciones de empates: La especialidad de la casa.</p>
+                    <small style="color: #444;">Finalizado: 12 Marzo</small>
+                </div>
+            </a>
+
+            <a href="/Segunda/Jornada19Segunda.html" class="jornada-card">
+                <div class="card-header">JORNADA 19</div>
+                <div class="content">
+                    <div class="mud-label">Histórico</div>
+                    <h3>Resumen Semanal</h3>
+                    <p>Análisis de goles a balón parado y porterías a cero.</p>
+                    <small style="color: #444;">Finalizado: 05 Marzo</small>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

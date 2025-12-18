@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uno X Dos IA - Fútbol Hub</title>
+    <link rel="stylesheet" href="loterias.css">
+    <style>
+        /* ESTILOS ESPECÍFICOS TEMÁTICA FÚTBOL */
+        :root {
+            --laliga-red: #ee1c2e;
+            --pitch-green: #2d5a27;
+            --pitch-line: rgba(255, 255, 255, 0.5);
+        }
+
+        body {
+            /* Fondo que simula el césped de un estadio */
+            background-color: var(--pitch-green);
+            background-image: 
+                linear-gradient(90deg, var(--pitch-line) 1px, transparent 1px),
+                linear-gradient(var(--pitch-line) 1px, transparent 1px),
+                url('https://www.transparenttextures.com/patterns/pinstriped-suit.png'); /* Textura de rayas de césped */
+            background-size: 100px 100px, 100px 100px, auto;
+        }
+
+        header {
+            background-color: #111; /* Negro elegante estilo LaLiga */
+            border-bottom: 5px solid var(--laliga-red);
+        }
+
+        .soccer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Título con estilo de túnel de vestuarios / marcador */
+        .stadium-title {
+            background: linear-gradient(145deg, #222, #000);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-left: 10px solid var(--laliga-red);
+            border-radius: 4px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .stadium-title h2 {
+            margin: 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Grid de Jornadas */
+        .jornadas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* Tarjeta de Jornada (Estilo Cromo de Fútbol) */
+        .jornada-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0; /* Para que la cabecera de la tarjeta ocupe todo el ancho */
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .jornada-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            border-color: var(--laliga-red);
+        }
+
+        /* Cabecera de la tarjeta con color */
+        .card-header {
+            background-color: #f4f4f4;
+            width: 100%;
+            padding: 15px 0;
+            border-bottom: 3px solid var(--laliga-red);
+        }
+
+        .jornada-card img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        .jornada-card .content {
+            padding: 15px;
+        }
+
+        .jornada-card h3 {
+            color: #111;
+            margin: 10px 0;
+            font-size: 1.3em;
+        }
+
+        .jornada-card .badge {
+            display: inline-block;
+            background: var(--laliga-red);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 2px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Balones de fútbol decorativos flotantes */
+        .soccer-bg {
+            position: fixed;
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" class="soccer-bg" style="top: 15%; left: 80%; width: 120px;">
+    <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" class="soccer-bg" style="top: 70%; left: 5%; width: 180px;">
+
+    <header>
+        <h1>⚽ LIGA EA SPORTS IA ⚽</h1>
+    </header>
+
+ <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="index.html">Inicio</a>
+        <a href="#">NBA</a>
+        <a href="#">Liga EA Sports</a>
+        <a href="#">Liga Hypermotion</a>
+        <a href="#">Loterías</a>
+      </div>
+    </div>
+  </nav>
+
+    <div class="soccer-container">
+        <div class="stadium-title">
+            <h2>Panel de Análisis - Primera División</h2>
+        </div>
+
+        <div class="jornadas-grid">
+            
+            <a href="#" class="jornada-card">
+                <div class="card-header">
+                    <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balon-futbol">
+                </div>
+                <div class="content">
+                    <div class="badge">EN DIRECTO / IA</div>
+                    <h3>Jornada 28</h3>
+                    <p>Análisis del Clásico y lucha por el descenso.</p>
+                    <small style="color: #666;">Actualizado: Hace 2 horas</small>
+                </div>
+            </a>
+
+            <a href="#" class="jornada-card">
+                <div class="card-header">
+                    <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balon-futbol">
+                </div>
+                <div class="content">
+                    <div class="badge" style="background: #333;">FINALIZADA</div>
+                    <h3>Jornada 27</h3>
+                    <p>Balance de aciertos: 7/10 resultados previstos.</p>
+                    <small style="color: #666;">10 Marzo 2025</small>
+                </div>
+            </a>
+
+            <a href="#" class="jornada-card">
+                <div class="card-header">
+                    <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balon-futbol">
+                </div>
+                <div class="content">
+                    <div class="badge" style="background: #333;">FINALIZADA</div>
+                    <h3>Jornada 26</h3>
+                    <p>Análisis estadístico xG de los equipos locales.</p>
+                    <small style="color: #666;">03 Marzo 2025</small>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
