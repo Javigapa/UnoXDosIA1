@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Predicciones Noche 59 Uno X Dos IA</title>
+  <link rel="stylesheet" href="../index.css">
+  <style>
+    body {
+      background-color: #c1731f;
+    }
+    /* Estilos específicos para la página de artículo */
+    .article-container {
+      max-width: 1000px;
+      /* Aumentamos el ancho para que las 3 columnas quepan bien */
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #cf914e;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .article-container h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 2.2em;
+    }
+    .article-meta {
+      color: #7f8c8d;
+      font-style: italic;
+      margin-bottom: 25px;
+      display: block;
+    }
+    .PartidosDelDia {
+      color: black;
+      font-size: 1.2em;
+      text-align: center;
+    }
+    /* Contenedor de las Tres Columnas (Para el ANÁLISIS) */
+    .tres-columnas {
+      display: grid;
+      /* Define 3 columnas de igual ancho */
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      /* Espacio entre las columnas */
+      margin: 30px 0;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+    /* Contenedor de las Dos Columnas (CLAVE para RESULTADOS) */
+    .dos-columnas {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* Define 2 columnas de igual ancho */
+      gap: 15px;
+      /* Reducimos el gap para ganar espacio */
+      margin: 30px auto;
+      /* Usamos margin auto para centrar el contenedor */
+      max-width: 98%;
+      /* Le damos un ancho máximo grande */
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+
+
+    /* Estilo para los Títulos de las Columnas */
+    .col-title {
+      background-color: #34495e;
+      /* Gris Azulado */
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 0;
+      /* Asegura que no haya espacio extra sobre el contenido */
+      height: fit-content;
+      /* Se ajusta a la altura del texto */
+    }
+
+    /* Estilo para el Texto de las Columnas */
+    .col-text {
+      background-color: #ecf0f1;
+      /* Gris Claro */
+      padding: 15px;
+      border-radius: 0 0 5px 5px;
+      border: 1px solid #bdc3c7;
+      margin-top: 0;
+      /* Pega el texto al título */
+    }
+    .col-text p {
+      margin: 0;
+      line-height: 1.5;
+    }
+    /* --- Estilos para la Tabla de Resultados (7 columnas) --- */
+    .results-table-container {
+      margin: 5px auto;
+      /* Reducido para ahorrar espacio vertical */
+      width: 100%;
+      /* Ocupa el 100% de su contenedor (col-text) */
+      overflow-x: auto;
+      /* Permite desplazamiento horizontal si la tabla es muy ancha */
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      /* Une los bordes de las celdas */
+      text-align: center;
+      font-size: 1em;
+      /* Ligeramente más pequeña la fuente */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .results-table th, .results-table td {
+      padding: 6px 4px;
+      /* Reducción drástica del padding para que quepa */
+      border: 1px solid #ddd;
+      white-space: nowrap;
+    }
+
+    .results-table thead th {
+      background-color: #34495e;
+      /* Encabezado Oscuro */
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    /* Columna de Equipos (Primera columna) */
+    .results-table tbody tr td:first-child {
+      background-color: #ecf0f1;
+      /* Fondo claro */
+      font-weight: bold;
+      text-align: left;
+      padding-left: 8px;
+      /* Reducido */
+      color: #2c3e50;
+    }
+
+    /* Columna de Resultado Final (Columna más grande y destacada) */
+    .final-score {
+      background-color: #e74c3c;
+      /* Rojo Destacado */
+      color: white;
+      font-size: 1.2em;
+      /* Ligeramente más pequeña */
+      font-weight: 900;
+      width: 15%;
+    }
+
+    /* --- MEDIA QUERY para MOVILES: Las columnas se apilan en 1 --- */
+    @media (max-width: 768px) {
+      .tres-columnas, .dos-columnas {
+        /* Aplica a ambos tipos de columna */
+        grid-template-columns: 1fr;
+        /* Una sola columna en móvil */
+      }
+      .article-container {
+        padding: 15px;
+        /* Reducir padding en móvil */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
+
+<nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="index.html">Inicio</a>
+        <a href="NBA.html">NBA</a>
+        <a href="LIgaEsports.html">Liga EA Sports</a>
+        <a href="Hypermotion.html">Liga Hypermotion</a>
+        <a href="Loterias.html">Loterías</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="article-container">
+    <div class="PartidosDelDia">
+      <h1>🏀 Partidos Noche 59:</h1>
+      <p>
+        1:00 AM: Heat VS Celtics<br>
+
+1:00 AM: 76ers VS Knicks<br>
+
+1:30 AM: Spurs VS Hawks<br>
+
+1:30 AM: Bulls VS Cavaliers<br>
+
+3:30 AM: Thunder VS Timberwolves<br>
+      </p>
+    </div>
+    <div class="tres-columnas">
+      <h3 class="col-title">1. Chat GPT</h3>
+      <h3 class="col-title">2. Gemini</h3>
+      <h3 class="col-title">3. Copilot </h3>
+    </div>
+
+    <div class="tres-columnas">
+      <div class="col-text">
+        <section>
+          <strong><h2>1:</h2></strong>
+        </section>
+        <article>
+          <p>
+<article>
+  <section>
+    <h3>1:00 AM – Heat vs Celtics</h3>
+    <p><strong>Favorito:</strong> Celtics – 60%<br>Heat – 40%</p>
+    <p>Boston llega con mayor consistencia ofensiva y una defensa más sólida en media cancha. Miami compite bien, pero suele sufrir cuando el ritmo sube.</p>
+  </section>
+
+  <section>
+    <h3>1:00 AM – 76ers vs Knicks</h3>
+    <p><strong>Favorito:</strong> 76ers – 56%<br>Knicks – 44%</p>
+    <p>Philadelphia presenta más talento diferencial y mejores cierres. New York es intenso, aunque menos eficiente en ataque posicional.</p>
+  </section>
+
+  <section>
+    <h3>1:30 AM – Spurs vs Hawks</h3>
+    <p><strong>Favorito:</strong> Hawks – 55%<br>Spurs – 45%</p>
+    <p>Atlanta tiene mayor poder ofensivo. San Antonio, con Wembanyama, mejora mucho en defensa y puede igualar el duelo si controla el rebote.</p>
+  </section>
+
+  <section>
+    <h3>1:30 AM – Bulls vs Cavaliers</h3>
+    <p><strong>Favorito:</strong> Cavaliers – 63%<br>Bulls – 37%</p>
+    <p>Cleveland es más equilibrado en ambos lados de la cancha. Chicago depende demasiado del acierto exterior.</p>
+  </section>
+
+  <section>
+    <h3>3:30 AM – Thunder vs Timberwolves</h3>
+    <p><strong>Favorito:</strong> Timberwolves – 52%<br>Thunder – 48%</p>
+    <p>Partido muy igualado. Minnesota destaca por su defensa y físico, mientras que OKC compensa con ritmo y ejecución ofensiva.</p>
+  </section>
+
+</article>
+
+          </p>
+      </div>
+
+      <div class="col-text">
+        <section>
+          <strong><h2>2:</h2></strong>
+        </section>
+                  <p>
+<div class="card">
+    <div class="match-title"><span class="time">01:00 CET:</span> <strong>Miami Heat</strong> vs. <strong>Boston Celtics</strong></div>
+    <div class="prediction"><br><br>
+        <p><strong>Equipo Favorito:</strong> <span class="winner"><strong>Boston Celtics</strong></span><br><br>
+        <strong>Probabilidad de Victoria:</strong> Celtics (60%) / Heat (40%)<br><br>
+        <strong>Razón Principal:</strong> Los <strong>Celtics</strong> (15-11) necesitan recuperar sensaciones en el TD Garden tras su reciente tropiezo contra Detroit. Aunque el <strong>Heat</strong> viene de ganar en Brooklyn, el cansancio del <i>back-to-back</i> y la profundidad de banquillo de Boston deberían inclinar la balanza para los locales.</p>
+    </div>
+</div><br><br><br>
+
+<div class="card" style="border: 2px solid #006bb6;">
+    <div class="match-title"><span class="time">01:00 CET:</span> <strong>Philadelphia 76ers</strong> vs. <strong>New York Knicks</strong></div>
+    <div class="prediction"><br><br>
+        <p><strong>Equipo Favorito:</strong> <span class="winner"><strong>New York Knicks</strong></span><br><br>
+        <strong>Probabilidad de Victoria:</strong> Knicks (70%) / 76ers (30%)<br><br>
+        <strong>Razón Principal:</strong> El Madison Square Garden es hoy por hoy el pabellón más difícil de la NBA (13-1 local). Los <strong>Knicks</strong> (19-7) celebrarán su título de Copa ante su gente. Aunque Tyrese Maxey está a nivel MVP, los Sixers sufrirán para contener el juego colectivo de los campeones.</p>
+    </div>
+</div><br><br><br>
+
+<div class="card">
+    <div class="match-title"><span class="time">01:30 CET:</span> <strong>San Antonio Spurs</strong> vs. <strong>Atlanta Hawks</strong></div>
+    <div class="prediction"><br><br>
+        <p><strong>Equipo Favorito:</strong> <span class="winner"><strong>San Antonio Spurs</strong></span><br><br>
+        <strong>Probabilidad de Victoria:</strong> Spurs (65%) / Hawks (35%)<br><br>
+        <strong>Razón Principal:</strong> Los <strong>Spurs</strong> (19-7) son uno de los equipos más sólidos de la liga fuera de casa. **Wembanyama** querrá aprovechar la irregularidad defensiva de Atlanta (que viene de encajar 133 puntos ante Charlotte) para dominar la zona desde el salto inicial.</p>
+    </div><br><br><br>
+</div>
+
+<div class="card">
+    <div class="match-title"><span class="time">01:30 CET:</span> <strong>Chicago Bulls</strong> vs. <strong>Cleveland Cavaliers</strong></div>
+    <div class="prediction"><br><br>
+        <p><strong>Equipo Favorito:</strong> <span class="winner"><strong>Cleveland Cavaliers</strong></span><br><br>
+        <strong>Probabilidad de Victoria:</strong> Cavaliers (60%) / Bulls (40%)<br><br>
+        <strong>Razón Principal:</strong> Los <strong>Cavs</strong> (15-13) se hacen fuertes en el Rocket Arena. Donovan Mitchell está en racha anotadora y los <strong>Bulls</strong>, a pesar del buen momento de Josh Giddey, suelen sufrir contra equipos con una rotación interior tan potente como la de Cleveland.</p>
+    </div><br><br><br>
+</div>
+
+<div class="card" style="border: 2px solid #ffd700;">
+    <div class="match-title"><span class="time">03:30 CET:</span> <strong>Oklahoma City Thunder</strong> vs. <strong>Minnesota Timberwolves</strong> <span style="color:#ffd700; float:right;">★ PARTIDO DE LA NOCHE</span></div>
+    <div class="prediction"><br><br>
+        <p><strong>Equipo Favorito:</strong> <span class="winner"><strong>Oklahoma City Thunder</strong></span><br><br>
+        <strong>Probabilidad de Victoria:</strong> Thunder (55%) / Timberwolves (45%)<br><br>
+        <strong>Razón Principal:</strong> Es el duelo definitivo por el dominio del Oeste. El <strong>Thunder</strong> (25-2) es casi invencible, pero Minnesota es el equipo que mejor puede defender a SGA. Será un partido de pocos puntos y mucha intensidad defensiva. Apostamos por el líder por su capacidad de cerrar mejor los finales apretados.</p>
+    </div><br><br><br>
+</div>
+
+          </p>
+      </div>
+
+
+      <div class="col-text">
+        <section>
+          <strong><h2>3:</h2></strong>
+        </section>
+                 <p>
+<p>
+    <article>
+  <ul>
+    <li><strong>01:00 – Heat vs Celtics</strong><br><br>
+      <strong>Favorito:</strong> Boston Celtics<br><br>
+      <strong>Probabilidad:</strong> 63%<br><br>
+      <strong>Clave:</strong> Miami sin Butler depende de Adebayo y Herro, pero Boston llega con Tatum, Brown y una defensa mucho más sólida.
+    </li><br><br><br>
+
+    <li><strong>01:00 – 76ers vs Knicks</strong><br><br>
+      <strong>Favorito:</strong> New York Knicks<br><br>
+      <strong>Probabilidad:</strong> 58%<br><br>
+      <strong>Clave:</strong> Knicks con Brunson y Karl-Anthony Towns forman un bloque más estable. Los 76ers siguen irregulares sin una estrella dominante.
+    </li><br><br><br>
+
+    <li><strong>01:30 – Spurs vs Hawks</strong><br><br>
+      <strong>Favorito:</strong> San Antonio Spurs<br><br>
+      <strong>Probabilidad:</strong> 60%<br><br>
+      <strong>Clave:</strong> Wembanyama + De’Aaron Fox dan ventaja en ambos lados. Hawks dependen demasiado de Trae Young y su defensa es floja.
+    </li><br><br><br>
+
+    <li><strong>01:30 – Bulls vs Cavaliers</strong><br><br>
+      <strong>Favorito:</strong> Cleveland Cavaliers<br><br>
+      <strong>Probabilidad:</strong> 59%<br><br>
+      <strong>Clave:</strong> Garland y Mobley sostienen un equipo más equilibrado. Bulls con Giddey y Vucevic compiten, pero sufren en defensa.
+    </li><br><br><br>
+
+    <li><strong>03:30 – Thunder vs Timberwolves</strong><br><br>
+      <strong>Favorito:</strong> Oklahoma City Thunder<br><br>
+      <strong>Probabilidad:</strong> 65%<br><br>
+      <strong>Clave:</strong> Shai Gilgeous-Alexander y Holmgren mantienen a OKC como uno de los mejores equipos del año. Wolves con Edwards y Randle son peligrosos, pero menos consistentes.
+    </li><br><br><br>
+  </ul>
+</article>
+          </p>
+      </div>
+    </div>
+    <h3>Conclusión Inicial</h3>
+<p>
+      5 partidos esta noche en la NBA. Vamos a ver qué dicen las IAs.<br>
+      ChatGPT apuesta por Celtics, 76ers, Hawks, Cavaliers y Timberwolves.<br>
+      Gemini apuesta por Celtics, Knicks, Spurs, Cavaliers y Thunder.<br>
+      Copilot apuesta por Celtics, Knicks, Spurs, Cavaliers y Thunder.<br>
+      Gemini y Copilot apuestan por los mismos equipos, mientras que ChatGPT difiere completamente. Veremos.<br>
+</p>
+
+    <h3>Resultado</h3>
+    <h3 class="col-title" style="margin-top: 20px; border-radius: 5px;">Partidos y resultados</h3>
+
+
+    <div class="dos-columnas">
+
+<div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Miami Heat</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Boston Celtics</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+         1:00 AM | TD Garden
+      </p>
+    </div>
+</div>
+
+<div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Phila. 76ers</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>N.Y. Knicks</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+         1:00 AM | Madison Square Garden
+      </p>
+    </div>
+</div>
+
+<div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>S.A. Spurs</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Atlanta Hawks</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+         1:30 AM | State Farm Arena
+      </p>
+    </div>
+</div>
+
+<div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Chicago Bulls</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Cleveland Cavs</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+         1:30 AM | Rocket Arena
+      </p>
+    </div>
+</div>
+
+<div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>OKC Thunder</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Min. T-Wolves</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+         3:30 AM | Target Center
+      </p>
+    </div>
+</div>
+</div>
+
+    <h3>Conclusión Final después de jugar</h3>
+    <p>
+      [Escribe aquí tu conclusión sobre los resultados de los partidos y si las IAs acertaron.]
+    </p>
+    <div class="volver">
+      <p>
+        <a href="../index.html">← Volver a la página principal de NBA</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Cierra el menú si el usuario hace clic fuera de él
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>

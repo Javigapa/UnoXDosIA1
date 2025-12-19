@@ -4,22 +4,76 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Uno X Dos IA - Predicciones Loterías y Deportes</title>
-  <link rel="stylesheet" href="loterias.css"> </head>
+  <link rel="stylesheet" href="loterias.css"> 
+  <style>
+    /* Estilos para las tarjetas de acceso a deportes */
+    .sports-hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .sport-portal-card {
+      background: #fff;
+      border: 2px solid var(--color-main);
+      border-radius: 12px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .sport-portal-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+      border-color: var(--color-secondary);
+    }
+
+    .sport-portal-card img {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 15px;
+    }
+
+    .sport-portal-card h3 {
+      margin: 10px 0;
+      color: var(--color-main);
+      font-size: 1.4em;
+    }
+
+    .btn-portal {
+      margin-top: 15px;
+      background-color: var(--color-main);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
 <body>
 
   <header>
     <h1>⚽ Uno X Dos IA 🧠</h1>
   </header>
 
- <nav>
+  <nav>
     <div class="dropdown">
       <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
       <div class="dropdown-content" id="myDropdown">
         <a href="index.html">Inicio</a>
-        <a href="#">NBA</a>
-        <a href="#">Liga EA Sports</a>
-        <a href="#">Liga Hypermotion</a>
-        <a href="#">Loterías</a>
+        <a href="NBA.html">NBA</a>
+        <a href="LIgaEsports.html">Liga EA Sports</a>
+        <a href="Hypermotion.html">Liga Hypermotion</a>
+        <a href="predicciones.html">Loterías (Pronósticos Diarios)</a>
       </div>
     </div>
   </nav>
@@ -28,460 +82,179 @@
 
     <aside class="sidebar">
       <h2>✨ Pronóstico IA</h2>
-        <div class="sidebar-section">
-        <h3>🔢 Números de Alta Frecuencia Euromillones</h3>
-        <p>
-          Los números con mayor probabilidad de aparición según el algoritmo de la semana: **24, 29, 42, 41, 45, 5, 12**.
-        </p>
+      <div class="sidebar-section">
+        <h3>🔢 Alta Frecuencia Euromillones</h3>
+        <p>Los números con mayor probabilidad: **24, 29, 42, 41, 45, 5, 12**.</p>
       </div>
       <div class="sidebar-section">
-        <h3>📉 Números Fríos (Baja Frecuencia Euromillones)</h3>
-        <p>
-          Números que el modelo ha descartado por patrones anómalos: **11, 16, 26, 34, 22**.
-        </p>
+        <h3>📉 Números Fríos Euromillones</h3>
+        <p>Modelos descartados: **11, 16, 26, 34, 22**.</p>
       </div>
       <div class="sidebar-section">
-        <h3>🔢 Números de Alta Frecuencia Primitiva</h3>
-        <p>
-          Los números con mayor probabilidad de aparición según el algoritmo de la semana: **46, 38, 19, 16, 39, 36, 25, 8, 40, 23, 43, 24**.
-        </p>
+        <h3>🔢 Alta Frecuencia Primitiva</h3>
+        <p>Números con mayor probabilidad: **46, 38, 19, 16, 39, 36, 25, 8, 40, 23, 43, 24**.</p>
       </div>
       <div class="sidebar-section">
-        <h3>📉 Números Fríos (Baja Frecuencia Primitiva)</h3>
-        <p>
-          Números que el modelo ha descartado por patrones anómalos: **27, 48, 31, 3, 35**.
-        </p>
+        <h3>📉 Números Fríos Primitiva</h3>
+        <p>Modelos descartados: **27, 48, 31, 3, 35**.</p>
       </div>
       <div class="sidebar-section">
-        <h3>🔢 Números de Alta Frecuencia Bonoloto</h3>
-        <p>
-          Los números con mayor probabilidad de aparición según el algoritmo de la semana: **1, 7, 26, 8, 24, 20, 21, 42, 44, 46**.
-        </p>
+        <h3>🔢 Alta Frecuencia Bonoloto</h3>
+        <p>Números con mayor probabilidad: **1, 7, 26, 8, 24, 20, 21, 42, 44, 46**.</p>
       </div>
       <div class="sidebar-section">
-        <h3>📉 Números Fríos (Baja Frecuencia Bonoloto)</h3>
-        <p>
-          Números que el modelo ha descartado por patrones anómalos: **48**.
-        </p>
+        <h3>📉 Números Fríos Bonoloto</h3>
+        <p>Modelos descartados: **48**.</p>
       </div>
     </aside>
 
     <main class="main-content">
 
-       <section class="ranking-section">
-    <h2>🥇 Ranking de Aciertos por IA 🎯</h2>
-
-    <div class="ranking-grid">
-        <div class="ranking-sport">
+      <section class="ranking-section">
+        <h2>🥇 Ranking de Aciertos por IA 🎯</h2>
+        <div class="ranking-grid">
+          <div class="ranking-sport">
             <h3>💶 Euromillones</h3>
-            
             <table class="ranking-table" id="ranking-euromillones">
-                <thead>
-                    <tr>
-                        <th>Modelo</th>
-                        <th>Sorteos</th>
-                        <th>números
-                          acertados
-                        </th>
-                        <th>Ganancia Total (€)</th> </tr>
-                </thead>
-                <tbody>
-                    <tr data-ia="gemini">
-                        <td>**Gemini**</td>
-                        <td data-jornadas>1</td>
-                        <td data-aciertos>0</td>
-                        <td data-ganancia>0</td> </tr>
-                    <tr data-ia="chatgpt">
-                        <td>**Chat GPT**</td>
-                        <td data-jornadas>1</td>
-                        <td data-aciertos>2</td>
-                        <td data-ganancia>0</td>
-                    </tr>
-                    <tr data-ia="copilot">
-                        <td>**Copilot**</td>
-                        <td data-jornadas>1</td>
-                        <td data-aciertos>1</td>
-                        <td data-ganancia>0</td>
-                    </tr>
-                </tbody>
+              <thead>
+                <tr><th>Modelo</th><th>Sorteos</th><th>Aciertos</th><th>Ganancia (€)</th></tr>
+              </thead>
+              <tbody>
+                <tr data-ia="gemini"><td>**Gemini**</td><td data-jornadas>2</td><td data-aciertos>0</td><td data-ganancia>0</td></tr>
+                <tr data-ia="chatgpt"><td>**Chat GPT**</td><td data-jornadas>2</td><td data-aciertos>3</td><td data-ganancia>0</td></tr>
+                <tr data-ia="copilot"><td>**Copilot**</td><td data-jornadas>2</td><td data-aciertos>2</td><td data-ganancia>0</td></tr>
+              </tbody>
             </table>
-        </div>
+          </div>
 
-        <div class="ranking-sport">
+          <div class="ranking-sport">
             <h3>🍀 La Primitiva</h3>
             <table class="ranking-table" id="ranking-primitiva">
-                <thead>
-                    <tr>
-                        <th>Modelo</th>
-                        <th>Sorteos</th>
-                         <th>números
-                          acertados
-                        </th>
-                        <th>Ganancia Total (€)</th> </tr>
-                </thead>
-                <tbody>
-                    <tr data-ia="chatgpt">
-                        <td>**Chat GPT**</td>
-                        <td data-jornadas>3</td>
-                        <td data-aciertos>2</td>
-                        <td data-ganancia>0</td>
-                    </tr>
-                    <tr data-ia="gemini">
-                        <td>**Gemini**</td>
-                        <td data-jornadas>3</td>
-                        <td data-aciertos>1</td>
-                        <td data-ganancia>0</td>
-                    </tr>
-                    <tr data-ia="copilot">
-                        <td>**Copilot**</td>
-                        <td data-jornadas>3</td>
-                        <td data-aciertos>5</td>
-                        <td data-ganancia>0</td>
-                    </tr>
-                </tbody>
+              <thead>
+                <tr><th>Modelo</th><th>Sorteos</th><th>Aciertos</th><th>Ganancia (€)</th></tr>
+              </thead>
+              <tbody>
+                <tr data-ia="chatgpt"><td>**Chat GPT**</td><td data-jornadas>3</td><td data-aciertos>2</td><td data-ganancia>0</td></tr>
+                <tr data-ia="gemini"><td>**Gemini**</td><td data-jornadas>3</td><td data-aciertos>1</td><td data-ganancia>0</td></tr>
+                <tr data-ia="copilot"><td>**Copilot**</td><td data-jornadas>3</td><td data-aciertos>5</td><td data-ganancia>0</td></tr>
+              </tbody>
             </table>
-        </div>
+          </div>
 
-        <div class="ranking-sport">
+          <div class="ranking-sport">
             <h3>🔢 Bonoloto</h3>
-            
             <table class="ranking-table" id="ranking-bonoloto">
-                <thead>
-                    <tr>
-                        <th>Modelo</th>
-                        <th>Sorteos</th>
-                         <th>números
-                          acertados
-                        </th>
-                        <th>Ganancia Total (€)</th> </tr>
-                </thead>
-                <tbody>
-                    <tr data-ia="copilot">
-                        <td>**Copilot**</td>
-                        <td data-jornadas>6</td>
-                        <td data-aciertos>8</td>
-                        <td data-ganancia>0.5</td>
-                    </tr>
-                    <tr data-ia="gemini">
-                        <td>**Gemini**</td>
-                        <td data-jornadas>6</td>
-                        <td data-aciertos>2</td>
-                        <td data-ganancia>0</td>
-                    </tr>
-                    <tr data-ia="chatgpt">
-                        <td>**Chat GPT**</td>
-                        <td data-jornadas>6</td>
-                        <td data-aciertos>3</td>
-                        <td data-ganancia>0</td>
-                    </tr>
-                </tbody>
-            </table>1
+              <thead>
+                <tr><th>Modelo</th><th>Sorteos</th><th>Aciertos</th><th>Ganancia (€)</th></tr>
+              </thead>
+              <tbody>
+                <tr data-ia="copilot"><td>**Copilot**</td><td data-jornadas>7</td><td data-aciertos>11</td><td data-ganancia>4.5</td></tr>
+                <tr data-ia="gemini"><td>**Gemini**</td><td data-jornadas>7</td><td data-aciertos>3</td><td data-ganancia>0</td></tr>
+                <tr data-ia="chatgpt"><td>**Chat GPT**</td><td data-jornadas>7</td><td data-aciertos>4</td><td data-ganancia>0</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-    </div>
-</section>
-<br><br><br>
+      </section>
+
+      <section class="sports-portals">
+        <h2 style="text-align: center; margin-top: 40px;">🍀 Días Sorteos 🍀</h2>
+        <div class="sports-hub-grid">
+          <a href="/Loterías/1Sorteos.html" class="sport-portal-card">
+            <h3>13 de Diciembre 2025</h3>
+            <div class="btn-portal">ACCEDER</div>
+          </a>
+          <a href="/Loterías/2Sorteos.html" class="sport-portal-card">
+            <h3>14 de Diciembre 2025</h3>
+            <div class="btn-portal">ACCEDER</div>
+          </a>
+          <a href="/Loterías/3Sorteos.html" class="sport-portal-card">
+            <h3>15 de Diciembre 2025</h3>
+            <div class="btn-portal">ACCEDER</div>
+          </a>
+                    <a href="/Loterías/4Sorteos.html" class="sport-portal-card">
+            <h3>16 de Diciembre 2025</h3>
+            <div class="btn-portal">ACCEDER</div>
+          </a>
+                    <a href="/Loterías/5Sorteos.html" class="sport-portal-card">
+            <h3>17 de Diciembre 2025</h3>
+            <div class="btn-portal">ACCEDER</div>
+          </a>
+                    <a href="/Loterías/6Sorteos.html" class="sport-portal-card">
+            <h3>18 de Diciembre 2025</h3>
+            <div class="btn-portal">ACCEDER</div>
+          </a>
+                    <a href="/Loterías/7Sorteos.html" class="sport-portal-card">
+            <h3>19 de Diciembre 2025</h3>
+            <div class="btn-portal">ACCEDER</div>
+          </a>
+                    <a href="/Loterías/8Sorteos.html" class="sport-portal-card">
+            <h3>20 de Diciembre 2025</h3>
+            <div class="btn-portal">ACCEDER</div>
+          </a>
+        </div>
+      </section>
+
       <h2>📰 Estrategias y Análisis Estadístico</h2>
       <div class="articles-grid">
-
         <article class="article-card">
-          <h3>Números frios y calientes</h3>
+          <h3>Números fríos y calientes</h3>
           <p>
-✔ Que un número aparezca mucho (número “hot”) no significa que tenga más probabilidad real de salir en futuros sorteos.<br>
-✖️ Las loterías modernas son sorteos aleatorios y cada combinación nueva tiene la misma probabilidad matemática que cualquier otra.<br>
-Esto es un principio fundamental de probabilidad en juegos de azar.<br><br>
-
-Sin embargo, analizar frecuencias históricas puede ser útil por una razón práctica:<br>
-👉 Si eliges números menos populares, podrías no tener que compartir tanto el premio si llegas a ganar. (Esto no aumenta tu probabilidad de ganar, pero puede aumentar tu premio esperado compartido).    <br><br>      </p>
+            ✔ Que un número aparezca mucho (número “hot”) no significa que tenga más probabilidad real de salir en futuros sorteos.<br>
+            ✖️ Las loterías modernas son sorteos aleatorios y cada combinación nueva tiene la misma probabilidad matemática.<br><br>
+            Analizar frecuencias es útil por una razón práctica: Si eliges números menos populares, podrías no tener que compartir tanto el premio si llegas a ganar.
+          </p>
         </article>
 
         <article class="article-card">
           <h3>Filtros de Paridad: Pares vs. Impares</h3>
           <p>
-¿Qué es un filtro de paridad?<br><br>
-
-Es un criterio que selecciona combinaciones según cuántos números pares e impares contienen.<br><br>
-
-Ejemplos:<br>
-
-3 pares / 3 impares<br>
-
-4 pares / 2 impares<br>
-
-2 pares / 4 impares<br>
-
-En Euromillones:<br>
-
-3 pares / 2 impares<br>
-
-2 pares / 3 impares<br>
-
-¿Por qué se usan?<br>
-<br>
-Porque al analizar sorteos históricos, se observa que:
-<br>
-Las combinaciones extremas (todos pares o todos impares) aparecen muy pocas veces.
-<br>
-La mayoría de sorteos tiene una mezcla de pares e impares.
-<br><br>
-👉 Esto no es magia, es combinatoria.
-<br>
-Ejemplo: La Primitiva (6 números del 1 al 49)
-<br>
-Posibles repartos:
-<br>
-6P / 0I
-<br>
-5P / 1I
-<br>
-4P / 2I
-<br>
-3P / 3I
-<br>
-2P / 4I
-<br>
-1P / 5I
-<br>
-0P / 6I
-<br><br>
-Las combinaciones más numerosas (más probables en conjunto) son:
-<br>
-3P / 3I
-<br>
-4P / 2I
-<br>
-2P / 4I
-<br>
-Las menos probables:
-<br>
-6P / 0I
-<br>
-0P / 6I
-<br><br>
-⚠️ Ojo:
-Esto no significa que una combinación concreta 3P/3I sea más probable que otra concreta 6P/0I.<br>
-Cada combinación individual sigue teniendo la misma probabilidad.<br>
-<br><br>
-¿Entonces el filtro sirve o no?
-<br>
-Depende de para qué lo uses.
-<br>
-✅ Lo que SÍ hace
-<br>
-✔ Elimina combinaciones “raras”<br>
-✔ Hace que tus apuestas se parezcan más a sorteos reales<br>
-✔ Reduce el espacio de búsqueda si juegas muchas combinaciones<br>
-<br><br>
-❌ Lo que NO hace
-<br>
-✖ No aumenta la probabilidad de que salga tu combinación concreta<br>
-✖ No garantiza premios<br>
-✖ No predice números     <br>     </p>
+            Las combinaciones extremas (todos pares o todos impares) aparecen muy pocas veces. La mayoría de sorteos tiene una mezcla de pares e impares (3P/3I, 4P/2I).<br><br>
+            Esto no aumenta la probabilidad de ganar, pero hace que tus apuestas se parezcan más a los sorteos reales que ocurren históricamente.
+          </p>
         </article>
 
         <article class="article-card">
-          <h3>La Probabilidad Condicional en el Sorteo</h3>
+          <h3>La Probabilidad Condicional</h3>
           <p>
-1. ¿Qué es la probabilidad condicional?<br><br>
-
-Es la probabilidad de que ocurra un evento A, sabiendo que ya ocurrió otro evento B.
-<br>
-Se escribe:
-<br>
-𝑃
-(
-𝐴
-∣
-𝐵
-)
-P(A∣B)
-
-Ejemplo simple (fuera de lotería):
-<br>
-Probabilidad de que una persona tenga gafas (A)
-<br>
-sabiendo que es mayor de 60 años (B)
-<br>
-Aquí sí hay relación, por eso cambia la probabilidad.
-<br>
-2. ¿Dónde está la trampa en la lotería?
-<br><br>
-En lotería casi todos los eventos relevantes son independientes.
-<br>
-Ejemplo:
-<br>
-A = “sale el número 23”
-<br>
-B = “en el sorteo anterior no salió el 23”
-<br>
-👉
-<br>
-𝑃
-(
-23
-∣
-no salió antes<br>
-)
-=
-𝑃
-(
-23
-)
-P(23 no salió antes)=P(23)
-<br>
-Es decir: no cambia nada.
-<br>
-Por eso frases como:
-<br>
-“Después de 3 sorteos impares, toca uno par”
-<br>
-“Este número viene retrasado”
-<br><br>
-❌ Son falsas desde el punto de vista matemático.
-<br>
-3. ¿Cuándo SÍ existe probabilidad condicional en lotería?
-<br><br>
-Aquí viene lo interesante 👇<br>
-Dentro del mismo sorteo, no entre sorteos.
-<br>
-🎯 Ejemplo 1: sin reemplazo
-<br><br>
-En La Primitiva (6/49):
-<br>
-Si ya han salido 3 números pares en un sorteo,
-<br>
-la probabilidad de que el siguiente sea par sí cambia.
-<br>
-Porque los números no se reemplazan.          </p>
+            ¿Es cierto que después de 3 sorteos impares toca uno par? ❌ Falso. Los sorteos son independientes.<br><br>
+            Sin embargo, **dentro** de un mismo sorteo (sin reemplazo), si ya han salido 3 pares de la urna, la probabilidad de que el cuarto sea impar aumenta ligeramente porque quedan menos pares dentro.
+          </p>
         </article>
       </div>
+
     </main>
   </div> 
-  <script>
-    // Parámetros de Ganancia
-    const GANANCIA_POR_ACIERTO = 100; // Euros que gana por acierto simulado
-    const COSTE_POR_FALLO = 10;     // Euros que pierde por fallo simulado (coste del boleto)
 
-    // Funcionalidad del Menú Desplegable (Sin cambios)
+  <script>
+    // Lógica del menú
     function toggleDropdown() {
       document.getElementById("myDropdown").classList.toggle("show");
     }
 
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        for (var i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-
-    /**
-     * Recalcula la tasa de éxito de cada modelo y ordena la tabla por Ganancia Total.
-     */
+    // Lógica de cálculo y ordenación de tablas
     function updateRankingTable(tableId) {
       const tableBody = document.getElementById(tableId).querySelector('tbody');
       if (!tableBody) return;
-
       const rows = Array.from(tableBody.querySelectorAll('tr'));
 
       rows.forEach(row => {
-        const jornadas = parseInt(row.querySelector('[data-jornadas]').textContent);
-        const aciertos = parseInt(row.querySelector('[data-aciertos]').textContent);
-        const tasaCell = row.querySelector('[data-tasa]');
         const gananciaCell = row.querySelector('[data-ganancia]');
-        
-        // --- Cálculo de Tasa (Igual que antes) ---
-        let tasa = 0;
-        if (jornadas > 0) {
-          tasa = (aciertos / jornadas) * 100;
-        }
-
-        row.dataset.tasaNumerica = tasa.toFixed(2);
-        tasaCell.textContent = `${tasa.toFixed(1)}%`;
-
-        // --- Formateo de Ganancia Total ---
-        // La ganancia ya está almacenada como texto en gananciaCell.textContent
-        const gananciaValue = parseFloat(gananciaCell.textContent.replace('+', '').replace(',', '.').trim());
-        
-        // Almacenamos el valor numérico para la ordenación de ganancias
-        row.dataset.gananciaNumerica = gananciaValue.toFixed(0); 
-        
-        // Formatear el texto de la ganancia
-        const formattedGanancia = (gananciaValue >= 0 ? '+' : '-') + Math.abs(gananciaValue).toFixed(0);
-        gananciaCell.textContent = formattedGanancia;
+        const gananciaValue = parseFloat(gananciaCell.textContent.replace('€', '').trim());
+        row.dataset.gananciaNumerica = gananciaValue;
+        gananciaCell.textContent = (gananciaValue >= 0 ? '+' : '') + gananciaValue + '€';
       });
 
-      // --- Ordenar las filas por Ganancia Total Descendente ---
-      rows.sort((a, b) => {
-        const gananciaA = parseFloat(a.dataset.gananciaNumerica);
-        const gananciaB = parseFloat(b.dataset.gananciaNumerica);
-        return gananciaB - gananciaA;
-      });
-
-      // Re-añadir las filas ordenadas
+      rows.sort((a, b) => parseFloat(b.dataset.gananciaNumerica) - parseFloat(a.dataset.gananciaNumerica));
       tableBody.innerHTML = '';
-      rows.forEach(row => {
-        tableBody.appendChild(row);
-      });
+      rows.forEach(row => tableBody.appendChild(row));
     }
 
-    /**
-     * Función que se llama al hacer clic en "Acertó" o "Falló".
-     * Incrementa las estadísticas y la ganancia/pérdida.
-     */
-    function updateStats(tableId, resultado) {
-      const selectId = tableId.replace('ranking-', '') + '-ia-select';
-      const iaSeleccionada = document.getElementById(selectId).value;
-
-      const tableBody = document.getElementById(tableId).querySelector('tbody');
-      const row = tableBody.querySelector(`tr[data-ia="${iaSeleccionada}"]`);
-
-      if (!row) return;
-
-      const jornadasCell = row.querySelector('[data-jornadas]');
-      const aciertosCell = row.querySelector('[data-aciertos]');
-      const gananciaCell = row.querySelector('[data-ganancia]');
-      
-      // 1. Obtener los valores numéricos actuales
-      let currentJornadas = parseInt(jornadasCell.textContent);
-      let currentAciertos = parseInt(aciertosCell.textContent);
-      
-      // La ganancia viene con signo (+/-) y un posible símbolo €. Necesitamos el valor numérico.
-      let currentGanancia = parseFloat(gananciaCell.textContent.replace('+', '').replace('€', '').trim());
-
-      // 2. Aplicar la lógica de la jornada
-      currentJornadas += 1;
-
-      if (resultado === 'acierto') {
-        currentAciertos += 1;
-        currentGanancia += GANANCIA_POR_ACIERTO;
-      } else { // resultado === 'fallo'
-        currentGanancia -= COSTE_POR_FALLO;
-      }
-
-      // 3. Escribir los nuevos valores en el HTML
-      jornadasCell.textContent = currentJornadas;
-      aciertosCell.textContent = currentAciertos;
-      
-      // La ganancia la escribimos sin formato (+/- y número)
-      gananciaCell.textContent = currentGanancia;
-
-      // 4. Actualizar y reordenar la tabla (esto formatea la ganancia con € y ordena)
-      updateRankingTable(tableId);
-    }
-
-
-    // Inicialización: Ejecutar la actualización para todas las tablas al cargar la página
     document.addEventListener('DOMContentLoaded', () => {
       updateRankingTable('ranking-euromillones');
       updateRankingTable('ranking-primitiva');
       updateRankingTable('ranking-bonoloto');
     });
- 
-</script>  
-
+  </script> 
 </body>
 </html>
