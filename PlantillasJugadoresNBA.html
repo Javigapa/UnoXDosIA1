@@ -9,7 +9,7 @@
 <body>
 
   <header>
-    <h1>⚽ Uno X Dos IA 🧠</h1>
+      <h1>⚽ Uno X Dos IA 🧠</h1>
   </header>
 
  <nav>
@@ -25,13 +25,35 @@
     </div>
   </nav>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    h1, h2 {
+ :root {
+            --nba-blue: #1d428a;
+            --nba-red: #c8102e;
+            --court-wood: #e9bc6e;
+        }
+
+        body {
+            /* Fondo que simula el parqué de una cancha */
+            background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+            background-color: #d2a679;
+        }
+
+        header {
+            background-color: var(--nba-blue);
+            border-bottom: 5px solid var(--nba-red);
+            color: white;
+        }
+        h1{
+          color: white;
+        }
+    
+    h2 {
       color: #2c3e50;
     }
+   .nba-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -74,10 +96,10 @@
   </style>
 </head>
 <body>
+<div class="nba-container">
+  <h2>Plantillas NBA 2025/2026</h2>
 
-  <h1>Plantillas NBA 2025/2026</h1>
-
-  <h2>🔍 Buscador de Jugadores</h2>
+  <h3>🔍 Buscador de Jugadores</h3>
   <p>
     Escribe el nombre de un jugador para saber en qué equipo juega:
   </p>
@@ -141,7 +163,7 @@
     }
   </script>
 
-  <h1>Plantillas NBA 2025/2026</h1>
+  <h2>Plantillas NBA 2025/2026</h2>
 
   <h2>
     <img src="Imagenes/Boston Celtics.png" alt="Boston Celtics" class="logo">
@@ -598,6 +620,10 @@
     <tr><td>Enrique Freeman</td><td>Ala-Pívot</td><td>25</td><td>2.06 m</td></tr>
     <tr><td>Rob Dillingham</td><td>Base</td><td>21</td><td>1.88 m</td></tr>
     <tr><td>Donte DiVincenzo</td><td>Escolta</td><td>28</td><td>1.93 m</td></tr>
+    <tr><td>Jaylen Clark</td><td>Escolta</td><td>24</td><td>1.96 m</td></tr>
+    <tr><td>Anthony Edwards</td><td>Escolta</td><td>24</td><td>1.93 m</td></tr>
+    <tr><td>Bones Hyland</td><td>Escolta</td><td>25</td><td>1.88 m</td></tr>
+    <tr><td>Jaden McDaniels</td><td>Alero</td><td>25</td><td>2.06 m</td></tr>
   </table>
 
   <h2>
@@ -620,6 +646,9 @@
     <tr><td>Drake Powell</td><td>Escolta</td><td>20</td><td>1.96 m</td></tr>
     <tr><td>Ben Saraf</td><td>Escolta</td><td>19</td><td>1.98 m</td></tr>
     <tr><td>Cam Thomas</td><td>Escolta</td><td>24</td><td>1.91 m</td></tr>
+    <tr><td>Noah Clowney</td><td>Ala-Pívot</td><td>21</td><td>2.08 m</td></tr>
+    <tr><td>E.J. Liddell</td><td>Pívot</td><td>25</td><td>1.98 m</td></tr>
+    <tr><td>Tyrese Martin</td><td>Escolta</td><td>26</td><td>1.98 m</td></tr>
   </table>
 
   <h2>
@@ -642,6 +671,10 @@
     <tr><td>Scoot Henderson</td><td>Base</td><td>21</td><td>1.91 m</td></tr>
     <tr><td>Kris Murray</td><td>Alero</td><td>25</td><td>2.03 m</td></tr>
     <tr><td>Donovan Clingan</td><td>Pívot</td><td>21</td><td>2.18 m</td></tr>
+    <tr><td>Yang Hansen</td><td>Pívot</td><td>20</td><td>2.16 m</td></tr>
+    <tr><td>Duop Reath</td><td>Pívot</td><td>29</td><td>2.06 m</td></tr>
+    <tr><td>Shaedon Sharpe</td><td>Escolta</td><td>22</td><td>1.96 m</td></tr>
+    <tr><td>Robert Williams</td><td>Pívot</td><td>28</td><td>2.06 m</td></tr>
   </table>
 
   <h2>
@@ -664,6 +697,10 @@
     <tr><td>Keegan Murray</td><td>Ala-Pívot</td><td>25</td><td>2.03 m</td></tr>
     <tr><td>Russell Westbrook</td><td>Base</td><td>37</td><td>1.91 m</td></tr>
     <tr><td>Dennis Schroder</td><td>Base</td><td>32</td><td>1.85 m</td></tr>
+    <tr><td>Nique Clifford</td><td>Alero</td><td>23</td><td>1.96 m</td></tr>
+    <tr><td>Zach LaVine</td><td>Escolta</td><td>30</td><td>1.96 m</td></tr>
+    <tr><td>Daeqwon Plowden</td><td>Escolta</td><td>27</td><td>1.98 m</td></tr>
+    <tr><td>Maxime Raynaud</td><td>Pívot</td><td>22</td><td>2.16 m</td></tr>
   </table>
 
   <h2>
@@ -683,6 +720,17 @@
     <tr><td>Filip Petrusev</td><td>Pívot</td><td>24</td><td>2.11 m</td></tr>
     <tr><td>Micah Peavy</td><td>Alero</td><td>24</td><td>2.01 m</td></tr>
     <tr><td>Jalen Lecque</td><td>Escolta</td><td>25</td><td>1.91 m</td></tr>
+    <tr><td>Kyle Anderson</td><td>Ala-Pívot</td><td>32</td><td>2.03 m</td></tr>
+    <tr><td>Ace Bailey</td><td>Alero</td><td>19</td><td>2.06 m</td></tr>
+    <tr><td>Walter Clayton</td><td>Escolta</td><td>22</td><td>1.93 m</td></tr>
+    <tr><td>Elijah Harkless</td><td>Escolta</td><td>25</td><td>1.91 m</td></tr>
+    <tr><td>Kevin Love</td><td>Pívot</td><td>37</td><td>2.08 m</td></tr>
+    <tr><td>Lauri Markkanen</td><td>Ala-Pívot</td><td>28</td><td>2.06 m</td></tr>
+    <tr><td>Svi Mykhailiuk</td><td>Alero</td><td>28</td><td>2.01 m</td></tr>
+    <tr><td>Georges Niang</td><td>Ala-Pívot</td><td>32</td><td>1.98 m</td></tr>
+    <tr><td>Jusuf Nurkic</td><td>Pívot</td><td>31</td><td>2.11 m</td></tr>
+    <tr><td>Oscar Tshiebwe</td><td>Pívot</td><td>26</td><td>2.03 m</td></tr>
+    <tr><td>Cody Williams</td><td>Alero</td><td>21</td><td>2.03 m</td></tr>
   </table>
 
   <h2>
@@ -810,6 +858,22 @@
     <tr><td>Steven Adams</td><td>Pívot</td><td>32</td><td>2.13 m</td></tr>
     <tr><td>Reggie Bullock</td><td>Escolta</td><td>34</td><td>1.98 m</td></tr>
   </table>
-
+  </div>
+    <script>
+        function toggleDropdown() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>
