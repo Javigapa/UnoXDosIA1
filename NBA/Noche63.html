@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Predicciones Noche 63 Uno X Dos IA</title>
+  <link rel="stylesheet" href="../index.css">
+  <style>
+    body {
+      background-color: #c1731f;
+    }
+    /* Estilos específicos para la página de artículo */
+    .article-container {
+      max-width: 1000px;
+      /* Aumentamos el ancho para que las 3 columnas quepan bien */
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #cf914e;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .article-container h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 2.2em;
+    }
+    .article-meta {
+      color: #7f8c8d;
+      font-style: italic;
+      margin-bottom: 25px;
+      display: block;
+    }
+    .PartidosDelDia {
+      color: black;
+      font-size: 1.2em;
+      text-align: center;
+    }
+    /* Contenedor de las Tres Columnas (Para el ANÁLISIS) */
+    .tres-columnas {
+      display: grid;
+      /* Define 3 columnas de igual ancho */
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      /* Espacio entre las columnas */
+      margin: 30px 0;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+    /* Contenedor de las Dos Columnas (CLAVE para RESULTADOS) */
+    .dos-columnas {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* Define 2 columnas de igual ancho */
+      gap: 15px;
+      /* Reducimos el gap para ganar espacio */
+      margin: 30px auto;
+      /* Usamos margin auto para centrar el contenedor */
+      max-width: 98%;
+      /* Le damos un ancho máximo grande */
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+
+
+    /* Estilo para los Títulos de las Columnas */
+    .col-title {
+      background-color: #34495e;
+      /* Gris Azulado */
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 0;
+      /* Asegura que no haya espacio extra sobre el contenido */
+      height: fit-content;
+      /* Se ajusta a la altura del texto */
+    }
+
+    /* Estilo para el Texto de las Columnas */
+    .col-text {
+      background-color: #ecf0f1;
+      /* Gris Claro */
+      padding: 15px;
+      border-radius: 0 0 5px 5px;
+      border: 1px solid #bdc3c7;
+      margin-top: 0;
+      /* Pega el texto al título */
+    }
+    .col-text p {
+      margin: 0;
+      line-height: 1.5;
+    }
+    /* --- Estilos para la Tabla de Resultados (7 columnas) --- */
+    .results-table-container {
+      margin: 5px auto;
+      /* Reducido para ahorrar espacio vertical */
+      width: 100%;
+      /* Ocupa el 100% de su contenedor (col-text) */
+      overflow-x: auto;
+      /* Permite desplazamiento horizontal si la tabla es muy ancha */
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      /* Une los bordes de las celdas */
+      text-align: center;
+      font-size: 1em;
+      /* Ligeramente más pequeña la fuente */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .results-table th, .results-table td {
+      padding: 6px 4px;
+      /* Reducción drástica del padding para que quepa */
+      border: 1px solid #ddd;
+      white-space: nowrap;
+    }
+
+    .results-table thead th {
+      background-color: #34495e;
+      /* Encabezado Oscuro */
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    /* Columna de Equipos (Primera columna) */
+    .results-table tbody tr td:first-child {
+      background-color: #ecf0f1;
+      /* Fondo claro */
+      font-weight: bold;
+      text-align: left;
+      padding-left: 8px;
+      /* Reducido */
+      color: #2c3e50;
+    }
+
+    /* Columna de Resultado Final (Columna más grande y destacada) */
+    .final-score {
+      background-color: #e74c3c;
+      /* Rojo Destacado */
+      color: white;
+      font-size: 1.2em;
+      /* Ligeramente más pequeña */
+      font-weight: 900;
+      width: 15%;
+    }
+
+    /* --- MEDIA QUERY para MOVILES: Las columnas se apilan en 1 --- */
+    @media (max-width: 768px) {
+      .tres-columnas, .dos-columnas {
+        /* Aplica a ambos tipos de columna */
+        grid-template-columns: 1fr;
+        /* Una sola columna en móvil */
+      }
+      .article-container {
+        padding: 15px;
+        /* Reducir padding en móvil */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
+
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="../index.html">Inicio</a>
+        <a href="../NBA.html">NBA</a>
+        <a href="../LIgaEsports.html">Liga EA Sports</a>
+        <a href="../Hypermotion.html">Liga Hypermotion</a>
+        <a href="../Loterias.html">Loterías</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="article-container">
+    <div class="PartidosDelDia">
+      <h1>🏀 Partidos Noche 63:</h1>
+      <p>
+       01:00: Wizards VS Hornets<br>
+
+01:00: Nets VS 76ers<br>
+
+01:30: Bulls VS Hawks<br>
+
+01:30: Pelicans VS Cavaliers<br>
+
+01:30: Bucks VS Pacers<br>
+
+01:30: Raptors VS Heat<br>
+
+02:00: Nuggets VS Mavericks<br>
+
+02:00: Knicks VS Timberwolves<br>
+
+02:30: Thunder VS Spurs<br>
+
+03:00: Lakers VS Suns<br>
+
+03:00: Grizzlies VS Jazz<br>
+
+04:00: Magic VS Trail Blazers<br>
+
+04:00: Pistons VS Kings<br>
+
+04:30: Rockets VS Clippers<br>
+      </p>
+    </div>
+    <div class="tres-columnas">
+      <h3 class="col-title">1. Chat GPT</h3>
+      <h3 class="col-title">2. Gemini</h3>
+      <h3 class="col-title">3. Copilot </h3>
+    </div>
+
+    <div class="tres-columnas">
+      <div class="col-text">
+        <section>
+          <strong><h2>1:</h2></strong>
+        </section>
+        <article>
+          <p>
+<article>
+  <section>
+    <h3>01:00 – Wizards vs Hornets</h3>
+    <p><strong>Favorito:</strong> Hornets – 55%<br>Wizards – 45%</p>
+    <p>Duelo irregular. Charlotte tiene algo más de talento ofensivo y mejor control del ritmo que Washington.</p>
+  </section>
+
+  <section>
+    <h3>01:00 – Nets vs 76ers</h3>
+    <p><strong>Favorito:</strong> 76ers – 62%<br>Nets – 38%</p>
+    <p>Philadelphia es más sólido defensivamente y maneja mejor los cierres. Brooklyn depende del acierto exterior.</p>
+  </section>
+
+  <section>
+    <h3>01:30 – Bulls vs Hawks</h3>
+    <p><strong>Favorito:</strong> Hawks – 57%<br>Bulls – 43%</p>
+    <p>Atlanta impone ritmo y anotación. Chicago compite, pero sufre atrás ante equipos rápidos.</p>
+  </section>
+
+  <section>
+    <h3>01:30 – Pelicans vs Cavaliers</h3>
+    <p><strong>Favorito:</strong> Cavaliers – 54%<br>Pelicans – 46%</p>
+    <p>Partido parejo. Cleveland destaca por su defensa y control del rebote; New Orleans por su físico y profundidad.</p>
+  </section>
+
+  <section>
+    <h3>01:30 – Bucks vs Pacers</h3>
+    <p><strong>Favorito:</strong> Bucks – 56%<br>Pacers – 44%</p>
+    <p>Milwaukee tiene ventaja por experiencia y juego interior. Indiana es peligrosa a alto ritmo.</p>
+  </section>
+
+  <section>
+    <h3>01:30 – Raptors vs Heat</h3>
+    <p><strong>Favorito:</strong> Heat – 55%<br>Raptors – 45%</p>
+    <p>Miami gestiona mejor los partidos cerrados. Toronto necesitará un alto acierto exterior.</p>
+  </section>
+
+  <section>
+    <h3>02:00 – Nuggets vs Mavericks</h3>
+    <p><strong>Favorito:</strong> Nuggets – 58%<br>Mavericks – 42%</p>
+    <p>Denver controla el ritmo con mayor eficiencia colectiva. Dallas compite, pero es irregular defensivamente.</p>
+  </section>
+
+  <section>
+    <h3>02:00 – Knicks vs Timberwolves</h3>
+    <p><strong>Favorito:</strong> Timberwolves – 54%<br>Knicks – 46%</p>
+    <p>Minnesota impone físico y defensa. New York puede equilibrar con buen cierre de partido.</p>
+  </section>
+
+  <section>
+    <h3>02:30 – Thunder vs Spurs</h3>
+    <p><strong>Favorito:</strong> Thunder – 57%<br>Spurs – 43%</p>
+    <p>OKC llega más cohesionado. San Antonio mejora con Wembanyama y puede competir en defensa.</p>
+  </section>
+
+  <section>
+    <h3>03:00 – Lakers vs Suns</h3>
+    <p><strong>Favorito:</strong> Lakers – 58%<br>Suns – 42%</p>
+    <p>Con Luka Dončić, los Lakers ganan creación y control del ritmo. Phoenix es peligroso si impone el tiro exterior.</p>
+  </section>
+
+  <section>
+    <h3>03:00 – Grizzlies vs Jazz</h3>
+    <p><strong>Favorito:</strong> Grizzlies – 55%<br>Jazz – 45%</p>
+    <p>Memphis destaca por intensidad y transición. Utah puede competir si controla pérdidas.</p>
+  </section>
+
+  <section>
+    <h3>04:00 – Magic vs Trail Blazers</h3>
+    <p><strong>Favorito:</strong> Magic – 60%<br>Trail Blazers – 40%</p>
+    <p>Orlando es más sólido defensivamente y físico. Portland depende de rachas.</p>
+  </section>
+
+  <section>
+    <h3>04:00 – Pistons vs Kings</h3>
+    <p><strong>Favorito:</strong> Kings – 65%<br>Pistons – 35%</p>
+    <p>Sacramento juega a mayor ritmo y con más recursos ofensivos. Detroit sigue irregular.</p>
+  </section>
+
+  <section>
+    <h3>04:30 – Rockets vs Clippers</h3>
+    <p><strong>Favorito:</strong> Rockets – 56%<br>Clippers – 44%</p>
+    <p>Houston llega con mejor dinámica y energía. Los Clippers atraviesan una racha negativa y problemas defensivos.</p>
+  </section>
+
+</article>
+
+          </p>
+      </div>
+
+      <div class="col-text">
+        <section>
+          <strong><h2>2:</h2></strong>
+        </section>
+                  <p>
+<div class="card" style="border-left: 5px solid #00788C; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Wizards</strong> vs. <strong>Hornets</strong> (01:00)</div><br>
+    <strong>Favorito:</strong> <span style="color: #00788C;"><strong>Charlotte Hornets</strong></span> (55%)<br><br>
+    <strong>Predicción:</strong> Charlotte juega en casa y LaMelo Ball suele crecerse ante defensas permisivas como la de Washington. Los Wizards dependen demasiado del acierto del novato Sarr.<br><br>
+    <strong>Clave:</strong> El control del ritmo de juego que imponga LaMelo y el acierto desde el triple de los locales.<br><br>
+</div>
+<br><br><br>
+
+<div class="card" style="border-left: 5px solid #006BB6; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Nets</strong> vs. <strong>76ers</strong> (01:00)</div><br>
+    <strong>Favorito:</strong> <span style="color: #006BB6;"><strong>Philadelphia 76ers</strong></span> (70%)<br><br>
+    <strong>Predicción:</strong> Tyrese Maxey está promediando números de estrella (31.7 PPG) y la defensa de los Nets tendrá problemas para contener su velocidad en transición.<br><br>
+    <strong>Clave:</strong> Si Philadelphia logra cerrar la pintura y obligar a Porter Jr. a realizar tiros forzados.<br><br>
+</div>
+<br><br><br>
+
+<div class="card" style="border-left: 5px solid #E03A3E; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Bulls</strong> vs. <strong>Hawks</strong> (01:30)</div><br>
+    <strong>Favorito:</strong> <span style="color: #E03A3E;"><strong>Atlanta Hawks</strong></span> (52%)<br><br>
+    <strong>Predicción:</strong> Duelo muy parejo entre dos equipos con récord similar. Jalen Johnson está en un nivel espectacular, rozando el triple-doble, lo que le da una ligera ventaja a Atlanta por su polivalencia.<br><br>
+    <strong>Clave:</strong> El duelo de bases entre Josh Giddey y Trae Young marcará quién domina el tempo del partido.<br><br>
+</div>
+<br><br><br>
+
+<div class="card" style="border-left: 5px solid #6F2633; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Pelicans</strong> vs. <strong>Cavaliers</strong> (01:30)</div><br>
+    <strong>Favorito:</strong> <span style="color: #6F2633;"><strong>Cleveland Cavaliers</strong></span> (80%)<br><br>
+    <strong>Predicción:</strong> Cleveland viene de una gran victoria y los Pelicans siguen hundidos en el fondo de la tabla (8-22). Donovan Mitchell debería tener otra noche plácida en anotación.<br><br>
+    <strong>Clave:</strong> La defensa exterior de Cleveland sobre Trey Murphy III, la principal arma de New Orleans.<br><br>
+</div>
+<br><br><br>
+
+<div class="card" style="border-left: 5px solid #00471B; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Bucks</strong> vs. <strong>Pacers</strong> (01:30)</div><br>
+    <strong>Favorito:</strong> <span style="color: #00471B;"><strong>Milwaukee Bucks</strong></span> (58%)<br><br>
+    <strong>Predicción:</strong> Aunque ambos equipos están en horas bajas, el talento individual de Milwaukee con Porter Jr. debería imponerse a unos Pacers que vienen de perder contra Boston anotando solo 95 puntos.<br><br>
+    <strong>Clave:</strong> El dominio de la zona y evitar que Siakam entre en ritmo anotador temprano.<br><br>
+</div>
+<br><br><br>
+
+<div class="card" style="border-left: 5px solid #98002E; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Raptors</strong> vs. <strong>Heat</strong> (01:30)</div><br>
+    <strong>Favorito:</strong> <span style="color: #98002E;"><strong>Miami Heat</strong></span> (60%)<br><br>
+    <strong>Predicción:</strong> Miami en casa suele ser un equipo muy rocoso. La capacidad anotadora de Norman Powell será fundamental para contrarrestar el juego físico de Scottie Barnes.<br><br>
+    <strong>Clave:</strong> La defensa de zona de Spoelstra para limitar las penetraciones de los Raptors.<br><br>
+</div>
+<br><br><br>
+
+<div class="card" style="border-left: 5px solid #0E2240; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Nuggets</strong> vs. <strong>Mavericks</strong> (02:00)</div><br>
+    <strong>Favorito:</strong> <span style="color: #0E2240;"><strong>Denver Nuggets</strong></span> (65%)<br><br>
+    <strong>Predicción:</strong> Jokic está en un nivel de triple-doble constante (21-7 de récord). Aunque Dallas cuenta con Anthony Davis en la zona, Denver tiene una circulación de balón muy superior.<br><br>
+    <strong>Clave:</strong> El duelo individual entre Jokic y Davis en la pintura decidirá el ganador.<br><br>
+</div>
+<br><br><br>
+
+<div class="card" style="border-left: 5px solid #005083; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Knicks</strong> vs. <strong>Timberwolves</strong> (02:00)</div><br>
+    <strong>Favorito:</strong> <span style="color: #005083;"><strong>Minnesota Timberwolves</strong></span> (55%)<br><br>
+    <strong>Predicción:</strong> Anthony Edwards está promediando casi 30 puntos por partido. Minnesota es muy fuerte en el Target Center y la vuelta de Karl-Anthony Towns (ahora en NY) será un factor emocional alto.<br><br>
+    <strong>Clave:</strong> La capacidad de los Wolves de contener el rebote ofensivo de los Knicks.<br><br>
+</div>
+<br><br><br>
+
+<div class="card" style="border-left: 5px solid #007AC1; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Thunder</strong> vs. <strong>Spurs</strong> (02:30)</div><br>
+    <strong>Favorito:</strong> <span style="color: #007AC1;"><strong>OKC Thunder</strong></span> (85%)<br><br>
+    <strong>Predicción:</strong> El mejor equipo de la liga (26-3) visita San Antonio. Aunque Wembanyama es un factor diferencial, el bloque defensivo y ofensivo de OKC con SGA es demasiado para los Spurs.<br><br>
+    <strong>Clave:</strong> No permitir que Wembanyama intimide en la zona y mantener el ritmo alto de anotación.<br><br>
+</div>
+<br><br><br>
+
+<div class="card" style="border-left: 5px solid #E56020; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Lakers</strong> vs. <strong>Suns</strong> (03:00)</div><br>
+    <strong>Favorito:</strong> <span style="color: #1D428A;"><strong>LA Lakers</strong></span> (51%)<br><br>
+    <strong>Predicción:</strong> Austin Reaves está liderando a los Lakers con casi 28 puntos por partido. Si logran frenar a Devin Booker, los Lakers tienen profundidad suficiente para ganar en Phoenix.<br><br>
+    <strong>Clave:</strong> El acierto exterior de los secundarios de Lakers para castigar las ayudas sobre Reaves.<br><br>
+</div>
+<br><br><br>
+
+<div class="card" style="border-left: 5px solid #5D76A9; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Grizzlies</strong> vs. <strong>Jazz</strong> (03:00)</div><br>
+    <strong>Favorito:</strong> <span style="color: #5D76A9;"><strong>Memphis Grizzlies</strong></span> (60%)<br><br>
+    <strong>Predicción:</strong> Memphis necesita lamerse las heridas tras la derrota ante OKC. El Jazz de Keyonte George es peligroso, pero Memphis tiene más experiencia en los cierres de partido.<br><br>
+    <strong>Clave:</strong> La defensa de Jaren Jackson Jr. para evitar que el Jazz anote cómodamente en la pintura.<br><br>
+</div>
+<br><br><br>
+
+<div class="card" style="border-left: 5px solid #0B77BD; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Magic</strong> vs. <strong>Trail Blazers</strong> (04:00)</div><br>
+    <strong>Favorito:</strong> <span style="color: #0B77BD;"><strong>Orlando Magic</strong></span> (65%)<br><br>
+    <strong>Predicción:</strong> Paolo Banchero debería dominar físicamente a los aleros de Portland. A pesar de jugar fuera, Orlando es un equipo mucho más estructurado defensivamente.<br><br>
+    <strong>Clave:</strong> Limitar la racha anotadora de Deni Avdija, que está promediando 25.5 puntos.<br><br>
+</div>
+<br><br><br>
+
+<div class="card" style="border-left: 5px solid #1D42BA; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Pistons</strong> vs. <strong>Kings</strong> (04:00)</div><br>
+    <strong>Favorito:</strong> <span style="color: #1D42BA;"><strong>Detroit Pistons</strong></span> (75%)<br><br>
+    <strong>Predicción:</strong> Los Pistons son la sensación del Este (23-6). Cade Cunningham está en nivel All-Star y no deberían tener problemas para superar a unos Kings en crisis (7-22).<br><br>
+    <strong>Clave:</strong> Mantener la intensidad defensiva durante los 48 minutos.<br><br>
+</div>
+<br><br><br>
+
+<div class="card" style="border-left: 5px solid #CE1141; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
+    <div class="match-title"><strong>Rockets</strong> vs. <strong>Clippers</strong> (04:30)</div><br>
+    <strong>Favorito:</strong> <span style="color: #CE1141;"><strong>Houston Rockets</strong></span> (55%)<br><br>
+    <strong>Predicción:</strong> Houston (17-9) llega en mejor forma colectiva. Si logran imponer un ritmo defensivo alto, los Clippers sufrirán para encontrar tiros cómodos.<br><br>
+    <strong>Clave:</strong> El control del rebote defensivo de Houston para lanzar ataques rápidos.<br><br>
+</div>
+<br><br><br>
+          </p>
+      </div>
+
+
+      <div class="col-text">
+        <section>
+          <strong><h2>3:</h2></strong>
+        </section>
+                 <p>
+<article>
+  <ul>
+
+    <li><strong>01:00 – Wizards vs Hornets</strong><br><br>
+      <strong>Favorito:</strong> Charlotte Hornets<br><br>
+      <strong>Probabilidad:</strong> 54%<br><br>
+      <strong>Clave:</strong> LaMelo Ball da más creación ofensiva. Wizards con McCollum como veterano, pero sin equilibrio defensivo.
+    </li><br><br><br>
+
+    <li><strong>01:00 – Nets vs 76ers</strong><br><br>
+      <strong>Favorito:</strong> Philadelphia 76ers<br><br>
+      <strong>Probabilidad:</strong> 56%<br><br>
+      <strong>Clave:</strong> Nets muy irregulares. Los 76ers, aunque sin estrella dominante, tienen mejor estructura colectiva.
+    </li><br><br><br>
+
+    <li><strong>01:30 – Bulls vs Hawks</strong><br><br>
+      <strong>Favorito:</strong> Atlanta Hawks<br><br>
+      <strong>Probabilidad:</strong> 57%<br><br>
+      <strong>Clave:</strong> Trae Young marca diferencias en ataque. Bulls con Giddey y Vucevic compiten, pero su defensa sigue siendo débil.
+    </li><br><br><br>
+
+    <li><strong>01:30 – Pelicans vs Cavaliers</strong><br><br>
+      <strong>Favorito:</strong> Cleveland Cavaliers<br><br>
+      <strong>Probabilidad:</strong> 59%<br><br>
+      <strong>Clave:</strong> Garland + Mobley dan más equilibrio. Pelicans con Zion.
+    </li><br><br><br>
+
+    <li><strong>01:30 – Bucks vs Pacers</strong><br><br>
+      <strong>Favorito:</strong> Indiana Pacers<br><br>
+      <strong>Probabilidad:</strong> 58%<br><br>
+      <strong>Clave:</strong> Bucks sin Giannis, sin Lillard y sin Brook Lopez pierden mucho nivel. Pacers con Haliburton y Siakam tienen más armas ofensivas.
+    </li><br><br><br>
+
+    <li><strong>01:30 – Raptors vs Heat</strong><br><br>
+      <strong>Favorito:</strong> Miami Heat<br><br>
+      <strong>Probabilidad:</strong> 55%<br><br>
+      <strong>Clave:</strong> Heat con Adebayo y Herro. Raptors con RJ Barrett como referencia, pero menos consistentes.
+    </li><br><br><br>
+
+    <li><strong>02:00 – Nuggets vs Mavericks</strong><br><br>
+      <strong>Favorito:</strong> Denver Nuggets<br><br>
+      <strong>Probabilidad:</strong> 60%<br><br>
+      <strong>Clave:</strong> Jokic domina el duelo interior. Mavericks con Anthony Davis y Kyrie, pero irregulares en finales ajustados.
+    </li><br><br><br>
+
+    <li><strong>02:00 – Knicks vs Timberwolves</strong><br><br>
+      <strong>Favorito:</strong> New York Knicks<br><br>
+      <strong>Probabilidad:</strong> 53%<br><br>
+      <strong>Clave:</strong> Brunson + Karl-Anthony Towns dan más equilibrio. Wolves con Edwards y Randle son peligrosos, pero menos fiables fuera de casa.
+    </li><br><br><br>
+
+    <li><strong>02:30 – Thunder vs Spurs</strong><br><br>
+      <strong>Favorito:</strong> Oklahoma City Thunder<br><br>
+      <strong>Probabilidad:</strong> 63%<br><br>
+      <strong>Clave:</strong> SGA y Holmgren mantienen a OKC como élite. Spurs con Wemby + Fox compiten, pero aún son irregulares.
+    </li><br><br><br>
+
+    <li><strong>03:00 – Lakers vs Suns</strong><br><br>
+      <strong>Favorito:</strong> Los Angeles Lakers<br><br>
+      <strong>Probabilidad:</strong> 56%<br><br>
+      <strong>Clave:</strong> Luka Doncic y Ayton dan ventaja. Suns con Booker + Jalen Green, pero con defensa inconsistente.
+    </li><br><br><br>
+
+    <li><strong>03:00 – Grizzlies vs Jazz</strong><br><br>
+      <strong>Favorito:</strong> Memphis Grizzlies<br><br>
+      <strong>Probabilidad:</strong> 55%<br><br>
+      <strong>Clave:</strong> Grizzlies mejoran en defensa. Jazz con problemas de creación ofensiva.
+    </li><br><br><br>
+
+    <li><strong>04:00 – Magic vs Trail Blazers</strong><br><br>
+      <strong>Favorito:</strong> Orlando Magic<br><br>
+      <strong>Probabilidad:</strong> 58%<br><br>
+      <strong>Clave:</strong> Banchero y Wagner lideran un bloque joven sólido. Blazers con Lillard, pero plantilla corta.
+    </li><br><br><br>
+
+    <li><strong>04:00 – Pistons vs Kings</strong><br><br>
+      <strong>Favorito:</strong> Detroit Pistons<br><br>
+      <strong>Probabilidad:</strong> 57%<br><br>
+      <strong>Clave:</strong> Pistons muy sólidos en defensa. Kings con Sabonis y Monk, pero menos fiables fuera de casa.
+    </li><br><br><br>
+
+    <li><strong>04:30 – Rockets vs Clippers</strong><br><br>
+      <strong>Favorito:</strong> Houston Rockets<br><br>
+      <strong>Probabilidad:</strong> 56%<br><br>
+      <strong>Clave:</strong> Rockets con Sengun, Amen Thompson, Jabari Smith Jr. y Brook Lopez. Clippers con problemas ofensivos y poca consistencia.
+    </li><br><br>
+
+  </ul>
+</article>
+
+          </p>
+      </div>
+    </div>
+    <h3>Conclusión Inicial</h3>
+<p>
+      Hasta 14 partidos tenemos esta noche en la NBA, vamos a ver qué dicen las IAs.<br><br>
+      ChatGPT apuesta por Hornets, 76ers, Hawks, Cavaliers, Bucks, Miami, Nuggets, Timberwolves, Thunder, Lakers, Grizzlies, Magic, Kings y Rockets.<br>
+      Gemini apuesta esta noche por Hornets, 76ers, Hawks, Cavaliers, Bucks, Miami, Nuggets, Timberwolves, Thunder, Lakers, Grizzlies, Magic, Pistons y Rockets.<br>
+      Copilot, por su parte, apuesta por Hornets, 76ers, Hawks, Cavaliers, Pacers, Miami, Nuggets, Knicks, Thunder, Lakers, Grizzlies, Magic, Pistons y Rockets.<br><br>
+      Muy pocos cambios entre las IAs; pocos partidos difieren unas de otras. Veremos quién gana esta noche.<br>
+</p>
+
+
+    <h3>Resultado</h3>
+    <h3 class="col-title" style="margin-top: 20px; border-radius: 5px;">Partidos y resultados</h3>
+
+
+    <div class="dos-columnas">
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Wizards</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Hornets</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Wizards VS Hornets (01:00)
+      </p>
+    </div>
+  </div>
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nets</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>76ers</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Nets VS 76ers (01:00)
+      </p>
+    </div>
+  </div>
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bulls</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Hawks</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Bulls VS Hawks (01:30)
+      </p>
+    </div>
+  </div>
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pelicans</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Cavaliers</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Pelicans VS Cavaliers (01:30)
+      </p>
+    </div>
+  </div>
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bucks</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Pacers</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Bucks VS Pacers (01:30)
+      </p>
+    </div>
+  </div>
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Raptors</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Heat</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Raptors VS Heat (01:30)
+      </p>
+    </div>
+  </div>
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nuggets</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Mavericks</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Nuggets VS Mavericks (02:00)
+      </p>
+    </div>
+  </div>
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Knicks</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Timberwolves</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Knicks VS Timberwolves (02:00)
+      </p>
+    </div>
+  </div>
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Thunder</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Spurs</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Thunder VS Spurs (02:30)
+      </p>
+    </div>
+  </div>
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Lakers</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Suns</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Lakers VS Suns (03:00)
+      </p>
+    </div>
+  </div>
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Grizzlies</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Jazz</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Grizzlies VS Jazz (03:00)
+      </p>
+    </div>
+  </div>
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Magic</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>T. Blazers</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Magic VS Trail Blazers (04:00)
+      </p>
+    </div>
+  </div>
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pistons</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Kings</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Pistons VS Kings (04:00)
+      </p>
+    </div>
+  </div>
+
+  <div class="col-text">
+    <div class="results-table-container">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipo</th>
+            <th>1er C.</th>
+            <th>2do C.</th>
+            <th>3er C.</th>
+            <th>4to C.</th>
+            <th class="final-score">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rockets</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+          <tr>
+            <td>Clippers</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td class="final-score">-</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="text-align: center; font-size: 0.9em; margin-top: 10px;">
+        Rockets VS Clippers (04:30)
+      </p>
+    </div>
+  </div>
+
+</div>
+    <h3>Conclusión Final después de jugar</h3>
+    <p>
+      [Escribe aquí tu conclusión sobre los resultados de los partidos y si las IAs acertaron.]
+    </p>
+    <div class="volver">
+      <p>
+        <a href="../NBA.html">← Volver a la página principal de NBA</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Cierra el menú si el usuario hace clic fuera de él
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>
