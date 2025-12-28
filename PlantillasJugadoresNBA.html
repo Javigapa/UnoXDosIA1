@@ -109,76 +109,975 @@
 
   <script>
     const jugadores = {
-      "LeBron James": "Los Angeles Lakers",
-      "Stephen Curry": "Golden State Warriors",
-      "Giannis Antetokounmpo": "Milwaukee Bucks",
-      "Thanasis Antetokounmpo": "Milwaukee Bucks",
-      "Zion Williamson": "New Orleans Pelicans",
-      "Joel Embiid": "Philadelphia 76ers",
-      "Victor Wembanyama": "San Antonio Spurs",
-      "Shai Gilgeous-Alexander": "Oklahoma City Thunder",
-      "LaMelo Ball": "Charlotte Hornets",
-      "Cade Cunningham": "Detroit Pistons",
-      "Fred VanVleet": "Houston Rockets",
-      "Nikola Jokic": "Denver Nuggets",
-      "Trae Young": "Atlanta Hawks",
-      "Scottie Barnes": "Toronto Raptors",
-      "Donovan Mitchell": "Cleveland Cavaliers"
-  "Jayson Tatum": "Boston Celtics",
-  "Jaylen Brown": "Boston Celtics",
-  "Derrick White": "Boston Celtics",
-  "Payton Pritchard": "Boston Celtics",
-  "Neemias Queta": "Boston Celtics",
-  "Hugo González": "Boston Celtics",
-  "Ron Harper Jr.": "Boston Celtics",
-  "Amari Williams": "Boston Celtics",
-  "Jordan Walsh": "Boston Celtics",
-  "Anfernee Simons": "Boston Celtics",
-  "Max Shulga": "Boston Celtics",
-  "Luka Garza": "Boston Celtics",
-  "Baylor Scheierman": "Boston Celtics",
-  "Josh Minott": "Boston Celtics",
-  "Sam Hauser": "Boston Celtics",
-  "Xavier Tillman": "Boston Celtics",
-  "Chris Boucher": "Boston Celtics"
-  
-  "Stephen Curry": "Golden State Warriors",
-  "Draymond Green": "Golden State Warriors",
-  "Jimmy Butler": "Golden State Warriors",
-  "Buddy Hield": "Golden State Warriors",
-  "Trayce Jackson-Davis": "Golden State Warriors",
-  "Gary Payton II": "Golden State Warriors",
-  "Brandin Podziemski": "Golden State Warriors",
-  "De'Anthony Melton": "Golden State Warriors",
-  "Jonathan Kuminga": "Golden State Warriors",
-  "Quinten Post": "Golden State Warriors",
-  "Alex Toohey": "Golden State Warriors",
-  "Moses Moody": "Golden State Warriors",
-  "Al Horford": "Golden State Warriors",
-  "Will Richard": "Golden State Warriors",
-  "Jackson Rowe": "Golden State Warriors",
-  "Gui Santos": "Golden State Warriors",
-  "Pat Spence": "Golden State Warriors"
-  
-  "Giannis Antetokounmpo": "Milwaukee Bucks",
-  "Thanasis Antetokounmpo": "Milwaukee Bucks",
-  "Alex Antetokounmpo": "Milwaukee Bucks",
-  "Cole Anthony": "Milwaukee Bucks",
-  "Kyle Kuzma": "Milwaukee Bucks",
-  "Gary Harris": "Milwaukee Bucks",
-  "Ryan Rollins": "Milwaukee Bucks",
-  "Taurean Prince": "Milwaukee Bucks",
-  "Bobby Portis": "Milwaukee Bucks",
-  "Myles Turner": "Milwaukee Bucks",
-  "Amir Coffey": "Milwaukee Bucks",
-  "AJ Green": "Milwaukee Bucks",
-  "Andre Jackson": "Milwaukee Bucks",
-  "Pete Nance": "Milwaukee Bucks",
-  "Kevin Porter": "Milwaukee Bucks",
-  "Mark Sears": "Milwaukee Bucks",
-  "Gary Trent": "Milwaukee Bucks",
-  "Jericho Sims": "Milwaukee Bucks"
+     
+      "Jayson Tatum": "Boston Celtics", 
+      "Jaylen Brown": "Boston Celtics", 
+      "Derrick White": "Boston Celtics", 
+      "Payton Pritchard": "Boston Celtics", 
+      "Neemias Queta": "Boston Celtics", 
+      "Hugo González": "Boston Celtics", 
+      "Ron Harper Jr.": "Boston Celtics", 
+      "Amari Williams": "Boston Celtics", 
+      "Jordan Walsh": "Boston Celtics", 
+      "Anfernee Simons": "Boston Celtics", 
+      "Max Shulga": "Boston Celtics", 
+      "Luka Garza": "Boston Celtics", 
+      "Baylor Scheierman": "Boston Celtics", 
+      "Josh Minott": "Boston Celtics", 
+      "Sam Hauser": "Boston Celtics", 
+      "Xavier Tillman": "Boston Celtics", 
+      "Chris Boucher": "Boston Celtics", 
+"Stephen Curry": "Golden State Warriors",
 
+"Draymond Green": "Golden State Warriors",
+
+"Jimmy Butler": "Golden State Warriors",
+
+"Buddy Hield": "Golden State Warriors",
+
+"Trayce Jackson-Davis": "Golden State Warriors",
+
+"Gary Payton II": "Golden State Warriors",
+
+"Brandin Podziemski": "Golden State Warriors",
+
+"De'Anthony Melton": "Golden State Warriors",
+
+"Jonathan Kuminga": "Golden State Warriors",
+
+"Quinten Post": "Golden State Warriors",
+
+"Moses Moody": "Golden State Warriors",
+
+"Al Horford": "Golden State Warriors",
+
+"Will Richard": "Golden State Warriors",
+
+"Gui Santos": "Golden State Warriors",
+
+"Pat Spence": "Golden State Warriors",
+
+"L.J. Cryer": "Golden State Warriors",
+
+"Seth Curry": "Golden State Warriors",
+
+"Malevy Leons": "Golden State Warriors",
+
+"Giannis Antetokounmpo": "Milwaukee Bucks",
+
+"Thanasis Antetokounmpo": "Milwaukee Bucks",
+
+"Alex Antetokounmpo": "Milwaukee Bucks",
+
+"Cole Anthony": "Milwaukee Bucks",
+
+"Kyle Kuzma": "Milwaukee Bucks",
+
+"Gary Harris": "Milwaukee Bucks",
+
+"Ryan Rollins": "Milwaukee Bucks",
+
+"Taurean Prince": "Milwaukee Bucks",
+
+"Bobby Portis": "Milwaukee Bucks",
+
+"Myles Turner": "Milwaukee Bucks",
+
+"Amir Coffey": "Milwaukee Bucks",
+
+"AJ Green": "Milwaukee Bucks",
+
+"Andre Jackson": "Milwaukee Bucks",
+
+"Pete Nance": "Milwaukee Bucks",
+
+"Kevin Porter": "Milwaukee Bucks",
+
+"Mark Sears": "Milwaukee Bucks",
+
+"Gary Trent": "Milwaukee Bucks",
+
+"Jericho Sims": "Milwaukee Bucks",
+
+"Zion Williamson": "New Orleans Pelicans",
+
+"Jose Alvarado": "New Orleans Pelicans",
+
+"Jordan Poole": "New Orleans Pelicans",
+
+"DeAndre Jordan": "New Orleans Pelicans",
+
+"Herbert Jones": "New Orleans Pelicans",
+
+"Jordan Hawkins": "New Orleans Pelicans",
+
+"Trey Murphy III": "New Orleans Pelicans",
+
+"Yves Missi": "New Orleans Pelicans",
+
+"Jeremiah Fears": "New Orleans Pelicans",
+
+"Trey Alexander": "New Orleans Pelicans",
+
+"Saddiq Bey": "New Orleans Pelicans",
+
+"Hunter Dickinson": "New Orleans Pelicans",
+
+"Kevon Looney": "New Orleans Pelicans",
+
+"Karlo Matkovic": "New Orleans Pelicans",
+
+"Bryce McGowens": "New Orleans Pelicans",
+
+"Dejounte Murray": "New Orleans Pelicans",
+
+"Micah Peavy": "New Orleans Pelicans",
+
+"Derik Queen": "New Orleans Pelicans",
+
+"Bam Adebayo": "Miami Heat",
+
+"Tyler Herro": "Miami Heat",
+
+"Davion Mitchell": "Miami Heat",
+
+"Jaime Jaquez Jr.": "Miami Heat",
+
+"Kel'el Ware": "Miami Heat",
+
+"Andrew Wiggins": "Miami Heat",
+
+"Kasparas Jakucionis": "Miami Heat",
+
+"Terry Rozier": "Miami Heat",
+
+"Simone Fontecchio": "Miami Heat",
+
+"Myron Gardner": "Miami Heat",
+
+"Vladislav Goldin": "Miami Heat",
+
+"Keshad Johnson": "Miami Heat",
+
+"Nikola Jovic": "Miami Heat",
+
+"Pelle Larsson": "Miami Heat",
+
+"Norman Powell": "Miami Heat",
+
+"Dru Smith": "Miami Heat",
+
+"Jahmir Young": "Miami Heat",
+
+"LeBron James": "Los Angeles Lakers",
+
+"Jarred Vanderbilt": "Los Angeles Lakers",
+
+"Gabe Vincent": "Los Angeles Lakers",
+
+"Jaxson Hayes": "Los Angeles Lakers",
+
+"Rui Hachimura": "Los Angeles Lakers",
+
+"Deandre Ayton": "Los Angeles Lakers",
+
+"Luka Doncic": "Los Angeles Lakers",
+
+"Marcus Smart": "Los Angeles Lakers",
+
+"Adou Thiero": "Los Angeles Lakers",
+
+"Nick Smith Jr.": "Los Angeles Lakers",
+
+"Austin Reaves": "Los Angeles Lakers",
+
+"Bronny James": "Los Angeles Lakers",
+
+"Jake LaRavia": "Los Angeles Lakers",
+
+"Chris Manon": "Los Angeles Lakers",
+
+"Christian Koloko": "Los Angeles Lakers",
+
+"Dalton Knecht": "Los Angeles Lakers",
+
+"Maxi Kleber": "Los Angeles Lakers",
+
+"Drew Timme": "Los Angeles Lakers",
+
+"Jordan Goodwin": "Phoenix Suns",
+
+"Devin Booker": "Phoenix Suns",
+
+"Royce O'Neale": "Phoenix Suns",
+
+"Koby Brea": "Phoenix Suns",
+
+"Nigel Hayes-Davis": "Phoenix Suns",
+
+"Collin Gillespie": "Phoenix Suns",
+
+"Oso Ighodaro": "Phoenix Suns",
+
+"Dillon Brooks": "Phoenix Suns",
+
+"Ryan Dunn": "Phoenix Suns",
+
+"Nick Richards": "Phoenix Suns",
+
+"Jalen Green": "Phoenix Suns",
+
+"Mark Williams": "Phoenix Suns",
+
+"Grayson Allen": "Phoenix Suns",
+
+"Rasheer Fleming": "Phoenix Suns",
+
+"Isaiah Livers": "Phoenix Suns",
+
+"Khaman Maluach": "Phoenix Suns",
+
+"Jamaree Bouyea": "Phoenix Suns",
+
+"Tre Jones": "Chicago Bulls",
+
+"Dalen Terry": "Chicago Bulls",
+
+"Noa Essengue": "Chicago Bulls",
+
+"Josh Giddey": "Chicago Bulls",
+
+"Patrick Williams": "Chicago Bulls",
+
+"Jalen Smith": "Chicago Bulls",
+
+"Emanuel Miller": "Chicago Bulls",
+
+"Nikola Vucevic": "Chicago Bulls",
+
+"Lachlan Olbrich": "Chicago Bulls",
+
+"Jevon Carter": "Chicago Bulls",
+
+"Kevin Huerter": "Chicago Bulls",
+
+"Julian Phillips": "Chicago Bulls",
+
+"Coby White": "Chicago Bulls",
+
+"Matas Buzelis": "Chicago Bulls",
+
+"Zach Collins": "Chicago Bulls",
+
+"Ayo Dosunmu": "Chicago Bulls",
+
+"Trentyn Flowers": "Chicago Bulls",
+
+"Isaac Okoro": "Chicago Bulls",
+
+"Dante Exum": "Dallas Mavericks",
+
+"Dereck Lively II": "Dallas Mavericks",
+
+"Cooper Flagg": "Dallas Mavericks",
+
+"Miles Kelly": "Dallas Mavericks",
+
+"Moussa Cisse": "Dallas Mavericks",
+
+"Klay Thompson": "Dallas Mavericks",
+
+"Daniel Gafford": "Dallas Mavericks",
+
+"Caleb Martin": "Dallas Mavericks",
+
+"Ryan Nembhard": "Dallas Mavericks",
+
+"P.J. Washington": "Dallas Mavericks",
+
+"Max Christie": "Dallas Mavericks",
+
+"Anthony Davis": "Dallas Mavericks",
+
+"Jaden Hardy": "Dallas Mavericks",
+
+"Kyrie Irving": "Dallas Mavericks",
+
+"Naji Marshall": "Dallas Mavericks",
+
+"Dwight Powell": "Dallas Mavericks",
+
+"D'Angelo Russell": "Dallas Mavericks",
+
+"Brandon Williams": "Dallas Mavericks",
+
+"Jalen Brunson": "New York Knicks",
+
+"OG Anunoby": "New York Knicks",
+
+"Mikal Bridges": "New York Knicks",
+
+"Jordan Clarkson": "New York Knicks",
+
+"Pacome Dadiet": "New York Knicks",
+
+"Mohamed Diawara": "New York Knicks",
+
+"Tosan Evbuomwan": "New York Knicks",
+
+"Josh Hart": "New York Knicks",
+
+"Ariel Hukporti": "New York Knicks",
+
+"Trey Jemison III": "New York Knicks",
+
+"Tyler Kolek": "New York Knicks",
+
+"Miles McBride": "New York Knicks",
+
+"Kevin McCullar Jr.": "New York Knicks",
+
+"Mitchell Robinson": "New York Knicks",
+
+"Landry Shamet": "New York Knicks",
+
+"Karl-Anthony Towns": "New York Knicks",
+
+"Guerschon Yabusele": "New York Knicks",
+
+"Nikola Jokic": "Denver Nuggets",
+
+"Jamal Murray": "Denver Nuggets",
+
+"Aaron Gordon": "Denver Nuggets",
+
+"Christian Braun": "Denver Nuggets",
+
+"Tim Hardaway Jr.": "Denver Nuggets",
+
+"Julian Strawther": "Denver Nuggets",
+
+"Jalen Pickett": "Denver Nuggets",
+
+"Zeke Nnaji": "Denver Nuggets",
+
+"Tamar Bates": "Denver Nuggets",
+
+"Peyton Watson": "Denver Nuggets",
+
+"Jonas Valanciunas": "Denver Nuggets",
+
+"Spencer Jones": "Denver Nuggets",
+
+"Cameron Johnson": "Denver Nuggets",
+
+"Bruce Brown": "Denver Nuggets",
+
+"Curtis Jones": "Denver Nuggets",
+
+"Hunter Tyson": "Denver Nuggets",
+
+"DaRon Holmes": "Denver Nuggets",
+
+"Trae Young": "Atlanta Hawks",
+
+"Jalen Johnson": "Atlanta Hawks",
+
+"Kristaps Porzingis": "Atlanta Hawks",
+
+"Dyson Daniels": "Atlanta Hawks",
+
+"Nickeil Alexander-Walker": "Atlanta Hawks",
+
+"Caleb Houstan": "Atlanta Hawks",
+
+"Luke Kennard": "Atlanta Hawks",
+
+"Vit Krejci": "Atlanta Hawks",
+
+"Onyeka Okongwu": "Atlanta Hawks",
+
+"Zaccharie Risacher": "Atlanta Hawks",
+
+"Mouhamed Gueye": "Atlanta Hawks",
+
+"N'Faly Dante": "Atlanta Hawks",
+
+"Nikola Durisic": "Atlanta Hawks",
+
+"Eli John N'Diaye": "Atlanta Hawks",
+
+"Asa Newell": "Atlanta Hawks",
+
+"Keaton Wallace": "Atlanta Hawks",
+
+"Malik Williams": "Atlanta Hawks",
+
+"Joel Embiid": "Philadelphia 76ers",
+
+"Tyrese Maxey": "Philadelphia 76ers",
+
+"Paul George": "Philadelphia 76ers",
+
+"Kelly Oubre Jr.": "Philadelphia 76ers",
+
+"Kyle Lowry": "Philadelphia 76ers",
+
+"Andre Drummond": "Philadelphia 76ers",
+
+"Dominick Barlow": "Philadelphia 76ers",
+
+"Adem Bona": "Philadelphia 76ers",
+
+"Jared McCain": "Philadelphia 76ers",
+
+"Hunter Sallis": "Philadelphia 76ers",
+
+"VJ Edgecombe": "Philadelphia 76ers",
+
+"Justin Edwards": "Philadelphia 76ers",
+
+"Johni Broome": "Philadelphia 76ers",
+
+"Eric Gordon": "Philadelphia 76ers",
+
+"Quentin Grimes": "Philadelphia 76ers",
+
+"Jabari Walker": "Philadelphia 76ers",
+
+"Trendon Watford": "Philadelphia 76ers",
+
+"MarJon Beauchamp": "Philadelphia 76ers",
+
+"Scottie Barnes": "Toronto Raptors",
+
+"Ja'Kobe Walter": "Toronto Raptors",
+
+"RJ Barrett": "Toronto Raptors",
+
+"Chucky Hepburn": "Toronto Raptors",
+
+"Gradey Dick": "Toronto Raptors",
+
+"A.J. Lawson": "Toronto Raptors",
+
+"Collin Murray-Boyles": "Toronto Raptors",
+
+"Brandon Ingram": "Toronto Raptors",
+
+"Ochai Agbaji": "Toronto Raptors",
+
+"Jamison Battle": "Toronto Raptors",
+
+"Jonathan Mogbo": "Toronto Raptors",
+
+"Alijah Martin": "Toronto Raptors",
+
+"Jamal Shead": "Toronto Raptors",
+
+"Jakob Poeltl": "Toronto Raptors",
+
+"Immanuel Quickley": "Toronto Raptors",
+
+"Sandro Mamukelashvili": "Toronto Raptors",
+
+"Garrett Temple": "Toronto Raptors",
+
+"Jarrett Allen": "Cleveland Cavaliers",
+
+"Lonzo Ball": "Cleveland Cavaliers",
+
+"Thomas Bryant": "Cleveland Cavaliers",
+
+"Darius Garland": "Cleveland Cavaliers",
+
+"De'Andre Hunter": "Cleveland Cavaliers",
+
+"Sam Merrill": "Cleveland Cavaliers",
+
+"Donovan Mitchell": "Cleveland Cavaliers",
+
+"Evan Mobley": "Cleveland Cavaliers",
+
+"Larry Nance Jr.": "Cleveland Cavaliers",
+
+"Craig Porter Jr.": "Cleveland Cavaliers",
+
+"Tyrese Proctor": "Cleveland Cavaliers",
+
+"Max Strus": "Cleveland Cavaliers",
+
+"Nae'Qwan Tomlin": "Cleveland Cavaliers",
+
+"Luke Travers": "Cleveland Cavaliers",
+
+"Chris Livingston": "Cleveland Cavaliers",
+
+"Jaylon Tyson": "Cleveland Cavaliers",
+
+"Dean Wade": "Cleveland Cavaliers",
+
+"Anthony Black": "Orlando Magic",
+
+"Goga Bitadze": "Orlando Magic",
+
+"Jase Richardson": "Orlando Magic",
+
+"Desmond Bane": "Orlando Magic",
+
+"Paolo Banchero": "Orlando Magic",
+
+"Noah Penda": "Orlando Magic",
+
+"Franz Wagner": "Orlando Magic",
+
+"Jalen Suggs": "Orlando Magic",
+
+"Wendell Carter Jr.": "Orlando Magic",
+
+"Jonathan Isaac": "Orlando Magic",
+
+"Tristan da Silva": "Orlando Magic",
+
+"Jamal Cain": "Orlando Magic",
+
+"Colin Castleton": "Orlando Magic",
+
+"Jett Howard": "Orlando Magic",
+
+"Tyus Jones": "Orlando Magic",
+
+"Orlando Robinson": "Orlando Magic",
+
+"Moritz Wagner": "Orlando Magic",
+
+"Andrew Nembhard": "Indiana Pacers",
+
+"Isaiah Jackson": "Indiana Pacers",
+
+"Jay Huff": "Indiana Pacers",
+
+"Johnny Furphy": "Indiana Pacers",
+
+"Tyrese Haliburton": "Indiana Pacers",
+
+"Ben Sheppard": "Indiana Pacers",
+
+"Pascal Siakam": "Indiana Pacers",
+
+"Bennedict Mathurin": "Indiana Pacers",
+
+"Tony Bradley": "Indiana Pacers",
+
+"Jarace Walker": "Indiana Pacers",
+
+"Quenton Jackson": "Indiana Pacers",
+
+"Aaron Nesmith": "Indiana Pacers",
+
+"Kam Jones": "Indiana Pacers",
+
+"Garrison Mathews": "Indiana Pacers",
+
+"T.J. McConnell": "Indiana Pacers",
+
+"Taelon Peter": "Indiana Pacers",
+
+"Micah Potter": "Indiana Pacers",
+
+"Ethan Thompson": "Indiana Pacers",
+
+"Obi Toppin": "Indiana Pacers",
+
+"James Wiseman": "Indiana Pacers",
+
+"Joan Beringer": "Minnesota Timberwolves",
+
+"Julius Randle": "Minnesota Timberwolves",
+
+"Terrence Shannon Jr.": "Minnesota Timberwolves",
+
+"Rudy Gobert": "Minnesota Timberwolves",
+
+"Mike Conley": "Minnesota Timberwolves",
+
+"Joe Ingles": "Minnesota Timberwolves",
+
+"Johnny Juzang": "Minnesota Timberwolves",
+
+"Rocco Zikarsky": "Minnesota Timberwolves",
+
+"Nah'Shon Hyland": "Minnesota Timberwolves",
+
+"Leonard Miller": "Minnesota Timberwolves",
+
+"Naz Reid": "Minnesota Timberwolves",
+
+"Enrique Freeman": "Minnesota Timberwolves",
+
+"Rob Dillingham": "Minnesota Timberwolves",
+
+"Donte DiVincenzo": "Minnesota Timberwolves",
+
+"Jaylen Clark": "Minnesota Timberwolves",
+
+"Anthony Edwards": "Minnesota Timberwolves",
+
+"Bones Hyland": "Minnesota Timberwolves",
+
+"Jaden McDaniels": "Minnesota Timberwolves",
+
+"Day'Ron Sharpe": "Brooklyn Nets",
+
+"Ziaire Williams": "Brooklyn Nets",
+
+"Nicolas Claxton": "Brooklyn Nets",
+
+"Michael Porter Jr.": "Brooklyn Nets",
+
+"Nolan Traore": "Brooklyn Nets",
+
+"Tyson Etienne": "Brooklyn Nets",
+
+"Danny Wolf": "Brooklyn Nets",
+
+"Jalen Wilson": "Brooklyn Nets",
+
+"Haywood Highsmith": "Brooklyn Nets",
+
+"Terance Mann": "Brooklyn Nets",
+
+"Egor Demin": "Brooklyn Nets",
+
+"Drake Powell": "Brooklyn Nets",
+
+"Ben Saraf": "Brooklyn Nets",
+
+"Cam Thomas": "Brooklyn Nets",
+
+"Noah Clowney": "Brooklyn Nets",
+
+"E.J. Liddell": "Brooklyn Nets",
+
+"Tyrese Martin": "Brooklyn Nets",
+
+"Rayan Rupert": "Portland Trail Blazers",
+
+"Toumani Camara": "Portland Trail Blazers",
+
+"Blake Wesley": "Portland Trail Blazers",
+
+"Deni Avdija": "Portland Trail Blazers",
+
+"Damian Lillard": "Portland Trail Blazers",
+
+"Jerami Grant": "Portland Trail Blazers",
+
+"Jrue Holiday": "Portland Trail Blazers",
+
+"Javonte Cooke": "Portland Trail Blazers",
+
+"Sidy Cissoko": "Portland Trail Blazers",
+
+"Matisse Thybulle": "Portland Trail Blazers",
+
+"Caleb Love": "Portland Trail Blazers",
+
+"Scoot Henderson": "Portland Trail Blazers",
+
+"Kris Murray": "Portland Trail Blazers",
+
+"Donovan Clingan": "Portland Trail Blazers",
+
+"Yang Hansen": "Portland Trail Blazers",
+
+"Duop Reath": "Portland Trail Blazers",
+
+"Shaedon Sharpe": "Portland Trail Blazers",
+
+"Robert Williams": "Portland Trail Blazers",
+
+"Devin Carter": "Sacramento Kings",
+
+"Dario Saric": "Sacramento Kings",
+
+"Drew Eubanks": "Sacramento Kings",
+
+"Domantas Sabonis": "Sacramento Kings",
+
+"Malik Monk": "Sacramento Kings",
+
+"Dylan Cardwell": "Sacramento Kings",
+
+"Precious Achiuwa": "Sacramento Kings",
+
+"Isaiah Stevens": "Sacramento Kings",
+
+"DeMar DeRozan": "Sacramento Kings",
+
+"Doug McDermott": "Sacramento Kings",
+
+"Keon Ellis": "Sacramento Kings",
+
+"Keegan Murray": "Sacramento Kings",
+
+"Russell Westbrook": "Sacramento Kings",
+
+"Dennis Schroder": "Sacramento Kings",
+
+"Nique Clifford": "Sacramento Kings",
+
+"Zach LaVine": "Sacramento Kings",
+
+"Daeqwon Plowden": "Sacramento Kings",
+
+"Maxime Raynaud": "Sacramento Kings",
+
+"Keyonte George": "Utah Jazz",
+
+"Walker Kessler": "Utah Jazz",
+
+"Brice Sensabaugh": "Utah Jazz",
+
+"Taylor Hendricks": "Utah Jazz",
+
+"Isaiah Collier": "Utah Jazz",
+
+"Kyle Anderson": "Utah Jazz",
+
+"Ace Bailey": "Utah Jazz",
+
+"Walter Clayton": "Utah Jazz",
+
+"Elijah Harkless": "Utah Jazz",
+
+"Kevin Love": "Utah Jazz",
+
+"Lauri Markkanen": "Utah Jazz",
+
+"Svi Mykhailiuk": "Utah Jazz",
+
+"Georges Niang": "Utah Jazz",
+
+"Jusuf Nurkic": "Utah Jazz",
+
+"Oscar Tshiebwe": "Utah Jazz",
+
+"Cody Williams": "Utah Jazz",
+
+"Kyle Filipowski": "Utah Jazz",
+
+"John Tonje": "Utah Jazz",
+
+"Shai Gilgeous-Alexander": "Oklahoma City Thunder",
+
+"Chet Holmgren": "Oklahoma City Thunder",
+
+"Jalen Williams": "Oklahoma City Thunder",
+
+"Luguentz Dort": "Oklahoma City Thunder",
+
+"Isaiah Joe": "Oklahoma City Thunder",
+
+"Jaylin Williams": "Oklahoma City Thunder",
+
+"Ousmane Dieng": "Oklahoma City Thunder",
+
+"Cason Wallace": "Oklahoma City Thunder",
+
+"Brooks Barnhize": "Oklahoma City Thunder",
+
+"Branden Carlson": "Oklahoma City Thunder",
+
+"Alex Caruso": "Oklahoma City Thunder",
+
+"Isaiah Hartenstein": "Oklahoma City Thunder",
+
+"Ajay Mitchell": "Oklahoma City Thunder",
+
+"Thomas Sorber": "Oklahoma City Thunder",
+
+"Nikola Topic": "Oklahoma City Thunder",
+
+"Aaron Wiggins": "Oklahoma City Thunder",
+
+"Kenrich Williams": "Oklahoma City Thunder",
+
+"Chris Youngblood": "Oklahoma City Thunder",
+
+"Victor Wembanyama": "San Antonio Spurs",
+
+"Jeremy Sochan": "San Antonio Spurs",
+
+"Devin Vassell": "San Antonio Spurs",
+
+"Keldon Johnson": "San Antonio Spurs",
+
+"Julian Champagnie": "San Antonio Spurs",
+
+"Harrison Ingram": "San Antonio Spurs",
+
+"Bismack Biyombo": "San Antonio Spurs",
+
+"Carter Bryant": "San Antonio Spurs",
+
+"Stephon Castle": "San Antonio Spurs",
+
+"De'Aaron Fox": "San Antonio Spurs",
+
+"Dylan Harper": "San Antonio Spurs",
+
+"David Jones Garcia": "San Antonio Spurs",
+
+"Luke Kornet": "San Antonio Spurs",
+
+"Jordan McLaughlin": "San Antonio Spurs",
+
+"Kelly Olynyk": "San Antonio Spurs",
+
+"Stanley Umude": "San Antonio Spurs",
+
+"Lindy Waters III": "San Antonio Spurs",
+
+"Harrison Barnes": "San Antonio Spurs",
+
+"Cade Cunningham": "Detroit Pistons",
+
+"Jaden Ivey": "Detroit Pistons",
+
+"Ausar Thompson": "Detroit Pistons",
+
+"Jalen Duren": "Detroit Pistons",
+
+"Marcus Sasser": "Detroit Pistons",
+
+"Isaiah Stewart": "Detroit Pistons",
+
+"Javonte Green": "Detroit Pistons",
+
+"Tobias Harris": "Detroit Pistons",
+
+"Ronald Holland": "Detroit Pistons",
+
+"Daniss Jenkins": "Detroit Pistons",
+
+"Isaac Jone": "Detroit Pistons",
+
+"Bobi Klintman": "Detroit Pistons",
+
+"Chaz Lanier": "Detroit Pistons",
+
+"Caris LeVert": "Detroit Pistons",
+
+"Wendell Moore Jr": "Detroit Pistons",
+
+"Paul Reed": "Detroit Pistons",
+
+"Duncan Robinson": "Detroit Pistons",
+
+"Tolu Smith": "Detroit Pistons",
+
+"Fred VanVleet": "Houston Rockets",
+
+"Jabari Smith Jr.": "Houston Rockets",
+
+"Alperen Şengün": "Houston Rockets",
+
+"Tari Eason": "Houston Rockets",
+
+"Amen Thompson": "Houston Rockets",
+
+"Steven Adams": "Houston Rockets",
+
+"Clint Capela": "Houston Rockets",
+
+"Isaiah Crawford": "Houston Rockets",
+
+"JD Davison": "Houston Rockets",
+
+"Kevin Durant": "Houston Rockets",
+
+"Dorian Finney-Smith": "Houston Rockets",
+
+"Jeff Green": "Houston Rockets",
+
+"Aaron Holiday": "Houston Rockets",
+
+"Josh Okogie": "Houston Rockets",
+
+"Reed Sheppar": "Houston Rockets",
+
+"Tyler Smith": "Houston Rockets",
+
+"Jae'Sean Tate": "Houston Rockets",
+
+"Nicolas Batum": "LA Clippers",
+
+"Bradley Beal": "LA Clippers",
+
+"Bogdan Bogdanovic": "LA Clippers",
+
+"Kobe Brown": "LA Clippers",
+
+"Cam Christie": "LA Clippers",
+
+"John Collins": "LA Clippers",
+
+"RayJ Dennis": "LA Clippers",
+
+"Kris Dunn": "LA Clippers",
+
+"James Harden": "LA Clippers",
+
+"Derrick Jones Jr": "LA Clippers",
+
+"Kawhi Leonard": "LA Clippers",
+
+"Brook Lopez": "LA Clippers",
+
+"Jordan Miller": "LA Clippers",
+
+"Yanic Konan Niederhauser": "LA Clippers",
+
+"Kobe Sander": "LA Clippers",
+
+"Ivica Zubac": "LA Clippers",
+
+"Marvin Bagley III": "Washington Wizards",
+
+"Malaki Branham": "Washington Wizards",
+
+"Bub Carrington": "Washington Wizards",
+
+"Justin Champagnie": "Washington Wizards",
+
+"Sharife Cooper": "Washington Wizards",
+
+"Bilal Coulibaly": "Washington Wizards",
+
+"Kyshawn George": "Washington Wizards",
+
+"Anthony Gill": "Washington Wizards",
+
+"AJ Johnson": "Washington Wizards",
+
+"Tre Johnson": "Washington Wizards",
+
+"Corey Kispert": "Washington Wizards",
+
+"CJ McCollum": "Washington Wizards",
+
+"Khris Middleton": "Washington Wizards",
+
+"Will Riley": "Washington Wizards",
+
+"Alex Sarr": "Washington Wizards",
+
+"Tristan Vukcevic": "Washington Wizards",
+
+"Jamir Watkins": "Washington Wizards",
+
+"Cam Whitmore": "Washington Wizards"
     };
 
     function buscarJugador() {
@@ -774,19 +1673,16 @@
   <table>
     <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
     <tr><td>Shai Gilgeous-Alexander</td><td>Base</td><td>27</td><td>1.98 m</td></tr>
-    <tr><td>Josh Giddey</td><td>Base</td><td>23</td><td>2.01 m</td></tr>
     <tr><td>Chet Holmgren</td><td>Pívot</td><td>23</td><td>2.16 m</td></tr>
     <tr><td>Jalen Williams</td><td>Alero</td><td>24</td><td>1.98 m</td></tr>
-    <tr><td>Lu Dort</td><td>Escolta</td><td>26</td><td>1.93 m</td></tr>
+    <tr><td>Luguentz Dort</td><td>Escolta</td><td>26</td><td>1.93 m</td></tr>
     <tr><td>Isaiah Joe</td><td>Escolta</td><td>25</td><td>1.91 m</td></tr>
     <tr><td>Jaylin Williams</td><td>Pívot</td><td>23</td><td>2.06 m</td></tr>
-    <tr><td>Tre Mann</td><td>Base</td><td>24</td><td>1.91 m</td></tr>
     <tr><td>Ousmane Dieng</td><td>Alero</td><td>22</td><td>2.06 m</td></tr>
     <tr><td>Cason Wallace</td><td>Base</td><td>21</td><td>1.91 m</td></tr>
     <tr><td>Brooks Barnhize</td><td>Escolta</td><td>23</td><td>1.98 m</td></tr>
     <tr><td>Branden Carlson</td><td>Pívot</td><td>26</td><td>2.13 m</td></tr>
     <tr><td>Alex Caruso</td><td>Escolta</td><td>31</td><td>1.96 m</td></tr>
-    <tr><td>Luguentz Dort</td><td>Escolta</td><td>26</td><td>1.93 m</td></tr>
     <tr><td>Isaiah Hartenstein</td><td>Pívot</td><td>27</td><td>2.13 m</td></tr>
     <tr><td>Ajay Mitchell</td><td>Base</td><td>23</td><td>1.93 m</td></tr>
     <tr><td>Thomas Sorber</td><td>Pívot</td><td>19</td><td>2.06 m</td></tr>
@@ -796,10 +1692,6 @@
     <tr><td>Chris Youngblood</td><td>Escolta</td><td>23</td><td>1.93 m</td></tr>
   </table>
 
-
-
-
-  
   <h2>
     <img src="Imagenes/San Antonio Spurs.png" alt="San Antonio Spurs" class="logo">
     San Antonio Spurs
@@ -810,11 +1702,7 @@
     <tr><td>Jeremy Sochan</td><td>Ala-Pívot</td><td>22</td><td>2.06 m</td></tr>
     <tr><td>Devin Vassell</td><td>Escolta</td><td>25</td><td>1.96 m</td></tr>
     <tr><td>Keldon Johnson</td><td>Alero</td><td>26</td><td>1.96 m</td></tr>
-    <tr><td>Tre Jones</td><td>Base</td><td>26</td><td>1.85 m</td></tr>
-    <tr><td>Blake Wesley</td><td>Escolta</td><td>22</td><td>1.93 m</td></tr>
-    <tr><td>Dominick Barlow</td><td>Ala-Pívot</td><td>22</td><td>2.06 m</td></tr>
     <tr><td>Julian Champagnie</td><td>Alero</td><td>24</td><td>2.01 m</td></tr>
-    <tr><td>Sidy Cissoko</td><td>Alero</td><td>21</td><td>1.98 m</td></tr>
     <tr><td>Harrison Ingram</td><td>Alero</td><td>22</td><td>2.01 m</td></tr>
     <tr><td>Bismack Biyombo</td><td>Pívot</td><td>33</td><td>2.03 m</td></tr>
     <tr><td>Carter Bryant</td><td>Alero</td><td>20</td><td>1.98 m</td></tr>
@@ -827,6 +1715,7 @@
     <tr><td>Kelly Olynyk</td><td>Ala-Pívot</td><td>34</td><td>2.13 m</td></tr>
     <tr><td>Stanley Umude</td><td>Escolta</td><td>26</td><td>1.98 m</td></tr>
     <tr><td>Lindy Waters III</td><td>Escolta</td><td>21</td><td>2.24 m</td></tr>
+    <tr><td>Harrison Barnes</td><td>Ala-Pívot</td><td>33</td><td>2.01 m</td></tr>
   </table>
 
   <h2>
@@ -867,10 +1756,18 @@
     <tr><td>Jalen Duren</td><td>Pívot</td><td>22</td><td>2.11 m</td></tr>
     <tr><td>Marcus Sasser</td><td>Base</td><td>24</td><td>1.88 m</td></tr>
     <tr><td>Isaiah Stewart</td><td>Ala-Pívot</td><td>25</td><td>2.06 m</td></tr>
-    <tr><td>Killian Hayes</td><td>Base</td><td>24</td><td>1.96 m</td></tr>
-    <tr><td>James Wiseman</td><td>Pívot</td><td>24</td><td>2.13 m</td></tr>
-    <tr><td>Simone Fontecchio</td><td>Alero</td><td>30</td><td>2.01 m</td></tr>
-    <tr><td>Malachi Flynn</td><td>Base</td><td>26</td><td>1.85 m</td></tr>
+    <tr><td>Javonte Green</td><td>Alero</td><td>32</td><td>1.96 m</td></tr>
+    <tr><td>Tobias Harris</td><td>Ala-Pívot</td><td>33</td><td>2.03 m</td></tr>
+    <tr><td>Ronald Holland</td><td>Ala-Pívot</td><td>20</td><td>2.03 m</td></tr>
+    <tr><td>Daniss Jenkins</td><td>Escolta</td><td>24</td><td>1.93 m</td></tr>
+    <tr><td>Isaac Jone</td><td>Pívot</td><td>25</td><td>2.03 m</td></tr>
+    <tr><td>Bobi Klintman</td><td>Ala-Pívot</td><td>22</td><td>2.06 m</td></tr>
+    <tr><td>Chaz Lanier</td><td>Alero</td><td>24</td><td>1.91 m</td></tr>
+    <tr><td>Caris LeVert</td><td>Escolta</td><td>31</td><td>2.01 m</td></tr>
+    <tr><td>Wendell Moore Jr</td><td>Alero</td><td>24</td><td>1.96 m</td></tr>
+    <tr><td>Paul Reed</td><td>Pívot</td><td>26</td><td>2.06 m</td></tr>
+    <tr><td>Duncan Robinson</td><td>Escolta</td><td>31</td><td>2.01 m</td></tr>
+    <tr><td>Tolu Smith</td><td>Pívot</td><td>25</td><td>2.11 m</td></tr>
   </table>
 
   <h2>
@@ -880,15 +1777,22 @@
   <table>
     <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
     <tr><td>Fred VanVleet</td><td>Base</td><td>31</td><td>1.85 m</td></tr>
-    <tr><td>Jalen Green</td><td>Escolta</td><td>23</td><td>1.93 m</td></tr>
     <tr><td>Jabari Smith Jr.</td><td>Ala-Pívot</td><td>22</td><td>2.08 m</td></tr>
     <tr><td>Alperen Şengün</td><td>Pívot</td><td>23</td><td>2.11 m</td></tr>
     <tr><td>Tari Eason</td><td>Alero</td><td>23</td><td>2.03 m</td></tr>
     <tr><td>Amen Thompson</td><td>Base</td><td>21</td><td>2.01 m</td></tr>
-    <tr><td>Cam Whitmore</td><td>Alero</td><td>21</td><td>2.01 m</td></tr>
-    <tr><td>Dillon Brooks</td><td>Alero</td><td>30</td><td>2.01 m</td></tr>
     <tr><td>Steven Adams</td><td>Pívot</td><td>32</td><td>2.13 m</td></tr>
-    <tr><td>Reggie Bullock</td><td>Escolta</td><td>34</td><td>1.98 m</td></tr>
+    <tr><td>Clint Capela</td><td>Pívot</td><td>31</td><td>2.08 m</td></tr>
+    <tr><td>Isaiah Crawford</td><td>Alero</td><td>24</td><td>1.98 m</td></tr>
+    <tr><td>JD Davison</td><td>Base</td><td>23</td><td>1.85 m</td></tr>
+    <tr><td>Kevin Durant</td><td>Escolta</td><td>37</td><td>2.11 m</td></tr>
+    <tr><td>Dorian Finney-Smith</td><td>Ala-Pívot</td><td>32</td><td>2.01 m</td></tr>
+    <tr><td>Jeff Green</td><td>Pívot</td><td>39</td><td>2.03 m</td></tr>
+    <tr><td>Aaron Holiday</td><td>Base</td><td>29</td><td>1.83 m</td></tr>
+    <tr><td>Josh Okogie</td><td>Alero</td><td>27</td><td>1.93 m</td></tr>
+    <tr><td>Reed Sheppar</td><td>Escolta</td><td>21</td><td>1.88 m</td></tr>
+    <tr><td>Tyler Smith</td><td>Ala-Pívot</td><td>21</td><td>2.06 m</td></tr>
+    <tr><td>Jae'Sean Tate</td><td>Ala-Pívot</td><td>30</td><td>1.93 m</td></tr>
   </table>
 
   <h2>
@@ -897,16 +1801,22 @@
   </h2>
   <table>
     <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
-    <tr><td></td><td>Base</td><td>31</td><td>1.85 m</td></tr>
-    <tr><td>Jalen Green</td><td>Escolta</td><td>23</td><td>1.93 m</td></tr>
-    <tr><td>Jabari Smith Jr.</td><td>Ala-Pívot</td><td>22</td><td>2.08 m</td></tr>
-    <tr><td>Alperen Şengün</td><td>Pívot</td><td>23</td><td>2.11 m</td></tr>
-    <tr><td>Tari Eason</td><td>Alero</td><td>23</td><td>2.03 m</td></tr>
-    <tr><td>Amen Thompson</td><td>Base</td><td>21</td><td>2.01 m</td></tr>
-    <tr><td>Cam Whitmore</td><td>Alero</td><td>21</td><td>2.01 m</td></tr>
-    <tr><td>Dillon Brooks</td><td>Alero</td><td>30</td><td>2.01 m</td></tr>
-    <tr><td>Steven Adams</td><td>Pívot</td><td>32</td><td>2.13 m</td></tr>
-    <tr><td>Reggie Bullock</td><td>Escolta</td><td>34</td><td>1.98 m</td></tr>
+    <tr><td>Nicolas Batum</td><td>Ala-Pívot</td><td>37</td><td>2.01 m</td></tr>
+    <tr><td>Bradley Beal</td><td>Base</td><td>32</td><td>1.93 m</td></tr>
+    <tr><td>Bogdan Bogdanovic</td><td>Escolta</td><td>33</td><td>1.96 m</td></tr>
+    <tr><td>Kobe Brown</td><td>Ala-Pívot</td><td>25</td><td>2.01 m</td></tr>
+    <tr><td>Cam Christie</td><td>Escolta</td><td>20</td><td>1.96 m</td></tr>
+    <tr><td>John Collins</td><td>Ala-Pívot</td><td>28</td><td>2.06 m</td></tr>
+    <tr><td>RayJ Dennis</td><td>Base</td><td>24</td><td>1.88 m</td></tr>
+    <tr><td>Kris Dunn</td><td>Escolta</td><td>31</td><td>1.91 m</td></tr>
+    <tr><td>James Harden</td><td>Base</td><td>36</td><td>1.96 m</td></tr>
+    <tr><td>Derrick Jones Jr</td><td>Ala-Pívot</td><td>28</td><td>1.98 m</td></tr>
+    <tr><td>Kawhi Leonard</td><td>Alero</td><td>34</td><td>1.98 m</td></tr>
+    <tr><td>Brook Lopez</td><td>Pívot</td><td>37</td><td>2.16 m</td></tr>
+    <tr><td>Jordan Miller</td><td>Escolta</td><td>25</td><td>1.96 m</td></tr>
+    <tr><td>Yanic Konan Niederhauser</td><td>Pívot</td><td>22</td><td>2.11 m</td></tr>
+    <tr><td>Kobe Sander</td><td>Escolta</td><td>23</td><td>2.03 m</td></tr>
+    <tr><td>Ivica Zubac</td><td>Pívot</td><td>28</td><td>2.13 m</td></tr>
   </table>
 
   <h2>
@@ -915,17 +1825,26 @@
   </h2>
   <table>
     <tr><th>Nombre</th><th>Posición</th><th>Edad</th><th>Estatura</th></tr>
-    <tr><td></td><td>Base</td><td>31</td><td>1.85 m</td></tr>
-    <tr><td>Jalen Green</td><td>Escolta</td><td>23</td><td>1.93 m</td></tr>
-    <tr><td>Jabari Smith Jr.</td><td>Ala-Pívot</td><td>22</td><td>2.08 m</td></tr>
-    <tr><td>Alperen Şengün</td><td>Pívot</td><td>23</td><td>2.11 m</td></tr>
-    <tr><td>Tari Eason</td><td>Alero</td><td>23</td><td>2.03 m</td></tr>
-    <tr><td>Amen Thompson</td><td>Base</td><td>21</td><td>2.01 m</td></tr>
-    <tr><td>Cam Whitmore</td><td>Alero</td><td>21</td><td>2.01 m</td></tr>
-    <tr><td>Dillon Brooks</td><td>Alero</td><td>30</td><td>2.01 m</td></tr>
-    <tr><td>Steven Adams</td><td>Pívot</td><td>32</td><td>2.13 m</td></tr>
-    <tr><td>Reggie Bullock</td><td>Escolta</td><td>34</td><td>1.98 m</td></tr>
+    <tr><td>Marvin Bagley III</td><td>Pívot</td><td>26</td><td>2.08 m</td></tr>
+    <tr><td>Malaki Branham</td><td>Base</td><td>22</td><td>1.93 m</td></tr>
+    <tr><td>Bub Carrington</td><td>Base</td><td>20</td><td>1.93 m</td></tr>
+    <tr><td>Justin Champagnie</td><td>Ala-Pívot</td><td>24</td><td>1.98 m</td></tr>
+    <tr><td>Sharife Cooper</td><td>Base</td><td>24</td><td>1.83 m</td></tr>
+    <tr><td>Bilal Coulibaly</td><td>Alero</td><td>21</td><td>2.01 m</td></tr>
+    <tr><td>Kyshawn George</td><td>Escolta</td><td>22</td><td>2.03 m</td></tr>
+    <tr><td>Anthony Gill</td><td>Pívot</td><td>33</td><td>2.01 m</td></tr>
+    <tr><td>AJ Johnson</td><td>Escolta</td><td>21</td><td>1.96 m</td></tr>
+    <tr><td>Tre Johnson</td><td>Alero</td><td>19</td><td>1.96 m</td></tr>
+    <tr><td>Corey Kispert</td><td>Alero</td><td>26</td><td>1.98 m</td></tr>
+    <tr><td>CJ McCollum</td><td>Base</td><td>34</td><td>1.91 m</td></tr>
+    <tr><td>Khris Middleton</td><td>Ala-Pívot</td><td>34</td><td>2.01 m</td></tr>
+    <tr><td>Will Riley</td><td>Ala-Pívot</td><td>19</td><td>2.06 m</td></tr>
+    <tr><td>Alex Sarr</td><td>Pívot</td><td>20</td><td>2.13 m</td></tr>
+    <tr><td>Tristan Vukcevic</td><td>Ala-Pívot</td><td>22</td><td>2.13 m</td></tr>
+    <tr><td>Jamir Watkins</td><td>Escolta</td><td>24</td><td>1.98 m</td></tr>
+    <tr><td>Cam Whitmore</td><td>Alero</td><td>21</td><td>1.98 m</td></tr>
   </table>
+
   </div>
     <script>
         function toggleDropdown() {
