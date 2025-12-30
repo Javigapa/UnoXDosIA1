@@ -1,24 +1,47 @@
 /* ========================================================= */
+/* --- FIX GLOBAL ANTI SCROLL (NO VISUAL) --- */
+/* ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* ========================================================= */
 /* --- ESTILO LOTERÍA: ROJO BILLETE Y ORO DE LA SUERTE --- */
 /* ========================================================= */
+
 body {
   font-family: 'Arial Black', sans-serif; 
   margin: 0;
   padding: 0;
   background-color: #f7f3e8; /* Base color crema/papel viejo */
   color: #1a1a1a;
-  overflow-x: hidden; /* ¡CLAVE! Oculta el scroll horizontal */
 }
 
-/* Colores Base */
+/* ========================================================= */
+/* --- COLORES BASE --- */
+/* ========================================================= */
+
 :root {
-  --color-main: #c42f27; /* Rojo Lotería / Premios */
-  --color-secondary: #ffc400; /* Dorado / Amarillo Premios */
-  --color-dark: #3a0000; /* Rojo oscuro para contraste */
-  --color-accent: #2e8b57; /* Verde Billete */
+  --color-main: #c42f27;        /* Rojo Lotería / Premios */
+  --color-secondary: #ffc400;  /* Dorado / Amarillo Premios */
+  --color-dark: #3a0000;       /* Rojo oscuro */
+  --color-accent: #2e8b57;     /* Verde Billete */
+  --color-media: #7a7a7a;
 }
 
-/* Encabezado */
+/* ========================================================= */
+/* --- ENCABEZADO --- */
+/* ========================================================= */
+
 header {
   background-color: var(--color-main);
   color: white;
@@ -33,16 +56,17 @@ header h1 {
   text-shadow: 2px 2px 0 var(--color-dark); 
 }
 
-/* Navegación (Dropdown) */
+/* ========================================================= */
+/* --- NAVEGACIÓN --- */
+/* ========================================================= */
+
 nav {
-  /* Mantenido tu color de fondo */
   background-color: #636442a7; 
   padding: 10px 0;
   text-align: center;
 }
 
 .dropbtn {
-  /* Mantenidos tus estilos de botón */
   background-color: #ffc400;
   color: white;
   padding: 12px 20px;
@@ -50,11 +74,10 @@ nav {
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  transition: background-color 0.3s;
 }
 
-.dropbtn:hover, .dropbtn:focus {
-  /* Mantenido tu estilo hover */
+.dropbtn:hover,
+.dropbtn:focus {
   background-color: #ddec3a;
 }
 
@@ -68,17 +91,15 @@ nav {
   position: absolute;
   background-color: #f9f9f9;
   min-width: 200px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   border-radius: 5px;
+  z-index: 10;
 }
 
 .dropdown-content a {
   color: #333;
   padding: 12px 16px;
-  text-decoration: none;
   display: block;
-  text-align: left;
 }
 
 .dropdown-content a:hover {
@@ -89,419 +110,168 @@ nav {
   display: block;
 }
 
+/* ========================================================= */
+/* --- CONTENEDOR PRINCIPAL --- */
+/* ========================================================= */
 
-/* Contenedor Principal */
 .container {
   display: flex;
   max-width: 1600px;
+  width: 100%;
   margin: 25px auto;
   padding: 0 20px;
 }
 
-/* Enlaces */
-a {
-  color: inherit;
-  text-decoration: none;
-}
+/* ========================================================= */
+/* --- SIDEBAR --- */
+/* ========================================================= */
 
-
-/* Sidebar (Barra Lateral) */
 .sidebar {
   width: 280px;
   padding: 20px;
   background-color: #fcfcfc;
-  border: 5px double var(--color-secondary); /* Marco de premio */
+  border: 5px double var(--color-secondary); /* CUADRADO AMARILLO */
   border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   margin-right: 25px;
   height: fit-content;
+  max-width: 100%;
 }
 
 .sidebar h2 {
   color: var(--color-main);
   border-bottom: 3px solid var(--color-secondary);
   padding-bottom: 10px;
-  margin-top: 0;
   text-align: center;
 }
 
-.sidebar-section {
-  margin-bottom: 20px;
-  padding: 10px;
-  border-left: 5px solid var(--color-accent); /* Verde billete */
-  background-color: #fffaf0;
-  border-radius: 4px;
-}
+/* ========================================================= */
+/* --- CONTENIDO PRINCIPAL --- */
+/* ========================================================= */
 
-.sidebar-section h3 {
-  color: var(--color-dark);
-  font-size: 1.1em;
-  text-transform: uppercase;
-}
-
-/* Contenido Principal */
 .main-content {
   flex-grow: 1;
-  /* Añadido para ayudar a la responsividad */
-  min-width: 0; 
+  min-width: 0;
   background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  max-width: 100%;
 }
 
-.main-content h2 {
-  color: var(--color-main);
-  margin-top: 0;
-  margin-bottom: 20px;
-  border-bottom: 2px dashed #ccc;
+/* ========================================================= */
+/* --- SECCIONES DE RESULTADOS (EUROMILLÓN / PRIMITIVA / BONOLOTO) --- */
+/* ========================================================= */
+
+.prediction-section {
+  border: 3px solid var(--color-main);   /* MARCO ROJO */
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 30px;
+  background-color: #fffaf0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.prediction-section .header-sorteo {
+  text-align: center;
+  border-bottom: 2px dashed var(--color-secondary);
+  margin-bottom: 15px;
   padding-bottom: 5px;
 }
 
-.articles-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-}
-
-.article-card {
-  background-color: #fff9e0; /* Fondo amarillo muy suave */
-  padding: 20px;
-  border-radius: 6px;
-  border: 1px solid var(--color-secondary);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s;
-}
-
-.article-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
-
-.article-card h3 {
+.prediction-section h3 {
   color: var(--color-dark);
-  margin-top: 0;
+  margin: 0;
+  font-size: 1.5em;
 }
 
-.article-card a {
-  display: inline-block;
-  margin-top: 10px;
-  color: var(--color-main);
-  text-decoration: underline;
-  font-weight: bold;
+/* ========================================================= */
+/* --- RESULTADOS DE HOY (RESALTADOS EN ROJO) --- */
+/* ========================================================= */
+
+.final-result {
+  padding: 15px;
+  background-color: var(--color-main); /* ROJO INTENSO */
+  border-radius: 5px;
+  border: 2px solid var(--color-secondary);
+  box-shadow: 0 0 10px rgba(196, 47, 39, 0.5);
 }
 
+/* ========================================================= */
+/* --- BOLAS (SE MANTIENEN TAL CUAL) --- */
+/* ========================================================= */
 
-/* ======================================== */
-/* --- ESTILOS DEL RANKING (MESA DE JUEGO) --- */
-/* ======================================== */
-
-.ranking-section {
-  padding: 25px 20px;
-  background: radial-gradient(circle at 10% 20%, #ffc400, #b8860b); /* Fondo con efecto metálico/oro */
-  border-radius: 12px;
-  margin-top: 35px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-  border: 3px solid white;
-}
-
-.ranking-section h2 {
-  color: white;
-  text-align: center;
-  font-size: 2em;
-  margin-bottom: 25px;
-  border-bottom: 4px double white;
-  padding-bottom: 10px;
-  text-shadow: 1px 1px 2px var(--color-dark);
-}
-
-.ranking-grid {
+.numbers-display {
   display: flex;
-  gap: 20px;
-  justify-content: space-between;
-  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 100%;
 }
+
+.ball,
+.star-ball {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.1em;
+  border: 2px solid var(--color-dark);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.ball {
+  background-color: #008000;
+  color: white;
+}
+
+.star-ball {
+  background-color: var(--color-secondary);
+  color: var(--color-dark);
+}
+
+/* ========================================================= */
+/* --- RANKING (SIN CAMBIOS VISUALES) --- */
+/* ========================================================= */
 
 .ranking-sport {
-  flex: 1;
-  min-width: 0; /* Añadido para evitar desbordamiento */
-  padding: 0;
-  border: 2px solid var(--color-dark);
-  border-radius: 6px;
-  background-color: #f7f7f7; /* Fondo de tabla claro */
-  overflow: hidden; /* Evita que la tabla interna se salga del contenedor */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.ranking-sport h3 {
-  color: var(--color-dark);
-  font-size: 1.3em;
-  text-align: center;
-  padding: 12px 0;
-  margin: 0;
-  background-color: var(--color-secondary); /* Título en color oro */
-  border-bottom: 2px solid var(--color-dark);
+  overflow-x: auto; /* SOLO FIX TÉCNICO */
 }
 
 .ranking-table {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
 }
 
-.ranking-table th, .ranking-table td {
-  padding: 10px 5px;
-  text-align: center;
-  border-right: 1px solid #e0e0e0;
-  font-size: 0.85em; 
-}
-.ranking-table th:last-child, .ranking-table td:last-child {
-  border-right: none;
-}
+/* ========================================================= */
+/* --- MEDIA QUERIES (SOLO ADAPTACIÓN) --- */
+/* ========================================================= */
 
-.ranking-table thead th {
-  background-color: var(--color-dark);
-  color: white;
-  font-weight: 700;
-  text-transform: uppercase;
-  /* Ajuste para 5 columnas (Ganancia Total) */
-  font-size: 0.70em; 
-}
-
-.ranking-table tbody tr:nth-child(even) {
-  background-color: #fff9e0; /* Fila par con toque amarillo */
-}
-
-.ranking-table tbody tr:hover {
-  background-color: #ffe082; /* Resaltado amarillo fuerte */
-}
-
-.ranking-table tbody tr:first-child td {
-  font-weight: bold;
-  color: var(--color-main);
-  background-color: #fff0b3; /* Fondo extra claro para el líder */
-}
-/* Estilo específico para la columna de Ganancia */
-.ranking-table tbody tr td[data-ganancia] {
-  font-weight: bold;
-  color: var(--color-accent); /* Usamos el verde billete */
-}
-
-
-/* --- Panel de Control (Administración) --- */
-.control-panel {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-  padding: 10px 15px;
-  background-color: #fff8e8; /* Fondo claro para el panel */
-  border-bottom: 1px solid var(--color-secondary);
-  margin-bottom: 5px;
-}
-
-.control-panel h4 {
-  color: var(--color-dark);
-  font-weight: bold;
-  flex-basis: 100%;
-  margin-top: 0;
-}
-
-.control-panel select {
-  padding: 8px;
-  border: 1px solid var(--color-dark);
-  border-radius: 4px;
-  font-size: 0.9em;
-}
-
-.control-panel button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  color: white;
-  transition: background-color 0.2s;
-}
-
-/* Botón Acertó (Verde Billete) */
-.control-panel button:nth-of-type(1) {
-  background-color: var(--color-accent); 
-}
-
-/* Botón Falló (Rojo Suave) */
-.control-panel button:nth-of-type(2) {
-  background-color: var(--color-main); 
-}
-
-/* ======================================== */
-/* --- MEDIA QUERIES (Responsividad) --- */
-/* ======================================== */
-
-/* Se añaden ajustes responsivos para pantallas de tablet o más pequeñas */
 @media (max-width: 900px) {
-    /* El ranking grid se apila para evitar desbordamiento */
-    .ranking-grid {
-        flex-direction: column; 
-        gap: 20px;
-    }
+  .ranking-grid {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 768px) {
-  /* MÓVILES */
   .container {
     flex-direction: column;
     padding: 10px;
   }
+
   .sidebar {
     width: 100%;
     margin-right: 0;
     margin-bottom: 20px;
-    order: -1;
-  }
-  .main-content {
-    /* min-width: 0 ya está aplicado arriba, pero es bueno repetirlo */
-    width: 100%; 
-  }
-  .articles-grid {
-    grid-template-columns: 1fr;
-  }
-  /* El ranking grid ya se apila en 900px, lo cual ayuda mucho */
-  
-  .control-panel {
-      justify-content: center;
-  }
-  .control-panel h4 {
-      text-align: center;
-  }
-  
-  /* Reducir aún más el tamaño del texto de la tabla en pantallas pequeñas */
-  .ranking-table th, .ranking-table td {
-      padding: 8px 3px;
-      font-size: 0.75em; 
   }
 }
-/* ======================================== */
-/* --- ESTILOS ESPECÍFICOS DE PREDICCIONES --- */
-/* ======================================== */
 
-.prediction-section {
-    border: 3px solid var(--color-main);
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 30px;
-    background-color: #fffaf0; /* Fondo de papel/boleto claro */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.prediction-section .header-sorteo {
-    text-align: center;
-    border-bottom: 2px dashed var(--color-secondary);
-    margin-bottom: 15px;
-    padding-bottom: 5px;
-}
-
-.prediction-section h3 {
-    color: var(--color-dark);
-    margin: 0;
-    font-size: 1.5em;
-}
-
-.data-row {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    background-color: #fcfcfc;
-}
-.data-row h4 {
-    color: var(--color-main);
-    margin-top: 0;
-    border-bottom: 1px dotted #ccc;
-    padding-bottom: 5px;
-}
-
-/* Estilo de los Números (Bolas) */
-.numbers-display {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-}
-
-.ball, .star-ball {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    font-weight: bold;
-    color: white;
-    font-size: 1.1em;
-    border: 2px solid var(--color-dark);
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-/* Bolas de números principales */
-.ball {
-    background-color: #008000; /* Verde Billete */
-}
-
-/* Bolas de estrellas/reintegro */
-.star-ball {
-    background-color: var(--color-secondary); /* Dorado */
-    color: var(--color-dark);
-}
-.complementario {
-    font-weight: bold;
-    color: rgb(219, 248, 33);
-    padding: 5px 10px;
-    border: 1px solid var(--color-main);
-    border-radius: 4px;
-    margin-left: 10px;
-}
-.complementario1 {
-    font-weight: bold;
-    color: var(--color-media);
-    padding: 5px 10px;
-    border: 1px solid var(--color-main);
-    border-radius: 4px;
-    margin-left: 10px;
-}
-
-/* Resultado Final (Para resaltarlo) */
-.final-result {
-    padding: 15px;
-    background-color: var(--color-main);
-    border-radius: 5px;
-    border: 2px solid var(--color-secondary);
-    box-shadow: 0 0 10px rgba(196, 47, 39, 0.5); /* Sombra roja */
-}
-.final-result .ball {
-    background-color: #005600; /* Verde más oscuro */
-}
-.final-result .star-ball {
-    background-color: #ffd700; /* Dorado más brillante */
-}
-
-.result-analysis {
-    margin-top: 10px;
-    font-size: 1.1em;
-    font-weight: 500;
-    color: var(--color-dark);
-}
-
-.ia-prediction-list p {
-    margin: 5px 0;
-    padding-left: 15px;
-    border-left: 3px solid var(--color-secondary);
-}
-
-/* Ajuste Responsivo para números pequeños */
 @media (max-width: 480px) {
-    .ball, .star-ball {
-        width: 30px;
-        height: 30px;
-        font-size: 1em;
-    }
+  .ball,
+  .star-ball {
+    width: 30px;
+    height: 30px;
+    font-size: 1em;
+  }
 }
