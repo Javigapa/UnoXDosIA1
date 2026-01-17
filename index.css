@@ -257,6 +257,22 @@ nav {
   font-size: 0.85em;
 }
 
+.Tips h3{
+  text-align: center;
+}
+.tres-columnas-Tips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.col-Tips {
+  background: #f2f2f2;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+
 /* ========================================================= */
 /* --- MEDIA QUERIES --- */
 /* ========================================================= */
@@ -290,5 +306,10 @@ nav {
   
   header h1 {
     font-size: 1.8em;
+  }
+}
+@media (max-width: 768px) {
+  .tres-columnas-Tips {
+    grid-template-columns: 1fr;
   }
 }
