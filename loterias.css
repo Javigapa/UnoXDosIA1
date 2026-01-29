@@ -243,6 +243,16 @@ nav {
   min-width: 600px;
   border-collapse: collapse;
 }
+ /* --- SECCIÓN DE CONTACTO --- */
+    .contact-footer {
+      margin-top: 50px;
+      background: var(--color-main);
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      border-bottom: 5px solid var(--color-secondary);
+    }
 
 /* ========================================================= */
 /* --- MEDIA QUERIES (SOLO ADAPTACIÓN) --- */

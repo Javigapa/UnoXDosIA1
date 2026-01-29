@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-90WQKBTXN3');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uno X Dos IA - Predicciones Deportivas Avanzadas</title>
+  <link rel="stylesheet" href="../index.css">
+  <style>
+
+    .columna_articulo{
+        background: #ffffff;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 70px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
+
+ <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+    <a href="../index.html">Inicio</a>
+        <a href="../NBA.html">NBA</a>
+        <a href="../LIgaEsports.html">Liga EA Sports</a>
+        <a href="../Hypermotion.html">Liga Hypermotion</a>
+        <a href="../Loterias.html">Loterías</a>
+      </div>
+    </div>
+  </nav>
+<div Class="columna_articulo">
+<section id="usan-ia-casas-apuestas">
+  <h2>¿Usan IA las casas de apuestas?</h2>
+
+  <p>
+    La respuesta corta es sí. <strong>Las casas de apuestas utilizan modelos algorítmicos, estadística avanzada e
+    Inteligencia Artificial</strong>, aunque no exactamente de la forma en la que muchos usuarios imaginan.
+  </p>
+
+  <p>
+    La IA no se emplea únicamente para predecir resultados, sino principalmente para
+    <strong>ajustar cuotas, gestionar el riesgo y proteger el margen del bookmaker</strong>.
+  </p>
+
+  <h3>¿Qué tecnologías usan realmente?</h3>
+  <ul>
+    <li>Modelos estadísticos clásicos (Poisson, Elo, ratings propios)</li>
+    <li>Machine Learning (regresiones, árboles de decisión, redes neuronales)</li>
+    <li>Sistemas en tiempo real para apuestas en vivo</li>
+    <li>Algoritmos de gestión de riesgo</li>
+  </ul>
+
+  <h3>Principales usos de la IA</h3>
+  <p>
+    La IA se utiliza para ajustar cuotas dinámicamente según el volumen de apuestas, detectar patrones de riesgo,
+    identificar apostadores ganadores y recalcular probabilidades en mercados en vivo.
+  </p>
+
+  <p>
+    En la práctica, la IA de las casas es más <strong>defensiva que predictiva</strong>.
+  </p>
+
+  <h3>Conclusión</h3>
+  <p>
+    Las casas de apuestas sí usan IA, pero su objetivo principal no es predecir resultados con máxima precisión,
+    sino <strong>asegurar la rentabilidad y estabilidad del negocio</strong>.
+  </p>
+</section>
+
+</div>
+ <section class="contact-footer">
+        <h2>📩 ¿Crees que falta algo?</h2>
+        <p>Si tienes alguna corrección, sugerencia o crees que le falta alguna función a esta página, dímelo aquí:</p>
+        <a href="mailto:unoxdosia@gmail.com?subject=Sugerencia para Uno X Dos IA" class="btn-contact">ENVIAR COMENTARIO O CORRECCIÓN</a>
+      </section>
+           <div class="volver">
+      <p>
+        <a href="../index.html">← Volver a la página principal</a>
+      </p>
+    </div>
+    </main>
+  </div>
+  <script>
+    // ========================================
+    // 1. FUNCIONALIDAD DEL MENÚ DESPLEGABLE
+    // ========================================
+
+    function toggleDropdown() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Cierra el menú si el usuario hace clic fuera de él
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+
+
+    // ========================================
+    // 2. FUNCIONALIDAD DEL RANKING DINÁMICO
+    // ========================================
+
+    /**
+    * Calcula la tasa de éxito de cada modelo y ordena la tabla.
+    * La tabla se ordena basándose en el atributo data-tasa-numerica.
+    * @param {string} tableId - El ID de la tabla a actualizar (ej. 'ranking-nba').
+    */
+    function updateRankingTable(tableId) {
+      const tableBody = document.getElementById(tableId).querySelector('tbody');
+      if (!tableBody) return;
+
+      // Convertir las filas (tr) a un Array para poder ordenarlas
+      const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+      // --- Paso A: Calcular y actualizar la Tasa de Éxito ---
+      rows.forEach(row => {
+        // Obtener valores de los atributos data-*
+        const jornadas = parseInt(row.querySelector('[data-jornadas]').textContent);
+        const aciertos = parseInt(row.querySelector('[data-aciertos]').textContent);
+        const tasaCell = row.querySelector('[data-tasa]');
+
+        let tasa = 0;
+        if (jornadas > 0) {
+          tasa = (aciertos / jornadas) * 100;
+        }
+
+        // Almacenar el valor numérico para la ordenación
+        row.dataset.tasaNumerica = tasa.toFixed(2);
+
+        // Mostrar el valor formateado al 1 decimal en la celda
+        tasaCell.textContent = `${tasa.toFixed(1)}%`;
+      });
+
+      // --- Paso B: Ordenar las filas ---
+      rows.sort((a, b) => {
+        // Comparar las tasas numéricas almacenadas
+        const tasaA = parseFloat(a.dataset.tasaNumerica);
+        const tasaB = parseFloat(b.dataset.tasaNumerica);
+
+        // Orden descendente (b - a)
+        return tasaB - tasaA;
+      });
+
+      // --- Paso C: Re-añadir las filas ordenadas al cuerpo de la tabla ---
+      // Esto borra las filas actuales y las añade en el nuevo orden
+      tableBody.innerHTML = '';
+      rows.forEach(row => {
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Ejecutar la actualización para todas las tablas una vez que la página esté cargada
+    document.addEventListener('DOMContentLoaded', () => {
+      updateRankingTable('ranking-nba');
+      updateRankingTable('ranking-ea');
+      updateRankingTable('ranking-hyper');
+      updateRankingTable('ranking-tips');
+    });
+
+  </script>
+
+</body>
+</html>

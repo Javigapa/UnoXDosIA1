@@ -117,7 +117,7 @@ nav {
 /* ========================================================= */
 
 .sidebar {
-  width: 280px;
+  width: 880px;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 8px;
@@ -227,13 +227,15 @@ nav {
   max-width: 100%;
 }
 
+
 .ranking-sport {
   flex: 1;
   min-width: 0;
   border: 1px solid #c0c6cc;
   border-radius: 6px;
   background-color: #ffffff;
-  overflow-x: auto;
+
+  overflow-x: auto; 
 }
 
 .ranking-sport h3 {
@@ -242,13 +244,16 @@ nav {
   padding: 12px 0;
   margin: 0;
   background-color: #eaf1f7;
+  min-width: 600px; 
+  display: block;   
 }
 
 .ranking-table {
   width: 100%;
-  min-width: 600px;
+  min-width: 600px; 
   border-collapse: collapse;
 }
+
 
 .ranking-table th,
 .ranking-table td {
@@ -271,6 +276,58 @@ nav {
   padding: 15px;
   border-radius: 8px;
 }
+ /* --- SECCIÓN DE CONTACTO --- */
+    .contact-footer {
+      margin-top: 50px;
+      background: var(--color-main);
+      color: rgb(13, 13, 13);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      border-bottom: 5px solid var(--color-secondary);
+    }
+
+/* Tipografía moderna */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.volver {
+  display: block;               /* Para poder centrarlo */
+  width: fit-content;           /* Ajusta al tamaño del texto */
+  margin: 30px auto;            /* Centrado horizontal */
+  padding: 12px 28px;
+
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+
+  color: #000;                  /* Texto negro */
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1em;
+  font-weight: 600;
+  text-decoration: none;
+
+  box-shadow:
+    4px 4px 10px rgba(0,0,0,0.15),
+    -4px -4px 10px rgba(255,255,255,0.6);
+
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.volver:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    6px 6px 14px rgba(0,0,0,0.2),
+    -6px -6px 14px rgba(255,255,255,0.7);
+}
+
+.volver:active {
+  transform: translateY(0);
+  box-shadow:
+    3px 3px 8px rgba(0,0,0,0.15),
+    -3px -3px 8px rgba(255,255,255,0.6);
+}
+
 
 
 /* ========================================================= */
