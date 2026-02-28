@@ -206,6 +206,18 @@ nav {
 /* ========================================================= */
 /* --- RANKING --- */
 /* ========================================================= */
+.tabla-premios {
+  width: 100%; 
+  border-collapse: collapse; 
+  margin: 30px auto; 
+  font-family: Arial, sans-serif; } 
+
+.tabla-premios th { 
+  background: #1e1e1e; 
+  color: #fff; 
+  padding: 15px; 
+  font-size: 20px; 
+  text-align: center; } .tabla-premios td { background: #f7f7f7; padding: 20px; vertical-align: top; border: 1px solid #ddd; } .tabla-premios h3 { margin-top: 0; color: #333; } .tabla-premios strong { color: #000; } .tabla-premios td:hover { background: #ececec; transition: 0.3s; } /* Responsive */ @media (max-width: 900px) { .tabla-premios { display: block; overflow-x: auto; white-space: nowrap; } }
 
 .ranking-section {
   padding: 25px 20px;
