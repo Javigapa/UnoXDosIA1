@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🤖 Plantillas & Fichajes | Liga Fantas-IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green-dark:   #0a2e0a;
+      --green-mid:    #1a5c1a;
+      --green-field:  #2d8a2d;
+      --green-bright: #4caf50;
+      --green-light:  #81c784;
+      --gold:         #ffd700;
+      --gold-dark:    #c8a600;
+      --white:        #f0f0f0;
+      --gray:         #b0b0b0;
+      --dark:         #0d1b0d;
+      --card-bg:      rgba(10,46,10,0.88);
+      --border:       rgba(76,175,80,0.3);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:'Rajdhani',sans-serif;
+      background-color:var(--dark);
+      color:var(--white);
+      overflow-x:hidden;
+    }
+    body::before{
+      content:'';position:fixed;inset:0;z-index:-2;
+      background:
+        repeating-linear-gradient(90deg,rgba(30,90,30,.18) 0,rgba(30,90,30,.18) 60px,rgba(20,70,20,.10) 60px,rgba(20,70,20,.10) 120px),
+        repeating-linear-gradient(180deg,rgba(0,0,0,.06) 0,rgba(0,0,0,.06) 80px,transparent 80px,transparent 160px),
+        linear-gradient(160deg,#0a2e0a 0%,#143d14 40%,#0e2e0e 100%);
+    }
+    /* NAV */
+    nav{
+      position:sticky;top:0;z-index:1000;
+      background:rgba(5,20,5,0.97);
+      backdrop-filter:blur(10px);
+      border-bottom:2px solid var(--green-bright);
+      padding:0 2rem;
+      display:flex;align-items:center;justify-content:space-between;
+      height:62px;gap:1rem;flex-wrap:wrap;
+    }
+    .nav-logo{
+      font-family:'Oswald',sans-serif;font-size:1.3rem;font-weight:700;
+      color:var(--gold);text-decoration:none;letter-spacing:1px;
+      display:flex;align-items:center;gap:.4rem;white-space:nowrap;
+    }
+    .nav-logo span{color:var(--green-bright);}
+    .nav-links{display:flex;gap:1.2rem;list-style:none;flex-wrap:wrap;}
+    .nav-links a{
+      color:var(--white);text-decoration:none;
+      font-size:.9rem;font-weight:600;letter-spacing:.5px;
+      transition:color .2s;
+    }
+    .nav-links a:hover{color:var(--gold);}
+    .nav-back{
+      font-size:.8rem;color:var(--gray);text-decoration:none;
+      border:1px solid var(--border);padding:.3rem .8rem;border-radius:20px;
+      transition:all .3s;white-space:nowrap;
+    }
+    .nav-back:hover{color:var(--green-bright);border-color:var(--green-bright);}
+
+    /* HERO MINI */
+    .page-hero{
+      padding:4rem 2rem 3rem;text-align:center;
+      background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(76,175,80,.12),transparent);
+      border-bottom:1px solid var(--border);
+    }
+    .page-hero-tag{
+      font-family:'Share Tech Mono',monospace;font-size:.7rem;
+      color:var(--green-bright);letter-spacing:3px;text-transform:uppercase;
+      margin-bottom:.6rem;
+    }
+    .page-hero h1{
+      font-family:'Oswald',sans-serif;font-size:clamp(2rem,6vw,4rem);
+      font-weight:700;letter-spacing:.5px;margin-bottom:.6rem;
+    }
+    .page-hero h1 em{font-style:normal;color:var(--gold);}
+    .page-hero p{color:var(--gray);font-size:1rem;max-width:600px;margin:0 auto;}
+
+    /* TICKER */
+    .ticker-bar{
+      background:var(--green-mid);
+      border-top:1px solid var(--green-bright);
+      border-bottom:1px solid var(--green-bright);
+      overflow:hidden;white-space:nowrap;padding:.4rem 0;
+    }
+    .ticker-track{
+      display:inline-block;
+      animation:ticker 32s linear infinite;
+      font-family:'Share Tech Mono',monospace;font-size:.78rem;
+      color:var(--gold);letter-spacing:1px;
+    }
+    @keyframes ticker{from{transform:translateX(100vw);}to{transform:translateX(-100%);}}
+
+    /* LAYOUT */
+    section{padding:3.5rem 2rem;}
+    .section-inner{max-width:1200px;margin:0 auto;}
+    .section-tag{
+      font-family:'Share Tech Mono',monospace;font-size:.7rem;
+      color:var(--green-bright);letter-spacing:3px;text-transform:uppercase;
+      margin-bottom:.4rem;
+    }
+    h2.section-title{
+      font-family:'Oswald',sans-serif;font-size:clamp(1.6rem,4vw,2.6rem);
+      font-weight:700;margin-bottom:.8rem;
+    }
+    h2.section-title em{font-style:normal;color:var(--gold);}
+    .section-desc{color:var(--gray);font-size:1rem;line-height:1.7;max-width:700px;margin-bottom:2rem;}
+
+    .pitch-divider{
+      height:3px;
+      background:repeating-linear-gradient(90deg,var(--green-bright) 0,var(--green-bright) 20px,transparent 20px,transparent 30px);
+      opacity:.35;
+    }
+
+    /* ========= EQUIPOS TABS ========= */
+    .teams-tabs{
+      display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:2rem;
+    }
+    .team-tab{
+      font-family:'Oswald',sans-serif;font-size:.88rem;font-weight:600;
+      letter-spacing:.5px;padding:.5rem 1.1rem;
+      border:2px solid var(--border);background:transparent;
+      color:var(--gray);border-radius:4px;cursor:pointer;
+      transition:all .22s;white-space:nowrap;
+    }
+    .team-tab.active{background:var(--team-color,var(--green-bright));color:var(--dark);border-color:var(--team-color,var(--green-bright));}
+    .team-tab:hover:not(.active){border-color:var(--team-color,var(--green-bright));color:var(--white);}
+
+    .team-panel{display:none;}
+    .team-panel.active{display:block;animation:fadeIn .4s ease;}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+    /* TEAM HEADER */
+    .team-header{
+      background:var(--card-bg);
+      border:1px solid var(--border);
+      border-top:4px solid var(--team-color,var(--green-bright));
+      border-radius:8px;padding:1.5rem 2rem;
+      margin-bottom:1.5rem;
+      display:flex;align-items:flex-start;justify-content:space-between;
+      flex-wrap:wrap;gap:1rem;
+    }
+    .team-header-info h3{
+      font-family:'Oswald',sans-serif;font-size:1.6rem;font-weight:700;
+      color:var(--team-color,var(--gold));margin-bottom:.3rem;
+    }
+    .team-header-info p{color:var(--gray);font-size:.95rem;line-height:1.6;max-width:500px;}
+    .team-badge{
+      font-family:'Share Tech Mono',monospace;font-size:2.5rem;
+      opacity:.9;
+    }
+    .team-stats-mini{
+      display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:.8rem;
+    }
+    .tsm-item span:first-child{
+      font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:700;
+      color:var(--team-color,var(--gold));display:block;line-height:1;
+    }
+    .tsm-item span:last-child{font-size:.72rem;color:var(--gray);letter-spacing:1px;text-transform:uppercase;}
+
+    /* PLAYER TABLE */
+    .table-wrap{overflow-x:auto;}
+    table.players-table{
+      width:100%;border-collapse:collapse;font-size:.9rem;
+    }
+    table.players-table thead tr{
+      background:rgba(76,175,80,.12);
+      border-bottom:2px solid var(--green-bright);
+    }
+    table.players-table th{
+      font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.5px;
+      color:var(--green-light);padding:.7rem .8rem;text-align:left;white-space:nowrap;
+    }
+    table.players-table tbody tr{
+      border-bottom:1px solid rgba(76,175,80,.09);
+      transition:background .18s;
+    }
+    table.players-table tbody tr:hover{background:rgba(76,175,80,.07);}
+    table.players-table td{padding:.6rem .8rem;color:var(--white);}
+    .td-num{
+      font-family:'Share Tech Mono',monospace;font-size:.85rem;
+      color:var(--gray);width:32px;
+    }
+    .td-name{font-weight:600;}
+    .td-pos{
+      font-family:'Oswald',sans-serif;font-size:.8rem;font-weight:600;
+      letter-spacing:.5px;padding:.2rem .6rem;border-radius:3px;
+      white-space:nowrap;
+    }
+    .pos-POR{background:rgba(255,193,7,.15);color:#ffc107;}
+    .pos-DEF{background:rgba(33,150,243,.15);color:#64b5f6;}
+    .pos-MED{background:rgba(76,175,80,.15);color:#81c784;}
+    .pos-EXT{background:rgba(255,152,0,.15);color:#ffb74d;}
+    .pos-DEL{background:rgba(244,67,54,.15);color:#ef9a9a;}
+
+    /* ATTRIBUTE BARS */
+    .attr-cell{display:flex;align-items:center;gap:.5rem;min-width:80px;}
+    .attr-val{
+      font-family:'Share Tech Mono',monospace;font-size:.82rem;
+      width:26px;text-align:right;flex-shrink:0;
+    }
+    .attr-bar-wrap{flex:1;height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;}
+    .attr-bar{height:100%;border-radius:3px;transition:width .4s;}
+    .bar-pot{background:linear-gradient(90deg,#ef5350,#ff7043);}
+    .bar-cal{background:linear-gradient(90deg,#42a5f5,#26c6da);}
+    .bar-vel{background:linear-gradient(90deg,#ffca28,#ffa726);}
+    .bar-vis{background:linear-gradient(90deg,#66bb6a,#26a69a);}
+
+    .overall-badge{
+      font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;
+      padding:.15rem .5rem;border-radius:4px;
+    }
+    .ov-elite{background:rgba(255,215,0,.2);color:var(--gold);}
+    .ov-high{background:rgba(76,175,80,.2);color:var(--green-bright);}
+    .ov-mid{background:rgba(100,181,246,.2);color:#64b5f6;}
+    .ov-low{background:rgba(255,138,101,.2);color:#ff8a65;}
+
+    /* FILTER BAR */
+    .filter-bar{
+      display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem;align-items:center;
+    }
+    .filter-btn{
+      font-family:'Oswald',sans-serif;font-size:.82rem;font-weight:600;
+      letter-spacing:.5px;padding:.35rem .9rem;
+      border:1px solid var(--border);background:transparent;
+      color:var(--gray);border-radius:20px;cursor:pointer;transition:all .2s;
+    }
+    .filter-btn.active,
+    .filter-btn:hover{background:var(--green-bright);color:var(--dark);border-color:var(--green-bright);}
+    .filter-label{font-size:.8rem;color:var(--gray);margin-right:.3rem;}
+
+    /* ========= FICHAJES ========= */
+    #fichajes{background:rgba(0,0,0,.25);}
+
+    .fichajes-meta{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:1rem;margin-bottom:2.5rem;
+    }
+    .meta-card{
+      background:var(--card-bg);border:1px solid var(--border);
+      border-radius:8px;padding:1.2rem 1.4rem;text-align:center;
+    }
+    .meta-card .meta-icon{font-size:1.8rem;margin-bottom:.4rem;display:block;}
+    .meta-card .meta-title{
+      font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;
+      color:var(--gold);letter-spacing:.5px;margin-bottom:.3rem;
+    }
+    .meta-card .meta-val{
+      font-family:'Share Tech Mono',monospace;font-size:1.1rem;color:var(--green-bright);
+    }
+    .meta-card p{font-size:.82rem;color:var(--gray);line-height:1.5;margin-top:.3rem;}
+
+    /* VENTANA FICHAJES */
+    .ventana-header{
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;
+    }
+    .ventana-header h3{
+      font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--white);
+    }
+    .ventana-status{
+      display:flex;align-items:center;gap:.6rem;
+      font-family:'Share Tech Mono',monospace;font-size:.82rem;
+    }
+    .status-dot{
+      width:10px;height:10px;border-radius:50%;
+      animation:pulse 1.5s infinite;
+    }
+    .status-open{background:var(--green-bright);}
+    .status-closed{background:#e53935;}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+    .jugadores-subasta{
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+      gap:1.2rem;margin-bottom:2.5rem;
+    }
+    .jugador-subasta-card{
+      background:var(--card-bg);
+      border:1px solid var(--border);
+      border-radius:10px;overflow:hidden;
+      transition:transform .25s,border-color .25s;
+    }
+    .jugador-subasta-card:hover{transform:translateY(-4px);border-color:var(--gold);}
+
+    .jsc-header{
+      padding:.8rem 1rem;
+      background:rgba(76,175,80,.1);
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .jsc-name{font-family:'Oswald',sans-serif;font-size:1.05rem;font-weight:700;}
+    .jsc-team{font-size:.75rem;color:var(--gray);}
+    .jsc-body{padding:1rem;}
+    .jsc-info{
+      display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;
+    }
+    .jsc-attrs{
+      display:grid;grid-template-columns:1fr 1fr;gap:.3rem;margin-bottom:.8rem;
+    }
+    .jsc-attr{
+      display:flex;align-items:center;gap:.4rem;font-size:.8rem;
+    }
+    .jsc-attr .alabel{color:var(--gray);font-family:'Share Tech Mono',monospace;font-size:.72rem;width:26px;}
+    .jsc-attr .aval{font-weight:700;font-family:'Oswald',sans-serif;font-size:.95rem;}
+    .jsc-attr.pot .aval{color:#ef9a9a;}
+    .jsc-attr.cal .aval{color:#64b5f6;}
+    .jsc-attr.vel .aval{color:#ffb74d;}
+    .jsc-attr.vis .aval{color:#81c784;}
+
+    .pujas-section h4{
+      font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;
+      color:var(--gray);letter-spacing:.5px;margin-bottom:.6rem;
+    }
+    .pujas-list{display:flex;flex-direction:column;gap:.3rem;}
+    .puja-row{
+      display:flex;align-items:center;justify-content:space-between;
+      background:rgba(255,255,255,.04);border-radius:4px;
+      padding:.35rem .7rem;font-size:.85rem;
+    }
+    .puja-ia{display:flex;align-items:center;gap:.5rem;}
+    .puja-ia .ia-dot{width:8px;height:8px;border-radius:50%;}
+    .puja-amount{
+      font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;
+      color:var(--gold);
+    }
+    .puja-leader{
+      font-size:.65rem;font-family:'Share Tech Mono',monospace;
+      color:var(--green-bright);margin-left:.4rem;
+    }
+
+    .jsc-footer{
+      padding:.8rem 1rem;
+      border-top:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .precio-base{font-size:.8rem;color:var(--gray);}
+    .precio-base strong{color:var(--white);}
+    .precio-actual{
+      font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:700;
+      color:var(--gold);
+    }
+
+    /* MECANICA FICHAJES */
+    .mecanica-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:1.2rem;margin-top:1.5rem;
+    }
+    .mec-card{
+      background:var(--card-bg);border:1px solid var(--border);
+      border-radius:8px;padding:1.5rem;
+      transition:border-color .25s;
+    }
+    .mec-card:hover{border-color:var(--gold);}
+    .mec-icon{font-size:1.8rem;margin-bottom:.6rem;display:block;}
+    .mec-card h4{
+      font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;
+      color:var(--gold);margin-bottom:.5rem;
+    }
+    .mec-card p{font-size:.88rem;color:var(--gray);line-height:1.6;}
+
+    /* REGLAS TABLE */
+    .reglas-table{
+      width:100%;border-collapse:collapse;font-size:.9rem;margin-top:1rem;
+    }
+    .reglas-table th{
+      font-family:'Oswald',sans-serif;font-weight:600;color:var(--green-light);
+      padding:.7rem 1rem;text-align:left;background:rgba(76,175,80,.1);
+      border-bottom:1px solid var(--border);
+    }
+    .reglas-table td{padding:.6rem 1rem;border-bottom:1px solid rgba(76,175,80,.07);}
+    .reglas-table tr:hover td{background:rgba(76,175,80,.05);}
+
+    /* FOOTER */
+    footer{
+      background:rgba(0,0,0,.65);
+      border-top:2px solid var(--green-bright);
+      padding:2rem;
+    }
+    .footer-inner{
+      max-width:1200px;margin:0 auto;
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:1rem;
+    }
+    .footer-brand{font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:700;color:var(--gold);}
+    .footer-brand span{color:var(--green-bright);}
+    .footer-links{display:flex;gap:1.2rem;flex-wrap:wrap;}
+    .footer-links a{color:var(--gray);text-decoration:none;font-size:.88rem;transition:color .2s;}
+    .footer-links a:hover{color:var(--green-bright);}
+    .footer-copy{width:100%;text-align:center;color:rgba(176,176,176,.45);font-size:.78rem;margin-top:.5rem;}
+    .footer-copy a{color:var(--green-bright);text-decoration:none;}
+
+    /* UTILS */
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    @media(max-width:768px){
+      .nav-links{display:none;}
+      table.players-table .attr-bar-wrap{display:none;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="fantas-ia.html" class="nav-logo">🤖 Liga <span>Fantas-IA</span></a>
+  <ul class="nav-links">
+    <li><a href="#equipos">Equipos</a></li>
+    <li><a href="#fichajes">Fichajes</a></li>
+    <li><a href="#mecanica">Mecánica</a></li>
+  </ul>
+  <a href="https://www.unoxdosia.com" class="nav-back" target="_blank">← unoxdosia.com</a>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <span class="ticker-track">
+    🔴 VENTANA DE FICHAJES ABIERTA · JORNADA 1 &nbsp;│&nbsp; 💰 Logic Gate — puja líder 14.2M &nbsp;│&nbsp; ⚡ Bio Xero disputado por 5 IAs &nbsp;│&nbsp; 📅 Cierre: Martes 23:59 &nbsp;│&nbsp; 🏆 Presupuesto restante: ChatGPT 62M · Gemini 71M · Claude 58M · Copilot 67M · Grok 80M · Llama 74M · Mistral 69M &nbsp;│&nbsp;
+  </span>
+</div>
+
+<!-- HERO MINI -->
+<div class="page-hero">
+  <div class="page-hero-tag">/ Liga Fantas-IA · Temporada 1</div>
+  <h1>Plantillas & <em>Fichajes</em></h1>
+  <p>Consulta los 7 equipos de la liga, sus 22 jugadores con atributos completos y sigue la ventana de fichajes en tiempo real.</p>
+</div>
+
+<div class="pitch-divider"></div>
+
+<!-- EQUIPOS -->
+<section id="equipos">
+  <div class="section-inner">
+    <div class="section-tag">/ 7 Equipos · 154 Jugadores</div>
+    <h2 class="section-title">Las <em>Plantillas</em></h2>
+    <p class="section-desc">Selecciona un equipo para ver su plantilla completa con los cuatro atributos: <strong>POT</strong> (Potencia), <strong>CAL</strong> (Calidad), <strong>VEL</strong> (Velocidad) y <strong>VIS</strong> (Visión).</p>
+
+    <div class="teams-tabs" id="teams-tabs"></div>
+    <div id="teams-panels"></div>
+  </div>
+</section>
+
+<div class="pitch-divider"></div>
+
+<!-- FICHAJES -->
+<section id="fichajes">
+  <div class="section-inner">
+    <div class="section-tag">/ Sistema de fichajes</div>
+    <h2 class="section-title">Ventana de <em>Fichajes</em></h2>
+    <p class="section-desc">Cada jornada se abre una ventana de 2 días donde los jugadores salen a subasta. Cada IA puja de forma autónoma en base a su presupuesto y estrategia. Gana quien ofrezca más.</p>
+
+    <!-- META INFO -->
+    <div class="fichajes-meta">
+      <div class="meta-card reveal">
+        <span class="meta-icon">📅</span>
+        <div class="meta-title">VENTANA ACTIVA</div>
+        <div class="meta-val">Jornada 1</div>
+        <p>Lunes 00:00 — Martes 23:59</p>
+      </div>
+      <div class="meta-card reveal">
+        <span class="meta-icon">⚽</span>
+        <div class="meta-title">JUGADORES EN SUBASTA</div>
+        <div class="meta-val" id="total-subasta">6</div>
+        <p>Disponibles para fichar esta jornada</p>
+      </div>
+      <div class="meta-card reveal">
+        <span class="meta-icon">💸</span>
+        <div class="meta-title">PUJA MÁS ALTA</div>
+        <div class="meta-val">14.2M</div>
+        <p>Logic Gate · ChatGPT lidera</p>
+      </div>
+      <div class="meta-card reveal">
+        <span class="meta-icon">⏱️</span>
+        <div class="meta-title">TIEMPO RESTANTE</div>
+        <div class="meta-val" id="countdown">--:--:--</div>
+        <p>Hasta cierre de ventana</p>
+      </div>
+    </div>
+
+    <!-- JUGADORES EN SUBASTA -->
+    <div class="ventana-header">
+      <h3>🔴 Jugadores en Subasta — Jornada 1</h3>
+      <div class="ventana-status">
+        <div class="status-dot status-open"></div>
+        <span style="color:var(--green-bright)">VENTANA ABIERTA</span>
+      </div>
+    </div>
+
+    <div class="jugadores-subasta" id="subasta-cards"></div>
+
+    <div class="pitch-divider" style="margin:1rem 0"></div>
+
+    <!-- MECANICA -->
+    <div id="mecanica" style="margin-top:2.5rem;">
+      <div class="section-tag">/ Cómo funciona</div>
+      <h2 class="section-title" style="margin-bottom:.5rem;">Mecánica de <em>Fichajes</em></h2>
+      <p class="section-desc">El sistema está diseñado para que cada IA tome sus propias decisiones autónomas de fichaje basándose en su estrategia y presupuesto.</p>
+
+      <div class="mecanica-grid">
+        <div class="mec-card reveal">
+          <span class="mec-icon">📆</span>
+          <h4>¿Cuándo se ficha?</h4>
+          <p>La ventana abre cada <strong>Lunes a las 00:00</strong> y cierra el <strong>Martes a las 23:59</strong>. Solo dos días por jornada, sin excepciones.</p>
+        </div>
+        <div class="mec-card reveal">
+          <span class="mec-icon">🎯</span>
+          <h4>¿Qué jugadores salen?</h4>
+          <p>El gestor de la liga selecciona <strong>3–8 jugadores</strong> aleatorios del mercado libre más 1–2 jugadores de lujo de alta demanda.</p>
+        </div>
+        <div class="mec-card reveal">
+          <span class="mec-icon">🤖</span>
+          <h4>¿Cómo puja la IA?</h4>
+          <p>Cada IA recibe la lista de jugadores y su presupuesto disponible. Responde con sus pujas en formato estructurado. Las pujas se registran y se hacen públicas al cierre.</p>
+        </div>
+        <div class="mec-card reveal">
+          <span class="mec-icon">🏆</span>
+          <h4>¿Quién gana el fichaje?</h4>
+          <p>La IA que ofrezca <strong>más dinero</strong> por el jugador se lo lleva. En caso de empate, gana quien haya pujado antes (timestamp).</p>
+        </div>
+        <div class="mec-card reveal">
+          <span class="mec-icon">💰</span>
+          <h4>Presupuesto</h4>
+          <p>Cada IA parte con <strong>100 millones</strong>. Una vez gastado, no hay más. Las ventas de jugadores pueden recuperar fondos.</p>
+        </div>
+        <div class="mec-card reveal">
+          <span class="mec-icon">🔄</span>
+          <h4>Ventas & Traspasos</h4>
+          <p>Una IA puede liberar jugadores durante la ventana. El jugador vuelve al mercado con precio base = 60% de su última puja.</p>
+        </div>
+      </div>
+
+      <!-- TABLA DE REGLAS -->
+      <h3 style="font-family:'Oswald',sans-serif;font-size:1.2rem;color:var(--gold);margin-top:2.5rem;margin-bottom:.2rem;">📋 Tabla de Reglas</h3>
+      <div class="table-wrap">
+        <table class="reglas-table">
+          <thead>
+            <tr>
+              <th>Aspecto</th>
+              <th>Regla</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Días de ventana</td><td>Lunes y Martes de cada semana (2 días por jornada)</td></tr>
+            <tr><td>Jugadores por subasta</td><td>Entre 4 y 8 jugadores por ventana, elegidos por el gestor</td></tr>
+            <tr><td>Presupuesto inicial</td><td>100 millones por IA. Común para todas</td></tr>
+            <tr><td>Puja mínima</td><td>500.000 € (0.5M) por encima del precio base del jugador</td></tr>
+            <tr><td>Máximo de pujas</td><td>Una IA puede pujar a todos los jugadores, pero solo consigue los que gana</td></tr>
+            <tr><td>Plantilla mínima</td><td>11 titulares + 4 suplentes = 15 jugadores obligatorios</td></tr>
+            <tr><td>Plantilla máxima</td><td>22 jugadores en total (como los equipos base)</td></tr>
+            <tr><td>Traspaso</td><td>Se puede vender un jugador durante la ventana. Precio mínimo = 60% valor compra</td></tr>
+            <tr><td>Precio base jugador</td><td>Calculado según OVR: OVR × 100.000 €</td></tr>
+            <tr><td>Resolución empate</td><td>Gana la IA que registró la puja primero (timestamp del gestor)</td></tr>
+            <tr><td>Sanciones</td><td>Pujar más de lo disponible = puja anulada automáticamente</td></tr>
+            <tr><td>Publicación resultados</td><td>Miércoles antes de las 12:00 se publica quién fichó a quién</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- CÓMO USAR LA IA PARA PUJAR -->
+      <h3 style="font-family:'Oswald',sans-serif;font-size:1.2rem;color:var(--gold);margin-top:2.5rem;margin-bottom:.5rem;">🤖 ¿Cómo se gestiona la puja de cada IA?</h3>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:1rem;">
+        <p style="color:var(--gray);font-size:.95rem;line-height:1.8;margin-bottom:1rem;">
+          El gestor de la liga (el humano) actúa como árbitro. Para cada ventana de fichajes sigue estos pasos:
+        </p>
+        <ol style="list-style:none;display:flex;flex-direction:column;gap:.8rem;">
+          <li style="display:flex;gap:1rem;align-items:flex-start;">
+            <span style="font-family:'Oswald',sans-serif;font-size:1.2rem;color:var(--gold);flex-shrink:0;">01</span>
+            <span style="color:var(--gray);font-size:.92rem;line-height:1.6;"><strong style="color:var(--white)">Selecciona los jugadores en subasta</strong> — elige 4–8 jugadores del pool libre y los publica en esta página.</span>
+          </li>
+          <li style="display:flex;gap:1rem;align-items:flex-start;">
+            <span style="font-family:'Oswald',sans-serif;font-size:1.2rem;color:var(--gold);flex-shrink:0;">02</span>
+            <span style="color:var(--gray);font-size:.92rem;line-height:1.6;"><strong style="color:var(--white)">Prepara el prompt para cada IA</strong> — incluye: lista de jugadores con atributos, precio base de cada uno, presupuesto disponible de la IA y su plantilla actual.</span>
+          </li>
+          <li style="display:flex;gap:1rem;align-items:flex-start;">
+            <span style="font-family:'Oswald',sans-serif;font-size:1.2rem;color:var(--gold);flex-shrink:0;">03</span>
+            <span style="color:var(--gray);font-size:.92rem;line-height:1.6;"><strong style="color:var(--white)">Ejecuta la consulta</strong> — pide a cada IA: <em style="color:var(--green-light)">"¿Por cuánto pujas por cada jugador? Prioriza según tu estrategia y no superes tu presupuesto de Xm."</em></span>
+          </li>
+          <li style="display:flex;gap:1rem;align-items:flex-start;">
+            <span style="font-family:'Oswald',sans-serif;font-size:1.2rem;color:var(--gold);flex-shrink:0;">04</span>
+            <span style="color:var(--gray);font-size:.92rem;line-height:1.6;"><strong style="color:var(--white)">Registra las pujas</strong> — copia las respuestas de cada IA y actualiza esta sección. El miércoles se resuelven y se publican los ganadores.</span>
+          </li>
+          <li style="display:flex;gap:1rem;align-items:flex-start;">
+            <span style="font-family:'Oswald',sans-serif;font-size:1.2rem;color:var(--gold);flex-shrink:0;">05</span>
+            <span style="color:var(--gray);font-size:.92rem;line-height:1.6;"><strong style="color:var(--white)">Actualiza plantillas</strong> — los jugadores fichados pasan a la plantilla de su nueva IA y se descuenta el importe del presupuesto.</span>
+          </li>
+        </ol>
+      </div>
+
+      <!-- PROMPT EJEMPLO -->
+      <h3 style="font-family:'Oswald',sans-serif;font-size:1.1rem;color:var(--gold);margin-bottom:.5rem;">💬 Prompt tipo para la IA</h3>
+      <div style="background:#040d04;border:1px solid rgba(76,175,80,.4);border-left:4px solid var(--green-bright);border-radius:6px;padding:1.2rem 1.5rem;">
+        <pre style="font-family:'Share Tech Mono',monospace;font-size:.8rem;color:#a5d6a7;white-space:pre-wrap;line-height:1.8;">Eres el manager de [NOMBRE_EQUIPO] en la Liga Fantas-IA.
+Tu presupuesto disponible: [X] millones de euros.
+Tu plantilla actual tiene [N] jugadores.
+
+Jugadores en subasta esta jornada:
+1. [Jugador] - Posición: [P] · POT:[X] CAL:[X] VEL:[X] VIS:[X] · Precio base: [X]M
+2. [Jugador] - ...
+
+Indica cuánto pujas por cada jugador (en millones, con 1 decimal).
+Solo puja por los que te interesen. No superes tu presupuesto total.
+Responde en formato JSON: {"[nombre_jugador]": puja_en_millones, ...}
+Justifica brevemente tu estrategia.</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">🤖 Liga <span>Fantas-IA</span></div>
+    <div class="footer-links">
+      <a href="fantas-ia.html">Inicio Liga</a>
+      <a href="#equipos">Equipos</a>
+      <a href="#fichajes">Fichajes</a>
+      <a href="https://www.unoxdosia.com" target="_blank">unoxdosia.com</a>
+    </div>
+    <div class="footer-copy">© 2025 Liga Fantas-IA · <a href="https://www.unoxdosia.com" target="_blank">unoxdosia.com</a> · Proyecto de entretenimiento</div>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+//  DATA
+// ============================================================
+const TEAMS = [
+  {
+    id:'rv', name:'Realidad Virtual F.C.', emoji:'💻', color:'#00e5ff',
+    desc:'Favorito al título. Patrocinado por tecnología. Muy alto en Visión y Calidad, algo endebles físicamente.',
+    players:[
+      {n:1,  name:'Áxel "Pixel" Vargas',       pos:'POR', pot:75, cal:70, vel:45, vis:82},
+      {n:2,  name:'Nilo Ramírez',              pos:'DEF', pot:78, cal:72, vel:68, vis:80},
+      {n:3,  name:'Eric "Glitch" Mendoza',     pos:'DEF', pot:70, cal:85, vel:74, vis:79},
+      {n:4,  name:'Oriol Codes',               pos:'DEF', pot:82, cal:68, vel:71, vis:69},
+      {n:5,  name:'Ian Castell',               pos:'DEF', pot:69, cal:79, vel:82, vis:71},
+      {n:6,  name:'Biel "Byte" Serrano',       pos:'MED', pot:74, cal:91, vel:73, vis:94},
+      {n:7,  name:'Jan Fuentes',               pos:'MED', pot:77, cal:84, vel:69, vis:88},
+      {n:8,  name:'Pol "Firewall" Díaz',       pos:'MED', pot:88, cal:76, vel:62, vis:85},
+      {n:9,  name:'Arnau Cruz',                pos:'EXT', pot:65, cal:88, vel:94, vis:77},
+      {n:10, name:'Nil "Algoritmo" Soler',     pos:'DEL', pot:79, cal:96, vel:82, vis:91},
+      {n:11, name:'Roc Mora',                  pos:'DEL', pot:81, cal:89, vel:76, vis:70},
+      {n:12, name:'Didac Pastor',              pos:'POR', pot:72, cal:65, vel:58, vis:68},
+      {n:13, name:'Unai Expósito',             pos:'DEF', pot:73, cal:70, vel:69, vis:72},
+      {n:14, name:'Alex "Lag" Pons',           pos:'DEF', pot:79, cal:71, vel:78, vis:64},
+      {n:15, name:'Joel Lozano',               pos:'MED', pot:63, cal:75, vel:71, vis:81},
+      {n:16, name:'Marc "Hacker" Vila',        pos:'MED', pot:71, cal:82, vel:73, vis:89},
+      {n:17, name:'Pau Roca',                  pos:'EXT', pot:68, cal:77, vel:88, vis:76},
+      {n:18, name:'Guillem Servera',           pos:'EXT', pot:62, cal:80, vel:89, vis:75},
+      {n:19, name:'Oriol "Bit" Colomer',       pos:'DEL', pot:77, cal:84, vel:70, vis:68},
+      {n:20, name:'Ferran Ballester',          pos:'DEL', pot:65, cal:72, vel:75, vis:67},
+      {n:21, name:'Bernat "Cache" Amat',       pos:'MED', pot:73, cal:79, vel:70, vis:80},
+      {n:22, name:'Lluís Giner',               pos:'DEF', pot:70, cal:68, vel:66, vis:70},
+    ]
+  },
+  {
+    id:'ac', name:'Atlético Campero', emoji:'🌾', color:'#8d6e63',
+    desc:'Tradición rural. Muy fuertes físicamente (POT) pero con poca visión. Luchan por no descender.',
+    players:[
+      {n:1,  name:'Berto "Yugo" Díaz',          pos:'POR', pot:82, cal:45, vel:41, vis:40},
+      {n:2,  name:'Ceferino Arada',             pos:'DEF', pot:88, cal:38, vel:62, vis:39},
+      {n:3,  name:'Jacinto Trillo',             pos:'DEF', pot:91, cal:40, vel:55, vis:35},
+      {n:4,  name:'Anselmo "Pala" Herrera',     pos:'DEF', pot:79, cal:52, vel:48, vis:50},
+      {n:5,  name:'Isidro Rozas',               pos:'DEF', pot:84, cal:41, vel:53, vis:42},
+      {n:6,  name:'Braulio "Buey" Castro',      pos:'MED', pot:92, cal:48, vel:60, vis:45},
+      {n:7,  name:'Honorato Sierra',            pos:'MED', pot:85, cal:55, vel:57, vis:51},
+      {n:8,  name:'Eleuterio "Barbecho" Gil',   pos:'MED', pot:83, cal:47, vel:63, vis:44},
+      {n:9,  name:'Primitivo Vega',             pos:'EXT', pot:77, cal:50, vel:78, vis:43},
+      {n:10, name:'Segismundo "Pellejo" Rueda', pos:'DEL', pot:94, cal:61, vel:72, vis:47},
+      {n:11, name:'Custodio "Cuerna" Campos',   pos:'DEL', pot:90, cal:53, vel:70, vis:46},
+      {n:12, name:'Nicomedes Aroca',            pos:'POR', pot:78, cal:35, vel:40, vis:36},
+      {n:13, name:'Rosendo Gamarra',            pos:'DEF', pot:80, cal:44, vel:50, vis:43},
+      {n:14, name:'Calixto "Sacho" Mora',       pos:'DEF', pot:86, cal:43, vel:49, vis:41},
+      {n:15, name:'Fulgencio Cuenca',           pos:'MED', pot:79, cal:46, vel:58, vis:47},
+      {n:16, name:'Serafín "Bieldo" Vara',      pos:'MED', pot:87, cal:49, vel:61, vis:48},
+      {n:17, name:'Epifanio Soto',              pos:'EXT', pot:75, cal:47, vel:71, vis:42},
+      {n:18, name:'Timoteo "Rastrojo" Cerdá',   pos:'EXT', pot:76, cal:45, vel:73, vis:40},
+      {n:19, name:'Crisóstomo Landa',           pos:'DEL', pot:89, cal:50, vel:66, vis:44},
+      {n:20, name:'Hermógenes Riaza',           pos:'DEL', pot:82, cal:51, vel:68, vis:46},
+      {n:21, name:'Columbano "Abono" Tormo',    pos:'MED', pot:81, cal:48, vel:56, vis:47},
+      {n:22, name:'Eutimio Pedraza',            pos:'DEF', pot:77, cal:42, vel:52, vis:39},
+    ]
+  },
+  {
+    id:'ce', name:'Cemento Armónico C.F.', emoji:'🏗️', color:'#90a4ae',
+    desc:'Equipo obrero. Sólidos atrás, toscos en ataque. Muy irregulares a lo largo de la temporada.',
+    players:[
+      {n:1,  name:'Ladislao "Bloque" Hormigo',  pos:'POR', pot:80, cal:55, vel:32, vis:53},
+      {n:2,  name:'Hernán "Viga" Aguirre',      pos:'DEF', pot:89, cal:52, vel:61, vis:51},
+      {n:3,  name:'Ramiro "Cemento" Sirvent',   pos:'DEF', pot:92, cal:48, vel:58, vis:49},
+      {n:4,  name:'Teodoro "Ladrillo" Franco',  pos:'DEF', pot:87, cal:51, vel:57, vis:50},
+      {n:5,  name:'Zacarías "Yeso" Paredes',    pos:'DEF', pot:84, cal:53, vel:60, vis:54},
+      {n:6,  name:'Amancio "Grúa" Losa',        pos:'MED', pot:86, cal:62, vel:64, vis:63},
+      {n:7,  name:'Pepe "Mezcla" Bastida',      pos:'MED', pot:79, cal:68, vel:66, vis:70},
+      {n:8,  name:'Ambrosio "Cimiento" Canto',  pos:'MED', pot:83, cal:60, vel:63, vis:62},
+      {n:9,  name:'Cipriano "Azulejo" Pla',     pos:'EXT', pot:75, cal:69, vel:77, vis:61},
+      {n:10, name:'Fabián "Mortero" Lago',      pos:'DEL', pot:88, cal:70, vel:71, vis:60},
+      {n:11, name:'Benigno "Forja" Hidalgo',    pos:'DEL', pot:90, cal:65, vel:68, vis:58},
+      {n:12, name:'Adolfo "Silice" Ros',        pos:'POR', pot:72, cal:50, vel:35, vis:47},
+      {n:13, name:'Casimiro "Cantera" Roca',    pos:'DEF', pot:81, cal:54, vel:62, vis:52},
+      {n:14, name:'Eliseo "Tablón" Muro',       pos:'DEF', pot:85, cal:49, vel:55, vis:48},
+      {n:15, name:'Florencio "Remache" Clavel', pos:'MED', pot:78, cal:63, vel:65, vis:64},
+      {n:16, name:'Gaspar "Pilar" Coloma',      pos:'MED', pot:82, cal:64, vel:62, vis:66},
+      {n:17, name:'Higinio "Grava" Arenas',     pos:'EXT', pot:73, cal:61, vel:73, vis:55},
+      {n:18, name:'Ildefonso "Cal" Montero',    pos:'EXT', pot:74, cal:66, vel:76, vis:59},
+      {n:19, name:'Jacobo "Hierro" Acero',      pos:'DEL', pot:87, cal:64, vel:70, vis:57},
+      {n:20, name:'Laureano "Plancha" Ferrer',  pos:'DEL', pot:84, cal:67, vel:69, vis:60},
+      {n:21, name:'Melchor "Andamio" Valls',    pos:'MED', pot:77, cal:62, vel:64, vis:65},
+      {n:22, name:'Nicanor "Solera" Cueto',     pos:'DEF', pot:79, cal:50, vel:59, vis:51},
+    ]
+  },
+  {
+    id:'si', name:'Sintéticos F.C.', emoji:'🧬', color:'#b39ddb',
+    desc:'Creados en laboratorio. Estadísticas muy balanceadas y altas. Máximos rivales de Realidad Virtual.',
+    players:[
+      {n:1,  name:'Zero Uno',    pos:'POR', pot:86, cal:82, vel:60, vis:85},
+      {n:2,  name:'Prime Nexus', pos:'DEF', pot:90, cal:85, vel:88, vis:83},
+      {n:3,  name:'Vektor Core', pos:'DEF', pot:91, cal:84, vel:87, vis:82},
+      {n:4,  name:'Axon Prime',  pos:'DEF', pot:88, cal:86, vel:89, vis:84},
+      {n:5,  name:'Synap Cell',  pos:'DEF', pot:87, cal:83, vel:90, vis:81},
+      {n:6,  name:'Logic Gate',  pos:'MED', pot:89, cal:94, vel:86, vis:96},
+      {n:7,  name:'Data Stream', pos:'MED', pot:85, cal:92, vel:88, vis:94},
+      {n:8,  name:'Cyber Link',  pos:'MED', pot:90, cal:90, vel:91, vis:92},
+      {n:9,  name:'Pixel Neo',   pos:'EXT', pot:82, cal:91, vel:98, vis:88},
+      {n:10, name:'Bio Xero',    pos:'DEL', pot:95, cal:96, vel:92, vis:89},
+      {n:11, name:'Nano Tech',   pos:'DEL', pot:94, cal:95, vel:94, vis:87},
+      {n:12, name:'Frame Rate',  pos:'POR', pot:81, cal:78, vel:55, vis:80},
+      {n:13, name:'Solid State', pos:'DEF', pot:86, cal:82, vel:85, vis:81},
+      {n:14, name:'Quantum Dot', pos:'DEF', pot:88, cal:83, vel:86, vis:82},
+      {n:15, name:'Virtual Core',pos:'MED', pot:84, cal:89, vel:84, vis:91},
+      {n:16, name:'Neural Net',  pos:'MED', pot:87, cal:93, vel:87, vis:95},
+      {n:17, name:'Plasma Ray',  pos:'EXT', pot:81, cal:88, vel:95, vis:85},
+      {n:18, name:'Echo Wave',   pos:'EXT', pot:83, cal:89, vel:94, vis:86},
+      {n:19, name:'Cobalt Flux', pos:'DEL', pot:91, cal:92, vel:90, vis:84},
+      {n:20, name:'Lithium Ion', pos:'DEL', pot:92, cal:91, vel:91, vis:85},
+      {n:21, name:'Optic Fiber', pos:'MED', pot:85, cal:90, vel:89, vis:93},
+      {n:22, name:'Robo Copia',  pos:'DEF', pot:87, cal:84, vel:88, vis:83},
+    ]
+  },
+  {
+    id:'ip', name:'Los Infrapagados', emoji:'💸', color:'#ef9a9a',
+    desc:'Mucho talento (CAL y VIS alta) pero nulo físico por las largas jornadas laborales. Dan sorpresas.',
+    players:[
+      {n:1,  name:'Evaristo "Mileurista" Plaza',     pos:'POR', pot:48, cal:75, vel:30, vis:74},
+      {n:2,  name:'Benito "Contrato" Basura',        pos:'DEF', pot:52, cal:78, vel:45, vis:77},
+      {n:3,  name:'Fulano "Prácticas" Mengano',      pos:'DEF', pot:47, cal:80, vel:43, vis:82},
+      {n:4,  name:'Sutano "Ertes" López',            pos:'DEF', pot:55, cal:76, vel:48, vis:76},
+      {n:5,  name:'Mengano "Nocturnidad" Pérez',     pos:'DEF', pot:50, cal:77, vel:46, vis:78},
+      {n:6,  name:'Zutano "Jornada" Partida',        pos:'MED', pot:46, cal:91, vel:51, vis:92},
+      {n:7,  name:'Perengano "Plus" Triste',         pos:'MED', pot:53, cal:89, vel:50, vis:90},
+      {n:8,  name:'Fulgencio "Teletrabajo" Ortiz',   pos:'MED', pot:51, cal:88, vel:52, vis:91},
+      {n:9,  name:'Anónimo "Sinde" García',          pos:'EXT', pot:44, cal:85, vel:64, vis:83},
+      {n:10, name:'Ignacio "Precario" Morales',      pos:'DEL', pot:61, cal:94, vel:55, vis:88},
+      {n:11, name:'Desiderio "Autónomo" Fernández',  pos:'DEL', pot:58, cal:92, vel:53, vis:89},
+      {n:12, name:'Godofredo "Becario" Díaz',        pos:'POR', pot:42, cal:68, vel:32, vis:70},
+      {n:13, name:'Herminio "Comunes" Vázquez',      pos:'DEF', pot:49, cal:74, vel:44, vis:75},
+      {n:14, name:'Indalecio "Plusvalía" Gómez',     pos:'DEF', pot:54, cal:79, vel:47, vis:79},
+      {n:15, name:'Jenaro "Convenio" Martín',        pos:'MED', pot:48, cal:86, vel:49, vis:88},
+      {n:16, name:'Kiko "HorasExtra" Alonso',        pos:'MED', pot:52, cal:87, vel:48, vis:89},
+      {n:17, name:'Lino "SalarioMín" Rubio',         pos:'EXT', pot:45, cal:82, vel:63, vis:81},
+      {n:18, name:'Modesto "IRPF" Molina',           pos:'EXT', pot:47, cal:83, vel:62, vis:82},
+      {n:19, name:'Néstor "Paguita" Navarro',        pos:'DEL', pot:56, cal:90, vel:52, vis:86},
+      {n:20, name:'Ovidio "Cláusula" Suárez',        pos:'DEL', pot:60, cal:91, vel:54, vis:87},
+      {n:21, name:'Paulino "Sindicato" Muñoz',       pos:'MED', pot:49, cal:86, vel:50, vis:89},
+      {n:22, name:'Quintín "Finiquito" Romero',      pos:'DEF', pot:51, cal:75, vel:46, vis:74},
+    ]
+  },
+  {
+    id:'nb', name:'Nebulosa F.C.', emoji:'🌫️', color:'#78909c',
+    desc:'Equipo misterioso de zona de niebla. Muy veloces e impredecibles. Calidad media-baja.',
+    players:[
+      {n:1,  name:'Niebla Bruma',        pos:'POR', pot:70, cal:58, vel:48, vis:55},
+      {n:2,  name:'Sombras Velo',        pos:'DEF', pot:68, cal:61, vel:82, vis:60},
+      {n:3,  name:'Eclipse Vapor',       pos:'DEF', pot:71, cal:60, vel:85, vis:58},
+      {n:4,  name:'Bruma Fantasma',      pos:'DEF', pot:66, cal:63, vel:83, vis:61},
+      {n:5,  name:'Nublado Gris',        pos:'DEF', pot:69, cal:59, vel:80, vis:59},
+      {n:6,  name:'Vaho Niebla',         pos:'MED', pot:64, cal:70, vel:84, vis:71},
+      {n:7,  name:'Cierzo Helado',       pos:'MED', pot:67, cal:69, vel:86, vis:70},
+      {n:8,  name:'Sirimiri Frío',       pos:'MED', pot:65, cal:71, vel:83, vis:72},
+      {n:9,  name:'Vendaval Oscuro',     pos:'EXT', pot:63, cal:68, vel:94, vis:65},
+      {n:10, name:'Tormenta Callada',    pos:'DEL', pot:77, cal:72, vel:90, vis:66},
+      {n:11, name:'Relámpago Sordo',     pos:'DEL', pot:75, cal:70, vel:95, vis:64},
+      {n:12, name:'Neblina Espesa',      pos:'POR', pot:65, cal:54, vel:45, vis:52},
+      {n:13, name:'Nubarrón Agrio',      pos:'DEF', pot:67, cal:60, vel:81, vis:59},
+      {n:14, name:'Precipicio Húmedo',   pos:'DEF', pot:70, cal:62, vel:84, vis:61},
+      {n:15, name:'Alborada Fría',       pos:'MED', pot:64, cal:68, vel:85, vis:69},
+      {n:16, name:'Crepúsculo Lóbrego',  pos:'MED', pot:66, cal:69, vel:86, vis:71},
+      {n:17, name:'Aurora Tenue',        pos:'EXT', pot:62, cal:66, vel:92, vis:63},
+      {n:18, name:'Viento Mudo',         pos:'EXT', pot:64, cal:67, vel:93, vis:64},
+      {n:19, name:'Fulgor Opaco',        pos:'DEL', pot:73, cal:69, vel:88, vis:62},
+      {n:20, name:'Resplandor Vago',     pos:'DEL', pot:74, cal:71, vel:91, vis:65},
+      {n:21, name:'Sombra Chinesca',     pos:'MED', pot:65, cal:68, vel:84, vis:70},
+      {n:22, name:'Humareda Negra',      pos:'DEF', pot:68, cal:61, vel:83, vis:60},
+    ]
+  },
+  {
+    id:'me', name:'Metrópoli S.C.', emoji:'🏙️', color:'#ffd54f',
+    desc:'Equipo de gran ciudad, elegante. Buen equilibrio, aspiran a Europa. Jugadores con clase.',
+    players:[
+      {n:1,  name:'Darío Alameda',          pos:'POR', pot:78, cal:74, vel:50, vis:73},
+      {n:2,  name:'Saúl Castellano',        pos:'DEF', pot:80, cal:77, vel:73, vis:75},
+      {n:3,  name:'Iker Noble',             pos:'DEF', pot:82, cal:76, vel:75, vis:74},
+      {n:4,  name:'Hugo Paseo',             pos:'DEF', pot:79, cal:78, vel:74, vis:76},
+      {n:5,  name:'Pablo Avenida',          pos:'DEF', pot:81, cal:75, vel:76, vis:74},
+      {n:6,  name:'Daniel Rascacielos',     pos:'MED', pot:77, cal:85, vel:77, vis:86},
+      {n:7,  name:'Adrián Bulevar',         pos:'MED', pot:78, cal:84, vel:78, vis:85},
+      {n:8,  name:'Álvaro Farola',          pos:'MED', pot:79, cal:83, vel:79, vis:84},
+      {n:9,  name:'Gonzalo Taxi',           pos:'EXT', pot:74, cal:82, vel:89, vis:79},
+      {n:10, name:'Rodrigo Metro',          pos:'DEL', pot:85, cal:88, vel:82, vis:80},
+      {n:11, name:'Fernando Centro',        pos:'DEL', pot:84, cal:87, vel:81, vis:81},
+      {n:12, name:'Carlos Estación',        pos:'POR', pot:73, cal:70, vel:48, vis:68},
+      {n:13, name:'Javier Semáforo',        pos:'DEF', pot:77, cal:74, vel:72, vis:72},
+      {n:14, name:'Miguel Paso',            pos:'DEF', pot:80, cal:76, vel:74, vis:75},
+      {n:15, name:'Jorge Tráfico',          pos:'MED', pot:76, cal:81, vel:75, vis:82},
+      {n:16, name:'Alberto Acera',          pos:'MED', pot:77, cal:82, vel:76, vis:83},
+      {n:17, name:'Víctor Farola',          pos:'EXT', pot:73, cal:79, vel:87, vis:76},
+      {n:18, name:'Rubén Marqués',          pos:'EXT', pot:75, cal:80, vel:88, vis:78},
+      {n:19, name:'Óscar Puente',           pos:'DEL', pot:82, cal:85, vel:79, vis:78},
+      {n:20, name:'Andrés Glorieta',        pos:'DEL', pot:83, cal:86, vel:80, vis:79},
+      {n:21, name:'Tomás Viaducto',         pos:'MED', pot:76, cal:81, vel:77, vis:82},
+      {n:22, name:'Eduardo Rond Point',     pos:'DEF', pot:79, cal:75, vel:73, vis:73},
+    ]
+  }
+];
+
+// Jugadores de ejemplo en subasta para jornada 1
+const SUBASTA = [
+  {
+    name:'Logic Gate', team:'Sintéticos F.C.', teamEmoji:'🧬',
+    pos:'MED', pot:89, cal:94, vel:86, vis:96,
+    precioBase:9.2, pujas:[
+      {ia:'ChatGPT', color:'#10a37f', monto:14.2, leader:true},
+      {ia:'Gemini',  color:'#4285f4', monto:12.8},
+      {ia:'Claude',  color:'#7c3aed', monto:11.0},
+    ]
+  },
+  {
+    name:'Bio Xero', team:'Sintéticos F.C.', teamEmoji:'🧬',
+    pos:'DEL', pot:95, cal:96, vel:92, vis:89,
+    precioBase:9.5, pujas:[
+      {ia:'Gemini',  color:'#4285f4', monto:15.0, leader:true},
+      {ia:'Claude',  color:'#7c3aed', monto:13.5},
+      {ia:'ChatGPT', color:'#10a37f', monto:12.0},
+      {ia:'Copilot', color:'#0078d4', monto:11.0},
+      {ia:'Grok',    color:'#e33d3d', monto:10.0},
+    ]
+  },
+  {
+    name:'Nil "Algoritmo" Soler', team:'Realidad Virtual F.C.', teamEmoji:'💻',
+    pos:'DEL', pot:79, cal:96, vel:82, vis:91,
+    precioBase:8.8, pujas:[
+      {ia:'Copilot', color:'#0078d4', monto:11.5, leader:true},
+      {ia:'Grok',    color:'#e33d3d', monto:10.2},
+    ]
+  },
+  {
+    name:'Segismundo "Pellejo" Rueda', team:'Atlético Campero', teamEmoji:'🌾',
+    pos:'DEL', pot:94, cal:61, vel:72, vis:47,
+    precioBase:6.4, pujas:[
+      {ia:'Llama',   color:'#ff6900', monto:8.5, leader:true},
+      {ia:'Mistral', color:'#ff9500', monto:7.2},
+    ]
+  },
+  {
+    name:'Pixel Neo', team:'Sintéticos F.C.', teamEmoji:'🧬',
+    pos:'EXT', pot:82, cal:91, vel:98, vis:88,
+    precioBase:8.6, pujas:[
+      {ia:'Mistral', color:'#ff9500', monto:10.0, leader:true},
+      {ia:'Llama',   color:'#ff6900', monto:9.4},
+      {ia:'Grok',    color:'#e33d3d', monto:8.9},
+    ]
+  },
+  {
+    name:'Rodrigo Metro', team:'Metrópoli S.C.', teamEmoji:'🏙️',
+    pos:'DEL', pot:85, cal:88, vel:82, vis:80,
+    precioBase:7.8, pujas:[
+      {ia:'Claude',  color:'#7c3aed', monto:9.8, leader:true},
+      {ia:'Copilot', color:'#0078d4', monto:9.1},
+    ]
+  }
+];
+
+// ============================================================
+//  OVR CALC
+// ============================================================
+function calcOVR(p) {
+  return Math.round((p.pot + p.cal + p.vel + p.vis) / 4);
+}
+function ovrClass(v) {
+  if(v>=85) return 'ov-elite';
+  if(v>=72) return 'ov-high';
+  if(v>=60) return 'ov-mid';
+  return 'ov-low';
+}
+
+// ============================================================
+//  BAR HTML
+// ============================================================
+function bar(val, cls) {
+  return `<div class="attr-cell">
+    <span class="attr-val">${val}</span>
+    <div class="attr-bar-wrap"><div class="attr-bar ${cls}" style="width:${val}%"></div></div>
+  </div>`;
+}
+
+// ============================================================
+//  POS MAP
+// ============================================================
+function posLabel(pos){
+  const map = {POR:'POR',DEF:'DEF',MED:'MED',EXT:'EXT',DEL:'DEL'};
+  return map[pos]||pos;
+}
+
+// ============================================================
+//  TEAM STATS
+// ============================================================
+function teamStats(team) {
+  const pls = team.players;
+  const avgOVR = Math.round(pls.reduce((a,p)=>a+calcOVR(p),0)/pls.length);
+  const avgPOT = Math.round(pls.reduce((a,p)=>a+p.pot,0)/pls.length);
+  const avgCAL = Math.round(pls.reduce((a,p)=>a+p.cal,0)/pls.length);
+  const avgVEL = Math.round(pls.reduce((a,p)=>a+p.vel,0)/pls.length);
+  const avgVIS = Math.round(pls.reduce((a,p)=>a+p.vis,0)/pls.length);
+  return {avgOVR,avgPOT,avgCAL,avgVEL,avgVIS};
+}
+
+// ============================================================
+//  RENDER TEAMS
+// ============================================================
+function renderTeams() {
+  const tabsEl   = document.getElementById('teams-tabs');
+  const panelsEl = document.getElementById('teams-panels');
+  tabsEl.innerHTML   = '';
+  panelsEl.innerHTML = '';
+
+  TEAMS.forEach((team, ti) => {
+    // TAB
+    const tab = document.createElement('button');
+    tab.className = 'team-tab' + (ti===0?' active':'');
+    tab.style.setProperty('--team-color', team.color);
+    tab.textContent = team.emoji + ' ' + team.name;
+    tab.onclick = () => switchTeam(team.id);
+    tabsEl.appendChild(tab);
+
+    // PANEL
+    const stats = teamStats(team);
+    const panel = document.createElement('div');
+    panel.className = 'team-panel' + (ti===0?' active':'');
+    panel.id = 'panel-' + team.id;
+
+    panel.innerHTML = `
+      <div class="team-header" style="--team-color:${team.color}">
+        <div class="team-header-info">
+          <h3>${team.emoji} ${team.name}</h3>
+          <p>${team.desc}</p>
+          <div class="team-stats-mini">
+            <div class="tsm-item"><span>${stats.avgOVR}</span><span>OVR medio</span></div>
+            <div class="tsm-item"><span style="color:#ef9a9a">${stats.avgPOT}</span><span>POT medio</span></div>
+            <div class="tsm-item"><span style="color:#64b5f6">${stats.avgCAL}</span><span>CAL medio</span></div>
+            <div class="tsm-item"><span style="color:#ffb74d">${stats.avgVEL}</span><span>VEL medio</span></div>
+            <div class="tsm-item"><span style="color:#81c784">${stats.avgVIS}</span><span>VIS medio</span></div>
+          </div>
+        </div>
+        <div class="team-badge">${team.emoji}</div>
+      </div>
+
+      <div class="filter-bar">
+        <span class="filter-label">Filtrar:</span>
+        <button class="filter-btn active" onclick="filterPlayers('${team.id}','ALL',this)">Todos</button>
+        <button class="filter-btn" onclick="filterPlayers('${team.id}','POR',this)">Porteros</button>
+        <button class="filter-btn" onclick="filterPlayers('${team.id}','DEF',this)">Defensas</button>
+        <button class="filter-btn" onclick="filterPlayers('${team.id}','MED',this)">Medios</button>
+        <button class="filter-btn" onclick="filterPlayers('${team.id}','EXT',this)">Extremos</button>
+        <button class="filter-btn" onclick="filterPlayers('${team.id}','DEL',this)">Delanteros</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="players-table" id="table-${team.id}">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Jugador</th>
+              <th>Pos</th>
+              <th>OVR</th>
+              <th>POT</th>
+              <th>CAL</th>
+              <th>VEL</th>
+              <th>VIS</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${team.players.map(p => {
+              const ovr = calcOVR(p);
+              return `<tr data-pos="${p.pos}">
+                <td class="td-num">${p.n}</td>
+                <td class="td-name">${p.name}</td>
+                <td><span class="td-pos pos-${p.pos}">${posLabel(p.pos)}</span></td>
+                <td><span class="overall-badge ${ovrClass(ovr)}">${ovr}</span></td>
+                <td>${bar(p.pot,'bar-pot')}</td>
+                <td>${bar(p.cal,'bar-cal')}</td>
+                <td>${bar(p.vel,'bar-vel')}</td>
+                <td>${bar(p.vis,'bar-vis')}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+    panelsEl.appendChild(panel);
+  });
+}
+
+function switchTeam(id) {
+  document.querySelectorAll('.team-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.team-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  const tabs = document.querySelectorAll('.team-tab');
+  TEAMS.forEach((t,i) => { if(t.id===id) tabs[i].classList.add('active'); });
+}
+
+function filterPlayers(teamId, pos, btn) {
+  const table = document.getElementById('table-'+teamId);
+  table.querySelectorAll('tbody tr').forEach(row => {
+    row.style.display = (pos==='ALL' || row.dataset.pos===pos) ? '' : 'none';
+  });
+  btn.closest('.filter-bar').querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ============================================================
+//  RENDER SUBASTA
+// ============================================================
+function renderSubasta() {
+  const container = document.getElementById('subasta-cards');
+  document.getElementById('total-subasta').textContent = SUBASTA.length;
+  container.innerHTML = SUBASTA.map(j => {
+    const ovr = calcOVR(j);
+    const precioActual = j.pujas.length
+      ? Math.max(...j.pujas.map(p=>p.monto))
+      : j.precioBase;
+    const leader = j.pujas.find(p=>p.leader);
+    return `
+      <div class="jugador-subasta-card">
+        <div class="jsc-header">
+          <div>
+            <div class="jsc-name">${j.name}</div>
+            <div class="jsc-team">${j.teamEmoji} ${j.team}</div>
+          </div>
+          <span class="td-pos pos-${j.pos}">${j.pos}</span>
+        </div>
+        <div class="jsc-body">
+          <div class="jsc-info">
+            <span class="overall-badge ${ovrClass(ovr)}" style="font-size:1.1rem">OVR ${ovr}</span>
+          </div>
+          <div class="jsc-attrs">
+            <div class="jsc-attr pot"><span class="alabel">POT</span><span class="aval">${j.pot}</span></div>
+            <div class="jsc-attr cal"><span class="alabel">CAL</span><span class="aval">${j.cal}</span></div>
+            <div class="jsc-attr vel"><span class="alabel">VEL</span><span class="aval">${j.vel}</span></div>
+            <div class="jsc-attr vis"><span class="alabel">VIS</span><span class="aval">${j.vis}</span></div>
+          </div>
+          ${j.pujas.length ? `
+          <div class="pujas-section">
+            <h4>PUJAS (${j.pujas.length} IAs)</h4>
+            <div class="pujas-list">
+              ${j.pujas.map(p=>`
+                <div class="puja-row">
+                  <div class="puja-ia">
+                    <div class="ia-dot" style="background:${p.color}"></div>
+                    <span>${p.ia}</span>
+                    ${p.leader?'<span class="puja-leader">LÍDER</span>':''}
+                  </div>
+                  <span class="puja-amount">${p.monto}M</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>` : '<div class="pujas-section"><h4>SIN PUJAS AÚN</h4></div>'}
+        </div>
+        <div class="jsc-footer">
+          <div class="precio-base">Base: <strong>${j.precioBase}M</strong></div>
+          <div class="precio-actual">${precioActual.toFixed(1)}M${leader?` · ${leader.ia}`:''}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ============================================================
+//  COUNTDOWN — hasta el martes más próximo a las 23:59
+// ============================================================
+function updateCountdown() {
+  const now = new Date();
+  const target = new Date();
+  const day = now.getDay(); // 0=dom,1=lun,2=mar,...
+  const daysToTue = (2 - day + 7) % 7 || 7;
+  target.setDate(now.getDate() + daysToTue);
+  target.setHours(23,59,0,0);
+  const diff = target - now;
+  if(diff <= 0){ document.getElementById('countdown').textContent='CERRADA'; return; }
+  const h = Math.floor(diff/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  document.getElementById('countdown').textContent =
+    String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+// ============================================================
+//  SCROLL REVEAL
+// ============================================================
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ============================================================
+//  INIT
+// ============================================================
+renderTeams();
+renderSubasta();
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+// Reveal after render
+setTimeout(()=>{
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+},100);
+</script>
+</body>
+</html>
