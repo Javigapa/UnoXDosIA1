@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-90WQKBTXN3');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Predicciones deportivas generadas por IA, ¿Que IA es mejor?"/>
+  <title>Jornada 27 LALIGA EA SPORTS 2025/2026</title>
+  <link rel="stylesheet" href="../index.css">
+  <link rel="icon" href="/Imagenes/favicon.png">
+  <style>
+    /* Estilos generales de cuerpo y contenedor de artículo */
+    body {
+      background-color: #26580f;
+      font-family: Arial, sans-serif;
+    }
+    .article-container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #3b8a16;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .article-container h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 2.2em;
+    }
+    .article-meta {
+      color: #7f8c8d;
+      font-style: italic;
+      margin-bottom: 25px;
+      display: block;
+    }
+    .PartidosDelDia {
+      color: black;
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+    /* Contenedor de las Tres Columnas de Análisis IA */
+    .tres-columnas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin: 30px 0;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+
+    /* Estilo para los Títulos de las Columnas */
+    .col-title {
+      background-color: #34495e;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 0;
+      height: fit-content;
+    }
+
+    /* Estilo para el Texto de las Columnas */
+    .col-text {
+      background-color: #ecf0f1;
+      padding: 15px;
+      border-radius: 0 0 5px 5px;
+      border: 1px solid #bdc3c7;
+      margin-top: 0;
+    }
+    .col-text p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* --- Estilos para la Tabla de Resultados (Fútbol) --- */
+    .results-section {
+      margin-top: 40px;
+      border-top: 2px solid #e74c3c;
+      padding-top: 20px;
+    }
+
+    .match-title {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-size: 1.5em;
+      border-bottom: 1px dashed #bdc3c7;
+      padding-bottom: 5px;
+    }
+
+    /* Contenedor de todas las tablas de resultados */
+    .all-results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* 2 tablas por línea */
+      gap: 20px;
+      /* Espacio entre las tablas */
+      margin-bottom: 30px;
+    }
+
+    .results-table-container {
+      width: 100%;
+      margin: 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border: 1px solid #bdc3c7;
+      border-radius: 5px;
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 1.1em;
+    }
+
+    .results-table th, .results-table td {
+      padding: 10px 5px;
+      border: 1px solid #ddd;
+    }
+
+    .results-table thead th {
+      background-color: #2980b9;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    .results-table tbody tr td:first-child {
+      background-color: #d9e9f1;
+      font-weight: bold;
+      text-align: left;
+      padding-left: 15px;
+      color: #2c3e50;
+      white-space: nowrap;
+    }
+
+    /* Columna de Resultado Final */
+    .final-score {
+      background-color: #27ae60;
+      color: white;
+      font-size: 1.4em;
+      font-weight: 900;
+      width: 15%;
+    }
+
+    /* Ocultar las columnas adicionales en todas las resoluciones */
+    .results-table thead th:not(:first-child):not(.final-score),
+    .results-table tbody tr td:nth-child(2),
+    .results-table tbody tr td:nth-child(3),
+    .results-table tbody tr td:nth-child(4),
+    .results-table tbody tr td:nth-child(5),
+    .results-table tbody tr td:nth-child(6) {
+      display: none;
+    }
+
+    /* --- Media Query para Móviles: Sobreescribe solo lo necesario para el diseño de 2 columnas --- */
+    @media (max-width: 768px) {
+      .article-container {
+        padding: 15px;
+        margin: 10px auto;
+      }
+      .article-container h1 {
+        font-size: 1.8em;
+      }
+
+      /* Diseño de una columna para el análisis IA */
+      .tres-columnas {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      .col-title {
+        font-size: 1.1em;
+        padding: 10px;
+      }
+
+      /* Diseño de dos columnas para las tablas de resultados */
+      .all-results-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .results-table-container {
+        margin-bottom: 10px;
+      }
+
+      h4 {
+        font-size: 1.2em;
+        text-align: center;
+        margin-bottom: 5px;
+      }
+
+      /* Ajustes de tamaño de fuente para las tablas */
+      .results-table {
+        font-size: 0.9em;
+      }
+      .results-table th, .results-table td {
+        padding: 8px 3px;
+      }
+      .final-score {
+        font-size: 1.2em;
+      }
+      .results-table tbody tr td:first-child {
+        padding-left: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>⚽ Uno X Dos IA 🧠</h1>
+  </header>
+
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
+      <div class="dropdown-content" id="myDropdown">
+        <a href="../index.html">Inicio</a>
+        <a href="../NBA.html">NBA</a>
+        <a href="../LIgaEsports.html">Liga EA Sports</a>
+        <a href="../Hypermotion.html">Liga Hypermotion</a>
+        <a href="../Loterias.html">Loterías</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="article-container">
+    <div class="PartidosDelDia">
+      <h1> Partidos Jornada 27:</h1>
+        <p>
+              <h3> 📅 Jornada de LaLiga ( 6 de Marzo al 9 de Marzo)
+    </h3>
+        <b>🔵 Viernes 6 de Marzo</b><br><br>
+        
+        <b>Celta vs Real Madrid</b> — 21:00 Movistar LaLiga<br><br>
+
+        <b>🔵 Sabado 7 de Marzo</b><br><br>
+
+        <b>Osasuna vs Mallorca</b> — 14:00 Movistar LaLiga<br><br>
+
+        <b>Levante vs Girona</b> — 16:15 Movistar LaLiga<br><br>
+
+        <b>Atlético vs R. Sociedad</b> — 18:30 Movistar LaLiga<br><br>
+        
+        <b>Athletic vs Barcelona</b> — 21:00 Movistar LaLiga<br><br>
+
+        <b>🔵 Domingo 8 de Marzo</b><br><br>
+        
+        <b>Villarreal vs Elche</b> — 14:00 Movistar LaLiga<br><br>
+        
+        <b>Getafe vs Betis</b> — 16:15 Movistar LaLiga<br><br>
+         
+         <b>Sevilla vs Rayo</b> — 18:30 Movistar LaLiga<br><br>
+
+        <b>Valencia vs Alavés</b> — 21:00 Movistar LaLiga<br><br>
+
+        <b>🔵 Lunes 9 de Marzo</b><br><br>
+
+         <b>Espanyol vs Oviedo</b> — 21:00 Movistar LaLiga
+
+      </p>
+    </div>
+    <div class="tres-columnas">
+      <h3 class="col-title">1. ChatGPT</h3>
+      <h3 class="col-title">2. Gemini</h3>
+      <h3 class="col-title">3. Copilot</h3>
+    </div>
+
+    <div class="tres-columnas">
+      <div class="col-text">
+        <section>
+          <strong><h2>1:</h2></strong>
+        </section>
+
+
+    <h3>Celta vs Real Madrid — 21:00 (Viernes)</h3><br><br>
+    <p><strong>Ganador:</strong> Real Madrid 57% – Celta 21% – Empate 22%</p><br><br>
+    <p>El Madrid parte como favorito por plantilla y pegada, aunque Balaídos siempre es un campo incómodo.</p><br><br><br>
+ 
+    <h3>Osasuna vs Mallorca — 14:00 (Sábado)</h3><br><br>
+    <p><strong>Ganador:</strong> Osasuna 45% – Mallorca 29% – Empate 26%</p><br><br>
+    <p>Osasuna suele hacerse fuerte en casa y parte con ligera ventaja en un duelo muy igualado.</p><br><br><br>
+
+    <h3>Levante vs Girona — 16:15 (Sábado)</h3><br><br>
+    <p><strong>Ganador:</strong> Girona 44% – Levante 31% – Empate 25%</p><br><br>
+    <p>Girona llega en mejor dinámica ofensiva, aunque el Levante necesita puntos y competirá al máximo.</p><br><br><br>
+
+    <h3>Atlético vs Real Sociedad — 18:30 (Sábado)</h3><br><br>
+    <p><strong>Ganador:</strong> Atlético 48% – Real Sociedad 27% – Empate 25%</p><br><br>
+    <p>Duelo muy atractivo; el Atlético es ligeramente favorito por su solidez en casa.</p><br><br><br>
+
+    <h3>Athletic vs Barcelona — 21:00 (Sábado)</h3><br><br>
+    <p><strong>Ganador:</strong> Barcelona 46% – Athletic 30% – Empate 24%</p><br><br>
+    <p>San Mamés siempre complica, pero el Barça tiene más calidad individual para decidir.</p><br><br><br>
+ 
+    <h3>Villarreal vs Elche — 14:00 (Domingo)</h3><br><br>
+    <p><strong>Ganador:</strong> Villarreal 61% – Elche 16% – Empate 23%</p><br><br>
+    <p>El Villarreal es claro favorito en casa ante un Elche que baja prestaciones como visitante.</p><br><br><br>
+
+    <h3>Getafe vs Betis — 16:15 (Domingo)</h3><br><br>
+    <p><strong>Ganador:</strong> Betis 42% – Getafe 33% – Empate 25%</p><br><br>
+    <p>Partido físico y cerrado; el Betis tiene más talento ofensivo, pero Getafe lo hará incómodo.</p><br><br><br>
+
+    <h3>Sevilla vs Rayo — 18:30 (Domingo)</h3><br><br>
+    <p><strong>Ganador:</strong> Sevilla 50% – Rayo 26% – Empate 24%</p><br><br>
+    <p>Sevilla parte con ventaja en el Sánchez-Pizjuán, aunque Rayo puede competir a buen ritmo.</p><br><br><br>
+
+    <h3>Valencia vs Alavés — 21:00 (Domingo)</h3><br><br>
+    <p><strong>Ganador:</strong> Valencia 47% – Alavés 28% – Empate 25%</p><br><br>
+    <p>Valencia necesita sumar en casa y parte con ligera ventaja ante un Alavés irregular fuera.</p><br><br><br>
+ 
+    <h3>Espanyol vs Oviedo — 21:00 (Lunes)</h3><br><br>
+    <p><strong>Ganador:</strong> Espanyol 44% – Oviedo 29% – Empate 27%</p><br><br>
+    <p>Duelo directo en la zona baja; el factor campo puede ser determinante.</p><br><br><br>
+  
+
+        </div>
+      <div class="col-text">
+        <section>
+          <strong><h2>2:</h2></strong>
+        </section>
+
+    <div>
+        <b>🔵 Viernes 6 de Marzo</b><br><br>
+        
+        <b>Celta vs Real Madrid</b> — 21:00 (Movistar LaLiga)<br><br>
+        Predicción: <b>Victoria Visitante (Real Madrid)</b><br><br>
+        % Ganador Celta: 20% | % Empate: 25% | % Ganador Real Madrid: 55%<br><br>
+        Justificación: Balaídos siempre aprieta, pero el Real Madrid llega en modo crucero. La pegada de los blancos en las segundas partes suele ser demasiado para un Celta que, aunque genera fútbol, concede espacios letales atrás.
+    </div>
+
+    <hr style="border: 0; height: 1px; background-color: #ddd; margin: 15px 0;">
+
+    <div class="partidos-sabado" style="margin-bottom: 25px;">
+        <b>🔵 Sábado 7 de Marzo</b><br><br>
+        
+        <b>Osasuna vs Mallorca</b> — 14:00 (Movistar LaLiga)<br><br>
+        Predicción: <b>Empate</b><br><br>
+        % Ganador Osasuna: 35% | % Empate: 40% | % Ganador Mallorca: 25%<br><br>
+        Justificación: Duelo de pizarras y mucha intensidad física. Ambos equipos se sienten cómodos defendiendo en bloque bajo y no suelen arriesgar en exceso, lo que apunta a un marcador corto y reparto de puntos.<br><br><br>
+
+        <b>Levante vs Girona</b> — 16:15 (Movistar LaLiga)<br><br>
+        Predicción: <b>Victoria Visitante (Girona)</b><br><br>
+        % Ganador Levante: 25% | % Empate: 30% | % Ganador Girona: 45%<br><br>
+        Justificación: El Girona sigue siendo uno de los equipos más divertidos de ver por su verticalidad. El Levante planteará batalla en el medio, pero la fluidez ofensiva de los catalanes debería acabar imponiéndose.<br><br><br>
+
+        <b>Atlético vs R. Sociedad</b> — 18:30 (Movistar LaLiga)<br><br>
+        Predicción: <b>Victoria Local (Atlético)</b><br><br>
+        % Ganador Atlético: 50% | % Empate: 30% | % Ganador R. Sociedad: 20%<br><br>
+        Justificación: El Metropolitano será clave. El Atlético de Simeone sabe cómo "secar" a equipos jugones como la Real Sociedad. Se espera un partido táctico donde un detalle o una jugada a balón parado decida el encuentro.<br><br><br>
+
+        <b>Athletic vs Barcelona</b> — 21:00 (Movistar LaLiga)<br><br>
+        Predicción: <b>Empate</b><br><br>
+        % Ganador Athletic: 35% | % Empate: 35% | % Ganador Barcelona: 30%<br><br>
+        Justificación: El gran partido de la jornada. San Mamés será una caldera y el Athletic castigará cada duda del Barça con transiciones rápidas. El Barça tendrá la posesión, pero el despliegue físico de los leones equilibrará la balanza.
+    </div>
+
+    <hr style="border: 0; height: 1px; background-color: #ddd; margin: 15px 0;">
+
+    <div class="partidos-domingo" style="margin-bottom: 25px;">
+        <b>🔵 Domingo 8 de Marzo</b><br><br>
+        
+        <b>Villarreal vs Elche</b> — 14:00 (Movistar LaLiga)<br><br>
+        Predicción: <b>Victoria Local (Villarreal)</b><br><br>
+        % Ganador Villarreal: 65% | % Empate: 20% | % Ganador Elche: 15%<br><br>
+        Justificación: El submarino amarillo debería dominar este derbi regional desde el control del balón. El Elche peleará, pero la calidad técnica en los últimos metros del Villarreal es muy superior.<br><br><br>
+        
+        <b>Getafe vs Betis</b> — 16:15 (Movistar LaLiga)<br><br>
+        Predicción: <b>Empate</b><br><br>
+        % Ganador Getafe: 35% | % Empate: 40% | % Ganador Betis: 25%<br><br>
+        Justificación: Choque de estilos contrapuestos. El Getafe buscará un partido trabado y de poco ritmo, algo que suele desesperar al Betis. Si los béticos no abren la lata pronto, se verán inmersos en un empate de mucha brega.<br><br><br>
+        
+        <b>Sevilla vs Rayo</b> — 18:30 (Movistar LaLiga)<br><br>
+        Predicción: <b>Victoria Local (Sevilla)</b><br><br>
+        % Ganador Sevilla: 50% | % Empate: 30% | % Ganador Rayo: 20%<br><br>
+        Justificación: El Sánchez-Pizjuán necesita recuperar su aura de fortín. El Sevilla buscará imponer su físico y experiencia ante un Rayo que siempre es valiente, pero que suele sufrir en defensa ante centros laterales.<br><br><br>
+
+        <b>Valencia vs Alavés</b> — 21:00 (Movistar LaLiga)<br><br>
+        Predicción: <b>Victoria Local (Valencia)</b><br><br>
+        % Ganador Valencia: 55% | % Empate: 25% | % Ganador Alavés: 20%<br><br>
+        Justificación: Mestalla empujará a un Valencia que necesita sumar de tres. El Alavés es un equipo muy ordenado, pero el talento individual de los jóvenes valencianistas debería romper el muro defensivo visitante.
+    </div>
+
+    <hr style="border: 0; height: 1px; background-color: #ddd; margin: 15px 0;">
+
+    <div class="partidos-lunes" style="margin-bottom: 25px;">
+        <b>🔵 Lunes 9 de Marzo</b><br><br>
+        
+        <b>Espanyol vs Oviedo</b> — 21:00 (Movistar LaLiga)<br><br>
+        Predicción: <b>Victoria Local (Espanyol)</b><br><br>
+        % Ganador Espanyol: 45% | % Empate: 35% | % Ganador Oviedo: 20%<br><br>
+        Justificación: El Espanyol en el RCDE Stadium suele ser un equipo muy sólido y difícil de batir. Ante un Oviedo que lucha por la permanencia, el oficio de los pericos debería ser suficiente para dejar los puntos en casa.
+    </div>
+
+</section>
+         </div>
+      <div class="col-text">
+        <section>
+          <strong><h2>3:</h2></strong>
+        </section>
+<b>🔵 Viernes 6 de Marzo</b><br><br>
+
+<b>Celta vs Real Madrid — 21:00 Movistar LaLiga</b><br>
+Predicción: Victoria de Real Madrid<br><br>
+Probabilidades: Real Madrid 65% | Empate 20% | Celta 15%<br><br>
+Análisis: El Madrid llega con más pegada y regularidad. Celta en casa compite, pero sufre mucho ante equipos de posesión dominante.<br><br><br>
+
+
+<b>🔵 Sábado 7 de Marzo</b><br><br>
+
+<b>Osasuna vs Mallorca — 14:00 Movistar LaLiga</b><br>
+Predicción: Empate<br><br>
+Probabilidades: Osasuna 35% | Empate 40% | Mallorca 25%<br><br>
+Análisis: Osasuna es fuerte en El Sadar, pero Mallorca es muy sólido defensivamente. Partido muy cerrado.<br><br><br>
+
+<b>Levante vs Girona — 16:15 Movistar LaLiga</b><br>
+Predicción: Victoria de Girona<br><br>
+Probabilidades: Girona 50% | Empate 30% | Levante 20%<br><br>
+Análisis: Girona tiene más ritmo ofensivo y Levante está siendo irregular. Superioridad visitante en juego y ocasiones.<br><br><br>
+
+<b>Atlético vs R. Sociedad — 18:30 Movistar LaLiga</b><br>
+Predicción: Empate<br><br>
+Probabilidades: Atlético 40% | Empate 40% | Real Sociedad 20%<br><br>
+Análisis: Atlético es muy fuerte en casa, pero la Real compite muy bien en partidos tácticos. Igualdad máxima.<br><br><br>
+
+<b>Athletic vs Barcelona — 21:00 Movistar LaLiga</b><br>
+Predicción: Victoria de Barcelona<br><br>
+Probabilidades: Barcelona 55% | Empate 30% | Athletic 15%<br><br>
+Análisis: Athletic en San Mamés es intenso, pero el Barça tiene más calidad individual y suele imponerse en duelos de ritmo alto.<br><br><br>
+
+
+<b>🔵 Domingo 8 de Marzo</b><br><br>
+
+<b>Villarreal vs Elche — 14:00 Movistar LaLiga</b><br>
+Predicción: Victoria de Villarreal<br><br>
+Probabilidades: Villarreal 60% | Empate 25% | Elche 15%<br><br>
+Análisis: Elche concede demasiado atrás y Villarreal en casa suele dominar. Partido favorable al Submarino Amarillo.<br><br><br>
+
+<b>Getafe vs Betis — 16:15 Movistar LaLiga</b><br>
+Predicción: Empate<br><br>
+Probabilidades: Getafe 35% | Empate 40% | Betis 25%<br><br>
+Análisis: Getafe es muy físico en casa, Betis tiene más calidad ofensiva. Choque equilibrado y difícil de romper.<br><br><br>
+
+<b>Sevilla vs Rayo — 18:30 Movistar LaLiga</b><br>
+Predicción: Victoria de Sevilla<br><br>
+Probabilidades: Sevilla 50% | Empate 30% | Rayo 20%<br><br>
+Análisis: Sevilla en casa suele imponer ritmo y Rayo llega con irregularidad. Favorito el conjunto andaluz.<br><br><br>
+
+<b>Valencia vs Alavés — 21:00 Movistar LaLiga</b><br>
+Predicción: Victoria de Valencia<br><br>
+Probabilidades: Valencia 50% | Empate 30% | Alavés 20%<br><br>
+Análisis: Mestalla empuja mucho y Alavés baja su nivel fuera. Valencia debería controlar el partido.<br><br><br>
+
+
+<b>🔵 Lunes 9 de Marzo</b><br><br>
+
+<b>Espanyol vs Oviedo — 21:00 Movistar LaLiga</b><br>
+Predicción: Victoria de Espanyol<br><br>
+Probabilidades: Espanyol 55% | Empate 30% | Oviedo 15%<br><br>
+Análisis: Espanyol está fuerte en casa y Oviedo sufre fuera. Superioridad local en ritmo y ocasiones.<br><br><br>
+
+      </div>
+      </div>
+    <section class="results-section">
+     
+      <h2 class="match-title">Resultados Detallados de la Jornada 27 </h2>
+<p style="margin-bottom: 30px;">
+Nueva jonada de liga y nuevas predicciones 
+</p>
+
+
+      <div class="all-results-grid">
+
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Celta</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Real Madrid</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Osasuna</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Mallorca</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Levante</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Girona</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Atlético</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>R. Sociedad</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Athletic</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Barcelona</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Villarreal</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Elche</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Getafe</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Betis</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Sevilla</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Rayo</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Valencia</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Alavés</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+        <div class="results-table-container">
+          <table class="results-table">
+            <thead>
+              <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Espanyol</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+              <tr><td>Oviedo</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+          </table>
+          <p style="text-align: center; font-size: 0.9em; margin-top: 5px; margin-bottom: 10px;">
+
+          </p>
+        </div>
+
+      </div>
+    </section>
+    <h3>Conclusión final</h3>
+<p>
+Después de jugar análisis.
+
+</p>
+
+
+    <div class="volver">
+      <p>
+        <a href="../index.html">← Volver a la página principal de Primera EA Sports</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Cierra el menú si el usuario hace clic fuera de él
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>
