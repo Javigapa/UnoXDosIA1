@@ -60,11 +60,87 @@ header h1 {
 /* --- NAVEGACIÓN --- */
 /* ========================================================= */
 
-nav {
-  background-color: #636442a7; 
-  padding: 10px 0;
-  text-align: center;
+         nav {
+  background: rgba(19,34,56,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 8px 20px;
+  position: relative;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
 }
+
+.nav-hamburger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #ffffff;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  transition: background 0.2s;
+}
+
+.nav-hamburger:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.ham-icon { font-size: 1.3em; }
+
+.nav-menu {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  background: rgba(13,27,42,0.98);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 8px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 220px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  z-index: 200;
+}
+
+.nav-menu.open {
+  display: flex;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border-radius: 7px;
+  text-decoration: none;
+  font-size: 0.92em;
+  font-weight: 600;
+  color: #8fa3b8;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+  background: rgba(255,255,255,0.07);
+}
+
+.nav-link.active {
+  color: #00c896;
+  background: rgba(0,200,150,0.1);
+  border-color: rgba(0,200,150,0.25);
+}
+
+.nav-emoji { font-size: 1.1em; }
 
 .dropbtn {
   background-color: #ffc400;

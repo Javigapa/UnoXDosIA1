@@ -21,18 +21,19 @@
   <header>
     <h1>🔢 Predicciones IA Diarias 🧠</h1>
   </header>
-  <nav>
-    <div class="dropdown">
-      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
-      <div class="dropdown-content" id="myDropdown">
-        <a href="../index.html">Inicio</a>
-        <a href="../NBA.html">NBA</a>
-        <a href="../LIgaEsports.html">Liga EA Sports</a>
-        <a href="../Hypermotion.html">Liga Hypermotion</a>
-        <a href="../Loterias.html">Loterías</a>
-      </div>
-    </div>
-  </nav>
+<nav aria-label="Navegación principal">
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+    <span class="ham-icon">☰</span>
+    <span class="ham-label">Secciones</span>
+  </button>
+  <div class="nav-menu" id="navMenu">
+    <a href="/index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
+    <a href="/NBA.html"         class="nav-link"><span class="nav-emoji">🏀</span> NBA</a>
+    <a href="/LIgaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
+    <a href="/Hypermotion.html" class="nav-link active"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+    <a href="/Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+  </div>
+</nav>
     <div class="container">
 
       <aside class="sidebar">
@@ -290,6 +291,25 @@
           }
         }
       }
+          function toggleNav() {
+  const menu = document.getElementById('navMenu');
+  menu.classList.toggle('open');
+}
+
+// Cierra al hacer clic fuera
+document.addEventListener('click', function(e) {
+  const nav = document.querySelector('nav');
+  if (!nav.contains(e.target)) {
+    document.getElementById('navMenu').classList.remove('open');
+  }
+});
+
+// Cierra al navegar
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navMenu').classList.remove('open');
+  });
+});
     </script>
   </body>
 </html>

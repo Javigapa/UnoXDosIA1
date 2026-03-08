@@ -1,313 +1,1444 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
- <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-90WQKBTXN3');
+  </script>
 
-  gtag('config', 'G-90WQKBTXN3');
-</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Predicciones deportivas generadas por IA, ¿Que IA es mejor?"/>
-  <title>Uno X Dos IA - Predicciones Deportivas Avanzadas</title>
-  <link rel="stylesheet" href="index.css">
+
+  <!-- SEO mejorado -->
+  <title>Uno X Dos IA | Predicciones Deportivas con Inteligencia Artificial</title>
+  <meta name="description" content="Descubre qué IA predice mejor: NBA, Liga EA Sports, Liga Hypermotion y Loterías. ChatGPT vs Gemini vs Copilot. Predicciones deportivas con inteligencia artificial, ranking en tiempo real y estadísticas de acierto.">
+  <meta name="keywords" content="predicciones deportivas IA, inteligencia artificial apuestas, NBA predicciones, Liga española predicciones, ChatGPT vs Gemini, mejor IA deportes, Uno X Dos IA">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Uno X Dos IA">
+
+  <!-- Open Graph (para redes sociales) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Uno X Dos IA | Predicciones Deportivas con Inteligencia Artificial">
+  <meta property="og:description" content="¿Qué IA predice mejor los resultados deportivos? Compara ChatGPT, Gemini y Copilot en NBA, LaLiga, Hypermotion y más.">
+  <meta property="og:url" content="https://unoxdosia.es">
+  <meta property="og:image" content="/Imagenes/og-preview.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Uno X Dos IA | Predicciones Deportivas con IA">
+  <meta name="twitter:description" content="ChatGPT vs Gemini vs Copilot: ¿quién acierta más los partidos? Estadísticas reales, ranking dinámico y predicciones actualizadas.">
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Uno X Dos IA",
+    "url": "https://unoxdosia.es",
+    "description": "Predicciones deportivas generadas por inteligencia artificial. Comparativa entre ChatGPT, Gemini y Copilot en NBA, LaLiga y más.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://unoxdosia.es/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
   <link rel="icon" href="/Imagenes/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ================================================
+       VARIABLES & RESET
+    ================================================ */
+    :root {
+      --navy:     #0d1b2a;
+      --navy2:    #132238;
+      --blue:     #1a3a5c;
+      --accent:   #00c896;
+      --accent2:  #ff6b35;
+      --gold:     #f0c040;
+      --light:    #f4f7f9;
+      --white:    #ffffff;
+      --text:     #e8ecf0;
+      --muted:    #8fa3b8;
+      --card-bg:  rgba(255,255,255,0.05);
+      --card-border: rgba(255,255,255,0.08);
+      --radius:   12px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Outfit', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ================================================
+       ANIMATED BACKGROUND
+    ================================================ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,200,150,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 90%, rgba(255,107,53,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 60% 50%, rgba(26,58,92,0.4) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ================================================
+       HEADER
+    ================================================ */
+    header {
+      position: relative;
+      z-index: 10;
+      background: linear-gradient(180deg, rgba(13,27,42,0.98) 0%, rgba(13,27,42,0.85) 100%);
+      border-bottom: 1px solid rgba(0,200,150,0.2);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 46px;
+      height: 46px;
+      background: linear-gradient(135deg, var(--accent), #00a87d);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4em;
+      box-shadow: 0 0 20px rgba(0,200,150,0.35);
+    }
+
+    .logo-text {
+      line-height: 1;
+    }
+
+    .logo-text span {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.7em;
+      letter-spacing: 2px;
+      color: var(--white);
+    }
+
+    .logo-text small {
+      font-size: 0.65em;
+      color: var(--accent);
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
+    /* ================================================
+       NAVIGATION
+    ================================================ */
+ nav {
+  background: rgba(19,34,56,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 8px 20px;
+  position: relative;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-hamburger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #ffffff;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  transition: background 0.2s;
+}
+
+.nav-hamburger:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.ham-icon { font-size: 1.3em; }
+.ham-label { letter-spacing: 0.5px; }
+
+.nav-menu {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  background: rgba(13,27,42,0.98);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 8px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 220px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  z-index: 200;
+}
+
+.nav-menu.open {
+  display: flex;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border-radius: 7px;
+  text-decoration: none;
+  font-size: 0.92em;
+  font-weight: 600;
+  color: #8fa3b8;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+  background: rgba(255,255,255,0.07);
+}
+
+.nav-link.active {
+  color: #00c896;
+  background: rgba(0,200,150,0.1);
+  border-color: rgba(0,200,150,0.25);
+}
+
+.nav-emoji { font-size: 1.1em; }
+
+    /* ================================================
+       HERO SECTION
+    ================================================ */
+    .hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 70px 24px 50px;
+      overflow: hidden;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,200,150,0.12);
+      border: 1px solid rgba(0,200,150,0.3);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: 0.8em;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      animation: fadeDown 0.6s ease both;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3em, 8vw, 6em);
+      line-height: 1;
+      letter-spacing: 3px;
+      color: var(--white);
+      margin-bottom: 12px;
+      animation: fadeDown 0.6s 0.1s ease both;
+    }
+
+    .hero h1 .highlight {
+      color: var(--accent);
+      position: relative;
+    }
+
+    .hero-sub {
+      font-size: clamp(1em, 2.5vw, 1.3em);
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 36px;
+      font-weight: 400;
+      line-height: 1.6;
+      animation: fadeDown 0.6s 0.2s ease both;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeDown 0.6s 0.3s ease both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      background: linear-gradient(135deg, var(--accent), #00a87d);
+      color: var(--navy);
+      font-family: var(--font-body);
+      font-size: 0.95em;
+      font-weight: 700;
+      border-radius: 9px;
+      text-decoration: none;
+      transition: all 0.25s;
+      box-shadow: 0 4px 20px rgba(0,200,150,0.3);
+      letter-spacing: 0.3px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,200,150,0.45);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      background: rgba(255,255,255,0.07);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.95em;
+      font-weight: 600;
+      border-radius: 9px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.25s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-2px);
+    }
+
+    /* ================================================
+       STATS BAR
+    ================================================ */
+    .stats-bar {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      background: rgba(19,34,56,0.7);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .stat-item {
+      padding: 16px 32px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      flex: 1;
+      min-width: 130px;
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2em;
+      letter-spacing: 1px;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.72em;
+      color: var(--muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-top: 4px;
+    }
+
+    /* ================================================
+       SECTION NAVIGATION CARDS
+    ================================================ */
+    .sections-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 24px 20px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2em;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 0.95em;
+      margin-bottom: 30px;
+    }
+
+    .sport-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .sport-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 28px 22px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sport-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--card-accent, rgba(0,200,150,0.08)), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .sport-card:hover::before { opacity: 1; }
+
+    .sport-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--card-accent-border, rgba(0,200,150,0.3));
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .sport-card.nba    { --card-accent: rgba(255,107,53,0.08);  --card-accent-border: rgba(255,107,53,0.3); }
+    .sport-card.liga   { --card-accent: rgba(0,200,150,0.08);   --card-accent-border: rgba(0,200,150,0.3); }
+    .sport-card.hyper  { --card-accent: rgba(240,192,64,0.08);  --card-accent-border: rgba(240,192,64,0.3); }
+    .sport-card.lot    { --card-accent: rgba(168,85,247,0.08);  --card-accent-border: rgba(168,85,247,0.3); }
+
+    .sport-card-emoji {
+      font-size: 2.5em;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .sport-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.6em;
+      letter-spacing: 1.5px;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .sport-card p {
+      font-size: 0.87em;
+      color: var(--muted);
+      line-height: 1.5;
+      flex-grow: 1;
+      margin-bottom: 18px;
+    }
+
+    .card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.78em;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 50px;
+      width: fit-content;
+      letter-spacing: 0.5px;
+    }
+
+    .sport-card.nba   .card-tag { background: rgba(255,107,53,0.15); color: #ff6b35; }
+    .sport-card.liga  .card-tag { background: rgba(0,200,150,0.15);  color: var(--accent); }
+    .sport-card.hyper .card-tag { background: rgba(240,192,64,0.15); color: var(--gold); }
+    .sport-card.lot   .card-tag { background: rgba(168,85,247,0.15); color: #a855f7; }
+
+    /* ================================================
+       RANKING SECTION
+    ================================================ */
+    .ranking-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 50px 24px;
+    }
+
+    .ranking-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 9px 20px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: transparent;
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.88em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover { color: var(--white); background: rgba(255,255,255,0.06); }
+    .tab-btn.active { background: rgba(0,200,150,0.12); color: var(--accent); border-color: rgba(0,200,150,0.3); }
+
+    .ranking-panel { display: none; }
+    .ranking-panel.active { display: block; animation: fadeIn 0.3s ease; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
+
+    .ranking-table-wrap {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    table.rank-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .rank-table thead tr {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .rank-table th {
+      padding: 13px 16px;
+      font-size: 0.78em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    .rank-table th:last-child,
+    .rank-table td:last-child { text-align: right; padding-right: 20px; }
+
+    .rank-table td {
+      padding: 14px 16px;
+      font-size: 0.9em;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+
+    .rank-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+
+    .rank-pos {
+      font-family: var(--font-display);
+      font-size: 1.4em;
+      letter-spacing: 1px;
+      color: var(--muted);
+      width: 40px;
+    }
+
+    .rank-pos.gold   { color: var(--gold); }
+    .rank-pos.silver { color: #c0cfd8; }
+    .rank-pos.bronze { color: #cd7f50; }
+
+    .rank-model {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .model-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .model-dot.chatgpt { background: #10a37f; }
+    .model-dot.gemini  { background: #4285f4; }
+    .model-dot.copilot { background: #7c3aed; }
+
+    .tasa-bar-wrap { display: flex; align-items: center; gap: 10px; }
+
+    .tasa-bar {
+      height: 6px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 3px;
+      width: 100px;
+      overflow: hidden;
+    }
+
+    .tasa-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent), #00a87d);
+      transition: width 0.8s ease;
+    }
+
+    .tasa-value {
+      font-family: var(--font-display);
+      font-size: 1.1em;
+      letter-spacing: 1px;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    /* ================================================
+       NOTICIAS / PRÓXIMOS PARTIDOS
+    ================================================ */
+    .news-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 50px;
+    }
+
+    @media (max-width: 700px) { .news-grid { grid-template-columns: 1fr; } }
+
+    .news-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+
+    .news-card h4 {
+      font-size: 0.75em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .match-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.9em;
+    }
+
+    .match-item:last-child { border-bottom: none; }
+
+    .match-vs {
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .match-badge {
+      font-size: 0.72em;
+      font-weight: 700;
+      background: rgba(255,255,255,0.07);
+      border-radius: 4px;
+      padding: 3px 8px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    .news-item {
+      display: flex;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.88em;
+      color: var(--text);
+      line-height: 1.4;
+      align-items: flex-start;
+    }
+
+    .news-item:last-child { border-bottom: none; }
+
+    .news-dot {
+      width: 8px; height: 8px;
+      background: var(--accent2);
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    /* ================================================
+       ARTICLES SECTION
+    ================================================ */
+    .articles-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .article-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .article-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .article-tag {
+      font-size: 0.72em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent2);
+      margin-bottom: 10px;
+    }
+
+    .article-card h3 {
+      font-size: 1em;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .article-card p {
+      font-size: 0.85em;
+      color: var(--muted);
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .article-read {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 14px;
+      font-size: 0.83em;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .article-read::after { content: '→'; transition: transform 0.2s; }
+    .article-card:hover .article-read::after { transform: translateX(4px); }
+
+    /* ================================================
+       PREDICCIONES DEL AÑO / PREMIOS
+    ================================================ */
+    .premios-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+
+    .premios-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 700px) { .premios-grid { grid-template-columns: 1fr; } }
+
+    .premio-col {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .premio-header {
+      padding: 16px 20px;
+      font-family: var(--font-display);
+      font-size: 1.4em;
+      letter-spacing: 2px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .premio-col.chatgpt .premio-header { background: rgba(16,163,127,0.15); color: #10a37f; }
+    .premio-col.gemini  .premio-header { background: rgba(66,133,244,0.15); color: #4285f4; }
+    .premio-col.copilot .premio-header { background: rgba(124,58,237,0.15); color: #7c3aed; }
+
+    .premio-section {
+      padding: 16px 20px 0;
+    }
+
+    .premio-section h5 {
+      font-size: 0.72em;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .premio-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 0.84em;
+      color: var(--text);
+    }
+
+    .premio-icon { font-size: 0.9em; flex-shrink: 0; margin-top: 1px; }
+    .premio-item strong { display: block; font-size: 0.85em; color: var(--muted); margin-bottom: 1px; font-weight: 500; }
+
+    .badge-down {
+      display: inline-block;
+      font-size: 0.72em;
+      font-weight: 700;
+      background: rgba(255,80,80,0.12);
+      color: #ff5050;
+      border-radius: 4px;
+      padding: 2px 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-up {
+      display: inline-block;
+      font-size: 0.72em;
+      font-weight: 700;
+      background: rgba(0,200,150,0.12);
+      color: var(--accent);
+      border-radius: 4px;
+      padding: 2px 6px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ================================================
+       CONTACT FOOTER
+    ================================================ */
+    .contact-section {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+      text-align: center;
+    }
+
+    .contact-box {
+      background: linear-gradient(135deg, rgba(0,200,150,0.08), rgba(255,107,53,0.05));
+      border: 1px solid rgba(0,200,150,0.2);
+      border-radius: 16px;
+      padding: 36px;
+    }
+
+    .contact-box h3 {
+      font-family: var(--font-display);
+      font-size: 2em;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .contact-box p {
+      color: var(--muted);
+      font-size: 0.92em;
+      margin-bottom: 22px;
+      line-height: 1.6;
+    }
+
+    .btn-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      background: rgba(0,200,150,0.12);
+      border: 1px solid rgba(0,200,150,0.3);
+      border-radius: 9px;
+      color: var(--accent);
+      font-family: var(--font-body);
+      font-size: 0.9em;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: all 0.25s;
+    }
+
+    .btn-contact:hover {
+      background: rgba(0,200,150,0.2);
+      transform: translateY(-2px);
+    }
+
+    /* ================================================
+       FOOTER
+    ================================================ */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: rgba(13,27,42,0.9);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+      padding: 20px;
+      font-size: 0.8em;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* ================================================
+       RESPONSIVE
+    ================================================ */
+    @media (max-width: 768px) {
+      .hero { padding: 40px 16px 30px; }
+      .stats-bar { justify-content: flex-start; overflow-x: auto; }
+      .stat-item { min-width: 120px; padding: 14px 20px; }
+      .ranking-wrap, .sections-wrap, .news-grid,
+      .articles-wrap, .premios-wrap { padding-left: 16px; padding-right: 16px; }
+      .premios-grid { grid-template-columns: 1fr; }
+      .tasa-bar { width: 60px; }
+    }
+
+    @media (max-width: 520px) {
+      header { flex-direction: column; gap: 10px; text-align: center; }
+      .nav-link span { display: none; }
+      .nav-link { padding: 9px 12px; }
+    }
+  </style>
 </head>
 <body>
+<!-- AQUI ACABA EL CSS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+  <!-- ========================
+       HEADER
+  ======================== -->
   <header>
-    <h1>⚽ Uno X Dos IA 🧠</h1>
+    <a href="index.html" class="header-logo">
+      <div class="logo-icon">⚽</div>
+      <div class="logo-text">
+        <span>UNO X DOS IA</span>
+        <small>PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+      </div>
+    </a>
   </header>
 
- <nav>
-    <div class="dropdown">
-      <button class="dropbtn" onclick="toggleDropdown()">Secciones Deportivas ▼</button>
-      <div class="dropdown-content" id="myDropdown">
-        <a href="index.html">Inicio</a>
-        <a href="NBA.html">NBA</a>
-        <a href="LIgaEsports.html">Liga EA Sports</a>
-        <a href="Hypermotion.html">Liga Hypermotion</a>
-        <a href="Loterias.html">Loterías</a>
+  <!-- ========================
+       NAV
+  ======================== -->
+ <nav aria-label="Navegación principal">
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+    <span class="ham-icon">☰</span>
+    <span class="ham-label">Secciones</span>
+  </button>
+  <div class="nav-menu" id="navMenu">
+    <a href="index.html"       class="nav-link active"><span class="nav-emoji">🏠</span> Inicio</a>
+    <a href="NBA.html"         class="nav-link "><span class="nav-emoji">🏀</span> NBA</a>
+    <a href="LIgaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
+    <a href="Hypermotion.html" class="nav-link"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+    <a href="Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+  </div>
+</nav>
+
+  <!-- ========================
+       HERO
+  ======================== -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-badge">🧠 Actualizado semanalmente</div>
+    <h1 id="hero-title">¿QUÉ IA <span class="highlight">PREDICE</span> MEJOR?</h1>
+    <p class="hero-sub">ChatGPT, Gemini y Copilot frente a frente. Datos reales, aciertos reales. Comprueba quién gana en NBA, LaLiga, Hypermotion y Loterías.</p>
+    <div class="hero-cta-group">
+      <a href="#ranking" class="btn-primary">📊 Ver el Ranking</a>
+      <a href="#secciones" class="btn-secondary">🔍 Explorar secciones</a>
+    </div>
+  </section>
+
+  <!-- ========================
+       STATS BAR
+  ======================== -->
+  <div class="stats-bar" role="region" aria-label="Estadísticas generales">
+    <div class="stat-item">
+      <div class="stat-number">3</div>
+      <div class="stat-label">IAs comparadas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">4</div>
+      <div class="stat-label">Deportes / Secciones</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number" id="stat-partidos">143+</div>
+      <div class="stat-label">Predicciones realizadas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">75%</div>
+      <div class="stat-label">Mejor tasa de acierto</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">📅</div>
+      <div class="stat-label">Jornada a jornada</div>
+    </div>
+  </div>
+
+  <!-- ========================
+       SECCIONES (SPORT CARDS)
+  ======================== -->
+  <section class="sections-wrap" id="secciones" aria-labelledby="secciones-title">
+    <p class="section-title" id="secciones-title">ELIGE TU SECCIÓN</p>
+    <p class="section-subtitle">Predicciones actualizadas cada jornada en cada competición</p>
+
+    <div class="sport-cards-grid">
+
+      <a href="NBA.html" class="sport-card nba" aria-label="Ir a predicciones NBA">
+        <span class="sport-card-emoji">🏀</span>
+        <h3>NBA</h3>
+        <p>Las mejores predicciones de la liga de baloncesto más seguida del mundo. Análisis jornada a jornada con datos reales.</p>
+        <div class="card-tag">🏆 122 jornadas analizadas</div>
+      </a>
+
+      <a href="LIgaEsports.html" class="sport-card liga" aria-label="Ir a predicciones Liga EA Sports">
+        <span class="sport-card-emoji">⚽</span>
+        <h3>Liga EA Sports</h3>
+        <p>Primera División española. Predicciones de ganador, descendidos y campeón de liga con las IAs más avanzadas.</p>
+        <div class="card-tag">⚽ LaLiga española</div>
+      </a>
+
+      <a href="Hypermotion.html" class="sport-card hyper" aria-label="Ir a predicciones Liga Hypermotion">
+        <span class="sport-card-emoji">📈</span>
+        <h3>Liga Hypermotion</h3>
+        <p>Segunda División. El ascenso y descenso más imprevisible del fútbol español, analizado por inteligencia artificial.</p>
+        <div class="card-tag">📊 Segunda División</div>
+      </a>
+
+      <a href="Loterias.html" class="sport-card lot" aria-label="Ir a predicciones de Loterías">
+        <span class="sport-card-emoji">🎲</span>
+        <h3>Loterías</h3>
+        <p>¿Puede la IA predecir la lotería? Un experimento único para descubrir los límites de la inteligencia artificial.</p>
+        <div class="card-tag">🎯 Experimento IA</div>
+      </a>
+  <a href="/LigaFantasIA/LigaFantasIA.html" class="sport-card lot" aria-label="Ir a predicciones de Loterías">
+        <span class="sport-card-emoji">🏆</span>
+        <h3>Liga FantasIA</h3>
+        <p>¿Que pasaría en una liga hecha por y para IAs.? ¿Quien será capaz de ganar esta nueva liga.?</p>
+        <div class="card-tag">⚽La liga de las IAs</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========================
+       RANKING CON TABS
+  ======================== -->
+  <section class="ranking-wrap" id="ranking" aria-labelledby="ranking-title">
+    <p class="section-title" id="ranking-title">🏅 EL PODIO DE LA IA</p>
+    <p class="section-subtitle">Clasificación en tiempo real — ordenada por tasa de acierto</p>
+
+    <div class="ranking-tabs" role="tablist" aria-label="Selecciona deporte">
+      <button class="tab-btn active" role="tab" aria-selected="true"  onclick="showTab('nba',   this)">🏀 NBA</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" onclick="showTab('ea',    this)">⚽ Liga EA Sports</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" onclick="showTab('hyper', this)">📈 Liga Hypermotion</button>
+    </div>
+
+    <!-- NBA -->
+    <div class="ranking-panel active" id="panel-nba" role="tabpanel">
+      <div class="ranking-table-wrap">
+        <table class="rank-table" aria-label="Ranking NBA">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Modelo IA</th>
+              <th>Jornadas</th>
+              <th>Aciertos</th>
+              <th>Tasa de Éxito</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-nba">
+            <tr data-jornadas="122" data-aciertos="43">
+              <td class="rank-pos">2</td>
+              <td><div class="rank-model"><div class="model-dot chatgpt"></div>Chat GPT</div></td>
+              <td>122</td><td>43</td>
+              <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:75%"></div></div><span class="tasa-value">75.0%</span></div></td>
+            </tr>
+            <tr data-jornadas="122" data-aciertos="64">
+              <td class="rank-pos">1</td>
+              <td><div class="rank-model"><div class="model-dot gemini"></div>Gemini</div></td>
+              <td>122</td><td>64</td>
+              <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:66.7%"></div></div><span class="tasa-value">66.7%</span></div></td>
+            </tr>
+            <tr data-jornadas="122" data-aciertos="40">
+              <td class="rank-pos">3</td>
+              <td><div class="rank-model"><div class="model-dot copilot"></div>Copilot</div></td>
+              <td>122</td><td>40</td>
+              <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:58.3%"></div></div><span class="tasa-value">58.3%</span></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:14px; text-align:right;"><a href="NBA.html" style="color:var(--accent);font-size:0.85em;font-weight:700;text-decoration:none;">Ver predicciones NBA completas →</a></p>
+    </div>
+
+    <!-- EA Sports -->
+    <div class="ranking-panel" id="panel-ea" role="tabpanel">
+      <div class="ranking-table-wrap">
+        <table class="rank-table" aria-label="Ranking Liga EA Sports">
+          <thead>
+            <tr><th>#</th><th>Modelo IA</th><th>Jornadas</th><th>Aciertos</th><th>Tasa de Éxito</th></tr>
+          </thead>
+          <tbody id="tbody-ea">
+            <tr>
+              <td class="rank-pos">2</td>
+              <td><div class="rank-model"><div class="model-dot gemini"></div>Gemini</div></td>
+              <td>12</td><td>5</td>
+              <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:73.3%"></div></div><span class="tasa-value">73.3%</span></div></td>
+            </tr>
+            <tr>
+              <td class="rank-pos">3</td>
+              <td><div class="rank-model"><div class="model-dot chatgpt"></div>Chat GPT</div></td>
+              <td>12</td><td>2</td>
+              <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:66.7%"></div></div><span class="tasa-value">66.7%</span></div></td>
+            </tr>
+            <tr>
+              <td class="rank-pos">1</td>
+              <td><div class="rank-model"><div class="model-dot copilot"></div>Copilot</div></td>
+              <td>12</td><td>8</td>
+              <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:60%"></div></div><span class="tasa-value">60.0%</span></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:14px; text-align:right;"><a href="LIgaEsports.html" style="color:var(--accent);font-size:0.85em;font-weight:700;text-decoration:none;">Ver predicciones Liga EA Sports completas →</a></p>
+    </div>
+
+    <!-- Hypermotion -->
+    <div class="ranking-panel" id="panel-hyper" role="tabpanel">
+      <div class="ranking-table-wrap">
+        <table class="rank-table" aria-label="Ranking Liga Hypermotion">
+          <thead>
+            <tr><th>#</th><th>Modelo IA</th><th>Jornadas</th><th>Aciertos</th><th>Tasa de Éxito</th></tr>
+          </thead>
+          <tbody id="tbody-hyper">
+            <tr>
+              <td class="rank-pos">3</td>
+              <td><div class="rank-model"><div class="model-dot copilot"></div>Copilot</div></td>
+              <td>9</td><td>2</td>
+              <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:72.2%"></div></div><span class="tasa-value">72.2%</span></div></td>
+            </tr>
+            <tr>
+              <td class="rank-pos">1</td>
+              <td><div class="rank-model"><div class="model-dot gemini"></div>Gemini</div></td>
+              <td>9</td><td>4</td>
+              <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:66.7%"></div></div><span class="tasa-value">66.7%</span></div></td>
+            </tr>
+            <tr>
+              <td class="rank-pos">2</td>
+              <td><div class="rank-model"><div class="model-dot chatgpt"></div>Chat GPT</div></td>
+              <td>9</td><td>3</td>
+              <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:61.1%"></div></div><span class="tasa-value">61.1%</span></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:14px; text-align:right;"><a href="Hypermotion.html" style="color:var(--accent);font-size:0.85em;font-weight:700;text-decoration:none;">Ver predicciones Hypermotion completas →</a></p>
+    </div>
+
+  </section>
+
+  <!-- ========================
+       PRÓXIMOS PARTIDOS + NOTICIAS
+  ======================== -->
+  <div class="news-grid" role="region" aria-label="Próximos partidos y noticias">
+
+    <div class="news-card">
+      <h4>📅 Próximos partidos clave</h4>
+
+      <div class="match-item">
+        <span class="match-vs">Athletic vs Barcelona</span>
+        <span class="match-badge">⚽ LaLiga</span>
+      </div>
+      <div class="match-item">
+        <span class="match-vs">Atlético vs R. Sociedad</span>
+        <span class="match-badge">⚽ LaLiga</span>
+      </div>
+      <div class="match-item">
+        <span class="match-vs">R. Sociedad B vs Castellón</span>
+        <span class="match-badge">📈 Hypermotion</span>
+      </div>
+      <div class="match-item">
+        <span class="match-vs">Racing vs Córdoba</span>
+        <span class="match-badge">📈 Hypermotion</span>
+      </div>
+      <div class="match-item">
+        <span class="match-vs">Timberwolves vs Nuggets</span>
+        <span class="match-badge">🏀 NBA</span>
+      </div>
+      <div class="match-item">
+        <span class="match-vs">Pelicans vs Lakers</span>
+        <span class="match-badge">🏀 NBA</span>
       </div>
     </div>
-  </nav>
 
-  <div class="container">
+    <div class="news-card">
+      <h4>🚨 Noticias que mueven cuotas</h4>
 
-    <aside class="sidebar">
-      <h2>🔎 La clave</h2>
-      <div class="sidebar-section">
-        <h3>📅 Próximos Partidos Clave Liga EA Sports</h3>
-        <p>
-        
-       Athletic vs Barcelona<br><br>
-        Atlético vs R. Sociedad<br><br>
-        </p>
+      <div class="news-item">
+        <div class="news-dot"></div>
+        <span>Real Madrid tiene nuevo entrenador: <strong>Álvaro Arbeloa</strong></span>
       </div>
-         <div class="sidebar-section">
-        <h3>📅 Próximos Partidos Clave Liga Hypermotion</h3>
-        <p>
-         R. Sociedad B vs Castellón<br><br>
-         Racing vs Córdoba<br><br>
-        </p>
+      <div class="news-item">
+        <div class="news-dot"></div>
+        <span>Traspaso de <strong>Trae Young</strong> de Hawks a Wizards</span>
       </div>
-      <div class="sidebar-section">
-        <h3>📅 Próximos Partidos Clave NBA</h3>
-        <p>
-
-Timberwolves vs Nuggets 1 de Marzo<br><br>
-Clippers vs Warriors 3 de Marzo<br><br>
-Pelicans vs Lakers 4 de Marzo<br><br>
+      <div class="news-item">
+        <div class="news-dot"></div>
+        <span>Traspaso de <strong>James Harden</strong> de Clippers a Cleveland</span>
       </div>
-            <div class="sidebar-section">
-        <h3>🚨 Noticias que Mueven Cuotas</h3>
-        <p>
-- Real Madrid tiene nuevo entrenador. Alvaro Alberoa<br>  <br>
-- Traspaso de Trae Young de Hawks a Wizards.<br><br>
-- Traspaso de James Hardem de Clippers a Cleveland.<br><br>
-- Traspaso de Anthony Davis de Dallas a Wizards<br><br>
-      </p>
+      <div class="news-item">
+        <div class="news-dot"></div>
+        <span>Traspaso de <strong>Anthony Davis</strong> de Dallas a Wizards</span>
       </div>
-    </aside>
+    </div>
 
-    <main class="main-content">
-      <h2>📰 Artículos de Estrategia y Algoritmos</h2>
-      <div class="articles-grid">
+  </div>
 
-        <article class="article-card">
-          <h3>¿Usan IA las casas de apuestas?</h3>
-          <p>
-              La respuesta corta es sí.          </p>
-          <a href="/Articulos/UsanIALasCasas.html">Leer más...</a>
-        </article>
+  <!-- ========================
+       PREDICCIONES DEL AÑO
+  ======================== -->
+  <section class="premios-wrap" aria-labelledby="premios-title">
+    <p class="section-title" id="premios-title">🏆 PREDICCIONES PARA TODA LA TEMPORADA</p>
+    <p class="section-subtitle">Lo que cada IA apuesta para el final del año</p>
 
-        <article class="article-card">
-          <h3>Precisión vs rentabilidad:</h3>
-          <p>
-              el gran error en las apuestas con IA          </p>
-          <a href="/Articulos/Precisionrentabilidad.html">Leer más...</a>
-        </article>
+    <div class="premios-grid">
 
-        <article class="article-card">
-          <h3>Comparativa: IA vs. Casa de Apuestas</h3>
-          <p>
-¿Existen estudios que comparen apuestas entre casas de apuestas y la Inteligencia Artificial?         
- <a href="/Articulos/EstudioIACasasApuestas.html">Leer más...</a>
-        </article>
+      <!-- ChatGPT -->
+      <div class="premio-col chatgpt">
+        <div class="premio-header">CHATGPT</div>
 
-         <article class="article-card">
-          <h3>Precisión vs rentabilidad:</h3>
-          <p>
-              el gran error en las apuestas con IA          </p>
-          <a href="/Articulos/IAVsCasas.html">Leer más...</a>
-        </article>
-      </div>
-
-      <section class="ranking-section">
-        <h2>🤖 El Podio de la IA 📊</h2>
-
-        <div class="ranking-grid">
-          <div class="ranking-sport">
-            <h3>🏀 Predicciones NBA</h3>
-            <table class="ranking-table" id="ranking-nba">
-              <thead>
-                <tr>
-                  <th>Modelo</th>
-                  <th>Jornadas</th>
-                  <th>Aciertos</th>
-                  <th>Tasa de Éxito</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-ia="chatgpt">
-                  <td>Chat GPT</td>
-                  <td data-jornadas>122</td>
-                  <td data-aciertos>43</td>
-                  <td data-tasa>75.0%</td>
-                </tr>
-                <tr data-ia="gemini">
-                  <td>Gemini</td>
-                  <td data-jornadas>122</td>
-                  <td data-aciertos>64</td>
-                  <td data-tasa>66.7%</td>
-                </tr>
-                <tr data-ia="copilot">
-                  <td>Copilot</td>
-                  <td data-jornadas>122</td>
-                  <td data-aciertos>40</td>
-                  <td data-tasa>58.3%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="ranking-sport">
-            <h3>⚽ Liga EA Sports</h3>
-            <table class="ranking-table" id="ranking-ea">
-              <thead>
-                <tr>
-                  <th>Modelo</th>
-                  <th>Jornadas</th>
-                  <th>Aciertos</th>
-                  <th>Tasa de Éxito</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-ia="gemini">
-                  <td>Gemini</td>
-                  <td data-jornadas>12</td>
-                  <td data-aciertos>5</td>
-                  <td data-tasa>73.3%</td>
-                </tr>
-                <tr data-ia="chatgpt">
-                  <td>Chat GPT</td>
-                  <td data-jornadas>12</td>
-                  <td data-aciertos>2</td>
-                  <td data-tasa>66.7%</td>
-                </tr>
-                <tr data-ia="copilot">
-                  <td>Copilot</td>
-                  <td data-jornadas>12</td>
-                  <td data-aciertos>8</td>
-                  <td data-tasa>60.0%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="ranking-sport">
-            <h3>📈 Liga Hypermotion</h3>
-            <table class="ranking-table" id="ranking-hyper">
-              <thead>
-                <tr>
-                  <th>Modelo</th>
-                  <th>Jornadas</th>
-                  <th>Aciertos</th>
-                  <th>Tasa de Éxito</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-ia="copilot">
-                  <td>Copilot</td>
-                  <td data-jornadas>9</td>
-                  <td data-aciertos>2</td>
-                  <td data-tasa>72.2%</td>
-                </tr>
-                <tr data-ia="gemini">
-                  <td>Gemini</td>
-                  <td data-jornadas>9</td>
-                  <td data-aciertos>4</td>
-                  <td data-tasa>66.7%</td>
-                </tr>
-                <tr data-ia="chatgpt">
-                  <td>Chat GPT</td>
-                  <td data-jornadas>9</td>
-                  <td data-aciertos>3</td>
-                  <td data-tasa>61.1%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>        
+        <div class="premio-section">
+          <h5>🏀 NBA</h5>
+          <div class="premio-item"><span class="premio-icon">🏆</span><div><strong>Rookie del año</strong>Kon Knueppel</div></div>
+          <div class="premio-item"><span class="premio-icon">⭐</span><div><strong>MVP</strong>Nikola Jokić</div></div>
+          <div class="premio-item"><span class="premio-icon">🎯</span><div><strong>Final</strong>Celtics vs Nuggets</div></div>
+          <div class="premio-item"><span class="premio-icon">🥇</span><div><strong>Campeón</strong>Boston Celtics</div></div>
         </div>
-        </section>
-<section>
-<table class="tabla-premios"><tr><th></th><th>GANADORES DEL AÑO</th><th></th></tr> <tr> <th>ChatGPT</th> <th>Gemini</th> <th>Copilot</th> </tr> <tr> <td> <h3>NBA</h3><br> <strong>🏆 Rookie del año</strong><br><br> - Kon Knueppel<br><br><br> <strong>🏆 MVP del año</strong><br><br> - Nikola Jokić<br><br><br> <strong>🏆 Final</strong><br><br> - Celtics vs Nuggets<br><br><br> <strong>🏆 Campeón NBA</strong><br><br> - Boston Celtics<br><br><br> <h3>Liga EASPORTS</h3><br><strong>🏆 Campeón</strong><br><br> - Real Madrid<br><br><strong>Descenso</strong><br><br> - Espanyol<br> - Oviedo<br> - Alavés<br><br><br> <h3>Liga Hypermotion</h3><br><strong>🏆 Campeón</strong><br><br> - Racing<br><br><br><strong>Descenso</strong><br><br> - Mirandés<br>- R. Sociedad B<br>- Cultural<br>- Zaragoza <br> </td> <td> <h3>NBA</h3><br> <strong>🏆 Rookie del año</strong><br><br> - Kon Knueppel<br><br><br> <strong>🏆 MVP del año</strong><br><br> - Luka Dončić<br><br> <br><strong>🏆 Final</strong><br><br> - Oklahoma City Thunder vs Boston Celtics<br><br><br> <strong>🏆 Campeón NBA</strong><br><br> - Oklahoma City Thunder<br><br><br> <h3>Liga EASPORTS</h3><br><strong>🏆 Campeón</strong><br><br> - Barcelona<br><br><br><strong>Descenso</strong><br><br> - Oviedo<br>- Elche<br>- Alavés o Levante <br><br> <br><h3>Liga Hypermotion</h3><br><strong>🏆 Campeón</strong><br><br> - Racing<br><br><br><strong>Descenso</strong><br><br> - Mirandés<br>- Granada<br>- Ceuta<br>- Zaragoza <br> </td> <td> <h3>NBA</h3><br> <strong>🏆 Rookie del año</strong><br><br> - Chet Holmgren<br><br><br> <strong>🏆 MVP del año</strong><br><br> - Nikola Jokić<br><br><br> <strong>🏆 Final</strong><br><br> - Celtics vs Nuggets<br><br><br> <strong>🏆 Campeón NBA</strong><br><br> - Boston Celtics<br><br><br> <h3>Liga EASPORTS</h3><br><strong>🏆 Campeón</strong><br><br> - Real Madrid<br><br><br><strong>Descenso</strong><br><br> - Elche<br>- Oviedo<br>- Levante <br><br><br> <h3>Liga Hypermotion</h3><br> <strong>🏆 Campeón</strong><br><br> - Racing<br><br><br><strong>Descenso</strong><br><br> - Cultural<br>- Huesca<br>- Valladolid<br>- Mirandés <br></td> </tr></table>
-</section>
 
-        <section class="contact-footer">
-        <h2>📩 ¿Crees que falta algo?</h2>
-        <p>Si tienes alguna corrección, sugerencia o crees que le falta alguna función a esta página, dímelo aquí:</p>
-        <a href="mailto:unoxdosia@gmail.com?subject=Sugerencia para Uno X Dos IA" class="btn-contact">ENVIAR COMENTARIO O CORRECCIÓN</a>
-      </section>
-    </main>
+        <div class="premio-section" style="padding-bottom:16px;">
+          <h5>⚽ Liga EA Sports</h5>
+          <div class="premio-item"><span class="premio-icon">🏆</span><div><strong>Campeón</strong>Real Madrid</div></div>
+          <div class="premio-item"><span class="premio-icon"></span><div><strong>Descenso</strong><span class="badge-down">Espanyol</span> <span class="badge-down">Oviedo</span> <span class="badge-down">Alavés</span></div></div>
+          <h5 style="margin-top:12px;">📈 Hypermotion</h5>
+          <div class="premio-item"><span class="premio-icon">🏆</span><div><strong>Campeón</strong>Racing</div></div>
+          <div class="premio-item"><span class="premio-icon"></span><div><strong>Descenso</strong><span class="badge-down">Mirandés</span> <span class="badge-down">R.S.B</span> <span class="badge-down">Cultural</span> <span class="badge-down">Zaragoza</span></div></div>
+        </div>
+      </div>
+
+      <!-- Gemini -->
+      <div class="premio-col gemini">
+        <div class="premio-header">GEMINI</div>
+
+        <div class="premio-section">
+          <h5>🏀 NBA</h5>
+          <div class="premio-item"><span class="premio-icon">🏆</span><div><strong>Rookie del año</strong>Kon Knueppel</div></div>
+          <div class="premio-item"><span class="premio-icon">⭐</span><div><strong>MVP</strong>Luka Dončić</div></div>
+          <div class="premio-item"><span class="premio-icon">🎯</span><div><strong>Final</strong>OKC Thunder vs Celtics</div></div>
+          <div class="premio-item"><span class="premio-icon">🥇</span><div><strong>Campeón</strong>Oklahoma City Thunder</div></div>
+        </div>
+
+        <div class="premio-section" style="padding-bottom:16px;">
+          <h5>⚽ Liga EA Sports</h5>
+          <div class="premio-item"><span class="premio-icon">🏆</span><div><strong>Campeón</strong>Barcelona</div></div>
+          <div class="premio-item"><span class="premio-icon"></span><div><strong>Descenso</strong><span class="badge-down">Oviedo</span> <span class="badge-down">Elche</span> <span class="badge-down">Alavés/Levante</span></div></div>
+          <h5 style="margin-top:12px;">📈 Hypermotion</h5>
+          <div class="premio-item"><span class="premio-icon">🏆</span><div><strong>Campeón</strong>Racing</div></div>
+          <div class="premio-item"><span class="premio-icon"></span><div><strong>Descenso</strong><span class="badge-down">Mirandés</span> <span class="badge-down">Granada</span> <span class="badge-down">Ceuta</span> <span class="badge-down">Zaragoza</span></div></div>
+        </div>
+      </div>
+
+      <!-- Copilot -->
+      <div class="premio-col copilot">
+        <div class="premio-header">COPILOT</div>
+
+        <div class="premio-section">
+          <h5>🏀 NBA</h5>
+          <div class="premio-item"><span class="premio-icon">🏆</span><div><strong>Rookie del año</strong>Chet Holmgren</div></div>
+          <div class="premio-item"><span class="premio-icon">⭐</span><div><strong>MVP</strong>Nikola Jokić</div></div>
+          <div class="premio-item"><span class="premio-icon">🎯</span><div><strong>Final</strong>Celtics vs Nuggets</div></div>
+          <div class="premio-item"><span class="premio-icon">🥇</span><div><strong>Campeón</strong>Boston Celtics</div></div>
+        </div>
+
+        <div class="premio-section" style="padding-bottom:16px;">
+          <h5>⚽ Liga EA Sports</h5>
+          <div class="premio-item"><span class="premio-icon">🏆</span><div><strong>Campeón</strong>Real Madrid</div></div>
+          <div class="premio-item"><span class="premio-icon"></span><div><strong>Descenso</strong><span class="badge-down">Elche</span> <span class="badge-down">Oviedo</span> <span class="badge-down">Levante</span></div></div>
+          <h5 style="margin-top:12px;">📈 Hypermotion</h5>
+          <div class="premio-item"><span class="premio-icon">🏆</span><div><strong>Campeón</strong>Racing</div></div>
+          <div class="premio-item"><span class="premio-icon"></span><div><strong>Descenso</strong><span class="badge-down">Cultural</span> <span class="badge-down">Huesca</span> <span class="badge-down">Valladolid</span> <span class="badge-down">Mirandés</span></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================
+       ARTÍCULOS
+  ======================== -->
+  <section class="articles-wrap" aria-labelledby="articulos-title">
+    <p class="section-title" id="articulos-title">📰 ESTRATEGIA Y ANÁLISIS</p>
+    <p class="section-subtitle">Todo lo que necesitas saber sobre IA y predicciones deportivas</p>
+
+    <div class="articles-grid">
+      <a href="/Articulos/UsanIALasCasas.html" class="article-card">
+        <div class="article-tag">🏢 Casas de apuestas</div>
+        <h3>¿Usan IA las casas de apuestas?</h3>
+        <p>La respuesta corta es sí. Descubre cómo las grandes plataformas utilizan inteligencia artificial para fijar cuotas.</p>
+        <span class="article-read">Leer artículo</span>
+      </a>
+
+      <a href="/Articulos/Precisionrentabilidad.html" class="article-card">
+        <div class="article-tag">⚖️ Estrategia</div>
+        <h3>Precisión vs. Rentabilidad</h3>
+        <p>El gran error en las apuestas con IA: acertar mucho no siempre significa ganar dinero. El análisis que cambia todo.</p>
+        <span class="article-read">Leer artículo</span>
+      </a>
+
+      <a href="/Articulos/EstudioIACasasApuestas.html" class="article-card">
+        <div class="article-tag">📊 Estudios</div>
+        <h3>Comparativa: IA vs. Casa de Apuestas</h3>
+        <p>¿Existen estudios que comparen los aciertos de las IAs con los de las casas de apuestas? Lo investigamos.</p>
+        <span class="article-read">Leer artículo</span>
+      </a>
+
+      <a href="/Articulos/IAVsCasas.html" class="article-card">
+        <div class="article-tag">🆚 Análisis</div>
+        <h3>IA vs. Casas: El duelo definitivo</h3>
+        <p>Un análisis profundo de las diferencias entre los modelos de IA y los algoritmos de las casas de apuestas.</p>
+        <span class="article-read">Leer artículo</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ========================
+       CONTACT
+  ======================== -->
+  <div class="contact-section">
+    <div class="contact-box">
+      <h3>💬 ¿TIENES ALGO QUE AÑADIR?</h3>
+      <p>Si detectas un error, tienes una sugerencia o quieres ver una nueva sección, escríbenos. Esta web mejora gracias a la comunidad.</p>
+      <a href="mailto:unoxdosia@gmail.com?subject=Sugerencia para Uno X Dos IA" class="btn-contact">
+        ✉️ Enviar comentario o corrección
+      </a>
+    </div>
+  </div>
+
+  <!-- ========================
+       FOOTER
+  ======================== -->
+  <footer>
+    <p>© 2025 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
+    <p style="margin-top:6px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com">Contacto</a></p>
+  </footer>
 
   <script>
-    // ========================================
-    // 1. FUNCIONALIDAD DEL MENÚ DESPLEGABLE
-    // ========================================
-
-    function toggleDropdown() {
-      document.getElementById("myDropdown").classList.toggle("show");
+    // Tab switching
+    function showTab(id, btn) {
+      document.querySelectorAll('.ranking-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      document.getElementById('panel-' + id).classList.add('active');
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected','true');
     }
 
-    // Cierra el menú si el usuario hace clic fuera de él
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        for (var i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
-
-
-    // ========================================
-    // 2. FUNCIONALIDAD DEL RANKING DINÁMICO
-    // ========================================
-
-    /**
-    * Calcula la tasa de éxito de cada modelo y ordena la tabla.
-    * La tabla se ordena basándose en el atributo data-tasa-numerica.
-    * @param {string} tableId - El ID de la tabla a actualizar (ej. 'ranking-nba').
-    */
-    function updateRankingTable(tableId) {
-      const tableBody = document.getElementById(tableId).querySelector('tbody');
-      if (!tableBody) return;
-
-      // Convertir las filas (tr) a un Array para poder ordenarlas
-      const rows = Array.from(tableBody.querySelectorAll('tr'));
-
-      // --- Paso A: Calcular y actualizar la Tasa de Éxito ---
-      rows.forEach(row => {
-        // Obtener valores de los atributos data-*
-        const jornadas = parseInt(row.querySelector('[data-jornadas]').textContent);
-        const aciertos = parseInt(row.querySelector('[data-aciertos]').textContent);
-        const tasaCell = row.querySelector('[data-tasa]');
-
-        let tasa = 0;
-        if (jornadas > 0) {
-          tasa = (aciertos / jornadas) * 100;
-        }
-
-        // Almacenar el valor numérico para la ordenación
-        row.dataset.tasaNumerica = tasa.toFixed(2);
-
-        // Mostrar el valor formateado al 1 decimal en la celda
-        tasaCell.textContent = `${tasa.toFixed(1)}%`;
-      });
-
-      // --- Paso B: Ordenar las filas ---
-      rows.sort((a, b) => {
-        // Comparar las tasas numéricas almacenadas
-        const tasaA = parseFloat(a.dataset.tasaNumerica);
-        const tasaB = parseFloat(b.dataset.tasaNumerica);
-
-        // Orden descendente (b - a)
-        return tasaB - tasaA;
-      });
-
-      // --- Paso C: Re-añadir las filas ordenadas al cuerpo de la tabla ---
-      // Esto borra las filas actuales y las añade en el nuevo orden
-      tableBody.innerHTML = '';
-      rows.forEach(row => {
-        tableBody.appendChild(row);
-      });
-    }
-
-    // Ejecutar la actualización para todas las tablas una vez que la página esté cargada
-    document.addEventListener('DOMContentLoaded', () => {
-      updateRankingTable('ranking-nba');
-      updateRankingTable('ranking-ea');
-      updateRankingTable('ranking-hyper');
-      updateRankingTable('ranking-tips');
+    // Rank positions styling
+    document.querySelectorAll('.rank-pos').forEach((el, i) => {
+      const classes = ['gold','silver','bronze'];
+      if (classes[i % 3]) el.classList.add(classes[i % 3]);
     });
 
+    // Animate tasa bars on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.tasa-bar-fill').forEach(bar => {
+            const w = bar.style.width;
+            bar.style.width = '0';
+            setTimeout(() => { bar.style.width = w; }, 100);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.ranking-panel').forEach(p => observer.observe(p));
+    function toggleNav() {
+  document.getElementById('navMenu').classList.toggle('open');
+}
+
+// Cierra el menú al hacer clic en un enlace
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navMenu').classList.remove('open');
+  });
+});
   </script>
 
 </body>
