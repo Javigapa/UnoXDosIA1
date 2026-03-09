@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🛠️ Guía de Cambios – Uno X Dos IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0d1b2a;
+      --accent: #00c896;
+      --accent2: #ff6b35;
+      --white: #ffffff;
+      --muted: #8fa3b8;
+      --card-bg: rgba(255,255,255,0.05);
+      --card-border: rgba(255,255,255,0.1);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); background: var(--navy); color: #e8ecf0; padding-bottom: 60px; }
+
+    header {
+      background: rgba(13,27,42,0.98);
+      border-bottom: 2px solid var(--accent);
+      padding: 18px 28px;
+      display: flex; align-items: center; gap: 14px;
+      position: sticky; top: 0; z-index: 50;
+    }
+    header h1 { font-family: var(--font-display); font-size: 1.5em; letter-spacing: 2px; color: var(--white); }
+    .badge {
+      background: rgba(0,200,150,0.12); border: 1px solid rgba(0,200,150,0.3);
+      color: var(--accent); font-size: 0.72em; font-weight: 700;
+      padding: 4px 12px; border-radius: 50px; letter-spacing: 1px;
+    }
+
+    .wrap { max-width: 860px; margin: 0 auto; padding: 36px 24px; }
+
+    .intro {
+      background: rgba(255,107,53,0.07); border: 1px solid rgba(255,107,53,0.2);
+      border-radius: 10px; padding: 20px 24px; margin-bottom: 36px;
+      font-size: 0.92em; line-height: 1.7; color: #e8ecf0;
+    }
+    .intro h3 { font-family: var(--font-display); font-size: 1.2em; letter-spacing: 1.5px; color: var(--accent2); margin-bottom: 8px; }
+    .intro ol { padding-left: 18px; }
+    .intro li { margin-bottom: 5px; }
+    .intro code { background: rgba(255,255,255,0.08); border-radius: 4px; padding: 1px 7px; font-family: monospace; color: var(--accent); font-size: 0.95em; }
+
+    /* Selector de página */
+    .page-selector { margin-bottom: 30px; }
+    .page-selector label { display: block; font-size: 0.8em; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 8px; }
+    .page-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .page-btn {
+      padding: 9px 18px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05); color: var(--muted);
+      font-family: var(--font-body); font-size: 0.88em; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .page-btn:hover { color: var(--white); background: rgba(255,255,255,0.09); }
+    .page-btn.active { background: rgba(0,200,150,0.12); color: var(--accent); border-color: rgba(0,200,150,0.3); }
+
+    /* Bloque de código */
+    .code-block { margin-bottom: 24px; }
+    .code-block-header {
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,0.06); border: 1px solid var(--card-border);
+      border-bottom: none; border-radius: 10px 10px 0 0;
+      padding: 12px 18px;
+    }
+    .code-block-title { font-family: var(--font-display); font-size: 1.1em; letter-spacing: 1.5px; color: var(--white); display: flex; align-items: center; gap: 10px; }
+    .code-block-sub { font-size: 0.75em; color: var(--muted); font-family: var(--font-body); font-weight: 400; letter-spacing: 0; }
+
+    .btn-copy {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--accent); border: none;
+      color: var(--navy); font-family: var(--font-body);
+      font-size: 0.85em; font-weight: 700;
+      padding: 8px 18px; border-radius: 7px;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .btn-copy:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(0,200,150,0.3); }
+    .btn-copy.copied { background: #4285f4; color: var(--white); }
+
+    pre {
+      background: rgba(0,0,0,0.45);
+      border: 1px solid var(--card-border);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 18px 20px;
+      font-size: 0.8em;
+      color: #a8d8b8;
+      overflow-x: auto;
+      white-space: pre;
+      line-height: 1.6;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+
+    .step-pill {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--accent2); color: var(--navy);
+      font-weight: 700; font-size: 0.85em; flex-shrink: 0;
+    }
+
+    .divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 32px 0; }
+
+    .tip {
+      background: rgba(0,200,150,0.07); border: 1px solid rgba(0,200,150,0.2);
+      border-radius: 8px; padding: 14px 18px; font-size: 0.85em; color: #e8ecf0;
+      line-height: 1.6; margin-top: 10px;
+    }
+    .tip strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🛠️ GUÍA DE CAMBIOS</h1>
+  <div class="badge">PRIVADO</div>
+</header>
+
+<div class="wrap">
+
+  <div class="intro">
+    <h3>📖 CÓMO USAR ESTA GUÍA</h3>
+    <ol>
+      <li>Selecciona <strong>en qué página</strong> vas a trabajar (cambia el enlace activo del nav).</li>
+      <li>Pulsa <strong>"Copiar"</strong> en cada bloque.</li>
+      <li>Abre el HTML de esa página y <strong>reemplaza</strong> el bloque antiguo por el nuevo.</li>
+      <li>Los 3 bloques son: <code>&lt;head&gt; fuentes</code>, <code>&lt;header&gt;</code> y <code>&lt;nav&gt;</code> y <code>&lt;footer&gt;</code>.</li>
+    </ol>
+  </div>
+
+  <!-- SELECTOR DE PÁGINA -->
+  <div class="page-selector">
+    <label>¿En qué página vas a trabajar?</label>
+    <div class="page-btns">
+      <button class="page-btn active" onclick="setPage('index')">🏠 index.html</button>
+      <button class="page-btn" onclick="setPage('nba')">🏀 NBA.html</button>
+      <button class="page-btn" onclick="setPage('liga')">⚽ LigaEsports.html</button>
+      <button class="page-btn" onclick="setPage('hyper')">📈 Hypermotion.html</button>
+      <button class="page-btn" onclick="setPage('loterias')">🎲 Loterias.html</button>
+      <button class="page-btn" onclick="setPage('subnba')">🏀 /NBA/nocheXXX.html</button>
+      <button class="page-btn" onclick="setPage('subliga')">⚽ /Liga/jornadaXXX.html</button>
+      <button class="page-btn" onclick="setPage('subhyper')">📈 /Segunda/jornadaXXX.html</button>
+    </div>
+  </div>
+
+  <!-- BLOQUE 1: FUENTES -->
+  <div class="code-block">
+    <div class="code-block-header">
+      <div class="code-block-title">
+        <span class="step-pill">1</span>
+        FUENTES
+        <span class="code-block-sub">Pégalo dentro de &lt;head&gt;, antes de &lt;/head&gt;</span>
+      </div>
+      <button class="btn-copy" onclick="copiar('code-fuentes', this)">📋 Copiar</button>
+    </div>
+    <pre id="code-fuentes">&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Outfit:wght@400;600;700&amp;display=swap" rel="stylesheet"&gt;</pre>
+  </div>
+
+  <!-- BLOQUE 2: HEADER -->
+  <div class="code-block">
+    <div class="code-block-header">
+      <div class="code-block-title">
+        <span class="step-pill">2</span>
+        HEADER
+        <span class="code-block-sub">Reemplaza todo tu &lt;header&gt;...&lt;/header&gt; actual</span>
+      </div>
+      <button class="btn-copy" onclick="copiar('code-header', this)">📋 Copiar</button>
+    </div>
+    <pre id="code-header"></pre>
+  </div>
+
+  <!-- BLOQUE 3: NAV -->
+  <div class="code-block">
+    <div class="code-block-header">
+      <div class="code-block-title">
+        <span class="step-pill">3</span>
+        NAV
+        <span class="code-block-sub">Reemplaza todo tu &lt;nav&gt;...&lt;/nav&gt; actual</span>
+      </div>
+      <button class="btn-copy" onclick="copiar('code-nav', this)">📋 Copiar</button>
+    </div>
+    <pre id="code-nav"></pre>
+  </div>
+
+  <!-- BLOQUE 4: CSS NAV -->
+  <div class="code-block">
+    <div class="code-block-header">
+      <div class="code-block-title">
+        <span class="step-pill">4</span>
+        CSS DEL NAV
+        <span class="code-block-sub">Pégalo dentro de &lt;style&gt; (solo si la página NO usa index.css)</span>
+      </div>
+      <button class="btn-copy" onclick="copiar('code-css', this)">📋 Copiar</button>
+    </div>
+    <pre id="code-css">nav {
+  background: rgba(19,34,56,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 8px 20px;
+  position: relative;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+}
+.nav-hamburger {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #ffffff; font-size: 1em; font-weight: 600;
+  padding: 10px 18px; border-radius: 8px; cursor: pointer;
+  font-family: 'Outfit', sans-serif; transition: background 0.2s;
+}
+.nav-hamburger:hover { background: rgba(255,255,255,0.12); }
+.nav-menu {
+  display: none; flex-direction: column; gap: 4px;
+  background: rgba(13,27,42,0.98);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 8px;
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  min-width: 220px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); z-index: 200;
+}
+.nav-menu.open { display: flex; }
+.nav-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 16px; border-radius: 7px; text-decoration: none;
+  font-size: 0.92em; font-weight: 600; color: #8fa3b8;
+  transition: all 0.2s; border: 1px solid transparent;
+}
+.nav-link:hover { color: #ffffff; background: rgba(255,255,255,0.07); }
+.nav-link.active { color: #00c896; background: rgba(0,200,150,0.1); border-color: rgba(0,200,150,0.25); }</pre>
+  </div>
+
+  <!-- BLOQUE 5: JS NAV -->
+  <div class="code-block">
+    <div class="code-block-header">
+      <div class="code-block-title">
+        <span class="step-pill">5</span>
+        JS DEL NAV
+        <span class="code-block-sub">Pégalo dentro de &lt;script&gt; antes de &lt;/body&gt;</span>
+      </div>
+      <button class="btn-copy" onclick="copiar('code-js', this)">📋 Copiar</button>
+    </div>
+    <pre id="code-js">function toggleNav() {
+  document.getElementById('navMenu').classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const nav = document.querySelector('nav');
+  if (!nav.contains(e.target)) {
+    document.getElementById('navMenu').classList.remove('open');
+  }
+});
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navMenu').classList.remove('open');
+  });
+});</pre>
+  </div>
+
+  <!-- BLOQUE 6: FOOTER -->
+  <div class="code-block">
+    <div class="code-block-header">
+      <div class="code-block-title">
+        <span class="step-pill">6</span>
+        FOOTER
+        <span class="code-block-sub">Pégalo justo antes de &lt;/body&gt;</span>
+      </div>
+      <button class="btn-copy" onclick="copiar('code-footer', this)">📋 Copiar</button>
+    </div>
+    <pre id="code-footer">&lt;footer style="background:rgba(13,27,42,0.9);border-top:1px solid rgba(255,255,255,0.05);text-align:center;padding:18px;font-size:0.78em;color:#8fa3b8;margin-top:60px;"&gt;
+  &lt;p&gt;© 2025 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.&lt;/p&gt;
+  &lt;p style="margin-top:5px;"&gt;Este sitio no fomenta las apuestas. Juega con responsabilidad. · &lt;a href="mailto:unoxdosia@gmail.com" style="color:#8fa3b8;"&gt;Contacto&lt;/a&gt;&lt;/p&gt;
+&lt;/footer&gt;</pre>
+  </div>
+
+  <div class="tip">
+    <strong>💡 Truco:</strong> Las páginas que están en subcarpetas como <code>/NBA/</code> o <code>/Segunda/</code> usan rutas con <code>../</code> — por eso hay un selector arriba. Selecciona el tipo de página correcto antes de copiar y los enlaces ya estarán bien.
+  </div>
+
+</div>
+
+<script>
+  // ── DATOS POR PÁGINA ──
+  const pages = {
+    index: {
+      activeLink: 'index.html',
+      prefix: '',
+      label: 'index.html'
+    },
+    nba: {
+      activeLink: 'NBA.html',
+      prefix: '',
+      label: 'NBA.html'
+    },
+    liga: {
+      activeLink: 'LIgaEsports.html',
+      prefix: '',
+      label: 'LigaEsports.html'
+    },
+    hyper: {
+      activeLink: 'Hypermotion.html',
+      prefix: '',
+      label: 'Hypermotion.html'
+    },
+    loterias: {
+      activeLink: 'Loterias.html',
+      prefix: '',
+      label: 'Loterias.html'
+    },
+    subnba: {
+      activeLink: 'NBA.html',
+      prefix: '../',
+      label: '/NBA/nocheXXX.html'
+    },
+    subliga: {
+      activeLink: 'LIgaEsports.html',
+      prefix: '../',
+      label: '/Liga/jornadaXXX.html'
+    },
+    subhyper: {
+      activeLink: 'Hypermotion.html',
+      prefix: '../',
+      label: '/Segunda/jornadaXXX.html'
+    }
+  };
+
+  let currentPage = 'index';
+
+  function buildHeader(prefix) {
+    return `<header style="position:relative;z-index:10;background:linear-gradient(180deg,rgba(13,27,42,0.98),rgba(13,27,42,0.85));border-bottom:1px solid rgba(0,200,150,0.2);padding:16px 24px;display:flex;align-items:center;backdrop-filter:blur(10px);">
+  <a href="${prefix}index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+    <div style="width:42px;height:42px;background:linear-gradient(135deg,#00c896,#00a87d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3em;box-shadow:0 0 18px rgba(0,200,150,0.3);">⚽</div>
+    <div>
+      <span style="display:block;font-family:'Bebas Neue',sans-serif;font-size:1.5em;letter-spacing:2px;color:#ffffff;line-height:1;">UNO X DOS IA</span>
+      <small style="font-size:0.6em;color:#00c896;letter-spacing:1px;font-weight:500;">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+    </div>
+  </a>
+</header>`;
+  }
+
+  function buildNav(prefix, activeLink) {
+    const links = [
+      { href: 'index.html',       emoji: '🏠', label: 'Inicio' },
+      { href: 'NBA.html',         emoji: '🏀', label: 'NBA' },
+      { href: 'LIgaEsports.html', emoji: '⚽', label: 'Liga EA Sports' },
+      { href: 'Hypermotion.html', emoji: '📈', label: 'Liga Hypermotion' },
+      { href: 'Loterias.html',    emoji: '🎲', label: 'Loterías' }
+    ];
+
+    const linksHtml = links.map(l => {
+      const isActive = l.href === activeLink ? ' active' : '';
+      return `    <a href="${prefix}${l.href}" class="nav-link${isActive}"><span>${l.emoji}</span> ${l.label}</a>`;
+    }).join('\n');
+
+    return `<nav aria-label="Navegación principal">
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+    <span>☰</span>
+    <span>Secciones</span>
+  </button>
+  <div class="nav-menu" id="navMenu">
+${linksHtml}
+  </div>
+</nav>`;
+  }
+
+  function setPage(pageKey) {
+    currentPage = pageKey;
+
+    // Actualizar botones
+    document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const p = pages[pageKey];
+    document.getElementById('code-header').textContent = buildHeader(p.prefix);
+    document.getElementById('code-nav').textContent = buildNav(p.prefix, p.activeLink);
+  }
+
+  // ── COPIAR AL PORTAPAPELES ──
+  function copiar(id, btn) {
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const original = btn.innerHTML;
+      btn.innerHTML = '✅ Copiado';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerHTML = original;
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // Inicializar con index
+  document.getElementById('code-header').textContent = buildHeader('');
+  document.getElementById('code-nav').textContent = buildNav('', 'index.html');
+</script>
+
+</body>
+</html>
