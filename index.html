@@ -966,7 +966,8 @@
 
     @media (max-width: 520px) {
       header { flex-direction: column; gap: 10px; text-align: center; }
-      .nav-link span { display: none; }
+      
+      .nav-emoji { display: inline !important; }
       .nav-link { padding: 9px 12px; }
     }
   </style>
@@ -985,24 +986,20 @@
       </div>
     </a>
   </header>
-
-  <!-- ========================
-       NAV
-  ======================== -->
+ 
  <nav aria-label="Navegación principal">
   <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
     <span class="ham-icon">☰</span>
     <span class="ham-label">Secciones</span>
   </button>
   <div class="nav-menu" id="navMenu">
-    <a href="index.html"       class="nav-link active"><span class="nav-emoji">🏠</span> Inicio</a>
-    <a href="NBA.html"         class="nav-link "><span class="nav-emoji">🏀</span> NBA</a>
+    <a href="index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
+    <a href="NBA.html"         class="nav-link"><span class="nav-emoji">🏀</span> NBA</a>
     <a href="LigaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
-    <a href="Hypermotion.html" class="nav-link"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
-    <a href="Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+    <a href="Hypermotion.html" class="nav-link "><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+    <a href="Loterias.html"    class="nav-link active"><span class="nav-emoji">🎲</span> Loterías</a>
   </div>
 </nav>
-
   <!-- ========================
        HERO
   ======================== -->
