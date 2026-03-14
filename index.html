@@ -966,7 +966,8 @@
 
     @media (max-width: 520px) {
       header { flex-direction: column; gap: 10px; text-align: center; }
-      .nav-link span { display: none; }
+      
+      .nav-emoji { display: inline !important; }
       .nav-link { padding: 9px 12px; }
     }
   </style>
@@ -985,24 +986,20 @@
       </div>
     </a>
   </header>
-
-  <!-- ========================
-       NAV
-  ======================== -->
+ 
  <nav aria-label="Navegación principal">
   <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
     <span class="ham-icon">☰</span>
     <span class="ham-label">Secciones</span>
   </button>
   <div class="nav-menu" id="navMenu">
-    <a href="index.html"       class="nav-link active"><span class="nav-emoji">🏠</span> Inicio</a>
-    <a href="NBA.html"         class="nav-link "><span class="nav-emoji">🏀</span> NBA</a>
-    <a href="LIgaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
-    <a href="Hypermotion.html" class="nav-link"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
-    <a href="Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+    <a href="index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
+    <a href="NBA.html"         class="nav-link"><span class="nav-emoji">🏀</span> NBA</a>
+    <a href="LigaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
+    <a href="Hypermotion.html" class="nav-link "><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+    <a href="Loterias.html"    class="nav-link active"><span class="nav-emoji">🎲</span> Loterías</a>
   </div>
 </nav>
-
   <!-- ========================
        HERO
   ======================== -->
@@ -1055,7 +1052,7 @@
         <span class="sport-card-emoji">🏀</span>
         <h3>NBA</h3>
         <p>Las mejores predicciones de la liga de baloncesto más seguida del mundo. Análisis jornada a jornada con datos reales.</p>
-        <div class="card-tag">🏆 122 jornadas analizadas</div>
+        <div class="card-tag">🏆mas de 122 jornadas analizadas</div>
       </a>
 
       <a href="LIgaEsports.html" class="sport-card liga" aria-label="Ir a predicciones Liga EA Sports">
@@ -1114,22 +1111,22 @@
             </tr>
           </thead>
           <tbody id="tbody-nba">
-            <tr data-jornadas="123" data-aciertos="43">
+            <tr data-jornadas="127" data-aciertos="43">
               <td class="rank-pos">2</td>
               <td><div class="rank-model"><div class="model-dot chatgpt"></div>Chat GPT</div></td>
-              <td>123</td><td>43</td>
+              <td>127</td><td>43</td>
               <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:75%"></div></div><span class="tasa-value">75.0%</span></div></td>
             </tr>
-            <tr data-jornadas="123" data-aciertos="64">
+            <tr data-jornadas="127" data-aciertos="64">
               <td class="rank-pos">1</td>
               <td><div class="rank-model"><div class="model-dot gemini"></div>Gemini</div></td>
-              <td>123</td><td>65</td>
+              <td>127</td><td>69</td>
               <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:66.7%"></div></div><span class="tasa-value">66.7%</span></div></td>
             </tr>
-            <tr data-jornadas="123" data-aciertos="40">
+            <tr data-jornadas="127" data-aciertos="40">
               <td class="rank-pos">3</td>
               <td><div class="rank-model"><div class="model-dot copilot"></div>Copilot</div></td>
-              <td>123</td><td>40</td>
+              <td>127</td><td>40</td>
               <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:58.3%"></div></div><span class="tasa-value">58.3%</span></div></td>
             </tr>
           </tbody>
@@ -1149,19 +1146,19 @@
             <tr>
               <td class="rank-pos">2</td>
               <td><div class="rank-model"><div class="model-dot gemini"></div>Gemini</div></td>
-              <td>12</td><td>5</td>
+              <td>13</td><td>6</td>
               <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:73.3%"></div></div><span class="tasa-value">73.3%</span></div></td>
             </tr>
             <tr>
               <td class="rank-pos">3</td>
               <td><div class="rank-model"><div class="model-dot chatgpt"></div>Chat GPT</div></td>
-              <td>12</td><td>2</td>
+              <td>13</td><td>2</td>
               <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:66.7%"></div></div><span class="tasa-value">66.7%</span></div></td>
             </tr>
             <tr>
               <td class="rank-pos">1</td>
               <td><div class="rank-model"><div class="model-dot copilot"></div>Copilot</div></td>
-              <td>12</td><td>8</td>
+              <td>13</td><td>9</td>
               <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:60%"></div></div><span class="tasa-value">60.0%</span></div></td>
             </tr>
           </tbody>
@@ -1181,19 +1178,19 @@
             <tr>
               <td class="rank-pos">3</td>
               <td><div class="rank-model"><div class="model-dot copilot"></div>Copilot</div></td>
-              <td>9</td><td>2</td>
+              <td>10</td><td>2</td>
               <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:72.2%"></div></div><span class="tasa-value">72.2%</span></div></td>
             </tr>
             <tr>
               <td class="rank-pos">1</td>
               <td><div class="rank-model"><div class="model-dot gemini"></div>Gemini</div></td>
-              <td>9</td><td>4</td>
+              <td>10</td><td>5</td>
               <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:66.7%"></div></div><span class="tasa-value">66.7%</span></div></td>
             </tr>
             <tr>
               <td class="rank-pos">2</td>
               <td><div class="rank-model"><div class="model-dot chatgpt"></div>Chat GPT</div></td>
-              <td>9</td><td>3</td>
+              <td>10</td><td>3</td>
               <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill" style="width:61.1%"></div></div><span class="tasa-value">61.1%</span></div></td>
             </tr>
           </tbody>
