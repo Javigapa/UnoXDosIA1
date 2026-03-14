@@ -179,9 +179,9 @@
       <button class="page-btn" onclick="setPage('liga')">⚽ LigaEsports.html</button>
       <button class="page-btn" onclick="setPage('hyper')">📈 Hypermotion.html</button>
       <button class="page-btn" onclick="setPage('loterias')">🎲 Loterias.html</button>
-      <button class="page-btn" onclick="setPage('subnba')">🏀 /NBA/nocheXXX.html</button>
-      <button class="page-btn" onclick="setPage('subliga')">⚽ /Liga/jornadaXXX.html</button>
-      <button class="page-btn" onclick="setPage('subhyper')">📈 /Segunda/jornadaXXX.html</button>
+      <button class="page-btn" onclick="setPage('subnba')">🏀 NBA/nocheXXX.html</button>
+      <button class="page-btn" onclick="setPage('subliga')">⚽ Liga/jornadaXXX.html</button>
+      <button class="page-btn" onclick="setPage('subhyper')">📈 Segunda/jornadaXXX.html</button>
     </div>
   </div>
 
@@ -383,11 +383,11 @@ document.querySelectorAll('.nav-link').forEach(link => {
 
   function buildNav(prefix, activeLink) {
     const links = [
-      { href: 'index.html',       emoji: '🏠', label: 'Inicio' },
-      { href: 'NBA.html',         emoji: '🏀', label: 'NBA' },
-      { href: 'LigaEsports.html', emoji: '⚽', label: 'Liga EA Sports' },
-      { href: 'Hypermotion.html', emoji: '📈', label: 'Liga Hypermotion' },
-      { href: 'Loterias.html',    emoji: '🎲', label: 'Loterías' }
+      { href: '/index.html',       emoji: '🏠', label: 'Inicio' },
+      { href: '/NBA.html',         emoji: '🏀', label: 'NBA' },
+      { href: '/LigaEsports.html', emoji: '⚽', label: 'Liga EA Sports' },
+      { href: '/Hypermotion.html', emoji: '📈', label: 'Liga Hypermotion' },
+      { href: '/Loterias.html',    emoji: '🎲', label: 'Loterías' }
     ];
 
     const linksHtml = links.map(l => {
