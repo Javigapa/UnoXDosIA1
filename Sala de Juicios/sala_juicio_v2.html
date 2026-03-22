@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sala de Juicios</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0c0a;
+  --surface: #171410;
+  --surface2: #1e1a16;
+  --border: #2e2820;
+  --gold: #c8a84b;
+  --gold2: #e8c96a;
+  --parchment: #f0e4c8;
+  --parchment2: #ddd0aa;
+  --ink: #1c1508;
+  --red: #8b1a1a;
+  --green: #1a3d28;
+  --green2: #245c3c;
+  --text-dim: rgba(200,168,75,0.45);
+  --text-mid: rgba(240,228,200,0.65);
+  --text-full: #f0e4c8;
+  --radius: 3px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow:hidden; }
+
+body {
+  background: var(--bg);
+  font-family: 'Crimson Pro', serif;
+  color: var(--text-full);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ═══════════════════════════ PANTALLA INICIO ═══════════════════════════ */
+#intro {
+  position: fixed; inset: 0; z-index: 200;
+  background: #0a0804;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+/* Fondo con textura sutil */
+#intro::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 30%, rgba(200,168,75,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 15% 80%, rgba(139,26,26,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 85% 80%, rgba(26,61,40,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Líneas decorativas horizontales */
+#intro::after {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 60px,
+    rgba(200,168,75,0.015) 60px, rgba(200,168,75,0.015) 61px
+  );
+  pointer-events: none;
+}
+
+.intro-inner {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+  align-items: center;
+  width: 100%; max-width: 1000px;
+}
+
+/* Ilustración SVG */
+.hero-art {
+  width: 340px; height: 180px;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 40px rgba(200,168,75,0.2));
+  animation: hero-float 6s ease-in-out infinite;
+}
+@keyframes hero-float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* Título */
+.hero-eyebrow {
+  font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 0.6rem; font-weight: 300;
+  font-family: 'Crimson Pro', serif;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.5rem, 9vw, 6.5rem);
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 80px rgba(200,168,75,0.25);
+}
+.hero-title em {
+  font-style: italic; font-weight: 400;
+  color: var(--parchment);
+  display: block;
+  font-size: 0.6em;
+  letter-spacing: 0.05em;
+}
+.hero-rule {
+  width: 120px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 1rem auto 1rem;
+}
+.hero-desc {
+  font-family: 'Crimson Pro', serif;
+  color: var(--text-mid); font-size: 1.05rem; font-style: italic;
+  text-align: center; line-height: 1.8; margin-bottom: 2.5rem;
+  max-width: 480px;
+}
+
+/* Layout casos */
+.intro-wrap {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 2.5rem;
+  width: 100%;
+  align-items: start;
+}
+
+.intro-left { }
+.intro-right { }
+
+.cases-label {
+  font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 0.75rem;
+  font-family: 'Crimson Pro', serif;
+}
+
+.case-list {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.case-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+}
+.case-card::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 0; background: var(--gold); transition: width 0.2s;
+}
+.case-card:hover { border-color: rgba(200,168,75,0.3); background: rgba(200,168,75,0.04); }
+.case-card:hover::before { width: 2px; }
+.case-card.selected { border-color: var(--gold); background: rgba(200,168,75,0.07); }
+.case-card.selected::before { width: 3px; }
+
+.case-card-top {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 0.25rem;
+}
+.case-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--parchment); }
+.case-tag {
+  font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+  background: rgba(200,168,75,0.12); color: var(--gold);
+  padding: 0.15rem 0.5rem; border-radius: 1px;
+}
+.case-desc { font-size: 0.88rem; color: var(--text-mid); line-height: 1.5; }
+
+.difficulty { display: flex; gap: 3px; margin-top: 0.4rem; }
+.diff-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
+.diff-dot.on { background: var(--gold); }
+
+/* Panel derecho: descripción del juego */
+.intro-brief {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.intro-brief h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--gold); font-size: 0.9rem; margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+.brief-item {
+  display: flex; gap: 0.75rem; margin-bottom: 0.85rem;
+  font-size: 0.9rem; color: var(--text-mid); line-height: 1.6;
+}
+.brief-icon { font-size: 1.1rem; flex-shrink: 0; padding-top: 0.05rem; }
+
+.start-btn {
+  width: 100%;
+  background: var(--gold);
+  color: var(--ink);
+  border: none;
+  padding: 0.9rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  cursor: pointer; border-radius: var(--radius);
+  transition: all 0.2s;
+  opacity: 0.3; pointer-events: none;
+}
+.start-btn.on { opacity: 1; pointer-events: all; }
+.start-btn.on:hover { background: var(--gold2); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(200,168,75,0.35); }
+
+/* ═══════════════════════════ JUICIO ═══════════════════════════ */
+#court {
+  display: none;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Top bar */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+  height: 50px;
+}
+.topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+.topbar-title { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 0.95rem; }
+.topbar-case {
+  font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-dim); border-left: 1px solid var(--border); padding-left: 0.75rem;
+}
+.topbar-status {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.78rem; color: var(--text-dim); letter-spacing: 0.1em;
+}
+.status-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--gold);
+  animation: blink 2.5s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* Layout principal: 3 columnas */
+.main-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── COLUMNA IZQUIERDA: Expediente + Pruebas ── */
+.sidebar-left {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-section {
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.sidebar-section-head {
+  padding: 0.6rem 1rem;
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-dim);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+
+.dossier-body {
+  padding: 0 1rem 0.75rem;
+  font-size: 0.82rem; line-height: 1.7; color: var(--text-mid);
+}
+.dossier-row { display: flex; gap: 0.5rem; margin-bottom: 0.15rem; }
+.dossier-key { color: var(--gold); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; flex-shrink: 0; padding-top: 0.1rem; }
+.dossier-val { color: var(--text-mid); }
+
+/* Pruebas */
+.evidences-scroll {
+  flex: 1; overflow-y: auto; padding: 0.5rem;
+}
+.evidences-scroll::-webkit-scrollbar { width: 3px; }
+.evidences-scroll::-webkit-scrollbar-thumb { background: var(--border); }
+
+.evidence-section-label {
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-dim); padding: 0.4rem 0.5rem 0.25rem;
+}
+
+.evidence-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.65rem 0.8rem;
+  margin-bottom: 0.4rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+}
+.evidence-card:hover { border-color: rgba(200,168,75,0.4); background: rgba(200,168,75,0.05); }
+.evidence-card.used { opacity: 0.45; cursor: default; pointer-events: none; }
+.evidence-card.double-edge { border-color: rgba(139,26,26,0.3); }
+.evidence-card.double-edge:hover { border-color: rgba(139,26,26,0.6); background: rgba(139,26,26,0.06); }
+
+.ev-top { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
+.ev-icon { font-size: 1rem; flex-shrink: 0; }
+.ev-name { font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--parchment); flex: 1; }
+.ev-badge {
+  font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.1rem 0.35rem; border-radius: 1px; flex-shrink: 0;
+}
+.ev-badge.defense { background: rgba(26,61,40,0.4); color: #6dbf8a; }
+.ev-badge.risk { background: rgba(139,26,26,0.35); color: #e07070; }
+.ev-badge.neutral { background: rgba(200,168,75,0.15); color: var(--gold); }
+.ev-badge.used-badge { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
+
+.ev-desc { font-size: 0.78rem; color: var(--text-mid); line-height: 1.5; }
+.ev-risk { font-size: 0.75rem; color: #e07070; margin-top: 0.25rem; font-style: italic; }
+
+.used-label {
+  position: absolute; top: 0.4rem; right: 0.5rem;
+  font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ── COLUMNA CENTRAL: Sala ── */
+.court-center {
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--bg);
+}
+
+/* Estrado */
+.bench {
+  background: linear-gradient(180deg, #12100d 0%, var(--surface) 100%);
+  border-bottom: 2px solid rgba(200,168,75,0.2);
+  padding: 0.75rem 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+  flex-shrink: 0;
+}
+.judge-ava {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: radial-gradient(circle, #2a2618 0%, #1a1408 100%);
+  border: 1.5px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; flex-shrink: 0;
+}
+.judge-meta h3 { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: var(--gold); }
+.judge-meta p { font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.08em; }
+
+/* Transcript */
+.transcript {
+  flex: 1; overflow-y: auto;
+  padding: 1.25rem 1.5rem;
+  display: flex; flex-direction: column; gap: 0.85rem;
+}
+.transcript::-webkit-scrollbar { width: 3px; }
+.transcript::-webkit-scrollbar-thumb { background: var(--border); }
+
+.msg {
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius);
+  font-size: 0.95rem; line-height: 1.75;
+  animation: slide-in 0.35s ease;
+}
+@keyframes slide-in { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+.msg.judge {
+  background: rgba(200,168,75,0.05);
+  border-left: 2px solid var(--gold);
+  color: var(--parchment);
+}
+.msg.sys {
+  background: rgba(255,255,255,0.02);
+  border-left: 2px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.85rem; font-style: italic;
+}
+.msg.ev-presented {
+  background: rgba(26,61,40,0.15);
+  border-left: 2px solid var(--green2);
+  color: var(--text-mid);
+  font-size: 0.88rem;
+}
+.msg.ev-risky {
+  background: rgba(139,26,26,0.1);
+  border-left: 2px solid var(--red);
+  color: var(--text-mid);
+  font-size: 0.88rem;
+}
+.msg.verdict-msg {
+  background: linear-gradient(135deg, rgba(139,26,26,0.15), rgba(200,168,75,0.08));
+  border: 1px solid rgba(200,168,75,0.3);
+  border-left: 3px solid var(--red);
+  color: var(--parchment);
+}
+.msg-role {
+  font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.4rem; font-weight: 400;
+}
+.msg-role.green { color: #6dbf8a; }
+.msg-role.red { color: #e07070; }
+
+.verdict-stamp {
+  display: inline-block;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 900; font-style: italic;
+  padding: 0.2rem 0.8rem;
+  border: 2.5px solid;
+  transform: rotate(-2deg);
+  margin-bottom: 0.75rem;
+}
+.verdict-stamp.guilty { color: var(--red); border-color: var(--red); }
+.verdict-stamp.free { color: #2a9e5a; border-color: #2a9e5a; }
+
+.typing {
+  padding: 0.9rem 1.1rem;
+  background: rgba(200,168,75,0.04);
+  border-left: 2px solid rgba(200,168,75,0.2);
+  border-radius: var(--radius);
+  display: none;
+}
+.dots { display: flex; gap: 4px; align-items: center; }
+.dots span {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--gold);
+  animation: dot-bounce 1.2s infinite;
+}
+.dots span:nth-child(2){animation-delay:.2s}
+.dots span:nth-child(3){animation-delay:.4s}
+@keyframes dot-bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+
+/* Input */
+.input-zone {
+  border-top: 1px solid var(--border);
+  padding: 0.85rem 1.25rem;
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.input-zone label {
+  display: block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 0.4rem;
+}
+.input-row { display: flex; gap: 0.6rem; align-items: flex-end; }
+.free-input {
+  flex: 1;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.85rem;
+  color: var(--parchment);
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.95rem; line-height: 1.4;
+  resize: none; min-height: 58px;
+  transition: border-color 0.2s;
+}
+.free-input:focus { outline: none; border-color: rgba(200,168,75,0.4); }
+.free-input:disabled { opacity: 0.4; cursor: not-allowed; }
+.free-input::placeholder { color: rgba(240,228,200,0.25); font-style: italic; }
+
+.btn-alegar {
+  background: var(--green);
+  color: var(--parchment);
+  border: none; border-radius: var(--radius);
+  padding: 0.6rem 1rem;
+  font-family: 'Crimson Pro', serif; font-size: 0.9rem;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+.btn-alegar:hover:not(:disabled) { background: var(--green2); }
+.btn-alegar:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.btn-veredicto {
+  background: rgba(139,26,26,0.3);
+  color: #e07070;
+  border: 1px solid rgba(139,26,26,0.4);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.85rem;
+  font-family: 'Crimson Pro', serif; font-size: 0.82rem;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.btn-veredicto:hover:not(:disabled) { background: rgba(139,26,26,0.5); border-color: var(--red); }
+.btn-veredicto:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* sidebar-right eliminado */
+
+/* Modal prueba */
+.ev-modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.75);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  display: none;
+}
+.ev-modal {
+  background: var(--parchment);
+  border-radius: 4px;
+  max-width: 480px; width: 100%;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+}
+.ev-modal-head {
+  background: var(--surface2);
+  padding: 1rem 1.25rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.ev-modal-icon { font-size: 1.6rem; }
+.ev-modal-title { font-family:'Playfair Display',serif; color:var(--gold); font-size:1.05rem; }
+.ev-modal-type { font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-dim); }
+.ev-modal-body { padding: 1.25rem; color: var(--ink); }
+.ev-modal-content { font-size:0.92rem; line-height:1.75; margin-bottom:1rem; }
+.ev-modal-risk {
+  background: rgba(139,26,26,0.1);
+  border-left: 3px solid var(--red);
+  padding: 0.6rem 0.85rem;
+  font-size:0.85rem; color:var(--red);
+  margin-bottom: 1rem; font-style:italic;
+}
+.ev-modal-btns { display: flex; gap: 0.6rem; }
+.ev-modal-present {
+  flex: 1;
+  background: var(--green);
+  color: var(--parchment);
+  border: none; border-radius: var(--radius);
+  padding: 0.7rem 1rem;
+  font-family:'Crimson Pro',serif; font-size:0.95rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.ev-modal-present:hover { background: var(--green2); }
+.ev-modal-cancel {
+  background: rgba(28,21,8,0.1);
+  color: var(--ink);
+  border: 1px solid rgba(28,21,8,0.2);
+  border-radius: var(--radius);
+  padding: 0.7rem 1rem;
+  font-family:'Crimson Pro',serif; font-size:0.95rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.ev-modal-cancel:hover { background: rgba(28,21,8,0.15); }
+
+/* score-bar eliminado */
+
+@media(max-width:800px){
+  .main-layout{ grid-template-columns:1fr; grid-template-rows:auto 1fr auto; }
+  .sidebar-left{ display:none; }
+  .intro-wrap{ grid-template-columns:1fr; }
+  .intro-right{ display:none; }
+  .hero-art{ width:240px; height:130px; }
+  .hero-title{ font-size:3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ INTRO ══════════ -->
+<div id="intro">
+  <div class="intro-inner">
+
+    <!-- Ilustración SVG: mazo + balanza -->
+    <svg class="hero-art" viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="goldG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#e8c96a"/>
+          <stop offset="50%" stop-color="#c8a84b"/>
+          <stop offset="100%" stop-color="#a07830"/>
+        </linearGradient>
+        <linearGradient id="goldG2" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#d4b05a"/>
+          <stop offset="100%" stop-color="#8a6020"/>
+        </linearGradient>
+        <linearGradient id="darkG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#2a2010"/>
+          <stop offset="100%" stop-color="#1a1408"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow2">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- ═══ MAZO (izquierda) ═══ -->
+      <!-- Sombra suave -->
+      <ellipse cx="88" cy="168" rx="42" ry="6" fill="rgba(0,0,0,0.35)"/>
+
+      <!-- Mango del mazo -->
+      <rect x="100" y="90" width="11" height="72" rx="4" fill="url(#goldG2)"/>
+      <rect x="101.5" y="90" width="3" height="72" rx="2" fill="rgba(255,255,255,0.15)"/>
+
+      <!-- Cabeza del mazo - cuerpo principal -->
+      <rect x="60" y="52" width="82" height="44" rx="6" fill="url(#goldG)" filter="url(#glow)"/>
+      <!-- Cabeza - sombra interna superior -->
+      <rect x="60" y="52" width="82" height="10" rx="6" fill="rgba(255,255,255,0.12)"/>
+      <!-- Cabeza - lado oscuro -->
+      <rect x="60" y="82" width="82" height="14" rx="0" fill="rgba(0,0,0,0.2)"/>
+      <!-- Cabeza - borde brillante izquierdo -->
+      <rect x="60" y="52" width="5" height="44" rx="3" fill="rgba(255,255,255,0.2)"/>
+      <!-- Anillo decorativo arriba -->
+      <rect x="96" y="48" width="14" height="8" rx="3" fill="url(#goldG2)"/>
+      <rect x="97" y="49" width="12" height="3" rx="2" fill="rgba(255,255,255,0.2)"/>
+      <!-- Anillo decorativo abajo -->
+      <rect x="96" y="90" width="14" height="8" rx="3" fill="url(#goldG2)"/>
+
+      <!-- Líneas de textura en la cabeza -->
+      <line x1="72" y1="56" x2="72" y2="92" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+      <line x1="84" y1="56" x2="84" y2="92" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
+      <line x1="120" y1="56" x2="120" y2="92" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
+      <line x1="132" y1="56" x2="132" y2="92" stroke="rgba(0,0,0,0.15)" stroke-width="1"/>
+
+      <!-- Base/platillo -->
+      <rect x="72" y="156" width="58" height="8" rx="4" fill="url(#goldG)"/>
+      <rect x="68" y="162" width="66" height="5" rx="3" fill="url(#goldG2)"/>
+
+      <!-- ═══ BALANZA (derecha) ═══ -->
+      <!-- Sombra -->
+      <ellipse cx="248" cy="168" rx="50" ry="5" fill="rgba(0,0,0,0.3)"/>
+
+      <!-- Columna central -->
+      <rect x="244" y="32" width="8" height="128" rx="3" fill="url(#goldG2)"/>
+      <rect x="245" y="32" width="2.5" height="128" rx="1.5" fill="rgba(255,255,255,0.18)"/>
+
+      <!-- Capitel superior -->
+      <rect x="232" y="26" width="32" height="10" rx="4" fill="url(#goldG)" filter="url(#glow)"/>
+      <rect x="233" y="27" width="30" height="4" rx="2" fill="rgba(255,255,255,0.2)"/>
+
+      <!-- Pomo superior -->
+      <circle cx="248" cy="22" r="8" fill="url(#goldG)" filter="url(#glow2)"/>
+      <circle cx="245" cy="19" r="3" fill="rgba(255,255,255,0.3)"/>
+
+      <!-- Base decorativa -->
+      <rect x="220" y="155" width="56" height="7" rx="3" fill="url(#goldG)"/>
+      <rect x="215" y="160" width="66" height="5" rx="3" fill="url(#goldG2)"/>
+      <rect x="218" y="153" width="60" height="4" rx="2" fill="rgba(255,255,255,0.08)"/>
+
+      <!-- Barra horizontal de la balanza -->
+      <line x1="188" y1="46" x2="308" y2="46" stroke="url(#goldG)" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="188" y1="46" x2="308" y2="46" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-linecap="round"/>
+
+      <!-- Pivote central en barra -->
+      <circle cx="248" cy="46" r="5" fill="url(#goldG)" filter="url(#glow)"/>
+      <circle cx="246" cy="44" r="2" fill="rgba(255,255,255,0.4)"/>
+
+      <!-- Cadena izquierda -->
+      <line x1="196" y1="46" x2="196" y2="90" stroke="url(#goldG)" stroke-width="2" stroke-dasharray="3,3"/>
+      <!-- Cadena derecha (plato bajo) -->
+      <line x1="300" y1="46" x2="300" y2="108" stroke="url(#goldG)" stroke-width="2" stroke-dasharray="3,3"/>
+
+      <!-- Plato izquierdo (alto) -->
+      <ellipse cx="196" cy="94" rx="26" ry="6" fill="url(#goldG)" filter="url(#glow)"/>
+      <ellipse cx="196" cy="91" rx="26" ry="5" fill="url(#goldG)"/>
+      <ellipse cx="193" cy="89" rx="12" ry="2.5" fill="rgba(255,255,255,0.2)"/>
+      <!-- Borde plato izq -->
+      <ellipse cx="196" cy="91" rx="26" ry="5" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+      <!-- Plato derecho (bajo, con peso) -->
+      <ellipse cx="300" cy="112" rx="26" ry="6" fill="url(#goldG)" filter="url(#glow)"/>
+      <ellipse cx="300" cy="109" rx="26" ry="5" fill="url(#goldG)"/>
+      <ellipse cx="297" cy="107" rx="12" ry="2.5" fill="rgba(255,255,255,0.2)"/>
+      <ellipse cx="300" cy="109" rx="26" ry="5" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+
+      <!-- Pesa sobre plato derecho -->
+      <rect x="286" y="94" width="28" height="16" rx="4" fill="url(#darkG)" stroke="url(#goldG)" stroke-width="1.5"/>
+      <rect x="288" y="96" width="24" height="5" rx="2" fill="rgba(200,168,75,0.2)"/>
+      <rect x="293" y="88" width="14" height="7" rx="3" fill="url(#darkG)" stroke="url(#goldG)" stroke-width="1.5"/>
+
+      <!-- Barra inclinada (porque el plato derecho pesa más) -->
+      <!-- Ya está implícito en las alturas distintas: izq y=91, der y=109 -->
+    </svg>
+
+    <!-- Eyebrow -->
+    <p class="hero-eyebrow">Simulador jurídico · IA como juez</p>
+
+    <!-- Título principal -->
+    <h1 class="hero-title">
+      Sala de Juicios
+      <em>¿Puedes salvar a tu cliente?</em>
+    </h1>
+
+    <div class="hero-rule"></div>
+
+    <p class="hero-desc">
+      Eres el abogado defensor. El juez es una IA que conoce cada prueba del expediente
+      y rechazará cualquier argumento sin respaldo documental.
+    </p>
+
+    <!-- Layout 2 columnas: casos + descripción -->
+    <div class="intro-wrap">
+      <div class="intro-left">
+        <p class="cases-label">Elige el caso que vas a defender</p>
+        <div class="case-list" id="case-list"></div>
+        <button class="start-btn" id="start-btn" onclick="startGame()">Iniciar el juicio →</button>
+      </div>
+      <div class="intro-right">
+        <div class="intro-brief">
+          <h3>Cómo funciona</h3>
+          <div class="brief-item">
+            <span class="brief-icon">📁</span>
+            <span>Cada caso tiene un <strong style="color:var(--parchment)">expediente real</strong> con pruebas documentales, testimonios y periciales.</span>
+          </div>
+          <div class="brief-item">
+            <span class="brief-icon">🗂</span>
+            <span>Puedes <strong style="color:var(--parchment)">presentar pruebas</strong> desde el panel izquierdo o hacer alegaciones libres ante el tribunal.</span>
+          </div>
+          <div class="brief-item">
+            <span class="brief-icon">⚠️</span>
+            <span>Algunas pruebas son de <strong style="color:#e8c06a">doble filo</strong>: pueden ayudarte o hundir tu defensa si las usas mal.</span>
+          </div>
+          <div class="brief-item" style="margin-bottom:0">
+            <span class="brief-icon">⚖️</span>
+            <span>Cuando estés listo, pide el <strong style="color:var(--parchment)">veredicto</strong>. El juez dictará sentencia basándose solo en lo que hayas presentado.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════ SALA ══════════ -->
+<div id="court">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title">⚖️ Juzgado Penal · Sala Primera</span>
+      <span class="topbar-case" id="tb-case">—</span>
+    </div>
+    <div class="topbar-status">
+      <div class="status-dot"></div>
+      <span id="tb-status">En sesión</span>
+
+    </div>
+  </div>
+
+  <div class="main-layout">
+
+    <!-- Izquierda: Expediente + Pruebas -->
+    <div class="sidebar-left">
+      <div class="sidebar-section">
+        <div class="sidebar-section-head">📁 Expediente</div>
+        <div class="dossier-body" id="dossier-body"></div>
+      </div>
+      <div class="sidebar-section-head" style="padding:0.6rem 1rem 0">🗂 Pruebas disponibles</div>
+      <div class="evidences-scroll" id="evidences-scroll"></div>
+    </div>
+
+    <!-- Centro: Sala -->
+    <div class="court-center">
+      <div class="bench">
+        <div class="judge-ava">👨‍⚖️</div>
+        <div class="judge-meta">
+          <h3>Ilmo. Sr. Magistrado D. Fernando Alcázar Roca</h3>
+          <p>Tribunal Penal — Sala de lo Penal</p>
+        </div>
+      </div>
+      <div class="transcript" id="transcript"></div>
+      <div class="typing" id="typing">
+        <div class="dots"><span></span><span></span><span></span></div>
+      </div>
+      <div class="input-zone">
+        <label>Alegación libre del letrado defensor —</label>
+        <div class="input-row">
+          <textarea id="free-input" class="free-input" placeholder="Argumente ante el tribunal... (las pruebas se presentan desde el panel izquierdo)" rows="2" onkeydown="handleKey(event)"></textarea>
+          <button class="btn-alegar" id="btn-alegar" onclick="submitFree()">Alegar ▶</button>
+          <button class="btn-veredicto" id="btn-veredicto" onclick="requestVerdict()">Pedir<br>veredicto</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal de prueba -->
+<div class="ev-modal-overlay" id="ev-modal">
+  <div class="ev-modal">
+    <div class="ev-modal-head">
+      <div class="ev-modal-icon" id="em-icon"></div>
+      <div>
+        <div class="ev-modal-title" id="em-title"></div>
+        <div class="ev-modal-type" id="em-type"></div>
+      </div>
+    </div>
+    <div class="ev-modal-body">
+      <div class="ev-modal-content" id="em-content"></div>
+      <div class="ev-modal-risk" id="em-risk" style="display:none"></div>
+      <div class="ev-modal-btns">
+        <button class="ev-modal-present" id="em-present-btn">Presentar al tribunal</button>
+        <button class="ev-modal-cancel" onclick="closeModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════ DATOS DE CASOS ═══════════════════════ */
+const CASES = [
+  {
+    id:'estafa',
+    name:'El caso Miralles',
+    tag:'Estafa agravada',
+    difficulty:2,
+    acusado:'Rodrigo Miralles Vega, 43 años',
+    cargo:'Estafa agravada — Art. 250 CP',
+    pena:'Hasta 6 años y multa de 560.000 €',
+    hechos:'Rodrigo Miralles captó a 34 inversores prometiendo rentabilidades del 18% anual mediante una supuesta plataforma de criptomonedas llamada "CryptoNova". Recaudó 280.000 € entre 2021 y 2022. La plataforma nunca existió.',
+    pruebas_fiscal:'Transferencias bancarias de las víctimas, contratos con promesas ficticias de rentabilidad, pericial informática que demuestra que el dominio cryptonova.es fue registrado 3 días antes del primer contrato y nunca tuvo infraestructura real. 34 perjudicados han declarado.',
+    evidences:[
+      {id:'e1',icon:'📧',name:'Correos con proveedor tecnológico',type:'Documento',badge:'defense',
+       content:'Serie de 12 correos electrónicos entre Miralles y la empresa "TechSoft Ltd" (Gibraltar) donde se negocia el desarrollo de la plataforma. La empresa entregó presupuesto firmado por 180.000€ pero nunca ejecutó el proyecto.',
+       detail:'Estos correos demuestran que Miralles contrató externamente el desarrollo. Argumento: fue víctima de un fraude por parte de TechSoft.',
+       risk:null},
+      {id:'e2',icon:'🏦',name:'Extracto bancario de Miralles',type:'Prueba física',badge:'risk',
+       content:'Extracto de la cuenta personal de Miralles del periodo 2021-2022. Muestra ingresos de 280.000€ de los inversores y salidas de 40.000€ a TechSoft Ltd. El resto (240.000€) se transfirió a una cuenta en Dubai.',
+       detail:'El extracto confirma que Miralles recibió el dinero. Solo 40.000€ fueron a TechSoft. Los 240.000€ restantes van a Dubai. Úsalo con cuidado: sirve para demostrar el pago a TechSoft pero también expone las transferencias a Dubai.',
+       risk:'⚠ DOBLE FILO: Si presentas este documento, el fiscal puede interrogar por los 240.000€ enviados a Dubai. Tendrás que tener una explicación preparada.'},
+      {id:'e3',icon:'📋',name:'Informe psicológico forense',type:'Prueba pericial',badge:'defense',
+       content:'Evaluación psicológica forense realizada por la Dra. Carmen Vidal (Col. 4821). Diagnóstico: Trastorno de ansiedad generalizada con rasgos impulsivos. El informe señala que Miralles presentaba alta credulidad ante propuestas de negocio y vulnerabilidad a ser manipulado.',
+       detail:'Refuerza la narrativa de víctima. Miralles no actuó con dolo sino que fue manipulado por TechSoft aprovechando su perfil psicológico.',
+       risk:null},
+      {id:'e4',icon:'💻',name:'Contrato con TechSoft Ltd',type:'Documento',badge:'defense',
+       content:'Contrato de desarrollo de software firmado entre Miralles y TechSoft Ltd el 15/03/2021 por valor de 180.000€. El contrato especifica entrega de plataforma funcional en 90 días. TechSoft incumplió todos los hitos.',
+       detail:'Prueba documental de que Miralles tenía intención real de crear la plataforma. El incumplimiento fue de TechSoft, no de él.',
+       risk:null},
+      {id:'e5',icon:'👤',name:'Testimonio de Elena Prados (inversora)',type:'Testimonio',badge:'risk',
+       content:'Elena Prados, inversora que perdió 12.000€, ha accedido a testificar a favor de la defensa. Declara que Miralles le devolvió 2.000€ de forma voluntaria antes del juicio y que "no parecía actuar con mala fe".',
+       detail:'Humaniza al acusado y demuestra voluntad de reparación. Sin embargo, Elena también declaró en instrucción contra él.',
+       risk:'⚠ DOBLE FILO: El fiscal puede recordar que Elena declaró en instrucción que Miralles le prometió "garantía total" y "sin riesgo". Su testimonio actual puede ser contraatacado.'},
+      {id:'e6',icon:'🌐',name:'Denuncia contra TechSoft en Gibraltar',type:'Documento',badge:'defense',
+       content:'Copia de la denuncia interpuesta por Miralles ante la Financial Services Commission de Gibraltar en octubre de 2022 contra TechSoft Ltd por incumplimiento contractual y fraude.',
+       detail:'Demuestra que Miralles tomó acciones legales contra TechSoft, coherente con la narrativa de que él también fue víctima.',
+       risk:null},
+    ]
+  },
+  {
+    id:'homicidio',
+    name:'El caso Fontán',
+    tag:'Homicidio',
+    difficulty:3,
+    acusado:'Carmen Fontán Ruiz, 38 años',
+    cargo:'Homicidio — Art. 138 CP',
+    pena:'10 a 15 años de prisión',
+    hechos:'El esposo de Carmen, Álvaro Mendoza, fue hallado muerto en su domicilio con una única herida de arma blanca en el cuello. Carmen afirma que actuó en defensa propia tras una agresión. El fiscal sostiene que fue un homicidio premeditado.',
+    pruebas_fiscal:'Cuchillo de cocina con huellas exclusivas de Carmen. Ausencia de lesiones defensivas en la víctima. Vecinos que declararon no haber oído discusión antes del suceso. Forense que sitúa la muerte entre las 2 y las 4 de la madrugada.',
+    evidences:[
+      {id:'h1',icon:'🏥',name:'Partes médicos 2019-2022',type:'Documento',badge:'defense',
+       content:'Historial médico de Carmen con 6 atenciones en urgencias en tres años: costilla fisurada (2019), hematoma orbital (2020), dos visitas por contusiones múltiples (2021), luxación de hombro (2022). En ninguna declaró violencia doméstica.',
+       detail:'Patrón claro de maltrato físico reiterado. Aunque Carmen no denunció, los partes son objetivos y cronológicos.',
+       risk:null},
+      {id:'h2',icon:'📱',name:'Mensajes de WhatsApp (Álvaro)',type:'Prueba física',badge:'risk',
+       content:'Extracción forense del teléfono de Álvaro. Incluye mensajes a amigos donde hace referencia a "tenerla controlada" y "que no se le ocurra". También hay una conversación con Carmen la tarde del suceso donde él escribe "esta noche arreglamos esto".',
+       detail:'Los mensajes establecen un ambiente de amenaza y violencia inminente. "Esta noche arreglamos esto" puede interpretarse como amenaza directa.',
+       risk:'⚠ DOBLE FILO: El fiscal argumentará que "arreglamos esto" era una discusión ordinaria de pareja. Además, los mensajes de Álvaro a sus amigos podrían ser interpretados como celos, no como violencia.'},
+      {id:'h3',icon:'🧠',name:'Informe psiquiátrico — Síndrome de la mujer maltratada',type:'Prueba pericial',badge:'defense',
+       content:'Evaluación del Dr. Ignacio Soler, psiquiatra forense (Col. 7734). Diagnóstico: Síndrome de la Mujer Maltratada con TEPT severo. El informe describe hiperalerta, respuesta de terror ante estímulos mínimos y disociación. Concluye que Carmen actuó desde una percepción real de peligro mortal.',
+       detail:'Clave para la exención por legítima defensa. El síndrome explica por qué actuó sin lesiones defensivas previas y sin llamar a la policía.',
+       risk:null},
+      {id:'h4',icon:'👩‍⚕️',name:'Testimonio vecina Carmen Torres',type:'Testimonio',badge:'defense',
+       content:'Carmen Torres, vecina del piso de abajo, declara haber oído gritos y golpes en múltiples ocasiones a lo largo de 2 años. La noche del suceso oyó "una discusión muy violenta" antes de que todo quedara en silencio.',
+       detail:'Contradice directamente a los vecinos del fiscal que dicen no haber oído nada. Torres es el único testimonio que sitúa la discusión antes de la muerte.',
+       risk:null},
+      {id:'h5',icon:'🔪',name:'Informe de biomecánica forense',type:'Prueba pericial',badge:'risk',
+       content:'Perito de la defensa, Dr. Marcos Leiva, analiza el ángulo y profundidad de la herida. Concluye que es consistente con un movimiento defensivo reactivo, no con un ataque planificado desde atrás.',
+       detail:'Apoya la hipótesis de reacción espontánea en lugar de premeditación.',
+       risk:'⚠ DOBLE FILO: El forense del fiscal tiene una opinión contraria. Si presentas este informe, el juez puede pedir contrapericial, y la discusión técnica puede perjudicarte si el perito del fiscal es más convincente.'},
+      {id:'h6',icon:'📂',name:'Expediente de denuncia retirada 2021',type:'Documento',badge:'risk',
+       content:'En mayo de 2021 Carmen interpuso denuncia por violencia doméstica que retiró 3 semanas después. El expediente incluye la denuncia original con descripción detallada de una agresión, y el escrito de retirada sin explicación.',
+       detail:'Demuestra que la violencia era real y que Carmen llegó a denunciar. La retirada es típica en víctimas de maltrato por miedo o dependencia económica.',
+       risk:'⚠ DOBLE FILO: El fiscal lo usará para argumentar que si retiró la denuncia es porque no había maltrato real, o para sugerir que Carmen usó el sistema de forma oportunista.'},
+    ]
+  },
+  {
+    id:'trafico',
+    name:'El caso Serrano',
+    tag:'Tráfico de drogas',
+    difficulty:1,
+    acusado:'Iván Serrano Molina, 29 años',
+    cargo:'Tráfico de sustancias psicotrópicas — Art. 368 CP',
+    pena:'3 a 6 años de prisión',
+    hechos:'Iván fue detenido en la A-7 a la altura de Murcia conduciendo un vehículo de alquiler con 4 kg de cocaína ocultos en el maletero. Afirma que desconocía el contenido y que transportaba un paquete por encargo de un conocido a cambio de 300€.',
+    pruebas_fiscal:'Droga intervenida (4 kg de cocaína, pureza 78%). Llamadas previas entre Iván y un narcotraficante conocido por la policía (alias "El Palmero"). 12.000€ en efectivo sin justificar en la guantera. Iván no tiene pasaporte ni viajes registrados al exterior.',
+    evidences:[
+      {id:'t1',icon:'💬',name:'Declaración del intermediario "Rafa"',type:'Testimonio',badge:'defense',
+       content:'Rafael Domínguez, quien le encargó el transporte, ha declarado ante notario que fue él quien colocó el paquete en el vehículo sin informar a Iván del contenido. Afirma que Iván creía transportar "material de construcción".',
+       detail:'Único testimonio directo que exculpa a Iván del conocimiento del contenido. Rafael tiene antecedentes por tráfico pero su declaración es voluntaria.',
+       risk:null},
+      {id:'t2',icon:'📞',name:'Registro de llamadas completo',type:'Prueba física',badge:'risk',
+       content:'Extracción forense del teléfono de Iván. Muestra 4 llamadas con "El Palmero" en los 10 días previos a la detención. Sin embargo, también muestra que Iván tiene el mismo número guardado como "Rafa Obra" en sus contactos, con 47 llamadas en el último año.',
+       detail:'Las llamadas con el mismo número guardado como contacto de obra apoya la versión de Iván de que lo conoce como alguien del sector de la construcción.',
+       risk:'⚠ DOBLE FILO: El fiscal destacará las 4 llamadas recientes y la frecuencia del contacto. Presentarlo obliga a responder sobre la relación con "El Palmero".'},
+      {id:'t3',icon:'💶',name:'Justificante de los 12.000€',type:'Documento',badge:'defense',
+       content:'Contrato de compraventa de una motocicleta firmado 4 días antes de la detención. Iván vendió su Yamaha MT-07 a un particular por 12.500€. El comprador ha confirmado la transacción y el pago en efectivo.',
+       detail:'Justifica el origen del efectivo intervenido. Elimina uno de los indicios más sólidos del fiscal.',
+       risk:null},
+      {id:'t4',icon:'🏗️',name:'Contrato laboral en empresa de construcción',type:'Documento',badge:'defense',
+       content:'Contrato de trabajo con Construcciones Levante S.L. donde Iván figura como peón desde hace 14 meses. Rafael Domínguez (Rafa) aparece como encargado de obra en la misma empresa.',
+       detail:'Explica el vínculo laboral entre Iván y Rafael, dando verosimilitud a que el encargo parecía relacionado con su trabajo.',
+       risk:null},
+      {id:'t5',icon:'👨‍👩‍👦',name:'Informe de situación familiar y social',type:'Prueba pericial',badge:'defense',
+       content:'Trabajadora social del juzgado. Iván tiene un hijo de 3 años, sin antecedentes penales, primer empleo estable en 2 años. Arraigo familiar en Castellón. La madre del niño está en situación de desempleo.',
+       detail:'Circunstancias atenuantes y de arraigo que el tribunal puede valorar para la pena o medidas alternativas, en caso de condena.',
+       risk:null},
+      {id:'t6',icon:'🔬',name:'Pericial sobre alijo: envoltorio y manipulación',type:'Prueba pericial',badge:'risk',
+       content:'Perito de la defensa analiza el alijo. El paquete estaba sellado profesionalmente con cinta especializada y colocado bajo el revestimiento del maletero. Concluye que requería conocimiento técnico para su extracción.',
+       detail:'Si Iván no sabía que estaba ahí, no podría haberlo colocado ni extraído. Apoya el desconocimiento.',
+       risk:'⚠ DOBLE FILO: El fiscal puede argumentar que precisamente el sellado profesional indica que Iván sabía que debía mantenerlo intacto. El perito del fiscal puede rebatir esta conclusión.'},
+    ]
+  }
+];
+
+/* ═══════════════════════ ESTADO ═══════════════════════ */
+let activeCase = null;
+let selectedCaseId = null;
+let history = [];
+let usedEvidences = new Set();
+let pendingEvidence = null;
+let gameOver = false;
+
+/* ═══════════════════════ CASOS PERSONALIZADOS ═══════════════════════ */
+async function loadCustomCases(){
+  try {
+    const res = await fetch('casos.json?_='+Date.now());
+    if(!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data.filter(c=>c.name&&c.hechos) : [];
+  } catch { return []; }
+}
+
+/* ═══════════════════════ INTRO ═══════════════════════ */
+async function renderIntro(){
+  const list = document.getElementById('case-list');
+  const custom = await loadCustomCases();
+
+  function makeCard(c, isCustom){
+    const dots = [1,2,3].map(i=>`<div class="diff-dot ${i<=(c.difficulty||2)?'on':''}"></div>`).join('');
+    const div = document.createElement('div');
+    div.className='case-card';
+    div.innerHTML=`
+      <div class="case-card-top">
+        <span class="case-name">${c.name}</span>
+        <span class="case-tag">${c.tag||''}</span>
+      </div>
+      <div class="case-desc">${(c.acusado||'').split(',')[0]} · ${(c.hechos||'').substring(0,70)}…</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.3rem">
+        <div class="difficulty" title="Dificultad">${dots}</div>
+      </div>`;
+    div.onclick=()=>{ selectedCaseId=c.id; document.querySelectorAll('.case-card').forEach(x=>x.classList.remove('selected')); div.classList.add('selected'); document.getElementById('start-btn').classList.add('on'); };
+    list.appendChild(div);
+  }
+
+  CASES.forEach(c=>makeCard(c,false));
+
+  if(custom.length){
+    const sep=document.createElement('div');
+    sep.style.cssText='font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(200,168,75,0.35);padding:0.75rem 0 0.4rem;border-top:1px solid rgba(200,168,75,0.1);margin-top:0.5rem';
+    sep.textContent='Más casos';
+    list.appendChild(sep);
+    custom.forEach(c=>makeCard(c,false));
+  }
+}
+
+async function startGame(){
+  if(!selectedCaseId) return;
+  const custom = await loadCustomCases();
+  activeCase = CASES.find(c=>c.id===selectedCaseId) || custom.find(c=>c.id===selectedCaseId);
+  document.getElementById('intro').style.display='none';
+  const court = document.getElementById('court');
+  court.style.display='flex';
+  document.getElementById('tb-case').textContent=`${activeCase.tag}: ${activeCase.name}`;
+  renderDossier();
+  renderEvidences();
+  openingStatement();
+}
+
+/* ═══════════════════════ EXPEDIENTE ═══════════════════════ */
+function renderDossier(){
+  document.getElementById('dossier-body').innerHTML=`
+    <div class="dossier-row"><span class="dossier-key">Acusado</span><span class="dossier-val">${activeCase.acusado}</span></div>
+    <div class="dossier-row"><span class="dossier-key">Cargo</span><span class="dossier-val">${activeCase.cargo}</span></div>
+    <div class="dossier-row"><span class="dossier-key">Pena máx.</span><span class="dossier-val">${activeCase.pena}</span></div>
+    <div class="dossier-row" style="margin-top:.5rem"><span class="dossier-key">Hechos</span></div>
+    <div style="font-size:.8rem;line-height:1.6;color:var(--text-mid);margin-top:.15rem">${activeCase.hechos}</div>
+    <div class="dossier-row" style="margin-top:.5rem"><span class="dossier-key">Fiscal</span></div>
+    <div style="font-size:.78rem;line-height:1.55;color:rgba(200,168,75,.5);margin-top:.15rem">${activeCase.pruebas_fiscal}</div>`;
+}
+
+/* ═══════════════════════ PRUEBAS ═══════════════════════ */
+function renderEvidences(){
+  const container = document.getElementById('evidences-scroll');
+  container.innerHTML='';
+  const groups={
+    'Documentos': activeCase.evidences.filter(e=>e.type==='Documento'),
+    'Testimonios': activeCase.evidences.filter(e=>e.type==='Testimonio'),
+    'Periciales': activeCase.evidences.filter(e=>e.type==='Prueba pericial'),
+    'Pruebas físicas': activeCase.evidences.filter(e=>e.type==='Prueba física'),
+  };
+  Object.entries(groups).forEach(([label,evs])=>{
+    if(!evs.length) return;
+    const lbl=document.createElement('div'); lbl.className='evidence-section-label'; lbl.textContent=label;
+    container.appendChild(lbl);
+    evs.forEach(ev=>{
+      const card=document.createElement('div');
+      card.className=`evidence-card${ev.risk?' double-edge':''}`;
+      card.id=`ev-card-${ev.id}`;
+      card.innerHTML=`
+        <div class="ev-top">
+          <span class="ev-icon">${ev.icon}</span>
+          <span class="ev-name">${ev.name}</span>
+          <span class="ev-badge ${ev.badge}">${ev.badge==='defense'?'Defensa':ev.badge==='risk'?'Riesgo':'Neutro'}</span>
+        </div>
+        <div class="ev-desc">${ev.content.substring(0,90)}…</div>
+        ${ev.risk?`<div class="ev-risk">⚠ Prueba de doble filo</div>`:''}`;
+      card.onclick=()=>openModal(ev);
+      container.appendChild(card);
+    });
+  });
+}
+
+/* ═══════════════════════ MODAL PRUEBA ═══════════════════════ */
+function openModal(ev){
+  if(gameOver || usedEvidences.has(ev.id)) return;
+  pendingEvidence=ev;
+  document.getElementById('em-icon').textContent=ev.icon;
+  document.getElementById('em-title').textContent=ev.name;
+  document.getElementById('em-type').textContent=ev.type;
+  document.getElementById('em-content').textContent=ev.content+'\n\n'+ev.detail;
+  const riskEl=document.getElementById('em-risk');
+  if(ev.risk){ riskEl.style.display='block'; riskEl.textContent=ev.risk; }
+  else { riskEl.style.display='none'; }
+  document.getElementById('em-present-btn').onclick=()=>presentEvidence(ev);
+  document.getElementById('ev-modal').style.display='flex';
+}
+function closeModal(){ document.getElementById('ev-modal').style.display='none'; pendingEvidence=null; }
+
+async function presentEvidence(ev){
+  closeModal();
+  usedEvidences.add(ev.id);
+  // Marcar como usada
+  const card=document.getElementById(`ev-card-${ev.id}`);
+  if(card){ card.classList.add('used'); card.innerHTML+=`<div class="used-label">Presentada</div>`; }
+
+  const isRisky = !!ev.risk;
+  const msgClass = isRisky ? 'ev-risky':'ev-presented';
+  const roleClass = isRisky ? 'red':'green';
+  const roleText = isRisky ? '⚠ Prueba presentada (doble filo)':'✅ Prueba presentada';
+
+  addMsg(msgClass, roleText, `<strong>${ev.icon} ${ev.name}</strong><br>${ev.content}`, roleClass);
+
+  // Mandar al juez
+  const judgePrompt=`[ABOGADO PRESENTA PRUEBA DOCUMENTAL]\nPrueba: "${ev.name}" (${ev.type})\nContenido completo: ${ev.content}`;
+  history.push({role:'user', content:judgePrompt});
+  setEnabled(false); showTyping(true);
+  const resp = await callJudge();
+  showTyping(false); setEnabled(true);
+  if(resp){ addMsg('judge','⚖️ Magistrado',resp); history.push({role:'assistant',content:resp}); }
+}
+
+/* ═══════════════════════ ALEGACIÓN LIBRE ═══════════════════════ */
+async function submitFree(){
+  const inp=document.getElementById('free-input');
+  const txt=inp.value.trim();
+  if(!txt||gameOver) return;
+  inp.value='';
+
+  history.push({role:'user', content:`[ABOGADO DEFENSOR - ALEGACIÓN LIBRE]: ${txt}`});
+  setEnabled(false); showTyping(true);
+  const resp=await callJudge();
+  showTyping(false); setEnabled(true);
+  if(resp){ addMsg('judge','⚖️ Magistrado',resp); history.push({role:'assistant',content:resp}); }
+  inp.focus();
+}
+
+/* ═══════════════════════ VEREDICTO ═══════════════════════ */
+async function requestVerdict(){
+  if(gameOver) return;
+  gameOver=true; setEnabled(false);
+  document.getElementById('tb-status').textContent='Deliberando…';
+  history.push({role:'user', content:'[ABOGADO DEFENSOR]: Señoría, la defensa ha concluido. Solicitamos respetuosamente que dicte sentencia.'});
+  showTyping(true);
+  const resp=await callJudge(true);
+  showTyping(false);
+  if(resp){
+    const isGuilty=/culpable|condena|prisión|pena/i.test(resp);
+    const isAcquitted=/absuel|libre|inocente|no ha lugar/i.test(resp);
+    let stamp='';
+    if(isGuilty) stamp='<div class="verdict-stamp guilty">CULPABLE</div><br>';
+    else if(isAcquitted) stamp='<div class="verdict-stamp free">ABSUELTO</div><br>';
+    addMsg('verdict-msg','⚖️ SENTENCIA',stamp+resp);
+    history.push({role:'assistant',content:resp});
+    document.getElementById('tb-status').textContent='Juicio concluido';
+  }
+}
+
+/* ═══════════════════════ SCORE ESTIMADO ═══════════════════════ */
+function updateScore(ev){
+  if(ev.badge==='defense') defenseScore = Math.min(85, defenseScore+12);
+  else if(ev.badge==='risk') defenseScore = Math.max(20, defenseScore-5);
+  document.getElementById('score-fill').style.width=defenseScore+'%';
+  document.getElementById('score-val').textContent=defenseScore+'%';
+}
+
+/* ═══════════════════════ SYSTEM PROMPT ═══════════════════════ */
+function buildSystem(forVerdict=false){
+  const evidenceList = activeCase.evidences.map(e=>
+    `- [${e.id}] "${e.name}" (${e.type}): ${e.content}`
+  ).join('\n');
+
+  const presentedList = activeCase.evidences
+    .filter(e=>usedEvidences.has(e.id))
+    .map(e=>`- "${e.name}": ${e.content}`)
+    .join('\n') || 'Ninguna presentada aún.';
+
+  return `Eres el Ilmo. Sr. Magistrado Fernando Alcázar Roca, juez penal en España con 25 años de experiencia.
+
+═══ CASO ACTUAL ═══
+Acusado: ${activeCase.acusado}
+Cargo: ${activeCase.cargo}
+Pena máxima: ${activeCase.pena}
+Hechos: ${activeCase.hechos}
+Pruebas de la acusación (fiscal): ${activeCase.pruebas_fiscal}
+
+═══ INVENTARIO COMPLETO DE PRUEBAS ═══
+Estas son TODAS las pruebas que existen en este expediente. No existe ninguna otra prueba, documento, informe ni testimonio fuera de esta lista. Cualquier cosa que el abogado mencione que NO esté en esta lista es INEXISTENTE y debes rechazarlo explícitamente:
+
+${evidenceList}
+
+═══ PRUEBAS YA PRESENTADAS POR LA DEFENSA ═══
+${presentedList}
+
+═══ TU ROL ═══
+- Diriges el juicio con autoridad, rigor jurídico y serenidad.
+- Evalúas cada alegación y prueba presentada. Si el abogado menciona algo que no existe en el inventario, LO RECHAZAS con firmeza: "Señor letrado, ese documento/informe/testimonio no obra en el expediente. No puede invocarlo."
+- Haces preguntas incisivas cuando los argumentos son débiles.
+- Eres escéptico pero justo. Las pruebas sólidas te hacen reconsiderar.
+- Las pruebas de doble filo (marcadas risk) puedes explotarlas contra la defensa si el abogado las presenta torpemente.
+- Respuestas de 80-160 palabras. Vocabulario jurídico formal español.
+${forVerdict ? `\n═══ DICTA SENTENCIA AHORA ═══\nEmpieza con "FALLO:" y concluye con CULPABLE o ABSUELTO con motivación jurídica clara basada exclusivamente en las pruebas presentadas.` : ''}`;
+}
+
+/* ═══════════════════════ API ═══════════════════════ */
+// ── URL de tu proxy (elige según tu servidor) ────────────────
+// PHP en mismo servidor:   '/judge.php'
+// Node en mismo servidor:  '/api/judge'
+// Node en Render/Railway:  'https://tu-app.onrender.com/api/judge'
+// Local para pruebas:      'http://localhost:3000/api/judge'
+const PROXY_URL = '/judge.php';
+// ─────────────────────────────────────────────────────────────
+
+async function callJudge(forVerdict=false){
+  try{
+    const res=await fetch(PROXY_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:buildSystem(forVerdict),
+        messages:history
+      })
+    });
+
+    if(res.status===429){
+      return 'Señoría, el sistema informa de que ha alcanzado el límite de consultas por hoy. El juicio queda suspendido hasta mañana.';
+    }
+
+    if(!res.ok){
+      const err=await res.json().catch(()=>({}));
+      console.error('Proxy error:', err);
+      return 'El magistrado no puede responder en este momento. Inténtelo de nuevo.';
+    }
+
+    const data=await res.json();
+    return data.content?.[0]?.text||'El magistrado guarda silencio.';
+  }catch(e){
+    console.error('callJudge error:', e);
+    return 'Error de conexión con la sala. Comprueba tu conexión e inténtalo de nuevo.';
+  }
+}
+
+/* ═══════════════════════ OPENING ═══════════════════════ */
+async function openingStatement(){
+  history=[{role:'user',content:`Inicia el juicio oral del caso ${activeCase.name}. Presenta los cargos brevemente contra ${activeCase.acusado} y concede la palabra al abogado defensor para que comience sus alegaciones.`}];
+  showTyping(true); setEnabled(false);
+  const resp=await callJudge();
+  showTyping(false); setEnabled(true);
+  if(resp){ addMsg('judge','⚖️ Magistrado',resp); history.push({role:'assistant',content:resp}); }
+}
+
+/* ═══════════════════════ UI HELPERS ═══════════════════════ */
+function addMsg(cls, role, html, roleClass=''){
+  const t=document.getElementById('transcript');
+  const d=document.createElement('div');
+  d.className=`msg ${cls}`;
+  d.innerHTML=`<div class="msg-role ${roleClass}">${role}</div>${html}`;
+  t.appendChild(d);
+  t.scrollTop=t.scrollHeight;
+}
+
+function showTyping(on){
+  const t=document.getElementById('typing');
+  t.style.display=on?'block':'none';
+  if(on){ const tr=document.getElementById('transcript'); tr.scrollTop=tr.scrollHeight; }
+}
+
+function setEnabled(on){
+  document.getElementById('free-input').disabled=!on;
+  document.getElementById('btn-alegar').disabled=!on;
+  document.getElementById('btn-veredicto').disabled=!on;
+}
+
+function handleKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); submitFree(); }
+}
+
+/* ═══════════════════════ INIT ═══════════════════════ */
+renderIntro();
+</script>
+</body>
+</html>

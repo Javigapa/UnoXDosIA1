@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editor de Casos — Sala de Juicios</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0c0a;
+  --surface: #151210;
+  --surface2: #1d1916;
+  --surface3: #242018;
+  --border: #2e2820;
+  --border2: #3d342a;
+  --gold: #c8a84b;
+  --gold2: #e8c96a;
+  --parchment: #f0e4c8;
+  --red: #8b1a1a;
+  --red2: #c0392b;
+  --green: #1a3d28;
+  --green2: #245c3c;
+  --green3: #6dbf8a;
+  --text-dim: rgba(200,168,75,0.4);
+  --text-mid: rgba(240,228,200,0.6);
+  --text-full: #f0e4c8;
+  --radius: 3px;
+  --input-bg: rgba(255,255,255,0.04);
+  --input-border: #3a3028;
+  --input-focus: rgba(200,168,75,0.35);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { height:100%; }
+body {
+  background: var(--bg);
+  font-family: 'Crimson Pro', serif;
+  color: var(--text-full);
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: 56px 1fr;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  grid-column: 1 / -1;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.5rem;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+.topbar-brand {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-family: 'Playfair Display', serif;
+  color: var(--gold); font-size: 1rem; letter-spacing: 0.05em;
+}
+.topbar-brand span { color: var(--text-mid); font-size: 0.8rem; font-family:'Crimson Pro',serif; }
+.topbar-actions { display: flex; gap: 0.6rem; align-items: center; }
+
+.btn { 
+  border: none; border-radius: var(--radius); cursor: pointer;
+  font-family: 'Crimson Pro', serif; font-size: 0.88rem;
+  padding: 0.45rem 1rem; transition: all 0.15s; letter-spacing: 0.04em;
+}
+.btn-ghost {
+  background: transparent; color: var(--text-mid);
+  border: 1px solid var(--border2);
+}
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+.btn-gold { background: var(--gold); color: #1c1508; font-weight: 600; }
+.btn-gold:hover { background: var(--gold2); transform: translateY(-1px); }
+.btn-green { background: var(--green); color: var(--parchment); }
+.btn-green:hover { background: var(--green2); }
+.btn-danger { background: rgba(139,26,26,0.2); color: #e07070; border: 1px solid rgba(139,26,26,0.3); }
+.btn-danger:hover { background: rgba(139,26,26,0.4); }
+.btn-sm { padding: 0.3rem 0.65rem; font-size: 0.8rem; }
+
+/* ── SIDEBAR CASOS ── */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.sidebar-head {
+  padding: 0.85rem 1rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0;
+}
+.sidebar-head h2 { font-family:'Playfair Display',serif; font-size:0.9rem; color:var(--gold); }
+
+.cases-list {
+  flex: 1; overflow-y: auto; padding: 0.5rem;
+}
+.cases-list::-webkit-scrollbar { width: 3px; }
+.cases-list::-webkit-scrollbar-thumb { background: var(--border2); }
+
+.case-item {
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+  margin-bottom: 0.3rem;
+  position: relative;
+}
+.case-item:hover { background: rgba(200,168,75,0.05); border-color: var(--border2); }
+.case-item.active { background: rgba(200,168,75,0.08); border-color: rgba(200,168,75,0.3); }
+.case-item-tag {
+  font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 0.2rem;
+}
+.case-item-name { font-family:'Playfair Display',serif; font-size:0.88rem; color:var(--parchment); }
+.case-item-ev { font-size:0.75rem; color: var(--text-dim); margin-top:0.15rem; }
+.case-item-badge {
+  position: absolute; top: 0.5rem; right: 0.5rem;
+  font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+  background: rgba(26,61,40,0.4); color: var(--green3);
+  padding: 0.1rem 0.4rem; border-radius: 1px;
+}
+.case-item-badge.builtin { background: rgba(200,168,75,0.1); color: var(--gold); }
+
+.empty-cases {
+  padding: 2rem 1rem; text-align: center;
+  color: var(--text-dim); font-size: 0.88rem; font-style: italic;
+}
+
+/* ── ÁREA PRINCIPAL ── */
+.main {
+  overflow-y: auto; padding: 1.5rem 2rem;
+  background: var(--bg);
+}
+.main::-webkit-scrollbar { width: 4px; }
+.main::-webkit-scrollbar-thumb { background: var(--border2); }
+
+/* Estado vacío */
+.empty-state {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  height: 100%; min-height: 400px; gap: 1rem; text-align: center;
+}
+.empty-icon { font-size: 3.5rem; opacity: 0.3; }
+.empty-title { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--gold); }
+.empty-desc { color: var(--text-mid); font-size:1rem; max-width:320px; line-height:1.7; }
+
+/* Formulario */
+.form-wrap { max-width: 820px; }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; color: var(--gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+
+.form-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.form-grid.cols3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-full { grid-column: 1 / -1; }
+
+.field { display: flex; flex-direction: column; gap: 0.35rem; }
+.field label {
+  font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-dim);
+}
+.field input, .field textarea, .field select {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius);
+  color: var(--text-full);
+  font-family: 'Crimson Pro', serif;
+  font-size: 0.95rem; padding: 0.55rem 0.8rem;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+.field input:focus, .field textarea:focus, .field select:focus {
+  outline: none; border-color: var(--input-focus);
+}
+.field textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+.field select option { background: #1d1916; color: var(--text-full); }
+.field-hint { font-size:0.78rem; color:var(--text-dim); font-style:italic; }
+
+/* Dificultad */
+.diff-picker { display: flex; gap: 0.4rem; }
+.diff-star {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--border2);
+  background: transparent; cursor: pointer;
+  color: var(--text-dim); font-size: 0.9rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.diff-star.on { background: rgba(200,168,75,0.15); border-color: var(--gold); color: var(--gold); }
+
+/* Separador sección */
+.section-sep { margin: 2rem 0 1.5rem; }
+
+/* Pruebas */
+.evidences-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.ev-list { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 1.5rem; }
+
+.ev-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.ev-card-head {
+  padding: 0.65rem 0.85rem;
+  background: var(--surface3);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.75rem;
+  cursor: pointer;
+}
+.ev-card-head:hover { background: rgba(200,168,75,0.05); }
+.ev-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(200,168,75,0.1); border: 1px solid rgba(200,168,75,0.3);
+  color: var(--gold); font-size: 0.72rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ev-head-name { flex: 1; font-family:'Playfair Display',serif; font-size:0.9rem; color:var(--parchment); }
+.ev-head-type { font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-dim); }
+.ev-head-badge {
+  font-size: 0.62rem; padding: 0.1rem 0.4rem; border-radius: 1px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.ev-head-badge.defense { background:rgba(26,61,40,0.4); color:var(--green3); }
+.ev-head-badge.risk { background:rgba(139,26,26,0.3); color:#e07070; }
+.ev-card-body { padding: 1rem; display: grid; grid-template-columns:1fr 1fr; gap:0.85rem; }
+.ev-card-body.collapsed { display: none; }
+
+/* Imagen prueba */
+.ev-img-area {
+  grid-column: 1 / -1;
+  border: 2px dashed var(--border2);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  position: relative;
+  min-height: 80px;
+  display: flex; align-items: center; justify-content: center; flex-direction: column;
+  gap: 0.4rem;
+}
+.ev-img-area:hover { border-color: rgba(200,168,75,0.4); }
+.ev-img-area.has-img { border-style: solid; border-color: rgba(200,168,75,0.3); padding:0; overflow:hidden; }
+.ev-img-area input[type=file] { display:none; }
+.ev-img-preview {
+  width: 100%; max-height: 160px; object-fit: cover; display:block;
+  border-radius: var(--radius);
+}
+.ev-img-hint { font-size:0.8rem; color:var(--text-dim); }
+.ev-img-label { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-dim); }
+.ev-img-remove {
+  position:absolute; top:0.4rem; right:0.4rem;
+  background:rgba(139,26,26,0.6); color:white; border:none; border-radius:2px;
+  padding:0.15rem 0.4rem; font-size:0.7rem; cursor:pointer;
+}
+
+.ev-full { grid-column: 1 / -1; }
+
+.ev-actions {
+  grid-column: 1 / -1;
+  display: flex; justify-content: flex-end; gap: 0.5rem;
+  padding-top: 0.5rem; border-top: 1px solid var(--border);
+}
+
+/* Icon picker */
+.icon-picker { display:flex; align-items:center; gap:0.5rem; }
+.icon-display {
+  width: 36px; height: 36px; border-radius: var(--radius);
+  background: var(--surface3); border: 1px solid var(--border2);
+  display:flex; align-items:center; justify-content:center;
+  font-size: 1.3rem; cursor:pointer; flex-shrink:0;
+}
+.icon-display:hover { border-color: var(--gold); }
+.icon-grid-wrap {
+  display:none; position:absolute; z-index:100;
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: var(--radius); padding:0.5rem; margin-top:0.25rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.icon-grid-wrap.open { display:block; }
+.icon-grid { display:grid; grid-template-columns: repeat(8,1fr); gap:3px; }
+.icon-opt {
+  width: 30px; height: 30px; display:flex; align-items:center; justify-content:center;
+  font-size:1.1rem; cursor:pointer; border-radius:2px;
+  transition:background 0.1s;
+}
+.icon-opt:hover { background: rgba(200,168,75,0.15); }
+
+/* Acciones finales */
+.form-actions {
+  display: flex; gap: 0.75rem; margin-top: 2rem;
+  padding-top: 1.5rem; border-top: 1px solid var(--border);
+  align-items: center;
+}
+.form-actions-right { margin-left: auto; display:flex; gap:0.6rem; }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index:999;
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-left: 3px solid var(--green2);
+  padding: 0.7rem 1.25rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem; color: var(--parchment);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  animation: toast-in 0.3s ease;
+  display: none;
+}
+.toast.error { border-left-color: var(--red2); }
+@keyframes toast-in { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+/* Dialog confirm */
+.overlay {
+  position:fixed; inset:0; z-index:300;
+  background:rgba(0,0,0,0.7);
+  display:none; align-items:center; justify-content:center;
+}
+.overlay.open { display:flex; }
+.dialog {
+  background: var(--surface2); border:1px solid var(--border2);
+  border-radius:4px; padding:1.5rem; max-width:380px; width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,0.7);
+}
+.dialog h3 { font-family:'Playfair Display',serif; color:var(--gold); margin-bottom:0.75rem; }
+.dialog p { color:var(--text-mid); font-size:0.95rem; margin-bottom:1.25rem; line-height:1.6; }
+.dialog-btns { display:flex; gap:0.6rem; justify-content:flex-end; }
+
+/* Responsive */
+@media(max-width:700px){
+  body { grid-template-columns:1fr; grid-template-rows:56px auto 1fr; }
+  .sidebar { grid-row:2; max-height:200px; }
+  .main { padding:1rem; }
+  .form-grid { grid-template-columns:1fr; }
+  .ev-card-body { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-brand">
+    ⚖️ Editor de Casos <span>/ Solo uso local — no subir al servidor</span>
+  </div>
+  <div class="topbar-actions">
+    <button class="btn btn-ghost" onclick="document.getElementById('import-file').click()">📥 Importar casos.json</button>
+    <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(event)">
+    <button class="btn btn-gold" onclick="exportJSON()">📤 Exportar casos.json</button>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-head">
+    <h2>Mis casos</h2>
+    <button class="btn btn-green btn-sm" onclick="newCase()">+ Nuevo</button>
+  </div>
+  <div class="cases-list" id="cases-list"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="main">
+  <div class="empty-state" id="empty-state">
+    <div class="empty-icon">📁</div>
+    <div class="empty-title">Sin caso seleccionado</div>
+    <div class="empty-desc">Crea un nuevo caso con el botón "Nuevo" o selecciona uno de la lista para editarlo.</div>
+    <button class="btn btn-green" onclick="newCase()">+ Crear primer caso</button>
+    <div style="margin-top:2rem;background:rgba(200,168,75,0.06);border:1px solid rgba(200,168,75,0.15);border-radius:3px;padding:1.25rem 1.5rem;max-width:420px;text-align:left">
+      <div style="font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(200,168,75,0.5);margin-bottom:0.75rem">Flujo de trabajo</div>
+      <div style="font-size:0.9rem;color:rgba(240,228,200,0.55);line-height:2">
+        1. Crea y guarda tus casos aquí<br>
+        2. Pulsa <strong style="color:var(--gold)">Exportar casos.json</strong><br>
+        3. Sube ese archivo a la raíz de tu servidor (junto a <code style="font-size:0.8rem;background:rgba(255,255,255,0.06);padding:0.1rem 0.3rem;border-radius:2px">sala_juicio_v2.html</code>)<br>
+        4. El juego los carga automáticamente
+      </div>
+      <div style="font-size:0.78rem;color:rgba(200,168,75,0.35);margin-top:0.75rem;font-style:italic">Este editor nunca se sube al servidor.</div>
+    </div>
+  </div>
+  <div class="form-wrap" id="form-wrap" style="display:none"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Confirm dialog -->
+<div class="overlay" id="confirm-overlay">
+  <div class="dialog">
+    <h3 id="confirm-title">¿Eliminar caso?</h3>
+    <p id="confirm-desc">Esta acción no se puede deshacer.</p>
+    <div class="dialog-btns">
+      <button class="btn btn-ghost" onclick="closeConfirm()">Cancelar</button>
+      <button class="btn btn-danger" id="confirm-ok">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════ CONSTANTES ═══════════════ */
+const STORAGE_KEY = 'sala_juicios_casos';
+const ICONS = ['📄','📋','📧','📞','💬','📱','🏦','💶','💰','🔍','🔬','🧠','🏥','👤','👨‍⚕️','👩‍⚕️','👮','📸','📹','🎙️','🗺️','🏠','🚗','🔪','💻','🌐','📂','🗂️','⚖️','📝','✉️','🖊️','📊','🧾','🔐','📡','🧪','🩺','💊','🩻','👔','👜','🔑','🏗️','🏭'];
+const EVIDENCE_TYPES = ['Documento','Testimonio','Prueba pericial','Prueba física'];
+
+/* ═══════════════ ESTADO ═══════════════ */
+let cases = [];
+let activeCaseId = null;
+let evidenceCollapsed = {};
+
+/* ═══════════════ STORAGE ═══════════════ */
+function loadCases(){
+  try { cases = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch { cases = []; }
+}
+function saveCases(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(cases));
+}
+function getCaseIdx(id){ return cases.findIndex(c=>c.id===id); }
+
+/* ═══════════════ SIDEBAR ═══════════════ */
+function renderSidebar(){
+  const list = document.getElementById('cases-list');
+  list.innerHTML = '';
+  if(!cases.length){
+    list.innerHTML = '<div class="empty-cases">Ningún caso creado aún</div>';
+    return;
+  }
+  cases.forEach(c=>{
+    const div = document.createElement('div');
+    div.className = `case-item${c.id===activeCaseId?' active':''}`;
+    div.innerHTML = `
+      <div class="case-item-tag">${c.tag||'Sin tipo'}</div>
+      <div class="case-item-name">${c.name||'Sin nombre'}</div>
+      <div class="case-item-ev">${(c.evidences||[]).length} prueba(s)</div>
+      <div class="case-item-badge">Personalizado</div>`;
+    div.onclick = ()=>selectCase(c.id);
+    list.appendChild(div);
+  });
+}
+
+/* ═══════════════ SELECCIÓN ═══════════════ */
+function selectCase(id){
+  activeCaseId = id;
+  evidenceCollapsed = {};
+  renderSidebar();
+  renderForm();
+}
+
+function newCase(){
+  const id = 'custom_'+Date.now();
+  const c = {
+    id, name:'', tag:'', difficulty:2,
+    acusado:'', cargo:'', pena:'', hechos:'', pruebas_fiscal:'',
+    evidences:[]
+  };
+  cases.push(c);
+  saveCases();
+  selectCase(id);
+}
+
+/* ═══════════════ FORMULARIO ═══════════════ */
+function renderForm(){
+  const wrap = document.getElementById('form-wrap');
+  document.getElementById('empty-state').style.display='none';
+  wrap.style.display='block';
+
+  const c = cases[getCaseIdx(activeCaseId)];
+  if(!c){ wrap.style.display='none'; document.getElementById('empty-state').style.display='flex'; return; }
+
+  wrap.innerHTML = `
+    <h2 class="section-title">📁 Información del caso</h2>
+    <div class="form-grid">
+      <div class="field">
+        <label>Nombre del caso</label>
+        <input id="f-name" type="text" value="${esc(c.name)}" placeholder="Ej: El caso Miralles">
+      </div>
+      <div class="field">
+        <label>Tipo / delito</label>
+        <input id="f-tag" type="text" value="${esc(c.tag)}" placeholder="Ej: Estafa agravada">
+      </div>
+      <div class="field">
+        <label>Acusado (nombre y edad)</label>
+        <input id="f-acusado" type="text" value="${esc(c.acusado)}" placeholder="Ej: Rodrigo Miralles Vega, 43 años">
+      </div>
+      <div class="field">
+        <label>Cargo formal (artículo)</label>
+        <input id="f-cargo" type="text" value="${esc(c.cargo)}" placeholder="Ej: Estafa agravada — Art. 250 CP">
+      </div>
+      <div class="field">
+        <label>Pena máxima posible</label>
+        <input id="f-pena" type="text" value="${esc(c.pena)}" placeholder="Ej: Hasta 6 años y multa de 560.000 €">
+      </div>
+      <div class="field">
+        <label>Dificultad</label>
+        <div class="diff-picker" id="diff-picker">
+          ${[1,2,3].map(i=>`<button type="button" class="diff-star${c.difficulty>=i?' on':''}" onclick="setDiff(${i})">${i===1?'●':i===2?'●●':'●●●'}</button>`).join('')}
+        </div>
+      </div>
+      <div class="field form-full">
+        <label>Hechos del caso</label>
+        <textarea id="f-hechos" rows="4" placeholder="Describe los hechos de forma objetiva, como aparecerían en el expediente...">${esc(c.hechos)}</textarea>
+      </div>
+      <div class="field form-full">
+        <label>Pruebas de la acusación (fiscal)</label>
+        <textarea id="f-fiscal" rows="3" placeholder="Lista las pruebas que el fiscal tiene contra el acusado. El juez IA las conocerá y las usará contra la defensa...">${esc(c.pruebas_fiscal)}</textarea>
+        <span class="field-hint">El juez conocerá exactamente estas pruebas y las usará para contraargumentar.</span>
+      </div>
+    </div>
+
+    <div class="section-sep">
+      <div class="evidences-header">
+        <h2 class="section-title" style="margin:0">🗂 Pruebas de la defensa</h2>
+        <button class="btn btn-green btn-sm" onclick="addEvidence()">+ Añadir prueba</button>
+      </div>
+      <p style="font-size:0.85rem;color:var(--text-mid);margin-bottom:1rem;font-style:italic;">
+        Estas son las únicas pruebas que el abogado (usuario) podrá presentar. El juez rechazará cualquier prueba que no esté aquí.
+      </p>
+    </div>
+    <div class="ev-list" id="ev-list"></div>
+
+    <div class="form-actions">
+      <button class="btn btn-danger" onclick="confirmDelete()">🗑 Eliminar caso</button>
+      <div class="form-actions-right">
+        <button class="btn btn-ghost" onclick="discardChanges()">Descartar cambios</button>
+        <button class="btn btn-gold" onclick="saveCase()">💾 Guardar caso</button>
+      </div>
+    </div>`;
+
+  renderEvidenceList();
+  // Auto-save on change
+  wrap.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('input', ()=>{}));
+}
+
+function renderEvidenceList(){
+  const c = cases[getCaseIdx(activeCaseId)];
+  const list = document.getElementById('ev-list');
+  if(!list) return;
+  list.innerHTML='';
+  if(!c.evidences.length){
+    list.innerHTML='<div style="color:var(--text-dim);font-size:0.9rem;font-style:italic;padding:0.5rem 0">No hay pruebas. Añade al menos una para que el juego sea jugable.</div>';
+    return;
+  }
+  c.evidences.forEach((ev,i)=>{
+    const collapsed = evidenceCollapsed[ev.id] !== false; // collapsed by default except new ones
+    const card = document.createElement('div');
+    card.className='ev-card'; card.id=`ev-card-${ev.id}`;
+    card.innerHTML=`
+      <div class="ev-card-head" onclick="toggleEv('${ev.id}')">
+        <div class="ev-num">${i+1}</div>
+        <span style="font-size:1.1rem">${ev.icon||'📄'}</span>
+        <span class="ev-head-name">${esc(ev.name)||'Sin nombre'}</span>
+        <span class="ev-head-type">${ev.type||''}</span>
+        <span class="ev-head-badge ${ev.badge}">${ev.badge==='defense'?'Defensa':'Riesgo'}</span>
+        <span style="color:var(--text-dim);font-size:0.8rem;margin-left:0.5rem">${collapsed?'▶':'▼'}</span>
+      </div>
+      <div class="ev-card-body ${collapsed?'collapsed':''}" id="ev-body-${ev.id}">
+        <div class="field" style="position:relative">
+          <label>Icono</label>
+          <div class="icon-picker">
+            <div class="icon-display" onclick="toggleIconGrid('${ev.id}')">${ev.icon||'📄'}</div>
+            <input id="f-ev-icon-${ev.id}" type="text" value="${esc(ev.icon||'📄')}" style="width:70px" maxlength="4" oninput="updateIconDisplay('${ev.id}')">
+          </div>
+          <div class="icon-grid-wrap" id="icon-grid-${ev.id}">
+            <div class="icon-grid">${ICONS.map(ic=>`<div class="icon-opt" onclick="pickIcon('${ev.id}','${ic}')">${ic}</div>`).join('')}</div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Nombre de la prueba</label>
+          <input id="f-ev-name-${ev.id}" type="text" value="${esc(ev.name)}" placeholder="Ej: Informe psicológico forense">
+        </div>
+        <div class="field">
+          <label>Tipo de prueba</label>
+          <select id="f-ev-type-${ev.id}">
+            ${EVIDENCE_TYPES.map(t=>`<option${ev.type===t?' selected':''}>${t}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field">
+          <label>Valor para la defensa</label>
+          <select id="f-ev-badge-${ev.id}">
+            <option value="defense"${ev.badge==='defense'?' selected':''}>✅ Favorable (defensa)</option>
+            <option value="risk"${ev.badge==='risk'?' selected':''}>⚠ Doble filo (riesgo)</option>
+          </select>
+        </div>
+        <div class="field ev-full">
+          <label>Contenido de la prueba</label>
+          <textarea id="f-ev-content-${ev.id}" rows="3" placeholder="Describe el documento/testimonio/pericial con detalle. Esto es lo que el juez leerá...">${esc(ev.content)}</textarea>
+        </div>
+        <div class="field ev-full">
+          <label>Argumento estratégico (solo visible para el jugador)</label>
+          <textarea id="f-ev-detail-${ev.id}" rows="2" placeholder="Explica al jugador cómo usar esta prueba estratégicamente...">${esc(ev.detail||'')}</textarea>
+        </div>
+        <div class="field ev-full" id="risk-field-${ev.id}" style="${ev.badge==='risk'?'':'display:none'}">
+          <label>Advertencia de doble filo</label>
+          <textarea id="f-ev-risk-${ev.id}" rows="2" placeholder="Explica qué puede salir mal si se usa esta prueba...">${esc(ev.risk||'')}</textarea>
+        </div>
+        <div class="ev-full">
+          <label style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);display:block;margin-bottom:0.35rem">Imagen de la prueba (opcional)</label>
+          <div class="ev-img-area ${ev.image?'has-img':''}" id="ev-img-area-${ev.id}" onclick="triggerImgUpload('${ev.id}')">
+            <input type="file" id="f-ev-img-${ev.id}" accept="image/*" onchange="handleImgUpload('${ev.id}',event)">
+            ${ev.image
+              ? `<img src="${ev.image}" class="ev-img-preview" id="ev-img-preview-${ev.id}"><button class="ev-img-remove" onclick="removeImg(event,'${ev.id}')">✕</button>`
+              : `<div class="ev-img-label">📸 Imagen / Documento</div><div class="ev-img-hint">Haz clic para subir una imagen (JPG, PNG)</div>`
+            }
+          </div>
+        </div>
+        <div class="ev-actions">
+          <button class="btn btn-ghost btn-sm" onclick="moveEv('${ev.id}',-1)">↑ Subir</button>
+          <button class="btn btn-ghost btn-sm" onclick="moveEv('${ev.id}',1)">↓ Bajar</button>
+          <button class="btn btn-danger btn-sm" onclick="removeEvidence('${ev.id}')">🗑 Eliminar prueba</button>
+        </div>
+      </div>`;
+    // Listener para mostrar/ocultar campo de riesgo
+    list.appendChild(card);
+    const badgeSel = card.querySelector(`#f-ev-badge-${ev.id}`);
+    badgeSel.addEventListener('change', ()=>{
+      document.getElementById(`risk-field-${ev.id}`).style.display = badgeSel.value==='risk'?'':'none';
+    });
+  });
+}
+
+/* ═══════════════ EVIDENCIAS ═══════════════ */
+function addEvidence(){
+  const c = cases[getCaseIdx(activeCaseId)];
+  const id = 'ev_'+Date.now();
+  c.evidences.push({id, icon:'📄', name:'', type:'Documento', badge:'defense', content:'', detail:'', risk:null, image:null});
+  evidenceCollapsed[id] = false; // nueva prueba abierta
+  saveCases();
+  renderEvidenceList();
+  setTimeout(()=>{ const el=document.getElementById(`ev-card-${id}`); if(el) el.scrollIntoView({behavior:'smooth',block:'nearest'}); },100);
+}
+
+function removeEvidence(evId){
+  const c = cases[getCaseIdx(activeCaseId)];
+  c.evidences = c.evidences.filter(e=>e.id!==evId);
+  saveCases();
+  renderEvidenceList();
+}
+
+function toggleEv(evId){
+  evidenceCollapsed[evId] = !evidenceCollapsed[evId];
+  const body = document.getElementById(`ev-body-${evId}`);
+  const head = body.previousElementSibling.querySelector('span:last-child');
+  if(evidenceCollapsed[evId]){ body.classList.add('collapsed'); if(head)head.textContent='▶'; }
+  else { body.classList.remove('collapsed'); if(head)head.textContent='▼'; }
+}
+
+function moveEv(evId, dir){
+  const c = cases[getCaseIdx(activeCaseId)];
+  const idx = c.evidences.findIndex(e=>e.id===evId);
+  const newIdx = idx+dir;
+  if(newIdx<0||newIdx>=c.evidences.length) return;
+  [c.evidences[idx],c.evidences[newIdx]]=[c.evidences[newIdx],c.evidences[idx]];
+  saveCases(); renderEvidenceList();
+}
+
+/* ═══════════════ ICONOS ═══════════════ */
+function toggleIconGrid(evId){
+  document.querySelectorAll('.icon-grid-wrap').forEach(g=>{ if(g.id!==`icon-grid-${evId}`) g.classList.remove('open'); });
+  document.getElementById(`icon-grid-${evId}`).classList.toggle('open');
+}
+function pickIcon(evId, icon){
+  document.getElementById(`f-ev-icon-${evId}`).value=icon;
+  document.getElementById(`icon-grid-${evId}`).classList.remove('open');
+  updateIconDisplay(evId);
+}
+function updateIconDisplay(evId){
+  const val = document.getElementById(`f-ev-icon-${evId}`).value;
+  document.querySelector(`#ev-card-${evId} .icon-display`).textContent=val;
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.icon-picker')) document.querySelectorAll('.icon-grid-wrap').forEach(g=>g.classList.remove('open'));
+});
+
+/* ═══════════════ IMÁGENES ═══════════════ */
+function triggerImgUpload(evId){ document.getElementById(`f-ev-img-${evId}`).click(); }
+function handleImgUpload(evId, event){
+  const file = event.target.files[0];
+  if(!file) return;
+  if(file.size > 2*1024*1024){ showToast('La imagen no debe superar 2MB','error'); return; }
+  const reader = new FileReader();
+  reader.onload = e=>{
+    const c = cases[getCaseIdx(activeCaseId)];
+    const ev = c.evidences.find(ev=>ev.id===evId);
+    if(ev){ ev.image = e.target.result; saveCases(); }
+    const area = document.getElementById(`ev-img-area-${evId}`);
+    area.classList.add('has-img');
+    area.innerHTML=`<input type="file" id="f-ev-img-${evId}" accept="image/*" onchange="handleImgUpload('${evId}',event)"><img src="${e.target.result}" class="ev-img-preview"><button class="ev-img-remove" onclick="removeImg(event,'${evId}')">✕</button>`;
+  };
+  reader.readAsDataURL(file);
+}
+function removeImg(event, evId){
+  event.stopPropagation();
+  const c = cases[getCaseIdx(activeCaseId)];
+  const ev = c.evidences.find(e=>e.id===evId);
+  if(ev){ ev.image=null; saveCases(); }
+  const area = document.getElementById(`ev-img-area-${evId}`);
+  area.classList.remove('has-img');
+  area.innerHTML=`<input type="file" id="f-ev-img-${evId}" accept="image/*" onchange="handleImgUpload('${evId}',event)"><div class="ev-img-label">📸 Imagen / Documento</div><div class="ev-img-hint">Haz clic para subir una imagen (JPG, PNG)</div>`;
+}
+
+/* ═══════════════ GUARDAR ═══════════════ */
+function collectFormData(){
+  const c = cases[getCaseIdx(activeCaseId)];
+  c.name = document.getElementById('f-name').value.trim();
+  c.tag = document.getElementById('f-tag').value.trim();
+  c.acusado = document.getElementById('f-acusado').value.trim();
+  c.cargo = document.getElementById('f-cargo').value.trim();
+  c.pena = document.getElementById('f-pena').value.trim();
+  c.hechos = document.getElementById('f-hechos').value.trim();
+  c.pruebas_fiscal = document.getElementById('f-fiscal').value.trim();
+  // Pruebas
+  c.evidences.forEach(ev=>{
+    ev.icon = document.getElementById(`f-ev-icon-${ev.id}`)?.value || ev.icon;
+    ev.name = document.getElementById(`f-ev-name-${ev.id}`)?.value?.trim() || ev.name;
+    ev.type = document.getElementById(`f-ev-type-${ev.id}`)?.value || ev.type;
+    ev.badge = document.getElementById(`f-ev-badge-${ev.id}`)?.value || ev.badge;
+    ev.content = document.getElementById(`f-ev-content-${ev.id}`)?.value?.trim() || ev.content;
+    ev.detail = document.getElementById(`f-ev-detail-${ev.id}`)?.value?.trim() || '';
+    const riskVal = document.getElementById(`f-ev-risk-${ev.id}`)?.value?.trim();
+    ev.risk = ev.badge==='risk' && riskVal ? riskVal : null;
+  });
+}
+
+function setDiff(n){
+  const c = cases[getCaseIdx(activeCaseId)];
+  c.difficulty = n;
+  document.querySelectorAll('.diff-star').forEach((btn,i)=>{
+    btn.classList.toggle('on', i<n);
+  });
+}
+
+function saveCase(){
+  collectFormData();
+  const c = cases[getCaseIdx(activeCaseId)];
+  if(!c.name){ showToast('El caso necesita un nombre','error'); return; }
+  if(!c.hechos){ showToast('Añade los hechos del caso','error'); return; }
+  saveCases();
+  renderSidebar();
+  renderEvidenceList();
+  showToast('✓ Caso guardado correctamente');
+}
+
+function discardChanges(){
+  loadCases(); renderSidebar();
+  if(activeCaseId && getCaseIdx(activeCaseId)>=0) renderForm();
+  else { document.getElementById('form-wrap').style.display='none'; document.getElementById('empty-state').style.display='flex'; activeCaseId=null; }
+  showToast('Cambios descartados');
+}
+
+/* ═══════════════ ELIMINAR ═══════════════ */
+let pendingDeleteId = null;
+function confirmDelete(){
+  pendingDeleteId = activeCaseId;
+  document.getElementById('confirm-title').textContent='¿Eliminar este caso?';
+  document.getElementById('confirm-desc').textContent='Se borrará permanentemente del almacenamiento. Esta acción no se puede deshacer.';
+  document.getElementById('confirm-ok').onclick = doDelete;
+  document.getElementById('confirm-overlay').classList.add('open');
+}
+function doDelete(){
+  cases = cases.filter(c=>c.id!==pendingDeleteId);
+  saveCases(); closeConfirm();
+  activeCaseId = null;
+  renderSidebar();
+  document.getElementById('form-wrap').style.display='none';
+  document.getElementById('empty-state').style.display='flex';
+  showToast('Caso eliminado');
+}
+function closeConfirm(){ document.getElementById('confirm-overlay').classList.remove('open'); }
+
+/* ═══════════════ EXPORT / IMPORT ═══════════════ */
+function exportJSON(){
+  if(activeCaseId) collectFormData();
+  saveCases();
+  const blob = new Blob([JSON.stringify(cases, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'casos.json';
+  a.click();
+  showToast('✓ casos.json descargado — súbelo a la raíz de tu servidor junto a sala_juicio_v2.html');
+}
+function importCasesBtn(){ document.getElementById('import-file').click(); }
+function importJSON(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    try{
+      const imported = JSON.parse(e.target.result);
+      if(!Array.isArray(imported)) throw new Error();
+      imported.forEach(c=>{ if(!cases.find(x=>x.id===c.id)) cases.push(c); });
+      saveCases(); renderSidebar();
+      showToast(`✓ ${imported.length} caso(s) importado(s)`);
+    }catch{ showToast('Error al importar el JSON','error'); }
+  };
+  reader.readAsText(file);
+  event.target.value='';
+}
+
+/* ═══════════════ TOAST ═══════════════ */
+let toastTimer;
+function showToast(msg, type='ok'){
+  const t = document.getElementById('toast');
+  t.textContent=msg; t.className=`toast${type==='error'?' error':''}`;
+  t.style.display='block';
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.style.display='none',2800);
+}
+
+/* ═══════════════ UTIL ═══════════════ */
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ═══════════════ INIT ═══════════════ */
+loadCases();
+renderSidebar();
+</script>
+</body>
+</html>
