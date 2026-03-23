@@ -736,9 +736,19 @@ body {
       <span class="topbar-case" id="tb-case">—</span>
     </div>
     <div class="topbar-status">
-      <div class="status-dot"></div>
+      <div class="status-dot" id="status-dot"></div>
       <span id="tb-status">En sesión</span>
-
+      <span id="ai-badge" style="
+        margin-left:0.85rem;
+        font-size:0.65rem;
+        letter-spacing:0.12em;
+        text-transform:uppercase;
+        background:rgba(255,255,255,0.04);
+        border:1px solid rgba(255,255,255,0.08);
+        color:rgba(240,228,200,0.35);
+        padding:0.2rem 0.55rem;
+        border-radius:2px;
+      ">comprobando IA…</span>
     </div>
   </div>
 
@@ -1147,52 +1157,147 @@ ${forVerdict ? `\n═══ DICTA SENTENCIA AHORA ═══\nEmpieza con "FALLO:
 }
 
 /* ═══════════════════════ API ═══════════════════════ */
-// ── URL de tu proxy (elige según tu servidor) ────────────────
-// PHP en mismo servidor:   '/judge.php'
-// Node en mismo servidor:  '/api/judge'
-// Node en Render/Railway:  'https://tu-app.onrender.com/api/judge'
-// Local para pruebas:      'http://localhost:3000/api/judge'
-const PROXY_URL = '/judge.php';
+
+// ── CONFIGURACIÓN ────────────────────────────────────────────
+// Key de Groq SOLO para desarrollo local — nunca llega a producción
+// Consíguela gratis en https://console.groq.com
+const GROQ_DEV_KEY = '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';
+
+// URL del proxy en producción (cuando subes a tu servidor)
+const PROXY_PROD_URL = '/judge.php'; // o '/api/judge' si usas Node
 // ─────────────────────────────────────────────────────────────
+
+const IS_LOCAL = ['localhost','127.0.0.1',''].includes(window.location.hostname);
+const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
+const GROQ_MODEL    = 'llama-3.3-70b-versatile';
 
 async function callJudge(forVerdict=false){
   try{
-    const res=await fetch(PROXY_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        system:buildSystem(forVerdict),
-        messages:history
-      })
-    });
+    let res;
 
-    if(res.status===429){
-      return 'Señoría, el sistema informa de que ha alcanzado el límite de consultas por hoy. El juicio queda suspendido hasta mañana.';
+    if(IS_LOCAL){
+      // ── Modo local: llama directo a Groq (la key solo está en tu ordenador)
+      const messages = [
+        { role:'system', content: buildSystem(forVerdict) },
+        ...history
+      ];
+      res = await fetch(GROQ_ENDPOINT, {
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization': `Bearer ${GROQ_DEV_KEY}`
+        },
+        body: JSON.stringify({
+          model: GROQ_MODEL,
+          max_tokens: 1000,
+          messages,
+          temperature: 0.7
+        })
+      });
+      if(!res.ok){
+        const err = await res.json().catch(()=>({}));
+        console.error('Groq error:', err);
+        if(res.status === 401) return '⚠ API key de Groq inválida. Revisa GROQ_DEV_KEY en el código.';
+        if(res.status === 429) return 'Señoría, el sistema ha alcanzado el límite de consultas. Espera un momento e inténtalo de nuevo.';
+        return 'Error conectando con Groq. Comprueba la consola.';
+      }
+      const data = await res.json();
+      return data.choices?.[0]?.message?.content || 'El magistrado guarda silencio.';
+
+    } else {
+      // ── Modo producción: pasa por el proxy (la key nunca sale al navegador)
+      res = await fetch(PROXY_PROD_URL, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          system: buildSystem(forVerdict),
+          messages: history,
+          max_tokens: 1000
+        })
+      });
+      if(res.status===429) return 'Señoría, el sistema informa de que ha alcanzado el límite de consultas por hoy. El juicio queda suspendido hasta mañana.';
+      if(!res.ok){
+        const err = await res.json().catch(()=>({}));
+        console.error('Proxy error:', err);
+        return 'El magistrado no puede responder en este momento. Inténtelo de nuevo.';
+      }
+      const data = await res.json();
+      return data.content?.[0]?.text || 'El magistrado guarda silencio.';
     }
 
-    if(!res.ok){
-      const err=await res.json().catch(()=>({}));
-      console.error('Proxy error:', err);
-      return 'El magistrado no puede responder en este momento. Inténtelo de nuevo.';
-    }
-
-    const data=await res.json();
-    return data.content?.[0]?.text||'El magistrado guarda silencio.';
   }catch(e){
     console.error('callJudge error:', e);
     return 'Error de conexión con la sala. Comprueba tu conexión e inténtalo de nuevo.';
   }
 }
 
+/* ═══════════════════════ COMPROBACIÓN IA ═══════════════════════ */
+async function checkAIStatus(){
+  const badge = document.getElementById('ai-badge');
+  const dot   = document.getElementById('status-dot');
+
+  if(IS_LOCAL){
+    // En local: comprobar que la key de Groq es válida
+    if(!GROQ_DEV_KEY || GROQ_DEV_KEY.includes('PON_AQUI')){
+      badge.textContent = '⚠ Pon tu GROQ_DEV_KEY';
+      badge.style.color = '#e8c06a';
+      badge.style.borderColor = 'rgba(200,168,75,0.4)';
+      badge.style.background = 'rgba(200,168,75,0.08)';
+      dot.style.background = '#c8a84b';
+      return;
+    }
+    // Key presente — marcamos como local directo
+    badge.textContent = '⚡ Groq · Local (directo)';
+    badge.style.color = '#6dbf8a';
+    badge.style.borderColor = 'rgba(26,93,56,0.5)';
+    badge.style.background = 'rgba(26,61,40,0.2)';
+    dot.style.background = '#2a9e5a';
+
+  } else {
+    // En producción: comprobar que el proxy responde
+    try {
+      const res = await fetch(PROXY_PROD_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          system: 'Responde solo con la palabra: OK',
+          messages: [{role:'user', content:'test'}],
+          max_tokens: 5
+        })
+      });
+      if(res.status === 429){
+        badge.textContent = '⚠ Límite alcanzado';
+        badge.style.color = '#e07070';
+        badge.style.borderColor = 'rgba(139,26,26,0.4)';
+        dot.style.background = '#8b1a1a';
+        return;
+      }
+      if(!res.ok) throw new Error('proxy_error');
+      badge.textContent = '⚡ Groq · Llama 3.3';
+      badge.style.color = '#6dbf8a';
+      badge.style.borderColor = 'rgba(26,93,56,0.5)';
+      badge.style.background = 'rgba(26,61,40,0.2)';
+      dot.style.background = '#2a9e5a';
+    } catch(e) {
+      badge.textContent = '✕ Sin conexión al proxy';
+      badge.style.color = '#e07070';
+      badge.style.borderColor = 'rgba(139,26,26,0.4)';
+      dot.style.background = '#8b1a1a';
+      dot.style.animation = 'none';
+      console.warn('Proxy no disponible:', e);
+    }
+  }
+}
+
 /* ═══════════════════════ OPENING ═══════════════════════ */
 async function openingStatement(){
+  checkAIStatus(); // comprueba en paralelo, no bloquea
   history=[{role:'user',content:`Inicia el juicio oral del caso ${activeCase.name}. Presenta los cargos brevemente contra ${activeCase.acusado} y concede la palabra al abogado defensor para que comience sus alegaciones.`}];
   showTyping(true); setEnabled(false);
   const resp=await callJudge();
   showTyping(false); setEnabled(true);
   if(resp){ addMsg('judge','⚖️ Magistrado',resp); history.push({role:'assistant',content:resp}); }
+
 }
 
 /* ═══════════════════════ UI HELPERS ═══════════════════════ */
