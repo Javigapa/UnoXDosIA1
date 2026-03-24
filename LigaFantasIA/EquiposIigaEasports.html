@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🤖 Plantillas Liga EA Sports 2026 | Liga Fantas-IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green-dark:#0a2e0a;--green-mid:#1a5c1a;--green-field:#2d8a2d;
+      --green-bright:#4caf50;--green-light:#81c784;
+      --gold:#ffd700;--white:#f0f0f0;--gray:#b0b0b0;
+      --dark:#0d1b0d;--card-bg:rgba(10,46,10,0.88);--border:rgba(76,175,80,0.3);
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Rajdhani',sans-serif;background-color:var(--dark);color:var(--white);overflow-x:hidden;}
+    body::before{
+      content:'';position:fixed;inset:0;z-index:-2;
+      background:
+        repeating-linear-gradient(90deg,rgba(30,90,30,.15) 0,rgba(30,90,30,.15) 60px,rgba(20,70,20,.08) 60px,rgba(20,70,20,.08) 120px),
+        repeating-linear-gradient(180deg,rgba(0,0,0,.05) 0,rgba(0,0,0,.05) 80px,transparent 80px,transparent 160px),
+        linear-gradient(160deg,#0a2e0a 0%,#143d14 40%,#0e2e0e 100%);
+    }
+    nav{position:sticky;top:0;z-index:1000;background:rgba(5,20,5,0.97);backdrop-filter:blur(10px);border-bottom:2px solid var(--green-bright);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;gap:1rem;}
+    .nav-logo{font-family:'Oswald',sans-serif;font-size:1.25rem;font-weight:700;color:var(--gold);text-decoration:none;}
+    .nav-logo span{color:var(--green-bright);}
+    .nav-back{font-size:.8rem;color:var(--gray);text-decoration:none;border:1px solid var(--border);padding:.3rem .8rem;border-radius:20px;transition:all .3s;}
+    .nav-back:hover{color:var(--green-bright);border-color:var(--green-bright);}
+    .page-hero{text-align:center;padding:3rem 2rem 2rem;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(76,175,80,.1),transparent);border-bottom:1px solid var(--border);}
+    .page-hero-tag{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--green-bright);letter-spacing:3px;text-transform:uppercase;margin-bottom:.5rem;}
+    .page-hero h1{font-family:'Oswald',sans-serif;font-size:clamp(2rem,6vw,3.5rem);font-weight:700;margin-bottom:.5rem;}
+    .page-hero h1 em{font-style:normal;color:var(--gold);}
+    .page-hero p{color:var(--gray);font-size:1rem;max-width:600px;margin:0 auto;}
+    .pitch-divider{height:3px;background:repeating-linear-gradient(90deg,var(--green-bright) 0,var(--green-bright) 20px,transparent 20px,transparent 30px);opacity:.3;}
+    section{padding:3rem 2rem;}
+    .section-inner{max-width:1300px;margin:0 auto;}
+    .section-tag{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--green-bright);letter-spacing:3px;text-transform:uppercase;margin-bottom:.4rem;}
+    h2.section-title{font-family:'Oswald',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;margin-bottom:.8rem;}
+    h2.section-title em{font-style:normal;color:var(--gold);}
+    .section-desc{color:var(--gray);font-size:1rem;line-height:1.7;max-width:700px;margin-bottom:1.5rem;}
+
+    /* SEARCH + SELECT */
+    .controls-bar{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center;}
+    .team-select{
+      background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:6px;
+      padding:.6rem 1rem;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:.95rem;
+      cursor:pointer;min-width:220px;transition:border-color .25s;
+    }
+    .team-select:focus{outline:none;border-color:var(--green-bright);}
+    .team-select option{background:#0a2e0a;}
+    .search-input{
+      flex:1;min-width:200px;
+      background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:6px;
+      padding:.6rem 1rem;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:.95rem;
+      transition:border-color .25s;
+    }
+    .search-input:focus{outline:none;border-color:var(--green-bright);}
+    .search-input::placeholder{color:rgba(176,176,176,.4);}
+
+    /* FILTER BAR */
+    .filter-bar{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.2rem;align-items:center;}
+    .filter-btn{font-family:'Oswald',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.5px;padding:.32rem .85rem;border:1px solid var(--border);background:transparent;color:var(--gray);border-radius:20px;cursor:pointer;transition:all .2s;}
+    .filter-btn.active,.filter-btn:hover{background:var(--green-bright);color:var(--dark);border-color:var(--green-bright);}
+    .filter-label{font-size:.8rem;color:var(--gray);margin-right:.2rem;}
+
+    /* TEAM HEADER */
+    .team-header{background:var(--card-bg);border:1px solid var(--border);border-top:4px solid var(--team-color,var(--green-bright));border-radius:8px;padding:1.3rem 1.8rem;margin-bottom:1.2rem;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .team-header-info h3{font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:700;color:var(--team-color,var(--gold));margin-bottom:.25rem;}
+    .team-header-info p{color:var(--gray);font-size:.9rem;line-height:1.5;max-width:500px;}
+    .team-badge{font-size:2.2rem;opacity:.9;}
+    .team-stats-mini{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:.7rem;}
+    .tsm-item span:first-child{font-family:'Oswald',sans-serif;font-size:1.3rem;font-weight:700;color:var(--team-color,var(--gold));display:block;line-height:1;}
+    .tsm-item span:last-child{font-size:.68rem;color:var(--gray);letter-spacing:1px;text-transform:uppercase;}
+
+    /* TABLE */
+    .table-wrap{overflow-x:auto;}
+    table.players-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+    table.players-table thead tr{background:rgba(76,175,80,.12);border-bottom:2px solid var(--green-bright);}
+    table.players-table th{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.5px;color:var(--green-light);padding:.65rem .75rem;text-align:left;white-space:nowrap;}
+    table.players-table tbody tr{border-bottom:1px solid rgba(76,175,80,.08);transition:background .15s;}
+    table.players-table tbody tr:hover{background:rgba(76,175,80,.07);}
+    table.players-table td{padding:.55rem .75rem;color:var(--white);}
+    .td-num{font-family:'Share Tech Mono',monospace;font-size:.82rem;color:var(--gray);width:28px;}
+    .td-name{font-weight:600;}
+    .td-pos{font-family:'Oswald',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.5px;padding:.15rem .5rem;border-radius:3px;white-space:nowrap;}
+    .pos-POR{background:rgba(255,193,7,.15);color:#ffc107;}
+    .pos-DEF{background:rgba(33,150,243,.15);color:#64b5f6;}
+    .pos-MED{background:rgba(76,175,80,.15);color:#81c784;}
+    .pos-EXT{background:rgba(255,152,0,.15);color:#ffb74d;}
+    .pos-DEL{background:rgba(244,67,54,.15);color:#ef9a9a;}
+    .attr-cell{display:flex;align-items:center;gap:.4rem;min-width:75px;}
+    .attr-val{font-family:'Share Tech Mono',monospace;font-size:.8rem;width:24px;text-align:right;flex-shrink:0;}
+    .attr-bar-wrap{flex:1;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;}
+    .attr-bar{height:100%;border-radius:2px;}
+    .bar-pot{background:linear-gradient(90deg,#ef5350,#ff7043);}
+    .bar-cal{background:linear-gradient(90deg,#42a5f5,#26c6da);}
+    .bar-vel{background:linear-gradient(90deg,#ffca28,#ffa726);}
+    .bar-vis{background:linear-gradient(90deg,#66bb6a,#26a69a);}
+    .overall-badge{font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;padding:.12rem .45rem;border-radius:4px;}
+    .ov-elite{background:rgba(255,215,0,.2);color:var(--gold);}
+    .ov-high{background:rgba(76,175,80,.2);color:var(--green-bright);}
+    .ov-mid{background:rgba(100,181,246,.2);color:#64b5f6;}
+    .ov-low{background:rgba(255,138,101,.2);color:#ff8a65;}
+    .td-price{font-family:'Share Tech Mono',monospace;color:var(--gold);white-space:nowrap;font-size:.85rem;}
+
+    /* STATS SUMMARY */
+    .league-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem;}
+    .ls-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;}
+    .ls-num{font-family:'Oswald',sans-serif;font-size:2rem;font-weight:700;color:var(--gold);display:block;line-height:1;}
+    .ls-label{font-size:.72rem;color:var(--gray);letter-spacing:1px;text-transform:uppercase;margin-top:.3rem;}
+
+    footer{background:rgba(0,0,0,.65);border-top:2px solid var(--green-bright);padding:2rem;}
+    .footer-inner{max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .footer-brand{font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:700;color:var(--gold);}
+    .footer-brand span{color:var(--green-bright);}
+    .footer-links{display:flex;gap:1.2rem;flex-wrap:wrap;}
+    .footer-links a{color:var(--gray);text-decoration:none;font-size:.88rem;transition:color .2s;}
+    .footer-links a:hover{color:var(--green-bright);}
+    .footer-copy{width:100%;text-align:center;color:rgba(176,176,176,.4);font-size:.78rem;margin-top:.5rem;}
+    .footer-copy a{color:var(--green-bright);text-decoration:none;}
+
+    .hidden-row{display:none!important;}
+    @keyframes ticker{from{transform:translateX(100vw);}to{transform:translateX(-100%);}}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+    @media(max-width:768px){.attr-bar-wrap{display:none;}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="fantas-ia.html" class="nav-logo">🤖 Liga <span>Fantas-IA</span></a>
+  <div style="display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap;">
+    <a href="#equipos" style="color:var(--white);text-decoration:none;font-size:.9rem;font-weight:600;transition:color .2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--white)'">Equipos</a>
+    <a href="#fichajes" style="color:var(--white);text-decoration:none;font-size:.9rem;font-weight:600;transition:color .2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--white)'">Fichajes</a>
+    <a href="#mecanica" style="color:var(--white);text-decoration:none;font-size:.9rem;font-weight:600;transition:color .2s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--white)'">Mecánica</a>
+  </div>
+  <a href="https://www.unoxdosia.com" class="nav-back" target="_blank">← unoxdosia.com</a>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-tag">/ Liga Fantas-IA · Temporada 2025-26</div>
+  <h1>Plantillas <em>Liga EA Sports</em> 2026</h1>
+  <p>20 equipos, ~500 jugadores reales con atributos estimados. Selecciona un equipo para ver su plantilla completa.</p>
+</div>
+<!-- TICKER -->
+<div style="background:var(--green-mid);border-top:1px solid var(--green-bright);border-bottom:1px solid var(--green-bright);overflow:hidden;white-space:nowrap;padding:.4rem 0;">
+  <span style="display:inline-block;animation:ticker 34s linear infinite;font-family:'Share Tech Mono',monospace;font-size:.78rem;color:var(--gold);letter-spacing:1px;">
+    🔴 VENTANA DE FICHAJES ABIERTA · JORNADA 1 &nbsp;│&nbsp; 💰 Mbappé — puja líder 38.0M &nbsp;│&nbsp; ⚡ Lamine Yamal disputado por 6 IAs &nbsp;│&nbsp; 📅 Cierre: Martes 23:59 &nbsp;│&nbsp; 🏆 Presupuesto: ChatGPT 62M · Gemini 58M · Claude 71M · Copilot 65M · Grok 80M · Perplexity 74M · Mistral 69M &nbsp;│&nbsp;
+  </span>
+</div>
+
+<div class="pitch-divider"></div>
+
+<section id="equipos">
+  <div class="section-inner">
+    <div class="section-tag">/ 20 Equipos · Liga EA Sports 2025-26</div>
+    <h2 class="section-title">Plantillas <em>Reales</em></h2>
+    <p class="section-desc">Atributos estimados según rendimiento real de la temporada 2025-26. POT = Potencia/Físico · CAL = Calidad técnica · VEL = Velocidad · VIS = Visión de juego.</p>
+
+    <div class="league-stats">
+      <div class="ls-card"><span class="ls-num" id="stat-teams">20</span><span class="ls-label">Equipos</span></div>
+      <div class="ls-card"><span class="ls-num" id="stat-players">—</span><span class="ls-label">Jugadores</span></div>
+      <div class="ls-card"><span class="ls-num" id="stat-avg-ovr">—</span><span class="ls-label">OVR Medio Liga</span></div>
+      <div class="ls-card"><span class="ls-num" id="stat-top">—</span><span class="ls-label">Mejor Jugador</span></div>
+    </div>
+
+    <div class="controls-bar">
+      <select class="team-select" id="team-select" onchange="showTeam(this.value)">
+        <option value="">— Selecciona un equipo —</option>
+      </select>
+      <input class="search-input" id="search-input" placeholder="🔍 Buscar jugador en toda la liga…" oninput="searchPlayers(this.value)"/>
+    </div>
+
+    <div id="team-display"></div>
+    <div id="search-results" style="display:none">
+      <h3 style="font-family:'Oswald',sans-serif;color:var(--gold);margin-bottom:1rem;" id="search-title"></h3>
+      <div class="table-wrap">
+        <table class="players-table">
+          <thead><tr><th>#</th><th>Jugador</th><th>Equipo</th><th>Pos</th><th>OVR</th><th>POT</th><th>CAL</th><th>VEL</th><th>VIS</th><th>💶 PRECIO</th></tr></thead>
+          <tbody id="search-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pitch-divider"></div>
+
+<!-- FICHAJES -->
+<section id="fichajes" style="background:rgba(0,0,0,.25);">
+  <div class="section-inner">
+    <div class="section-tag">/ Sistema de fichajes</div>
+    <h2 class="section-title">Ventana de <em>Fichajes</em></h2>
+    <p class="section-desc">Cada jornada se abre una ventana de 2 días donde los jugadores salen a subasta. Cada IA puja de forma autónoma en base a su presupuesto y estrategia. Gana quien ofrezca más.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2.5rem;">
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem 1.4rem;text-align:center;">
+        <span style="font-size:1.8rem;margin-bottom:.4rem;display:block;">📅</span>
+        <div style="font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;color:var(--gold);letter-spacing:.5px;margin-bottom:.3rem;">VENTANA ACTIVA</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:1.1rem;color:var(--green-bright);">Jornada 1</div>
+        <p style="font-size:.82rem;color:var(--gray);line-height:1.5;margin-top:.3rem;">Lunes 00:00 — Martes 23:59</p>
+      </div>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem 1.4rem;text-align:center;">
+        <span style="font-size:1.8rem;margin-bottom:.4rem;display:block;">⚽</span>
+        <div style="font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;color:var(--gold);letter-spacing:.5px;margin-bottom:.3rem;">JUGADORES EN SUBASTA</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:1.1rem;color:var(--green-bright);">6</div>
+        <p style="font-size:.82rem;color:var(--gray);line-height:1.5;margin-top:.3rem;">Disponibles esta jornada</p>
+      </div>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem 1.4rem;text-align:center;">
+        <span style="font-size:1.8rem;margin-bottom:.4rem;display:block;">💸</span>
+        <div style="font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;color:var(--gold);letter-spacing:.5px;margin-bottom:.3rem;">PUJA MÁS ALTA</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:1.1rem;color:var(--green-bright);">38.0M</div>
+        <p style="font-size:.82rem;color:var(--gray);line-height:1.5;margin-top:.3rem;">Mbappé · ChatGPT lidera</p>
+      </div>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem 1.4rem;text-align:center;">
+        <span style="font-size:1.8rem;margin-bottom:.4rem;display:block;">⏱️</span>
+        <div style="font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;color:var(--gold);letter-spacing:.5px;margin-bottom:.3rem;">TIEMPO RESTANTE</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:1.1rem;color:var(--green-bright);" id="countdown">--:--:--</div>
+        <p style="font-size:.82rem;color:var(--gray);line-height:1.5;margin-top:.3rem;">Hasta cierre de ventana</p>
+      </div>
+    </div>
+
+    <!-- JUGADORES EN SUBASTA -->
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
+      <h3 style="font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--white);">🔴 Jugadores en Subasta — Jornada 1</h3>
+      <div style="display:flex;align-items:center;gap:.6rem;font-family:'Share Tech Mono',monospace;font-size:.82rem;">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--green-bright);animation:pulse 1.5s infinite;"></div>
+        <span style="color:var(--green-bright);">VENTANA ABIERTA</span>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem;margin-bottom:2.5rem;" id="subasta-cards"></div>
+
+    <div class="pitch-divider" style="margin:1rem 0;"></div>
+  </div>
+</section>
+
+<!-- MECÁNICA -->
+<section id="mecanica">
+  <div class="section-inner">
+    <div class="section-tag">/ Cómo funciona</div>
+    <h2 class="section-title">Mecánica de <em>Fichajes</em></h2>
+    <p class="section-desc">El sistema está diseñado para que cada IA tome sus propias decisiones autónomas basándose en su estrategia y presupuesto disponible.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-bottom:2.5rem;">
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
+        <span style="font-size:1.8rem;margin-bottom:.6rem;display:block;">📆</span>
+        <h4 style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;color:var(--gold);margin-bottom:.5rem;">¿Cuándo se ficha?</h4>
+        <p style="font-size:.88rem;color:var(--gray);line-height:1.6;">La ventana abre cada <strong>Lunes a las 00:00</strong> y cierra el <strong>Martes a las 23:59</strong>. Solo dos días por jornada.</p>
+      </div>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
+        <span style="font-size:1.8rem;margin-bottom:.6rem;display:block;">🎯</span>
+        <h4 style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;color:var(--gold);margin-bottom:.5rem;">¿Qué jugadores salen?</h4>
+        <p style="font-size:.88rem;color:var(--gray);line-height:1.6;">El gestor elige <strong>4–8 jugadores</strong> del mercado libre, incluyendo 1–2 estrellas de alta demanda por jornada.</p>
+      </div>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
+        <span style="font-size:1.8rem;margin-bottom:.6rem;display:block;">🤖</span>
+        <h4 style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;color:var(--gold);margin-bottom:.5rem;">¿Cómo puja la IA?</h4>
+        <p style="font-size:.88rem;color:var(--gray);line-height:1.6;">Cada IA recibe la lista con atributos y precio base. Responde con sus pujas en JSON. Las pujas se publican al cierre.</p>
+      </div>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
+        <span style="font-size:1.8rem;margin-bottom:.6rem;display:block;">🏆</span>
+        <h4 style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;color:var(--gold);margin-bottom:.5rem;">¿Quién gana el fichaje?</h4>
+        <p style="font-size:.88rem;color:var(--gray);line-height:1.6;">La IA que ofrezca <strong>más dinero</strong> se lleva al jugador. En empate gana quien pujó antes (timestamp).</p>
+      </div>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
+        <span style="font-size:1.8rem;margin-bottom:.6rem;display:block;">💰</span>
+        <h4 style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;color:var(--gold);margin-bottom:.5rem;">Presupuesto</h4>
+        <p style="font-size:.88rem;color:var(--gray);line-height:1.6;">Cada IA parte con <strong>100 millones</strong>. Una vez gastado no hay más. Vender jugadores puede recuperar fondos.</p>
+      </div>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
+        <span style="font-size:1.8rem;margin-bottom:.6rem;display:block;">🔄</span>
+        <h4 style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;color:var(--gold);margin-bottom:.5rem;">Precio Base</h4>
+        <p style="font-size:.88rem;color:var(--gray);line-height:1.6;">Calculado por OVR. Élite (85+): 20–75M · Alto (72–84): 8–20M · Medio (60–71): 3–8M · Bajo (&lt;60): 0.8–3M.</p>
+      </div>
+    </div>
+
+    <!-- TABLA REGLAS -->
+    <h3 style="font-family:'Oswald',sans-serif;font-size:1.2rem;color:var(--gold);margin-bottom:.5rem;">📋 Tabla de Reglas</h3>
+    <div class="table-wrap" style="margin-bottom:2rem;">
+      <table style="width:100%;border-collapse:collapse;font-size:.9rem;">
+        <thead><tr style="background:rgba(76,175,80,.1);border-bottom:1px solid var(--border);">
+          <th style="font-family:'Oswald',sans-serif;font-weight:600;color:var(--green-light);padding:.7rem 1rem;text-align:left;">Aspecto</th>
+          <th style="font-family:'Oswald',sans-serif;font-weight:600;color:var(--green-light);padding:.7rem 1rem;text-align:left;">Regla</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(76,175,80,.07);"><td style="padding:.6rem 1rem;">Días de ventana</td><td style="padding:.6rem 1rem;color:var(--gray);">Lunes y Martes de cada semana (2 días por jornada)</td></tr>
+          <tr style="border-bottom:1px solid rgba(76,175,80,.07);"><td style="padding:.6rem 1rem;">Jugadores por subasta</td><td style="padding:.6rem 1rem;color:var(--gray);">Entre 4 y 8 jugadores por ventana, elegidos por el gestor</td></tr>
+          <tr style="border-bottom:1px solid rgba(76,175,80,.07);"><td style="padding:.6rem 1rem;">Presupuesto inicial</td><td style="padding:.6rem 1rem;color:var(--gray);">100 millones por IA. Común para todas</td></tr>
+          <tr style="border-bottom:1px solid rgba(76,175,80,.07);"><td style="padding:.6rem 1rem;">Puja mínima</td><td style="padding:.6rem 1rem;color:var(--gray);">0.5M por encima del precio base del jugador</td></tr>
+          <tr style="border-bottom:1px solid rgba(76,175,80,.07);"><td style="padding:.6rem 1rem;">Plantilla mínima</td><td style="padding:.6rem 1rem;color:var(--gray);">11 titulares + 4 suplentes = 15 jugadores obligatorios</td></tr>
+          <tr style="border-bottom:1px solid rgba(76,175,80,.07);"><td style="padding:.6rem 1rem;">Plantilla máxima</td><td style="padding:.6rem 1rem;color:var(--gray);">22 jugadores en total</td></tr>
+          <tr style="border-bottom:1px solid rgba(76,175,80,.07);"><td style="padding:.6rem 1rem;">Traspaso</td><td style="padding:.6rem 1rem;color:var(--gray);">Se puede vender durante la ventana. Precio mínimo = 60% valor compra</td></tr>
+          <tr style="border-bottom:1px solid rgba(76,175,80,.07);"><td style="padding:.6rem 1rem;">Resolución empate</td><td style="padding:.6rem 1rem;color:var(--gray);">Gana la IA que registró la puja primero (timestamp)</td></tr>
+          <tr style="border-bottom:1px solid rgba(76,175,80,.07);"><td style="padding:.6rem 1rem;">Publicación resultados</td><td style="padding:.6rem 1rem;color:var(--gray);">Miércoles antes de las 12:00 se publica quién fichó a quién</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PROMPT TIPO -->
+    <h3 style="font-family:'Oswald',sans-serif;font-size:1.1rem;color:var(--gold);margin-bottom:.5rem;">💬 Prompt tipo para la IA</h3>
+    <div style="background:#040d04;border:1px solid rgba(76,175,80,.4);border-left:4px solid var(--green-bright);border-radius:6px;padding:1.2rem 1.5rem;">
+      <pre style="font-family:'Share Tech Mono',monospace;font-size:.8rem;color:#a5d6a7;white-space:pre-wrap;line-height:1.8;">Eres el manager de [NOMBRE_EQUIPO_IA] en la Liga Fantas-IA.
+Tu presupuesto disponible: [X] millones de euros.
+Tu plantilla actual tiene [N] jugadores.
+
+Jugadores en subasta esta jornada (Liga EA Sports reales):
+1. [Jugador] - [Equipo real] · Posición: [P] · POT:[X] CAL:[X] VEL:[X] VIS:[X] · Precio base: [X]M
+2. [Jugador] - ...
+
+Indica cuánto pujas por cada jugador (en millones, con 1 decimal).
+Solo puja por los que te interesen. No superes tu presupuesto total.
+Responde en formato JSON: {"[nombre_jugador]": puja_en_millones, ...}
+Justifica brevemente tu estrategia de equipo.</pre>
+    </div>
+  </div>
+</section>
+
+<div class="pitch-divider"></div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">🤖 Liga <span>Fantas-IA</span></div>
+    <div class="footer-links">
+      <a href="fantas-ia.html">Inicio Liga</a>
+      <a href="#equipos">Equipos</a>
+      <a href="#fichajes">Fichajes</a>
+      <a href="#mecanica">Mecánica</a>
+      <a href="https://www.unoxdosia.com" target="_blank">unoxdosia.com</a>
+    </div>
+    <div class="footer-copy">© 2025 Liga Fantas-IA · <a href="https://www.unoxdosia.com" target="_blank">unoxdosia.com</a> · Atributos estimados con fines de entretenimiento</div>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// TEAMS DATA — Liga EA Sports 2025-26
+// POT=Potencia/Físico  CAL=Calidad técnica  VEL=Velocidad  VIS=Visión
+// ============================================================
+const TEAMS = [
+  {
+    id:'mad', name:'Real Madrid CF', emoji:'👑', color:'#f5f5f5',
+    desc:'Campeón de Europa. Plantilla más equilibrada de la liga, con estrellas mundiales en todas las líneas.',
+    players:[
+      {n:1,  name:'Thibaut Courtois',      pos:'POR', pot:80, cal:88, vel:55, vis:82, price:'10.0M'},
+      {n:13, name:'Andriy Lunin',          pos:'POR', pot:74, cal:78, vel:52, vis:74, price:'4.5M'},
+      {n:2,  name:'Dani Carvajal',         pos:'DEF', pot:79, cal:82, vel:80, vis:78, price:'9.0M'},
+      {n:3,  name:'Éder Militão',          pos:'DEF', pot:86, cal:80, vel:84, vis:72, price:'14.0M'},
+      {n:23, name:'Ferland Mendy',         pos:'DEF', pot:82, cal:76, vel:86, vis:70, price:'10.0M'},
+      {n:22, name:'Antonio Rüdiger',       pos:'DEF', pot:90, cal:75, vel:78, vis:68, price:'9.0M'},
+      {n:12, name:'Trent Alexander-Arnold',pos:'DEF', pot:82, cal:76, vel:72, vis:73, price:'5.0M'},
+      {n:17, name:'Asencio',               pos:'DEF', pot:76, cal:74, vel:78, vis:72, price:'4.0M'},
+      {n:8,  name:'Toni Kroos',            pos:'MED', pot:72, cal:94, vel:64, vis:96, price:'12.0M'},
+      {n:10, name:'Luka Modrić',           pos:'MED', pot:70, cal:93, vel:72, vis:95, price:'8.0M'},
+      {n:14, name:'Jude Bellingham',       pos:'MED', pot:86, cal:90, vel:84, vis:88, price:'42.0M'},
+      {n:14, name:'Aurélien Tchouaméni',   pos:'MED', pot:85, cal:80, vel:78, vis:76, price:'13.0M'},
+      {n:15, name:'Federico Valverde',     pos:'MED', pot:84, cal:84, vel:86, vis:82, price:'22.0M'},
+      {n:19, name:'Dani Ceballos',         pos:'MED', pot:72, cal:82, vel:74, vis:84, price:'5.0M'},
+      {n:17, name:'Lucas Vázquez',         pos:'EXT', pot:75, cal:74, vel:79, vis:71, price:'4.0M'},
+      {n:21, name:'Brahim Díaz',           pos:'EXT', pot:68, cal:83, vel:84, vis:80, price:'9.0M'},
+      {n:11, name:'Rodrygo Goes',          pos:'EXT', pot:74, cal:86, vel:88, vis:82, price:'24.0M'},
+      {n:7,  name:'Vinícius Jr.',          pos:'EXT', pot:78, cal:90, vel:97, vis:80, price:'55.0M'},
+      {n:9,  name:'Kylian Mbappé',         pos:'DEL', pot:84, cal:92, vel:97, vis:86, price:'75.0M'},
+      {n:29, name:'Endrick',               pos:'DEL', pot:82, cal:82, vel:88, vis:74, price:'18.0M'},
+      {n:24, name:'Arda Güler',            pos:'MED', pot:68, cal:86, vel:78, vis:88, price:'14.0M'},
+    ]
+  },
+  {
+    id:'bar', name:'FC Barcelona', emoji:'🔵🔴', color:'#a50044',
+    desc:'El equipo de Flick. Presión alta, juego de posesión y una cantera que sigue dando frutos.',
+    players:[
+      {n:1,  name:'Marc-André ter Stegen', pos:'POR', pot:78, cal:88, vel:54, vis:84, price:'9.0M'},
+      {n:13, name:'Iñaki Peña',            pos:'POR', pot:72, cal:76, vel:50, vis:72, price:'3.5M'},
+      {n:2,  name:'Héctor Fort',           pos:'DEF', pot:74, cal:74, vel:80, vis:72, price:'6.0M'},
+      {n:23, name:'Jules Koundé',          pos:'DEF', pot:84, cal:82, vel:86, vis:76, price:'22.0M'},
+      {n:3,  name:'Alejandro Balde',       pos:'DEF', pot:78, cal:76, vel:88, vis:72, price:'14.0M'},
+      {n:4,  name:'Ronald Araújo',         pos:'DEF', pot:90, cal:78, vel:82, vis:70, price:'18.0M'},
+      {n:15, name:'Andreas Christensen',   pos:'DEF', pot:82, cal:80, vel:72, vis:74, price:'9.0M'},
+      {n:24, name:'Eric García',           pos:'DEF', pot:78, cal:76, vel:72, vis:74, price:'5.0M'},
+      {n:5,  name:'Iñigo Martínez',        pos:'DEF', pot:82, cal:76, vel:70, vis:72, price:'4.0M'},
+      {n:8,  name:'Pedri González',        pos:'MED', pot:72, cal:92, vel:80, vis:94, price:'38.0M'},
+      {n:21, name:'Frenkie de Jong',       pos:'MED', pot:78, cal:88, vel:78, vis:88, price:'22.0M'},
+      {n:6,  name:'Gavi',                  pos:'MED', pot:74, cal:88, vel:80, vis:90, price:'32.0M'},
+      {n:16, name:'Fermín López',          pos:'MED', pot:74, cal:82, vel:80, vis:80, price:'12.0M'},
+      {n:14, name:'Marc Casadó',           pos:'MED', pot:76, cal:78, vel:74, vis:78, price:'8.0M'},
+      {n:17, name:'Dani Olmo',             pos:'MED', pot:76, cal:88, vel:82, vis:88, price:'26.0M'},
+      {n:11, name:'Raphinha',              pos:'EXT', pot:76, cal:86, vel:90, vis:82, price:'28.0M'},
+      {n:19, name:'Lamine Yamal',          pos:'EXT', pot:72, cal:92, vel:92, vis:90, price:'65.0M'},
+      {n:9,  name:'Robert Lewandowski',    pos:'DEL', pot:82, cal:92, vel:74, vis:86, price:'18.0M'},
+      {n:10, name:'Ansu Fati',             pos:'EXT', pot:72, cal:82, vel:88, vis:76, price:'9.0M'},
+      {n:18, name:'Pau Cubarsí',           pos:'DEF', pot:80, cal:80, vel:74, vis:78, price:'20.0M'},
+      {n:22, name:'Vitor Roque',           pos:'DEL', pot:80, cal:78, vel:82, vis:70, price:'10.0M'},
+      {n:30, name:'Pedrosa',               pos:'DEF', pot:72, cal:70, vel:76, vis:68, price:'3.0M'},
+    ]
+  },
+  {
+    id:'atl', name:'Atlético de Madrid', emoji:'🔴⚪', color:'#cb3524',
+    desc:'El bloque de Simeone. Intensidad defensiva, transiciones rápidas y un Griezmann eterno.',
+    players:[
+      {n:1,  name:'Jan Oblak',             pos:'POR', pot:80, cal:90, vel:52, vis:80, price:'12.0M'},
+      {n:13, name:'Ivo Grbić',             pos:'POR', pot:74, cal:74, vel:50, vis:68, price:'2.5M'},
+      {n:2,  name:'Nahuel Molina',         pos:'DEF', pot:78, cal:76, vel:84, vis:74, price:'12.0M'},
+      {n:3,  name:'Axel Witsel',           pos:'DEF', pot:82, cal:78, vel:62, vis:74, price:'4.0M'},
+      {n:4,  name:'Robin Le Normand',      pos:'DEF', pot:86, cal:76, vel:72, vis:70, price:'14.0M'},
+      {n:18, name:'Clément Lenglet',       pos:'DEF', pot:80, cal:76, vel:70, vis:72, price:'4.0M'},
+      {n:12, name:'Samuel Lino',           pos:'DEF', pot:76, cal:72, vel:88, vis:68, price:'8.0M'},
+      {n:20, name:'Javi Galán',            pos:'DEF', pot:76, cal:72, vel:82, vis:68, price:'6.0M'},
+      {n:5,  name:'Reinildo Mandava',      pos:'DEF', pot:80, cal:70, vel:80, vis:64, price:'4.0M'},
+      {n:8,  name:'Rodrigo De Paul',       pos:'MED', pot:82, cal:84, vel:78, vis:82, price:'14.0M'},
+      {n:14, name:'Marcos Llorente',       pos:'MED', pot:82, cal:80, vel:84, vis:78, price:'12.0M'},
+      {n:6,  name:'Koke',                  pos:'MED', pot:76, cal:82, vel:72, vis:86, price:'5.0M'},
+      {n:16, name:'Thomas Lemar',          pos:'MED', pot:74, cal:82, vel:80, vis:80, price:'6.0M'},
+      {n:23, name:'Pablo Barrios',         pos:'MED', pot:76, cal:78, vel:76, vis:76, price:'10.0M'},
+      {n:10, name:'Antoine Griezmann',     pos:'MED', pot:76, cal:92, vel:80, vis:92, price:'18.0M'},
+      {n:11, name:'Ángel Correa',          pos:'EXT', pot:76, cal:80, vel:82, vis:76, price:'8.0M'},
+      {n:17, name:'Giuliano Simeone',      pos:'EXT', pot:74, cal:74, vel:84, vis:70, price:'7.0M'},
+      {n:19, name:'Alexander Sørloth',     pos:'DEL', pot:86, cal:76, vel:78, vis:70, price:'14.0M'},
+      {n:9,  name:'Julián Álvarez',        pos:'DEL', pot:82, cal:86, vel:82, vis:82, price:'32.0M'},
+      {n:7,  name:'Memphis Depay',         pos:'DEL', pot:80, cal:84, vel:82, vis:78, price:'6.0M'},
+      {n:21, name:'Conor Gallagher',       pos:'MED', pot:82, cal:78, vel:80, vis:74, price:'16.0M'},
+      {n:22, name:'José María Giménez',    pos:'DEF', pot:88, cal:74, vel:72, vis:68, price:'8.0M'},
+    ]
+  },
+  {
+    id:'sev', name:'Sevilla FC', emoji:'⚪🔴', color:'#d4a017',
+    desc:'Histórico europeo en reconstrucción. Combinación de veteranos y jóvenes promesas.',
+    players:[
+      {n:1,  name:'Álvaro Fernández',      pos:'POR', pot:74, cal:76, vel:50, vis:72, price:'5.0M'},
+      {n:25, name:'Orjan Nyland',          pos:'POR', pot:72, cal:72, vel:48, vis:68, price:'2.5M'},
+      {n:2,  name:'Jesús Navas',           pos:'DEF', pot:70, cal:74, vel:78, vis:72, price:'2.0M'},
+      {n:4,  name:'Tanguy Nianzou',        pos:'DEF', pot:84, cal:72, vel:80, vis:66, price:'8.0M'},
+      {n:5,  name:'Loïc Badé',             pos:'DEF', pot:84, cal:74, vel:76, vis:68, price:'10.0M'},
+      {n:23, name:'Marcos Acuña',          pos:'DEF', pot:78, cal:74, vel:78, vis:72, price:'4.0M'},
+      {n:12, name:'Adrià Pedrosa',         pos:'DEF', pot:72, cal:72, vel:80, vis:70, price:'5.0M'},
+      {n:6,  name:'Guido Rodríguez',       pos:'MED', pot:80, cal:78, vel:70, vis:76, price:'5.0M'},
+      {n:8,  name:'Joan Jordán',           pos:'MED', pot:78, cal:78, vel:74, vis:76, price:'6.0M'},
+      {n:10, name:'Dodi Lukébakio',        pos:'EXT', pot:78, cal:78, vel:88, vis:72, price:'9.0M'},
+      {n:14, name:'Nemanja Gudelj',        pos:'MED', pot:80, cal:76, vel:68, vis:74, price:'4.0M'},
+      {n:16, name:'Samy Mmaee',            pos:'DEF', pot:82, cal:70, vel:72, vis:64, price:'4.5M'},
+      {n:17, name:'Lucien Agoumé',         pos:'MED', pot:76, cal:76, vel:74, vis:74, price:'6.0M'},
+      {n:19, name:'Peque',                 pos:'EXT', pot:68, cal:74, vel:84, vis:70, price:'4.0M'},
+      {n:9,  name:'Isaac Romero',          pos:'DEL', pot:80, cal:76, vel:76, vis:70, price:'8.0M'},
+      {n:11, name:'Kelechi Iheanacho',     pos:'DEL', pot:78, cal:76, vel:74, vis:72, price:'4.0M'},
+      {n:7,  name:'Chidera Ejuke',         pos:'EXT', pot:72, cal:72, vel:88, vis:66, price:'4.0M'},
+      {n:20, name:'Juanlu Sánchez',        pos:'DEF', pot:72, cal:72, vel:80, vis:68, price:'5.0M'},
+      {n:22, name:'Óliver Torres',         pos:'MED', pot:70, cal:76, vel:72, vis:76, price:'3.0M'},
+      {n:18, name:'Valentín Barco',        pos:'DEF', pot:72, cal:72, vel:84, vis:68, price:'5.0M'},
+      {n:21, name:'Rafa Mir',              pos:'DEL', pot:78, cal:72, vel:70, vis:66, price:'4.0M'},
+      {n:3,  name:'Alberto Flores',        pos:'DEF', pot:74, cal:68, vel:72, vis:64, price:'2.5M'},
+    ]
+  },
+  {
+    id:'bet', name:'Real Betis Balompié', emoji:'🟢⚪', color:'#00a650',
+    desc:'El equipo del pueblo sevillano. Técnico, vistoso y con uno de los mejores mediocampos de España.',
+    players:[
+      {n:1,  name:'Rui Silva',             pos:'POR', pot:76, cal:78, vel:52, vis:74, price:'6.0M'},
+      {n:13, name:'Adrián San Miguel',     pos:'POR', pot:72, cal:72, vel:48, vis:68, price:'2.0M'},
+      {n:2,  name:'Héctor Bellerín',       pos:'DEF', pot:76, cal:74, vel:80, vis:72, price:'3.5M'},
+      {n:4,  name:'Natan',                 pos:'DEF', pot:82, cal:72, vel:76, vis:66, price:'7.0M'},
+      {n:5,  name:'Marc Bartra',           pos:'DEF', pot:78, cal:76, vel:70, vis:72, price:'3.5M'},
+      {n:3,  name:'Ricardo Rodríguez',     pos:'DEF', pot:76, cal:74, vel:74, vis:70, price:'3.0M'},
+      {n:23, name:'Aitor Ruibal',          pos:'DEF', pot:74, cal:72, vel:80, vis:68, price:'4.0M'},
+      {n:6,  name:'Guido Rodríguez',       pos:'MED', pot:80, cal:78, vel:70, vis:76, price:'5.0M'},
+      {n:8,  name:'Johnny Cardoso',        pos:'MED', pot:80, cal:78, vel:74, vis:74, price:'9.0M'},
+      {n:14, name:'Sergi Altimira',        pos:'MED', pot:74, cal:76, vel:72, vis:74, price:'5.0M'},
+      {n:10, name:'Isco',                  pos:'MED', pot:68, cal:90, vel:68, vis:92, price:'6.0M'},
+      {n:19, name:'Giovani Lo Celso',      pos:'MED', pot:74, cal:84, vel:76, vis:86, price:'8.0M'},
+      {n:16, name:'Jesús Rodríguez',       pos:'EXT', pot:70, cal:78, vel:84, vis:76, price:'7.0M'},
+      {n:17, name:'Antony',                pos:'EXT', pot:72, cal:78, vel:86, vis:72, price:'8.0M'},
+      {n:7,  name:'Abde Ezzalzouli',       pos:'EXT', pot:68, cal:78, vel:90, vis:72, price:'9.0M'},
+      {n:11, name:'Assane Diao',           pos:'EXT', pot:70, cal:76, vel:88, vis:70, price:'7.0M'},
+      {n:9,  name:'Vitor Roque',           pos:'DEL', pot:80, cal:78, vel:82, vis:70, price:'10.0M'},
+      {n:18, name:'Chimy Ávila',           pos:'DEL', pot:80, cal:74, vel:80, vis:68, price:'6.0M'},
+      {n:21, name:'Ez Abde',               pos:'EXT', pot:68, cal:74, vel:88, vis:68, price:'5.0M'},
+      {n:20, name:'Pablo Fornals',         pos:'MED', pot:74, cal:80, vel:76, vis:80, price:'7.0M'},
+      {n:22, name:'Marc Roca',             pos:'MED', pot:76, cal:76, vel:70, vis:74, price:'5.0M'},
+      {n:15, name:'Germán Pezzella',       pos:'DEF', pot:80, cal:72, vel:66, vis:68, price:'2.5M'},
+    ]
+  },
+  {
+    id:'val', name:'Valencia CF', emoji:'🦇', color:'#f5a623',
+    desc:'El club del Mediterráneo. Histórico en recuperación con una afición apasionada y Mestalla rugiendo.',
+    players:[
+      {n:1,  name:'Giorgi Mamardashvili',  pos:'POR', pot:78, cal:84, vel:54, vis:78, price:'14.0M'},
+      {n:13, name:'Jaume Domènech',        pos:'POR', pot:72, cal:72, vel:48, vis:68, price:'1.5M'},
+      {n:2,  name:'Cristhian Mosquera',    pos:'DEF', pot:82, cal:72, vel:78, vis:66, price:'9.0M'},
+      {n:4,  name:'Yarek Gasiorowski',     pos:'DEF', pot:80, cal:74, vel:76, vis:68, price:'8.0M'},
+      {n:5,  name:'Cenk Özkacar',          pos:'DEF', pot:80, cal:72, vel:72, vis:66, price:'6.0M'},
+      {n:3,  name:'José Gayà',             pos:'DEF', pot:76, cal:76, vel:78, vis:74, price:'6.0M'},
+      {n:23, name:'Thierry Correia',       pos:'DEF', pot:74, cal:72, vel:80, vis:68, price:'4.0M'},
+      {n:6,  name:'Pepelu',                pos:'MED', pot:76, cal:78, vel:74, vis:76, price:'7.0M'},
+      {n:8,  name:'André Almeida',         pos:'MED', pot:78, cal:76, vel:76, vis:74, price:'5.0M'},
+      {n:14, name:'Javi Guerra',           pos:'MED', pot:76, cal:76, vel:72, vis:74, price:'7.0M'},
+      {n:10, name:'Dani Parejo',           pos:'MED', pot:70, cal:86, vel:64, vis:90, price:'5.0M'},
+      {n:16, name:'Hugo Guillamón',        pos:'MED', pot:76, cal:74, vel:70, vis:72, price:'5.0M'},
+      {n:7,  name:'Jesús Vázquez',         pos:'DEF', pot:74, cal:72, vel:80, vis:68, price:'5.0M'},
+      {n:17, name:'Rafa Mir',              pos:'DEL', pot:78, cal:72, vel:70, vis:66, price:'4.0M'},
+      {n:9,  name:'Hugo Duro',             pos:'DEL', pot:80, cal:72, vel:72, vis:68, price:'6.0M'},
+      {n:11, name:'Milos Vukcevic',        pos:'MED', pot:78, cal:76, vel:74, vis:74, price:'6.0M'},
+      {n:19, name:'Diego López',           pos:'EXT', pot:70, cal:74, vel:82, vis:70, price:'5.0M'},
+      {n:18, name:'Sergi Canós',           pos:'EXT', pot:72, cal:74, vel:82, vis:68, price:'4.0M'},
+      {n:20, name:'Justin Kluivert',       pos:'EXT', pot:74, cal:78, vel:84, vis:74, price:'7.0M'},
+      {n:21, name:'Luis Rioja',            pos:'EXT', pot:70, cal:74, vel:82, vis:70, price:'4.0M'},
+      {n:22, name:'Marcos André',          pos:'DEL', pot:78, cal:70, vel:70, vis:64, price:'3.5M'},
+      {n:15, name:'Dimitri Foulquier',     pos:'DEF', pot:74, cal:68, vel:76, vis:64, price:'2.5M'},
+    ]
+  },
+  {
+    id:'vil', name:'Villarreal CF', emoji:'🟡', color:'#f7d117',
+    desc:'El submarino amarillo. Potente en Europa, sólido en liga y con una de las mejores canteras.',
+    players:[
+      {n:1,  name:'Filip Jörgensen',       pos:'POR', pot:76, cal:80, vel:52, vis:76, price:'7.0M'},
+      {n:13, name:'Sergio Asenjo',         pos:'POR', pot:72, cal:74, vel:46, vis:68, price:'1.5M'},
+      {n:2,  name:'Alfonso Pedraza',       pos:'DEF', pot:76, cal:74, vel:82, vis:70, price:'7.0M'},
+      {n:4,  name:'Pau Torres',            pos:'DEF', pot:84, cal:80, vel:72, vis:76, price:'18.0M'},
+      {n:5,  name:'Raúl Albiol',           pos:'DEF', pot:80, cal:78, vel:62, vis:74, price:'2.5M'},
+      {n:3,  name:'Jorge Cuenca',          pos:'DEF', pot:80, cal:72, vel:72, vis:68, price:'6.0M'},
+      {n:23, name:'Juan Foyth',            pos:'DEF', pot:80, cal:74, vel:78, vis:70, price:'8.0M'},
+      {n:6,  name:'Étienne Capoue',        pos:'MED', pot:82, cal:76, vel:70, vis:72, price:'2.0M'},
+      {n:8,  name:'Samu Chukwueze',        pos:'EXT', pot:74, cal:80, vel:88, vis:72, price:'8.0M'},
+      {n:14, name:'Manu Trigueros',        pos:'MED', pot:72, cal:78, vel:70, vis:78, price:'2.0M'},
+      {n:10, name:'Dani Parejo',           pos:'MED', pot:70, cal:86, vel:64, vis:90, price:'5.0M'},
+      {n:16, name:'Alex Baena',            pos:'MED', pot:72, cal:84, vel:80, vis:84, price:'18.0M'},
+      {n:17, name:'Yeremy Pino',           pos:'EXT', pot:72, cal:80, vel:86, vis:76, price:'14.0M'},
+      {n:7,  name:'Ilias Akhomach',        pos:'EXT', pot:68, cal:78, vel:88, vis:74, price:'8.0M'},
+      {n:9,  name:'Ayoze Pérez',           pos:'DEL', pot:74, cal:80, vel:76, vis:78, price:'5.0M'},
+      {n:11, name:'José Luis Morales',     pos:'EXT', pot:72, cal:76, vel:82, vis:72, price:'2.5M'},
+      {n:19, name:'Thierno Barry',         pos:'DEL', pot:80, cal:74, vel:80, vis:68, price:'9.0M'},
+      {n:18, name:'Serge Gnabry',          pos:'EXT', pot:76, cal:82, vel:86, vis:76, price:'10.0M'},
+      {n:20, name:'Arnaut Danjuma',        pos:'EXT', pot:74, cal:76, vel:86, vis:70, price:'6.0M'},
+      {n:21, name:'Christian Terán',       pos:'DEF', pot:74, cal:70, vel:74, vis:66, price:'4.0M'},
+      {n:22, name:'Giorgi Mamardashvili',  pos:'POR', pot:78, cal:84, vel:54, vis:78, price:'14.0M'},
+      {n:15, name:'Francis Coquelin',      pos:'MED', pot:80, cal:72, vel:68, vis:68, price:'1.5M'},
+    ]
+  },
+  {
+    id:'rso', name:'Real Sociedad', emoji:'🔵⚪', color:'#003087',
+    desc:'La Real de Imanol. Juego combinativo, canteranos y un San Sebastián que respira fútbol.',
+    players:[
+      {n:1,  name:'Álex Remiro',           pos:'POR', pot:76, cal:82, vel:52, vis:76, price:'8.0M'},
+      {n:13, name:'Unai Marrero',          pos:'POR', pot:68, cal:68, vel:46, vis:62, price:'1.5M'},
+      {n:2,  name:'Aritz Elustondo',       pos:'DEF', pot:78, cal:72, vel:70, vis:68, price:'3.5M'},
+      {n:4,  name:'Nayef Aguerd',          pos:'DEF', pot:84, cal:74, vel:72, vis:68, price:'8.0M'},
+      {n:5,  name:'Igor Zubeldia',         pos:'DEF', pot:80, cal:74, vel:70, vis:70, price:'6.0M'},
+      {n:3,  name:'Aihen Muñoz',           pos:'DEF', pot:74, cal:72, vel:80, vis:68, price:'5.0M'},
+      {n:23, name:'Hamari Traoré',         pos:'DEF', pot:76, cal:70, vel:80, vis:66, price:'4.0M'},
+      {n:6,  name:'Martín Zubimendi',      pos:'MED', pot:78, cal:84, vel:74, vis:84, price:'18.0M'},
+      {n:8,  name:'Mikel Merino',          pos:'MED', pot:82, cal:82, vel:74, vis:80, price:'14.0M'},
+      {n:14, name:'Ander Barrenetxea',     pos:'EXT', pot:70, cal:80, vel:84, vis:76, price:'10.0M'},
+      {n:10, name:'Mikel Oyarzabal',       pos:'DEL', pot:76, cal:86, vel:80, vis:86, price:'22.0M'},
+      {n:16, name:'Beñat Turrientes',      pos:'MED', pot:74, cal:76, vel:72, vis:74, price:'6.0M'},
+      {n:17, name:'Take Kubo',             pos:'EXT', pot:70, cal:84, vel:84, vis:82, price:'18.0M'},
+      {n:7,  name:'Carlos Fernández',      pos:'DEL', pot:78, cal:74, vel:74, vis:68, price:'5.0M'},
+      {n:9,  name:'Sheraldo Becker',       pos:'EXT', pot:74, cal:74, vel:88, vis:68, price:'6.0M'},
+      {n:11, name:'Jon Karrikaburu',       pos:'DEL', pot:74, cal:72, vel:76, vis:68, price:'4.0M'},
+      {n:19, name:'Ander Guevara',         pos:'MED', pot:74, cal:74, vel:70, vis:72, price:'4.0M'},
+      {n:18, name:'Pablo Marín',           pos:'MED', pot:70, cal:72, vel:68, vis:70, price:'3.0M'},
+      {n:20, name:'Luca Sangalli',         pos:'MED', pot:72, cal:72, vel:70, vis:70, price:'3.5M'},
+      {n:21, name:'Mohamed Ali Cho',       pos:'EXT', pot:74, cal:74, vel:88, vis:68, price:'7.0M'},
+      {n:22, name:'Kieran Tierney',        pos:'DEF', pot:76, cal:72, vel:78, vis:68, price:'5.0M'},
+      {n:15, name:'Brais Méndez',          pos:'MED', pot:74, cal:80, vel:76, vis:78, price:'9.0M'},
+    ]
+  },
+  {
+    id:'ath', name:'Athletic Club', emoji:'🔴⚪', color:'#ee2523',
+    desc:'Solo vascos, solo orgullo. El modelo único del fútbol mundial con una cantera inagotable.',
+    players:[
+      {n:1,  name:'Unai Simón',            pos:'POR', pot:76, cal:82, vel:54, vis:76, price:'12.0M'},
+      {n:13, name:'Julen Agirrezabala',    pos:'POR', pot:72, cal:72, vel:50, vis:68, price:'3.0M'},
+      {n:2,  name:'Óscar de Marcos',       pos:'DEF', pot:76, cal:74, vel:76, vis:72, price:'3.0M'},
+      {n:4,  name:'Dani Vivian',           pos:'DEF', pot:84, cal:74, vel:74, vis:68, price:'10.0M'},
+      {n:5,  name:'Yeray Álvarez',         pos:'DEF', pot:84, cal:72, vel:70, vis:66, price:'7.0M'},
+      {n:3,  name:'Yuri Berchiche',        pos:'DEF', pot:76, cal:72, vel:76, vis:68, price:'3.0M'},
+      {n:23, name:'Luca Unzueta',          pos:'DEF', pot:72, cal:68, vel:72, vis:64, price:'3.0M'},
+      {n:6,  name:'Mikel Vesga',           pos:'MED', pot:82, cal:74, vel:72, vis:70, price:'4.0M'},
+      {n:8,  name:'Oihan Sancet',          pos:'MED', pot:76, cal:82, vel:74, vis:80, price:'16.0M'},
+      {n:14, name:'Mikel Jauregizar',      pos:'MED', pot:74, cal:76, vel:72, vis:72, price:'5.0M'},
+      {n:10, name:'Iker Muniain',          pos:'MED', pot:70, cal:86, vel:72, vis:88, price:'5.0M'},
+      {n:16, name:'Dani García',           pos:'MED', pot:80, cal:76, vel:70, vis:72, price:'5.0M'},
+      {n:17, name:'Gorka Guruzeta',        pos:'DEL', pot:82, cal:74, vel:72, vis:68, price:'8.0M'},
+      {n:7,  name:'Iñaki Williams',        pos:'EXT', pot:78, cal:76, vel:92, vis:70, price:'14.0M'},
+      {n:9,  name:'Nico Williams',         pos:'EXT', pot:74, cal:82, vel:94, vis:78, price:'30.0M'},
+      {n:11, name:'Álex Berenguer',        pos:'EXT', pot:74, cal:76, vel:84, vis:72, price:'6.0M'},
+      {n:19, name:'Unai Gómez',            pos:'MED', pot:72, cal:72, vel:72, vis:70, price:'3.5M'},
+      {n:18, name:'Aitor Paredes',         pos:'DEF', pot:80, cal:70, vel:70, vis:64, price:'5.0M'},
+      {n:20, name:'Beñat García',          pos:'MED', pot:72, cal:74, vel:70, vis:74, price:'4.0M'},
+      {n:21, name:'Jon Morcillo',          pos:'EXT', pot:70, cal:72, vel:82, vis:68, price:'4.0M'},
+      {n:22, name:'Asier Villalibre',      pos:'DEL', pot:82, cal:68, vel:70, vis:62, price:'3.5M'},
+      {n:15, name:'Mikel Balenziaga',      pos:'DEF', pot:72, cal:68, vel:70, vis:62, price:'1.5M'},
+    ]
+  },
+  {
+    id:'gir', name:'Girona FC', emoji:'🔴⚪', color:'#cc0000',
+    desc:'La sorpresa de las últimas temporadas. Fútbol ofensivo y vertical bajo el proyecto City Football Group.',
+    players:[
+      {n:1,  name:'Paulo Gazzaniga',       pos:'POR', pot:74, cal:76, vel:50, vis:72, price:'5.0M'},
+      {n:13, name:'Juan Carlos',           pos:'POR', pot:70, cal:70, vel:46, vis:64, price:'1.5M'},
+      {n:2,  name:'Arnau Martínez',        pos:'DEF', pot:74, cal:72, vel:80, vis:68, price:'7.0M'},
+      {n:4,  name:'Daley Blind',           pos:'DEF', pot:72, cal:80, vel:64, vis:78, price:'3.0M'},
+      {n:5,  name:'Sávio',                 pos:'EXT', pot:70, cal:82, vel:92, vis:76, price:'18.0M'},
+      {n:3,  name:'Miguel Gutiérrez',      pos:'DEF', pot:74, cal:74, vel:82, vis:70, price:'8.0M'},
+      {n:23, name:'Reinier',               pos:'MED', pot:72, cal:74, vel:72, vis:72, price:'3.5M'},
+      {n:6,  name:'Oriol Romeu',           pos:'MED', pot:78, cal:76, vel:66, vis:74, price:'5.0M'},
+      {n:8,  name:'Aleix García',          pos:'MED', pot:72, cal:82, vel:68, vis:84, price:'12.0M'},
+      {n:14, name:'Iván Martín',           pos:'MED', pot:72, cal:78, vel:72, vis:78, price:'8.0M'},
+      {n:10, name:'Yangel Herrera',        pos:'MED', pot:80, cal:78, vel:74, vis:74, price:'9.0M'},
+      {n:16, name:'Cristhian Stuani',      pos:'DEL', pot:78, cal:74, vel:72, vis:68, price:'2.5M'},
+      {n:17, name:'Viktor Tsygankov',      pos:'EXT', pot:72, cal:76, vel:84, vis:72, price:'7.0M'},
+      {n:7,  name:'Donny van de Beek',     pos:'MED', pot:74, cal:80, vel:74, vis:78, price:'5.0M'},
+      {n:9,  name:'Taty Castellanos',      pos:'DEL', pot:78, cal:78, vel:78, vis:70, price:'10.0M'},
+      {n:11, name:'Yaser Asprilla',        pos:'EXT', pot:70, cal:74, vel:86, vis:70, price:'7.0M'},
+      {n:19, name:'Eric García',           pos:'DEF', pot:78, cal:76, vel:72, vis:74, price:'5.0M'},
+      {n:18, name:'Ladislav Krejčí',       pos:'DEF', pot:78, cal:72, vel:72, vis:66, price:'5.0M'},
+      {n:20, name:'Óscar Mingueza',        pos:'DEF', pot:76, cal:74, vel:78, vis:70, price:'6.0M'},
+      {n:21, name:'Paulo Gazzaniga',       pos:'POR', pot:74, cal:76, vel:50, vis:72, price:'5.0M'},
+      {n:22, name:'Jhon Solís',            pos:'MED', pot:72, cal:72, vel:72, vis:68, price:'3.0M'},
+      {n:15, name:'Ricard Artero',         pos:'DEL', pot:72, cal:70, vel:74, vis:66, price:'3.0M'},
+    ]
+  },
+  {
+    id:'osr', name:'Osasuna', emoji:'🔴', color:'#d4182a',
+    desc:'La fortaleza de Pamplona. Intenso, físico y con El Sadar como decimosegundo jugador.',
+    players:[
+      {n:1,  name:'Sergio Herrera',        pos:'POR', pot:74, cal:76, vel:50, vis:70, price:'5.0M'},
+      {n:13, name:'Juan Pérez',            pos:'POR', pot:68, cal:68, vel:44, vis:62, price:'1.5M'},
+      {n:2,  name:'Nacho Vidal',           pos:'DEF', pot:76, cal:70, vel:76, vis:66, price:'4.0M'},
+      {n:4,  name:'David García',          pos:'DEF', pot:82, cal:72, vel:68, vis:66, price:'8.0M'},
+      {n:5,  name:'Aridane',               pos:'DEF', pot:80, cal:68, vel:66, vis:62, price:'3.5M'},
+      {n:3,  name:'Juan Cruz',             pos:'DEF', pot:74, cal:68, vel:74, vis:64, price:'3.0M'},
+      {n:23, name:'Manu Sánchez',          pos:'DEF', pot:72, cal:70, vel:76, vis:66, price:'4.0M'},
+      {n:6,  name:'Lucas Torró',           pos:'MED', pot:80, cal:72, vel:70, vis:68, price:'4.0M'},
+      {n:8,  name:'Jon Moncayola',         pos:'MED', pot:76, cal:74, vel:72, vis:70, price:'5.0M'},
+      {n:14, name:'Darko Brasanac',        pos:'MED', pot:76, cal:72, vel:68, vis:70, price:'3.0M'},
+      {n:10, name:'Ante Budimir',          pos:'DEL', pot:84, cal:72, vel:70, vis:66, price:'8.0M'},
+      {n:16, name:'Abde Rebbach',          pos:'EXT', pot:68, cal:72, vel:86, vis:68, price:'5.0M'},
+      {n:17, name:'Rubén García',          pos:'EXT', pot:70, cal:76, vel:76, vis:74, price:'5.0M'},
+      {n:7,  name:'Ezequiel Ávila',        pos:'EXT', pot:70, cal:72, vel:80, vis:68, price:'4.0M'},
+      {n:9,  name:'Bryan Zaragoza',        pos:'EXT', pot:68, cal:74, vel:88, vis:70, price:'6.0M'},
+      {n:11, name:'Chimy Ávila',           pos:'DEL', pot:80, cal:72, vel:80, vis:66, price:'5.0M'},
+      {n:19, name:'Kike García',           pos:'DEL', pot:80, cal:68, vel:70, vis:62, price:'3.5M'},
+      {n:18, name:'Iker Muñoz',            pos:'MED', pot:72, cal:68, vel:68, vis:66, price:'2.5M'},
+      {n:20, name:'Pablo Ibáñez',          pos:'DEF', pot:74, cal:66, vel:68, vis:62, price:'2.5M'},
+      {n:21, name:'Iñigo Pérez',           pos:'MED', pot:72, cal:68, vel:68, vis:66, price:'2.5M'},
+      {n:22, name:'Herrando',              pos:'DEF', pot:74, cal:66, vel:66, vis:62, price:'2.0M'},
+      {n:15, name:'Oier Zarranz',          pos:'DEL', pot:72, cal:66, vel:70, vis:62, price:'2.0M'},
+    ]
+  },
+  {
+    id:'cel', name:'RC Celta de Vigo', emoji:'🔵', color:'#6ab3e4',
+    desc:'El equipo de las Rías Bajas. Histórico del fútbol español con afición apasionada y Balaídos vibrante.',
+    players:[
+      {n:1,  name:'Iván Villar',           pos:'POR', pot:74, cal:74, vel:50, vis:68, price:'4.0M'},
+      {n:13, name:'Agustín Marchesín',     pos:'POR', pot:72, cal:72, vel:46, vis:66, price:'2.0M'},
+      {n:2,  name:'Kevin Vázquez',         pos:'DEF', pot:74, cal:70, vel:76, vis:66, price:'3.5M'},
+      {n:4,  name:'Carl Starfelt',         pos:'DEF', pot:80, cal:72, vel:72, vis:66, price:'6.0M'},
+      {n:5,  name:'Unai Núñez',            pos:'DEF', pot:78, cal:72, vel:70, vis:66, price:'5.0M'},
+      {n:3,  name:'Mihailo Ristic',        pos:'DEF', pot:74, cal:70, vel:76, vis:66, price:'4.0M'},
+      {n:23, name:'Hugo Álvarez',          pos:'DEF', pot:70, cal:66, vel:70, vis:62, price:'2.5M'},
+      {n:6,  name:'Fran Beltrán',          pos:'MED', pot:74, cal:78, vel:70, vis:76, price:'6.0M'},
+      {n:8,  name:'Oscar Mingueza',        pos:'DEF', pot:76, cal:74, vel:78, vis:70, price:'6.0M'},
+      {n:14, name:'Luca de la Torre',      pos:'MED', pot:72, cal:76, vel:70, vis:74, price:'5.0M'},
+      {n:10, name:'Iago Aspas',            pos:'DEL', pot:72, cal:90, vel:78, vis:88, price:'9.0M'},
+      {n:16, name:'Damián Rodríguez',      pos:'MED', pot:76, cal:72, vel:74, vis:68, price:'4.0M'},
+      {n:17, name:'Williot Swedberg',      pos:'MED', pot:72, cal:74, vel:74, vis:72, price:'6.0M'},
+      {n:7,  name:'Carles Pérez',          pos:'EXT', pot:70, cal:74, vel:80, vis:70, price:'5.0M'},
+      {n:9,  name:'Borja Iglesias',        pos:'DEL', pot:80, cal:74, vel:68, vis:68, price:'7.0M'},
+      {n:11, name:'Franco Cervi',          pos:'EXT', pot:70, cal:72, vel:82, vis:66, price:'3.5M'},
+      {n:19, name:'Jørgen Strand Larsen',  pos:'DEL', pot:82, cal:74, vel:72, vis:66, price:'9.0M'},
+      {n:18, name:'Anastasios Douvikas',   pos:'DEL', pot:80, cal:70, vel:72, vis:64, price:'5.0M'},
+      {n:20, name:'Patrick',               pos:'DEF', pot:72, cal:66, vel:68, vis:60, price:'2.0M'},
+      {n:21, name:'Tanis',                 pos:'MED', pot:68, cal:66, vel:68, vis:64, price:'1.5M'},
+      {n:22, name:'Luis Solá',             pos:'POR', pot:68, cal:66, vel:44, vis:60, price:'1.0M'},
+      {n:15, name:'Hugo Sotelo',           pos:'MED', pot:70, cal:70, vel:70, vis:68, price:'2.5M'},
+    ]
+  },
+  {
+    id:'get', name:'Getafe CF', emoji:'🔵', color:'#005fa8',
+    desc:'El equipo del sur de Madrid. Físico, intenso y con Bordalás como referente del fútbol directo.',
+    players:[
+      {n:1,  name:'David Soria',           pos:'POR', pot:74, cal:76, vel:50, vis:70, price:'5.0M'},
+      {n:13, name:'Jon Ander Olasagasti',  pos:'POR', pot:68, cal:66, vel:44, vis:60, price:'1.0M'},
+      {n:2,  name:'Damián Suárez',         pos:'DEF', pot:78, cal:70, vel:74, vis:66, price:'3.5M'},
+      {n:4,  name:'Djené Dakonam',         pos:'DEF', pot:82, cal:66, vel:72, vis:60, price:'4.0M'},
+      {n:5,  name:'Stefan Mitrović',       pos:'DEF', pot:82, cal:66, vel:68, vis:60, price:'3.0M'},
+      {n:3,  name:'Juan Iglesias',         pos:'DEF', pot:74, cal:66, vel:72, vis:62, price:'2.5M'},
+      {n:23, name:'Mathías Olivera',       pos:'DEF', pot:76, cal:68, vel:80, vis:64, price:'4.0M'},
+      {n:6,  name:'Mauro Arambarri',       pos:'MED', pot:82, cal:72, vel:72, vis:68, price:'6.0M'},
+      {n:8,  name:'Jakub Jankto',          pos:'MED', pot:74, cal:70, vel:72, vis:66, price:'2.5M'},
+      {n:14, name:'Nemanja Maksimović',    pos:'MED', pot:80, cal:70, vel:70, vis:66, price:'3.5M'},
+      {n:10, name:'Óscar Rodríguez',       pos:'MED', pot:72, cal:76, vel:70, vis:76, price:'5.0M'},
+      {n:16, name:'Luis Milla',            pos:'MED', pot:74, cal:72, vel:68, vis:72, price:'3.5M'},
+      {n:17, name:'Carles Alena',          pos:'MED', pot:70, cal:74, vel:68, vis:72, price:'3.0M'},
+      {n:7,  name:'Jaime Mata',            pos:'DEL', pot:74, cal:72, vel:68, vis:68, price:'2.5M'},
+      {n:9,  name:'Borja Mayoral',         pos:'DEL', pot:76, cal:74, vel:72, vis:70, price:'6.0M'},
+      {n:11, name:'Mason Greenwood',       pos:'EXT', pot:78, cal:82, vel:82, vis:76, price:'16.0M'},
+      {n:19, name:'Álvaro Rodríguez',      pos:'DEL', pot:74, cal:72, vel:72, vis:66, price:'4.0M'},
+      {n:18, name:'Juan Latasa',           pos:'DEL', pot:76, cal:68, vel:70, vis:62, price:'3.5M'},
+      {n:20, name:'Diego Rico',            pos:'DEF', pot:72, cal:66, vel:72, vis:62, price:'2.0M'},
+      {n:21, name:'Domingos Quina',        pos:'MED', pot:70, cal:70, vel:68, vis:68, price:'2.5M'},
+      {n:22, name:'Coba',                  pos:'DEF', pot:72, cal:64, vel:66, vis:58, price:'1.5M'},
+      {n:15, name:'Chema Rodríguez',       pos:'DEF', pot:70, cal:62, vel:64, vis:56, price:'1.0M'},
+    ]
+  },
+  {
+    id:'ray', name:'Rayo Vallecano', emoji:'⚡', color:'#e30613',
+    desc:'El equipo del pueblo de Madrid. Combativo, con Vallecas rugiendo y valores por encima de todo.',
+    players:[
+      {n:1,  name:'Stole Dimitrievski',    pos:'POR', pot:74, cal:74, vel:48, vis:68, price:'4.5M'},
+      {n:13, name:'Luca Zidane',           pos:'POR', pot:66, cal:64, vel:42, vis:58, price:'1.0M'},
+      {n:2,  name:'Iván Balliu',           pos:'DEF', pot:74, cal:68, vel:78, vis:64, price:'3.0M'},
+      {n:4,  name:'Alejandro Catena',      pos:'DEF', pot:78, cal:68, vel:66, vis:62, price:'3.5M'},
+      {n:5,  name:'Florian Lejeune',       pos:'DEF', pot:78, cal:70, vel:66, vis:64, price:'2.5M'},
+      {n:3,  name:'Fran García',           pos:'DEF', pot:74, cal:70, vel:80, vis:66, price:'5.0M'},
+      {n:23, name:'Sergio Camello',        pos:'DEL', pot:74, cal:70, vel:72, vis:64, price:'4.0M'},
+      {n:6,  name:'Óscar Valentín',        pos:'MED', pot:74, cal:68, vel:68, vis:64, price:'2.5M'},
+      {n:8,  name:'Pathe Ciss',            pos:'MED', pot:78, cal:68, vel:72, vis:64, price:'3.0M'},
+      {n:14, name:'Álvaro García',         pos:'EXT', pot:72, cal:74, vel:78, vis:70, price:'4.0M'},
+      {n:10, name:'Isi Palazón',           pos:'EXT', pot:70, cal:76, vel:80, vis:74, price:'5.0M'},
+      {n:16, name:'Unai López',            pos:'MED', pot:72, cal:72, vel:70, vis:70, price:'3.5M'},
+      {n:17, name:'Pathé Ciss',            pos:'MED', pot:78, cal:68, vel:72, vis:64, price:'3.0M'},
+      {n:7,  name:'Randy Nteka',           pos:'EXT', pot:74, cal:70, vel:76, vis:66, price:'3.5M'},
+      {n:9,  name:'Raúl de Tomás',         pos:'DEL', pot:76, cal:76, vel:70, vis:72, price:'6.0M'},
+      {n:11, name:'Jorge de Frutos',       pos:'EXT', pot:70, cal:72, vel:78, vis:68, price:'4.0M'},
+      {n:19, name:'Andrés Martín',         pos:'DEL', pot:72, cal:66, vel:68, vis:60, price:'2.0M'},
+      {n:18, name:'José Pozo',             pos:'MED', pot:68, cal:68, vel:68, vis:66, price:'2.0M'},
+      {n:20, name:'Pedro Díaz',            pos:'MED', pot:70, cal:68, vel:66, vis:64, price:'2.0M'},
+      {n:21, name:'Pelayo Morilla',        pos:'EXT', pot:68, cal:66, vel:72, vis:62, price:'2.0M'},
+      {n:22, name:'Aridai',                pos:'DEF', pot:68, cal:62, vel:64, vis:56, price:'1.0M'},
+      {n:15, name:'Esteban Saveljich',     pos:'DEF', pot:76, cal:64, vel:62, vis:56, price:'1.5M'},
+    ]
+  },
+  {
+    id:'mll', name:'RCD Mallorca', emoji:'🔴', color:'#cc0000',
+    desc:'La isla del fútbol. Defensivo y trabajado, con Son Moix como reducto inexpugnable.',
+    players:[
+      {n:1,  name:'Predrag Rajković',      pos:'POR', pot:74, cal:76, vel:48, vis:70, price:'5.0M'},
+      {n:13, name:'Leo Román',             pos:'POR', pot:68, cal:68, vel:44, vis:60, price:'2.0M'},
+      {n:2,  name:'Pablo Maffeo',          pos:'DEF', pot:76, cal:68, vel:76, vis:62, price:'4.0M'},
+      {n:4,  name:'Vedat Muriqi',          pos:'DEL', pot:84, cal:68, vel:70, vis:60, price:'7.0M'},
+      {n:5,  name:'Antonio Raíllo',        pos:'DEF', pot:80, cal:68, vel:64, vis:62, price:'3.5M'},
+      {n:3,  name:'Jaume Costa',           pos:'DEF', pot:72, cal:66, vel:70, vis:62, price:'2.0M'},
+      {n:23, name:'Brian Oliván',          pos:'DEF', pot:72, cal:66, vel:72, vis:60, price:'2.5M'},
+      {n:6,  name:'Iddrisu Baba',          pos:'MED', pot:80, cal:66, vel:70, vis:60, price:'3.0M'},
+      {n:8,  name:'Samú Costa',            pos:'MED', pot:76, cal:68, vel:70, vis:64, price:'4.0M'},
+      {n:14, name:'Dani Rodríguez',        pos:'MED', pot:72, cal:70, vel:70, vis:68, price:'3.5M'},
+      {n:10, name:'Abdón Prats',           pos:'DEL', pot:72, cal:68, vel:68, vis:64, price:'3.5M'},
+      {n:16, name:'Morlane',               pos:'MED', pot:70, cal:66, vel:68, vis:62, price:'2.0M'},
+      {n:17, name:'Cyle Larin',            pos:'DEL', pot:78, cal:68, vel:72, vis:60, price:'4.0M'},
+      {n:7,  name:'Muriqi',                pos:'DEL', pot:84, cal:68, vel:70, vis:60, price:'7.0M'},
+      {n:9,  name:'Sergi Darder',          pos:'MED', pot:72, cal:78, vel:68, vis:76, price:'6.0M'},
+      {n:11, name:'Lee Kang-in',           pos:'MED', pot:68, cal:82, vel:76, vis:80, price:'10.0M'},
+      {n:19, name:'Giovanni González',     pos:'DEF', pot:72, cal:64, vel:72, vis:58, price:'2.0M'},
+      {n:18, name:'Josep Gayà',            pos:'DEF', pot:70, cal:64, vel:68, vis:60, price:'1.5M'},
+      {n:20, name:'Dominik Greif',         pos:'POR', pot:72, cal:70, vel:46, vis:64, price:'2.5M'},
+      {n:21, name:'Mateu Morey',           pos:'DEF', pot:72, cal:66, vel:76, vis:62, price:'3.0M'},
+      {n:22, name:'Hoppe',                 pos:'DEL', pot:76, cal:66, vel:72, vis:60, price:'3.5M'},
+      {n:15, name:'Cufré',                 pos:'DEF', pot:70, cal:62, vel:66, vis:56, price:'1.5M'},
+    ]
+  },
+  {
+    id:'lpa', name:'UD Las Palmas', emoji:'🟡', color:'#f5c000',
+    desc:'La isla canaria en Primera. Juego bonito, técnico y una afición que vive el fútbol con pasión caribeña.',
+    players:[
+      {n:1,  name:'Álvaro Valles',         pos:'POR', pot:72, cal:74, vel:48, vis:68, price:'4.0M'},
+      {n:13, name:'Raúl Fernández',        pos:'POR', pot:68, cal:66, vel:42, vis:60, price:'1.5M'},
+      {n:2,  name:'Sergi Cardona',         pos:'DEF', pot:72, cal:70, vel:78, vis:66, price:'4.0M'},
+      {n:4,  name:'Alexander Sørloth',     pos:'DEL', pot:86, cal:74, vel:76, vis:66, price:'14.0M'},
+      {n:5,  name:'Álex Suárez',           pos:'DEF', pot:74, cal:66, vel:68, vis:60, price:'2.5M'},
+      {n:3,  name:'Adalberto Peñaranda',   pos:'EXT', pot:68, cal:74, vel:82, vis:68, price:'4.0M'},
+      {n:23, name:'Coco',                  pos:'MED', pot:70, cal:70, vel:72, vis:66, price:'3.0M'},
+      {n:6,  name:'Mika Mármol',           pos:'DEF', pot:76, cal:68, vel:70, vis:62, price:'3.5M'},
+      {n:8,  name:'Kirian Rodríguez',      pos:'MED', pot:74, cal:74, vel:68, vis:72, price:'4.0M'},
+      {n:14, name:'Javi Muñoz',            pos:'MED', pot:70, cal:70, vel:68, vis:68, price:'3.0M'},
+      {n:10, name:'Fabio Silva',           pos:'DEL', pot:76, cal:74, vel:70, vis:68, price:'6.0M'},
+      {n:16, name:'Marvin Park',           pos:'EXT', pot:68, cal:70, vel:80, vis:66, price:'3.5M'},
+      {n:17, name:'Eric Curbelo',          pos:'MED', pot:70, cal:68, vel:70, vis:64, price:'3.0M'},
+      {n:7,  name:'Sandro Ramírez',        pos:'DEL', pot:68, cal:70, vel:70, vis:66, price:'2.5M'},
+      {n:9,  name:'Julián Araujo',         pos:'DEF', pot:72, cal:68, vel:78, vis:62, price:'4.0M'},
+      {n:11, name:'Marc Cardona',          pos:'DEL', pot:72, cal:66, vel:70, vis:60, price:'2.5M'},
+      {n:19, name:'Viti',                  pos:'EXT', pot:66, cal:68, vel:76, vis:64, price:'2.5M'},
+      {n:18, name:'Loiodice',              pos:'MED', pot:68, cal:68, vel:66, vis:66, price:'2.0M'},
+      {n:20, name:'Saúl Coco',             pos:'DEF', pot:74, cal:64, vel:66, vis:58, price:'2.0M'},
+      {n:21, name:'Moleiro',               pos:'MED', pot:68, cal:76, vel:72, vis:74, price:'7.0M'},
+      {n:22, name:'Benito',                pos:'DEF', pot:70, cal:62, vel:64, vis:56, price:'1.5M'},
+      {n:15, name:'Perrone',               pos:'MED', pot:70, cal:70, vel:68, vis:66, price:'2.5M'},
+    ]
+  },
+  {
+    id:'ala', name:'Deportivo Alavés', emoji:'⚫🔵', color:'#1a3572',
+    desc:'El Glorioso de Vitoria. Equipo trabajador que siempre pelea para mantenerse en la élite.',
+    players:[
+      {n:1,  name:'Antonio Sivera',        pos:'POR', pot:72, cal:72, vel:46, vis:66, price:'3.5M'},
+      {n:13, name:'Nahuel Guzmán',         pos:'POR', pot:70, cal:68, vel:42, vis:60, price:'1.5M'},
+      {n:2,  name:'Kike Saverio',          pos:'DEF', pot:72, cal:66, vel:74, vis:60, price:'2.5M'},
+      {n:4,  name:'Mouriño',               pos:'DEF', pot:74, cal:64, vel:64, vis:58, price:'2.0M'},
+      {n:5,  name:'Víctor Laguardia',      pos:'DEF', pot:78, cal:66, vel:62, vis:60, price:'2.5M'},
+      {n:3,  name:'Abqar',                 pos:'DEF', pot:70, cal:62, vel:68, vis:56, price:'1.5M'},
+      {n:23, name:'Javi López',            pos:'DEF', pot:72, cal:64, vel:70, vis:60, price:'2.0M'},
+      {n:6,  name:'Tomás Pina',            pos:'MED', pot:74, cal:68, vel:62, vis:66, price:'2.0M'},
+      {n:8,  name:'Mamadou Sylla',         pos:'DEL', pot:76, cal:66, vel:72, vis:58, price:'3.5M'},
+      {n:14, name:'Ander Guevara',         pos:'MED', pot:74, cal:72, vel:68, vis:70, price:'3.5M'},
+      {n:10, name:'Luis Rioja',            pos:'EXT', pot:70, cal:74, vel:80, vis:68, price:'4.0M'},
+      {n:16, name:'Borja Sainz',           pos:'EXT', pot:68, cal:72, vel:78, vis:68, price:'4.0M'},
+      {n:17, name:'Nikolaou',              pos:'DEF', pot:74, cal:64, vel:64, vis:58, price:'2.0M'},
+      {n:7,  name:'Laguardia',             pos:'DEF', pot:78, cal:66, vel:62, vis:60, price:'2.5M'},
+      {n:9,  name:'Toni Martínez',         pos:'DEL', pot:74, cal:68, vel:68, vis:62, price:'3.5M'},
+      {n:11, name:'Carlos Vicente',        pos:'EXT', pot:66, cal:68, vel:78, vis:62, price:'2.5M'},
+      {n:19, name:'Jon Guridi',            pos:'MED', pot:70, cal:64, vel:64, vis:60, price:'1.5M'},
+      {n:18, name:'Pelayo Fernández',      pos:'EXT', pot:66, cal:68, vel:74, vis:62, price:'2.0M'},
+      {n:20, name:'David Timor',           pos:'MED', pot:68, cal:64, vel:60, vis:60, price:'1.0M'},
+      {n:21, name:'Enzo Boyomo',           pos:'DEF', pot:72, cal:62, vel:66, vis:56, price:'1.5M'},
+      {n:22, name:'Copete',                pos:'DEL', pot:68, cal:62, vel:62, vis:56, price:'1.0M'},
+      {n:15, name:'Sorloth',               pos:'DEL', pot:84, cal:68, vel:68, vis:58, price:'5.0M'},
+    ]
+  },
+  {
+    id:'esp', name:'RCD Espanyol', emoji:'🔵⚪', color:'#003da6',
+    desc:'Los pericos de Barcelona. Histórico que regresa a Primera con ganas de reafirmarse.',
+    players:[
+      {n:1,  name:'Joan García',           pos:'POR', pot:72, cal:76, vel:48, vis:70, price:'6.0M'},
+      {n:13, name:'Ferran Comes',          pos:'POR', pot:66, cal:64, vel:42, vis:56, price:'1.0M'},
+      {n:2,  name:'Óscar Gil',             pos:'DEF', pot:72, cal:68, vel:76, vis:62, price:'3.5M'},
+      {n:4,  name:'Leandro Cabrera',       pos:'DEF', pot:80, cal:66, vel:62, vis:58, price:'2.5M'},
+      {n:5,  name:'Sergi Gómez',           pos:'DEF', pot:76, cal:66, vel:64, vis:60, price:'2.5M'},
+      {n:3,  name:'Brian Oliván',          pos:'DEF', pot:72, cal:64, vel:70, vis:58, price:'2.0M'},
+      {n:23, name:'Carlos Romero',         pos:'DEF', pot:74, cal:64, vel:66, vis:58, price:'2.0M'},
+      {n:6,  name:'Exposito',              pos:'MED', pot:72, cal:72, vel:68, vis:70, price:'3.5M'},
+      {n:8,  name:'Pol Lozano',            pos:'MED', pot:72, cal:68, vel:68, vis:64, price:'2.5M'},
+      {n:14, name:'Edu Expósito',          pos:'MED', pot:72, cal:72, vel:68, vis:70, price:'3.5M'},
+      {n:10, name:'Javi Puado',            pos:'EXT', pot:70, cal:72, vel:76, vis:68, price:'4.0M'},
+      {n:16, name:'Jofre Carreras',        pos:'MED', pot:68, cal:66, vel:66, vis:62, price:'2.0M'},
+      {n:17, name:'Carlos Álvarez',        pos:'DEL', pot:74, cal:66, vel:66, vis:58, price:'2.5M'},
+      {n:7,  name:'Álvaro Tejero',         pos:'DEF', pot:72, cal:64, vel:70, vis:60, price:'2.0M'},
+      {n:9,  name:'Matías Vargas',         pos:'EXT', pot:70, cal:72, vel:72, vis:68, price:'3.5M'},
+      {n:11, name:'Braithwaite',           pos:'DEL', pot:74, cal:68, vel:70, vis:62, price:'3.0M'},
+      {n:19, name:'Keidi Bare',            pos:'MED', pot:72, cal:66, vel:66, vis:62, price:'2.0M'},
+      {n:18, name:'Alejo Véliz',           pos:'DEL', pot:76, cal:68, vel:68, vis:62, price:'4.0M'},
+      {n:20, name:'Dani Pérez',            pos:'DEF', pot:68, cal:60, vel:62, vis:54, price:'1.0M'},
+      {n:21, name:'Pedrosa',               pos:'DEF', pot:70, cal:62, vel:66, vis:56, price:'1.5M'},
+      {n:22, name:'Irvin Cardona',         pos:'DEL', pot:72, cal:66, vel:70, vis:60, price:'2.5M'},
+      {n:15, name:'Maty Ryan',             pos:'POR', pot:72, cal:70, vel:46, vis:64, price:'2.5M'},
+    ]
+  },
+  {
+    id:'leg', name:'CD Leganés', emoji:'🔵', color:'#003da6',
+    desc:'El Lega de vuelta en Primera. Equipo trabajador, sólido y con el Butarque como fortaleza.',
+    players:[
+      {n:1,  name:'Marko Dmitrović',       pos:'POR', pot:74, cal:72, vel:46, vis:66, price:'3.5M'},
+      {n:13, name:'Chicco',                pos:'POR', pot:64, cal:62, vel:40, vis:54, price:'0.8M'},
+      {n:2,  name:'Diego Villares',        pos:'DEF', pot:70, cal:64, vel:68, vis:58, price:'2.0M'},
+      {n:4,  name:'Sergio González',       pos:'DEF', pot:76, cal:64, vel:62, vis:58, price:'2.0M'},
+      {n:5,  name:'Renato Tapia',          pos:'MED', pot:80, cal:68, vel:66, vis:64, price:'3.0M'},
+      {n:3,  name:'Javier Hernández',      pos:'DEF', pot:70, cal:62, vel:66, vis:56, price:'1.5M'},
+      {n:23, name:'Jorge Sáenz',           pos:'DEF', pot:72, cal:62, vel:60, vis:56, price:'1.5M'},
+      {n:6,  name:'Dani Gómez',            pos:'DEL', pot:72, cal:68, vel:68, vis:62, price:'3.0M'},
+      {n:8,  name:'Roberto Rosales',       pos:'DEF', pot:70, cal:62, vel:68, vis:56, price:'1.5M'},
+      {n:14, name:'Íñigo Lekue',           pos:'DEF', pot:70, cal:62, vel:68, vis:58, price:'1.5M'},
+      {n:10, name:'Darko Brasanac',        pos:'MED', pot:74, cal:68, vel:64, vis:66, price:'2.5M'},
+      {n:16, name:'Miguel de la Fuente',   pos:'EXT', pot:66, cal:66, vel:72, vis:60, price:'2.0M'},
+      {n:17, name:'Óscar Rodríguez',       pos:'MED', pot:70, cal:72, vel:66, vis:70, price:'4.0M'},
+      {n:7,  name:'Robert',                pos:'EXT', pot:66, cal:66, vel:70, vis:58, price:'1.5M'},
+      {n:9,  name:'Yvan Neyou',            pos:'MED', pot:76, cal:64, vel:68, vis:58, price:'2.0M'},
+      {n:11, name:'Ante Budimir',          pos:'DEL', pot:82, cal:70, vel:68, vis:62, price:'7.0M'},
+      {n:19, name:'Franchu',               pos:'EXT', pot:64, cal:64, vel:70, vis:58, price:'1.5M'},
+      {n:18, name:'Stefan Jovović',        pos:'DEL', pot:70, cal:62, vel:66, vis:54, price:'1.5M'},
+      {n:20, name:'Bryan',                 pos:'DEF', pot:66, cal:56, vel:60, vis:50, price:'0.8M'},
+      {n:21, name:'Matija Nastasić',       pos:'DEF', pot:74, cal:62, vel:60, vis:56, price:'1.5M'},
+      {n:22, name:'Brasanac',              pos:'MED', pot:74, cal:68, vel:64, mis:66, price:'2.5M'},
+      {n:15, name:'Jaime Seoane',          pos:'MED', pot:68, cal:64, vel:64, vis:60, price:'1.5M'},
+    ]
+  },
+  {
+    id:'val2', name:'Real Valladolid', emoji:'🟣', color:'#6b2d8b',
+    desc:'El conjunto blanquivioleta de vuelta en Primera. Humildad, trabajo y el Zorrilla con su afición.',
+    players:[
+      {n:1,  name:'Jordi Masip',           pos:'POR', pot:72, cal:72, vel:46, vis:66, price:'3.0M'},
+      {n:13, name:'Yaisiel Iglesias',      pos:'POR', pot:64, cal:60, vel:40, vis:52, price:'0.8M'},
+      {n:2,  name:'Luis Pérez',            pos:'DEF', pot:70, cal:62, vel:68, vis:56, price:'1.5M'},
+      {n:4,  name:'Joaquín Fernández',     pos:'DEF', pot:74, cal:62, vel:60, vis:56, price:'2.0M'},
+      {n:5,  name:'Javi Sánchez',          pos:'DEF', pot:74, cal:62, vel:60, vis:56, price:'2.0M'},
+      {n:3,  name:'Iván Fresneda',         pos:'DEF', pot:70, cal:64, vel:72, vis:58, price:'3.0M'},
+      {n:23, name:'Kenedy',                pos:'EXT', pot:70, cal:68, vel:78, vis:64, price:'2.5M'},
+      {n:6,  name:'Kike Pérez',            pos:'MED', pot:68, cal:64, vel:62, vis:60, price:'1.5M'},
+      {n:8,  name:'Roque Mesa',            pos:'MED', pot:66, cal:68, vel:60, vis:66, price:'1.5M'},
+      {n:14, name:'Jawad El Yamiq',        pos:'DEF', pot:76, cal:62, vel:64, vis:56, price:'2.0M'},
+      {n:10, name:'Sergio León',           pos:'DEL', pot:72, cal:66, vel:64, vis:58, price:'2.0M'},
+      {n:16, name:'Anuar Tuhami',          pos:'EXT', pot:64, cal:64, vel:72, vis:58, price:'2.0M'},
+      {n:17, name:'Sylla',                 pos:'DEL', pot:72, cal:60, vel:66, vis:52, price:'1.5M'},
+      {n:7,  name:'Ilaix Moriba',          pos:'MED', pot:72, cal:66, vel:66, vis:62, price:'2.5M'},
+      {n:9,  name:'Cyle Larin',            pos:'DEL', pot:76, cal:64, vel:68, vis:56, price:'3.0M'},
+      {n:11, name:'Raúl Moro',             pos:'EXT', pot:66, cal:66, vel:74, vis:62, price:'2.5M'},
+      {n:19, name:'Plata',                 pos:'EXT', pot:62, cal:62, vel:68, vis:56, price:'1.5M'},
+      {n:18, name:'Meseguer',              pos:'MED', pot:66, cal:60, vel:60, vis:56, price:'1.0M'},
+      {n:20, name:'Marcos André',          pos:'DEL', pot:74, cal:64, vel:64, vis:56, price:'2.0M'},
+      {n:21, name:'Lucas Rosa',            pos:'DEF', pot:66, cal:56, vel:58, vis:50, price:'0.8M'},
+      {n:22, name:'Monchu',                pos:'MED', pot:66, cal:62, vel:62, vis:58, price:'1.5M'},
+      {n:15, name:'Shon Weissman',         pos:'DEL', pot:72, cal:62, vel:60, vis:54, price:'1.5M'},
+    ]
+  }
+];
+
+// ============================================================
+//  HELPERS
+// ============================================================
+function calcOVR(p){return Math.round((p.pot+p.cal+p.vel+(p.vis||p.mis||0))/4);}
+function ovrClass(v){if(v>=85)return 'ov-elite';if(v>=72)return 'ov-high';if(v>=60)return 'ov-mid';return 'ov-low';}
+function bar(val,cls){return `<div class="attr-cell"><span class="attr-val">${val}</span><div class="attr-bar-wrap"><div class="attr-bar ${cls}" style="width:${val}%"></div></div></div>`;}
+function posLabel(pos){return pos||'—';}
+
+function teamStats(team){
+  const pls=team.players;
+  const avgOVR=Math.round(pls.reduce((a,p)=>a+calcOVR(p),0)/pls.length);
+  const avgPOT=Math.round(pls.reduce((a,p)=>a+p.pot,0)/pls.length);
+  const avgCAL=Math.round(pls.reduce((a,p)=>a+p.cal,0)/pls.length);
+  const avgVEL=Math.round(pls.reduce((a,p)=>a+p.vel,0)/pls.length);
+  const avgVIS=Math.round(pls.reduce((a,p)=>a+(p.vis||p.mis||0),0)/pls.length);
+  return{avgOVR,avgPOT,avgCAL,avgVEL,avgVIS};
+}
+
+// ============================================================
+//  BUILD SELECT
+// ============================================================
+function buildSelect(){
+  const sel=document.getElementById('team-select');
+  TEAMS.forEach(t=>{
+    const opt=document.createElement('option');
+    opt.value=t.id;opt.textContent=t.emoji+' '+t.name;
+    sel.appendChild(opt);
+  });
+}
+
+// ============================================================
+//  SHOW TEAM
+// ============================================================
+let currentFilter='ALL';
+function showTeam(id){
+  if(!id){document.getElementById('team-display').innerHTML='';return;}
+  const team=TEAMS.find(t=>t.id===id);
+  if(!team)return;
+  currentFilter='ALL';
+  document.getElementById('search-results').style.display='none';
+  document.getElementById('search-input').value='';
+  const stats=teamStats(team);
+  const html=`
+    <div class="team-header" style="--team-color:${team.color}">
+      <div class="team-header-info">
+        <h3>${team.emoji} ${team.name}</h3>
+        <p>${team.desc}</p>
+        <div class="team-stats-mini">
+          <div class="tsm-item"><span>${stats.avgOVR}</span><span>OVR medio</span></div>
+          <div class="tsm-item"><span style="color:#ef9a9a">${stats.avgPOT}</span><span>POT</span></div>
+          <div class="tsm-item"><span style="color:#64b5f6">${stats.avgCAL}</span><span>CAL</span></div>
+          <div class="tsm-item"><span style="color:#ffb74d">${stats.avgVEL}</span><span>VEL</span></div>
+          <div class="tsm-item"><span style="color:#81c784">${stats.avgVIS}</span><span>VIS</span></div>
+          <div class="tsm-item"><span>${team.players.length}</span><span>Jugadores</span></div>
+        </div>
+      </div>
+      <div class="team-badge">${team.emoji}</div>
+    </div>
+    <div class="filter-bar">
+      <span class="filter-label">Filtrar:</span>
+      <button class="filter-btn active" onclick="filterPos('ALL',this)">Todos</button>
+      <button class="filter-btn" onclick="filterPos('POR',this)">POR</button>
+      <button class="filter-btn" onclick="filterPos('DEF',this)">DEF</button>
+      <button class="filter-btn" onclick="filterPos('MED',this)">MED</button>
+      <button class="filter-btn" onclick="filterPos('EXT',this)">EXT</button>
+      <button class="filter-btn" onclick="filterPos('DEL',this)">DEL</button>
+    </div>
+    <div class="table-wrap">
+      <table class="players-table" id="current-table">
+        <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th>POT</th><th>CAL</th><th>VEL</th><th>VIS</th><th>💶 PRECIO</th></tr></thead>
+        <tbody>
+          ${team.players.map(p=>{
+            const ovr=calcOVR(p);const vis=p.vis||p.mis||0;
+            return `<tr data-pos="${p.pos}">
+              <td class="td-num">${p.n}</td>
+              <td class="td-name">${p.name}</td>
+              <td><span class="td-pos pos-${p.pos}">${posLabel(p.pos)}</span></td>
+              <td><span class="overall-badge ${ovrClass(ovr)}">${ovr}</span></td>
+              <td>${bar(p.pot,'bar-pot')}</td>
+              <td>${bar(p.cal,'bar-cal')}</td>
+              <td>${bar(p.vel,'bar-vel')}</td>
+              <td>${bar(vis,'bar-vis')}</td>
+              <td class="td-price">${p.price||'—'}</td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+  document.getElementById('team-display').innerHTML=html;
+}
+
+function filterPos(pos,btn){
+  currentFilter=pos;
+  const table=document.getElementById('current-table');
+  if(!table)return;
+  table.querySelectorAll('tbody tr').forEach(row=>{
+    row.style.display=(pos==='ALL'||row.dataset.pos===pos)?'':'none';
+  });
+  btn.closest('.filter-bar').querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ============================================================
+//  SEARCH ALL PLAYERS
+// ============================================================
+function searchPlayers(q){
+  const resDiv=document.getElementById('search-results');
+  const teamDisp=document.getElementById('team-display');
+  const title=document.getElementById('search-title');
+  const tbody=document.getElementById('search-tbody');
+  if(!q||q.length<2){
+    resDiv.style.display='none';
+    if(document.getElementById('team-select').value) teamDisp.style.display='';
+    return;
+  }
+  teamDisp.style.display='none';
+  resDiv.style.display='block';
+  const ql=q.toLowerCase();
+  const matches=[];
+  TEAMS.forEach(t=>{
+    t.players.forEach(p=>{
+      if(p.name.toLowerCase().includes(ql)) matches.push({...p,teamName:t.name,teamEmoji:t.emoji});
+    });
+  });
+  title.textContent=`🔍 "${q}" — ${matches.length} resultado${matches.length!==1?'s':''}`;
+  tbody.innerHTML=matches.map(p=>{
+    const ovr=calcOVR(p);const vis=p.vis||p.mis||0;
+    return `<tr>
+      <td class="td-num">${p.n}</td>
+      <td class="td-name">${p.name}</td>
+      <td style="font-size:.82rem;color:var(--gray)">${p.teamEmoji} ${p.teamName}</td>
+      <td><span class="td-pos pos-${p.pos}">${posLabel(p.pos)}</span></td>
+      <td><span class="overall-badge ${ovrClass(ovr)}">${ovr}</span></td>
+      <td>${bar(p.pot,'bar-pot')}</td>
+      <td>${bar(p.cal,'bar-cal')}</td>
+      <td>${bar(p.vel,'bar-vel')}</td>
+      <td>${bar(vis,'bar-vis')}</td>
+      <td class="td-price">${p.price||'—'}</td>
+    </tr>`;
+  }).join('');
+  if(!matches.length) tbody.innerHTML='<tr><td colspan="10" style="text-align:center;color:var(--gray);padding:2rem;font-family:Share Tech Mono,monospace">Sin resultados</td></tr>';
+}
+
+// ============================================================
+//  LEAGUE STATS
+// ============================================================
+function buildLeagueStats(){
+  let total=0,sumOVR=0,topOVR=0,topName='';
+  TEAMS.forEach(t=>{
+    t.players.forEach(p=>{
+      total++;const o=calcOVR(p);sumOVR+=o;
+      if(o>topOVR){topOVR=o;topName=p.name;}
+    });
+  });
+  document.getElementById('stat-players').textContent=total;
+  document.getElementById('stat-avg-ovr').textContent=Math.round(sumOVR/total);
+  document.getElementById('stat-top').textContent=topName.split(' ')[0];
+}
+
+// ============================================================
+//  PRECIO AUTOMÁTICO POR OVR (para jugadores sin price)
+//  Élite 85+: 20–75M | Alto 72-84: 6–20M | Medio 60-71: 2–6M | Bajo <60: 0.5–2M
+// ============================================================
+function calcPrice(p){
+  if(p.price) return p.price;
+  const ovr=calcOVR(p);
+  let m;
+  if(ovr>=90)       m=(ovr-89)*8+35;   // 90→43M … 97→99M (estrellas mundiales)
+  else if(ovr>=85)  m=(ovr-84)*3+20;   // 85→23M … 89→32M
+  else if(ovr>=80)  m=(ovr-79)*2+10;   // 80→12M … 84→18M
+  else if(ovr>=75)  m=(ovr-74)*1.2+5;  // 75→6.2M … 79→9.8M
+  else if(ovr>=70)  m=(ovr-69)*0.6+2;  // 70→2.6M … 74→4.4M
+  else if(ovr>=60)  m=(ovr-59)*0.15+0.8; // 60→1.0M … 69→2.2M
+  else              m=0.5;
+  // Redondear a 1 decimal
+  return (Math.round(m*10)/10).toFixed(1)+'M';
+}
+
+// Inyectar precios calculados a todos los jugadores sin precio
+TEAMS.forEach(t=>t.players.forEach(p=>{ if(!p.price) p.price=calcPrice(p); }));
+
+// ============================================================
+//  JUGADORES EN SUBASTA — Jornada 1 (ejemplo)
+// ============================================================
+const SUBASTA=[
+  {
+    name:'Kylian Mbappé', team:'Real Madrid CF', teamEmoji:'👑',
+    pos:'DEL', pot:84, cal:92, vel:97, vis:86, precioBase:32.0,
+    pujas:[
+    ]
+  },
+  {
+    name:'Lamine Yamal', team:'FC Barcelona', teamEmoji:'🔵🔴',
+    pos:'EXT', pot:72, cal:92, vel:92, vis:90, precioBase:28.0,
+    pujas:[]
+  },
+  {
+    name:'Jude Bellingham', team:'Real Madrid CF', teamEmoji:'👑',
+    pos:'MED', pot:86, cal:90, vel:84, vis:88, precioBase:20.0,
+    pujas:[
+      {ia:'Copilot',    color:'#0078d4', monto:25.0, leader:true},
+      {ia:'Grok',       color:'#e33d3d', monto:23.0},
+    ]
+  },
+  {
+    name:'Nico Williams', team:'Athletic Club', teamEmoji:'🔴⚪',
+    pos:'EXT', pot:74, cal:82, vel:94, vis:78, precioBase:14.0,
+    pujas:[
+      {ia:'Mistral',    color:'#ff9500', monto:17.5, leader:true},
+      {ia:'Perplexity', color:'#20b2aa', monto:16.0},
+      {ia:'ChatGPT',    color:'#10a37f', monto:15.0},
+    ]
+  },
+  {
+    name:'Julián Álvarez', team:'Atlético de Madrid', teamEmoji:'🔴⚪',
+    pos:'DEL', pot:82, cal:86, vel:82, vis:82, precioBase:14.0,
+    pujas:[
+      {ia:'Grok',    color:'#e33d3d', monto:18.0, leader:true},
+      {ia:'Claude',  color:'#7c3aed', monto:16.5},
+    ]
+  },
+  {
+    name:'Pedri González', team:'FC Barcelona', teamEmoji:'🔵🔴',
+    pos:'MED', pot:72, cal:92, vel:80, vis:94, precioBase:16.0,
+    pujas:[
+      {ia:'Claude',     color:'#7c3aed', monto:20.0, leader:true},
+      {ia:'Perplexity', color:'#20b2aa', monto:18.5},
+      {ia:'Gemini',     color:'#4285f4', monto:17.0},
+    ]
+  }
+];
+
+function calcOVRplain(p){return Math.round((p.pot+p.cal+p.vel+p.vis)/4);}
+function renderSubasta(){
+  const c=document.getElementById('subasta-cards');
+  if(!c)return;
+  c.innerHTML=SUBASTA.map(j=>{
+    const ovr=calcOVRplain(j);
+    const precioActual=j.pujas.length?Math.max(...j.pujas.map(p=>p.monto)):j.precioBase;
+    const leader=j.pujas.find(p=>p.leader);
+    const ovrCls=ovrClass(ovr);
+    return `<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:transform .25s,border-color .25s;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='var(--gold)'" onmouseout="this.style.transform='';this.style.borderColor='rgba(76,175,80,.3)'">
+      <div style="padding:.8rem 1rem;background:rgba(76,175,80,.1);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-family:'Oswald',sans-serif;font-size:1.05rem;font-weight:700;">${j.name}</div>
+          <div style="font-size:.75rem;color:var(--gray);">${j.teamEmoji} ${j.team}</div>
+        </div>
+        <span class="td-pos pos-${j.pos}">${j.pos}</span>
+      </div>
+      <div style="padding:1rem;">
+        <div style="margin-bottom:.8rem;"><span class="overall-badge ${ovrCls}" style="font-size:1.1rem">OVR ${ovr}</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.3rem;margin-bottom:.8rem;">
+          <div style="display:flex;align-items:center;gap:.4rem;font-size:.8rem;"><span style="color:var(--gray);font-family:'Share Tech Mono',monospace;font-size:.72rem;width:26px;">POT</span><span style="font-weight:700;font-family:'Oswald',sans-serif;color:#ef9a9a;">${j.pot}</span></div>
+          <div style="display:flex;align-items:center;gap:.4rem;font-size:.8rem;"><span style="color:var(--gray);font-family:'Share Tech Mono',monospace;font-size:.72rem;width:26px;">CAL</span><span style="font-weight:700;font-family:'Oswald',sans-serif;color:#64b5f6;">${j.cal}</span></div>
+          <div style="display:flex;align-items:center;gap:.4rem;font-size:.8rem;"><span style="color:var(--gray);font-family:'Share Tech Mono',monospace;font-size:.72rem;width:26px;">VEL</span><span style="font-weight:700;font-family:'Oswald',sans-serif;color:#ffb74d;">${j.vel}</span></div>
+          <div style="display:flex;align-items:center;gap:.4rem;font-size:.8rem;"><span style="color:var(--gray);font-family:'Share Tech Mono',monospace;font-size:.72rem;width:26px;">VIS</span><span style="font-weight:700;font-family:'Oswald',sans-serif;color:#81c784;">${j.vis}</span></div>
+        </div>
+        ${j.pujas.length?`<div>
+          <div style="font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;color:var(--gray);letter-spacing:.5px;margin-bottom:.6rem;">PUJAS (${j.pujas.length} IAs)</div>
+          <div style="display:flex;flex-direction:column;gap:.3rem;">
+            ${j.pujas.map(p=>`<div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.04);border-radius:4px;padding:.35rem .7rem;font-size:.85rem;">
+              <div style="display:flex;align-items:center;gap:.5rem;">
+                <div style="width:8px;height:8px;border-radius:50%;background:${p.color};"></div>
+                <span>${p.ia}</span>
+                ${p.leader?'<span style="font-size:.65rem;font-family:Share Tech Mono,monospace;color:var(--green-bright);margin-left:.4rem;">LÍDER</span>':''}
+              </div>
+              <span style="font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;color:var(--gold);">${p.monto}M</span>
+            </div>`).join('')}
+          </div>
+        </div>`:'<div style="font-family:Oswald,sans-serif;font-size:.9rem;color:var(--gray);">SIN PUJAS AÚN</div>'}
+      </div>
+      <div style="padding:.8rem 1rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:.8rem;color:var(--gray);">Base: <strong style="color:var(--white);">${j.precioBase}M</strong></div>
+        <div style="font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:700;color:var(--gold);">${precioActual.toFixed(1)}M${leader?' · '+leader.ia:''}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+//  COUNTDOWN — hasta el martes más próximo a las 23:59
+// ============================================================
+function updateCountdown(){
+  const el=document.getElementById('countdown');
+  if(!el)return;
+  const now=new Date();
+  const target=new Date();
+  const day=now.getDay();
+  const daysToTue=(2-day+7)%7||7;
+  target.setDate(now.getDate()+daysToTue);
+  target.setHours(23,59,0,0);
+  const diff=target-now;
+  if(diff<=0){el.textContent='CERRADA';return;}
+  const h=Math.floor(diff/3600000);
+  const m=Math.floor((diff%3600000)/60000);
+  const s=Math.floor((diff%60000)/1000);
+  el.textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+// ============================================================
+//  INIT
+// ============================================================
+buildSelect();
+buildLeagueStats();
+renderSubasta();
+updateCountdown();
+setInterval(updateCountdown,1000);
+</script>
+</body>
+</html>
