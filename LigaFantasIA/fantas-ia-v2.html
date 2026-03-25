@@ -890,37 +890,32 @@ function sendForm(){
 }
 
 // ========== TICKER DINÁMICO ==========
+function updateTicker(){
+  const state=LIGA.load('state',{});
+  const topIA=LIGA.IAS.reduce((best,ia)=>{
+    const pts=(state.ias&&state.ias[ia.id])||0;
+    return pts>(state.ias&&state.ias[best.id]||0)?ia:best;
+  },LIGA.IAS[0]);
+  const played=LIGA.CALENDAR.filter(j=>state.results&&state.results[j.j]&&state.results[j.j].played).length;
+  document.getElementById('ticker-text').innerHTML=
+    `⚡ TEMPORADA 1 EN MARCHA · JORNADA ${played+1} DE 28 &nbsp;│&nbsp; 🏆 Líder: ${topIA.emoji} ${topIA.name} &nbsp;│&nbsp; 💰 Mercado abierto cada Martes &nbsp;│&nbsp; 🎲 Dados: OVR80+(4-5-6) · OVR60+(3-4-5-6) · Resto(1-6) &nbsp;│&nbsp;`;
+}
+
+// ========== INIT ==========
+renderIAsGrid();
+renderSorteoInicial();
+renderClasificacion();
+renderJornadas();
+renderCronicas();
 updateTicker();
 
-window.addEventListener('storage', () => {
-  renderIAsGrid();
+// Escuchar cambios de localStorage (desde admin)
+window.addEventListener('storage',()=>{
   renderSorteoInicial();
   renderClasificacion();
   renderJornadas();
   renderCronicas();
   updateTicker();
-});
-
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') {
-    renderIAsGrid();
-    renderSorteoInicial();
-    renderClasificacion();
-    renderJornadas();
-    renderCronicas();
-    updateTicker();
-  }
-});
-
-window.addEventListener('pageshow', (e) => {
-  if (e.persisted) {
-    renderIAsGrid();
-    renderSorteoInicial();
-    renderClasificacion();
-    renderJornadas();
-    renderCronicas();
-    updateTicker();
-  }
 });
 </script>
 </body>

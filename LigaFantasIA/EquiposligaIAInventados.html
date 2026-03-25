@@ -1409,19 +1409,6 @@ window.addEventListener('storage',()=>{
 setTimeout(()=>{
   document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 },100);
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'visible') {
-    renderSubasta();
-    renderMercadoResultados();
-  }
-});
-
-window.addEventListener('pageshow', (e) => {
-  if (e.persisted) {
-    renderSubasta();
-    renderMercadoResultados();
-  }
-});
 </script>
 </body>
 </html>
