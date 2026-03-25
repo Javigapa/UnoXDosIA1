@@ -430,7 +430,7 @@
 <div class="page-hero">
   <div class="page-hero-tag">/ Liga Fantas-IA · Temporada 1</div>
   <h1>Plantillas & <em>Fichajes</em></h1>
-  <p>Consulta los 7 equipos de la liga, sus 22 jugadores con atributos completos y sigue la ventana de fichajes en tiempo real.</p>
+  <p>Consulta los equipos de la liga, sus jugadores con atributos completos y sigue la ventana de fichajes en tiempo real.</p>
 </div>
 
 <div class="pitch-divider"></div>
@@ -438,7 +438,7 @@
 <!-- EQUIPOS -->
 <section id="equipos">
   <div class="section-inner">
-    <div class="section-tag">/ 7 Equipos · 154 Jugadores</div>
+    <div class="section-tag">/ <span id="teams-count">—</span> Equipos · <span id="players-count">—</span> Jugadores</div>
     <h2 class="section-title">Las <em>Plantillas</em></h2>
     <p class="section-desc">Selecciona un equipo para ver su plantilla completa con los cuatro atributos: <strong>POT</strong> (Potencia), <strong>CAL</strong> (Calidad), <strong>VEL</strong> (Velocidad) y <strong>VIS</strong> (Visión).</p>
 
@@ -627,11 +627,12 @@ Justifica brevemente tu estrategia.</pre>
   </div>
 </footer>
 
+<script src="liga-data.js"></script>
 <script>
 // ============================================================
 //  DATA
 // ============================================================
-const TEAMS = [
+const TEAMS = (typeof LIGA !== 'undefined' && Array.isArray(LIGA.TEAMS)) ? LIGA.TEAMS : [
   {
     id:'rv', name:'Realidad Virtual F.C.', emoji:'💻', color:'#00e5ff',
     desc:'Favorito al título. Patrocinado por tecnología. Muy alto en Visión y Calidad, algo endebles físicamente.',
@@ -937,6 +938,53 @@ function teamStats(team) {
 function renderTeams() {
   const tabsEl   = document.getElementById('teams-tabs');
   const panelsEl = document.getElementById('teams-panels');
+
+  // ======== STATE (puntos) ========
+  const state = (typeof LIGA !== 'undefined' && LIGA.load) ? LIGA.load('state',{}) : {};
+  const ACTIVE_IAS = (typeof LIGA !== 'undefined' && Array.isArray(LIGA.IAS))
+    ? LIGA.IAS.filter(ia => ia.id !== 'nu')
+    : [];
+
+  const assignments = state.assignments || {};
+  const managerByTeamName = {};
+  Object.entries(assignments).forEach(([iaId, teamName]) => {
+    if(iaId === 'nu') return; // Nómadas United NO compite como IA
+    managerByTeamName[teamName] = iaId;
+  });
+
+  const stateTeams = state.teams || {};
+  const statePuntos = state.puntos || {};
+  const puntosJornadas = Object.values(statePuntos);
+
+  const playerPtsCache = {};
+  function playerTotalPoints(playerName) {
+    if(playerPtsCache[playerName] !== undefined) return playerPtsCache[playerName];
+    if(!puntosJornadas.length || !ACTIVE_IAS.length) {
+      playerPtsCache[playerName] = 0;
+      return 0;
+    }
+
+    let total = 0;
+    for(const jornadaMap of puntosJornadas) {
+      if(!jornadaMap) continue;
+      for(const ia of ACTIVE_IAS) {
+        const key = `${ia.id}_${playerName}`;
+        const v = jornadaMap[key];
+        if(v) total += (v.dado || 0) + (v.cronica || 0);
+      }
+    }
+    playerPtsCache[playerName] = total;
+    return total;
+  }
+
+  // ======== COUNTERS ========
+  const totalTeams = (TEAMS || []).length;
+  const totalPlayers = (TEAMS || []).reduce((s,t)=>s+(t.players?.length||0),0);
+  const teamsCountEl = document.getElementById('teams-count');
+  const playersCountEl = document.getElementById('players-count');
+  if(teamsCountEl) teamsCountEl.textContent = String(totalTeams);
+  if(playersCountEl) playersCountEl.textContent = String(totalPlayers);
+
   tabsEl.innerHTML   = '';
   panelsEl.innerHTML = '';
 
@@ -951,6 +999,12 @@ function renderTeams() {
 
     // PANEL
     const stats = teamStats(team);
+    const teamState = stateTeams[team.id] || {};
+    const teamPts = (teamState.g || 0) * 3 + (teamState.e || 0);
+    const mgrId = managerByTeamName[team.name];
+    const mgrIA = (mgrId && typeof LIGA !== 'undefined')
+      ? LIGA.IAS.find(x => x.id === mgrId) || null
+      : null;
     const panel = document.createElement('div');
     panel.className = 'team-panel' + (ti===0?' active':'');
     panel.id = 'panel-' + team.id;
@@ -960,8 +1014,12 @@ function renderTeams() {
         <div class="team-header-info">
           <h3>${team.emoji} ${team.name}</h3>
           <p>${team.desc}</p>
+          <div style="margin-top:.65rem;font-size:.82rem;color:var(--gray);font-family:'Share Tech Mono',monospace;">
+            Manager: ${mgrIA ? `${mgrIA.emoji} ${mgrIA.name}` : '—'}
+          </div>
           <div class="team-stats-mini">
             <div class="tsm-item"><span>${stats.avgOVR}</span><span>OVR medio</span></div>
+            <div class="tsm-item"><span style="color:var(--gold)">${teamPts}</span><span>Pts equipo</span></div>
             <div class="tsm-item"><span style="color:#ef9a9a">${stats.avgPOT}</span><span>POT medio</span></div>
             <div class="tsm-item"><span style="color:#64b5f6">${stats.avgCAL}</span><span>CAL medio</span></div>
             <div class="tsm-item"><span style="color:#ffb74d">${stats.avgVEL}</span><span>VEL medio</span></div>
@@ -989,6 +1047,7 @@ function renderTeams() {
               <th>Jugador</th>
               <th>Pos</th>
               <th>OVR</th>
+              <th>Pts</th>
               <th>POT</th>
               <th>CAL</th>
               <th>VEL</th>
@@ -999,11 +1058,13 @@ function renderTeams() {
           <tbody>
             ${team.players.map(p => {
               const ovr = calcOVR(p);
+              const pts = playerTotalPoints(p.name);
               return `<tr data-pos="${p.pos}">
                 <td class="td-num">${p.n}</td>
                 <td class="td-name">${p.name}</td>
                 <td><span class="td-pos pos-${p.pos}">${posLabel(p.pos)}</span></td>
                 <td><span class="overall-badge ${ovrClass(ovr)}">${ovr}</span></td>
+                <td style="font-family:'Share Tech Mono',monospace;font-weight:700;color:var(--gold);text-align:center;">${pts}</td>
                 <td>${bar(p.pot,'bar-pot')}</td>
                 <td>${bar(p.cal,'bar-cal')}</td>
                 <td>${bar(p.vel,'bar-vel')}</td>

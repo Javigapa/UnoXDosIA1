@@ -5,7 +5,7 @@
 
 const LIGA = {
 
-  // ======= 8 IAs =======
+  // ======= 7 IAs =======
   IAS: [
     { id:'chatgpt',    name:'ChatGPT',    company:'OpenAI',          emoji:'🤖', color:'#10a37f' },
     { id:'gemini',     name:'Gemini',     company:'Google DeepMind', emoji:'💎', color:'#4285f4' },
@@ -14,7 +14,6 @@ const LIGA = {
     { id:'grok',       name:'Grok',       company:'xAI',             emoji:'⚡', color:'#e33d3d' },
     { id:'perplexity', name:'Perplexity', company:'Perplexity AI',   emoji:'🔍', color:'#20b2aa' },
     { id:'mistral',    name:'Mistral',    company:'Mistral AI',      emoji:'🌊', color:'#ff9500' },
-    { id:'claude2',    name:'Claude',     company:'Anthropic',       emoji:'🔮', color:'#9b59b6' },
   ],
 
   // ======= 8 EQUIPOS =======
@@ -297,4 +296,5 @@ const LIGA = {
   // ======= localStorage helpers =======
   save(key,val){ try{ localStorage.setItem('fantasia_'+key, JSON.stringify(val)); }catch(e){} },
   load(key,def){ try{ const v=localStorage.getItem('fantasia_'+key); return v?JSON.parse(v):def; }catch(e){ return def; } },
+
 };

@@ -183,6 +183,86 @@
     .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
     .reveal.visible{opacity:1;transform:translateY(0);}
     @media(max-width:768px){nav{padding:0 1rem;}.nav-links{display:none;}.hero-stats{gap:1.5rem;}}
+
+    /* SORTEO INICIAL */
+    #sorteo-inicial{background:rgba(0,0,0,.25);}
+    .sorteo-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:1.2rem;
+    }
+    .sorteo-card{
+      background:var(--card-bg);
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:1rem 1.1rem;
+      overflow:hidden;
+    }
+    .sorteo-card-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:1rem;
+      margin-bottom:.6rem;
+    }
+    .sorteo-card-title{
+      font-family:'Oswald',sans-serif;
+      font-size:1.05rem;
+      font-weight:700;
+      color:var(--gold);
+      letter-spacing:.2px;
+    }
+    .sorteo-card-budget{
+      font-family:'Share Tech Mono',monospace;
+      font-size:.78rem;
+      color:var(--gray);
+      text-align:right;
+      line-height:1.4;
+      white-space:nowrap;
+    }
+    table.sorteo-table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:.86rem;
+    }
+    table.sorteo-table thead tr{
+      background:rgba(76,175,80,.12);
+      border-bottom:2px solid var(--green-bright);
+    }
+    table.sorteo-table th{
+      font-family:'Oswald',sans-serif;
+      font-weight:600;
+      letter-spacing:.3px;
+      color:var(--green-light);
+      padding:.55rem .5rem;
+      text-align:left;
+      white-space:nowrap;
+    }
+    table.sorteo-table td{
+      padding:.42rem .5rem;
+      border-bottom:1px solid rgba(76,175,80,.08);
+      color:var(--white);
+      vertical-align:top;
+    }
+    table.sorteo-table td.num{
+      width:28px;
+      font-family:'Share Tech Mono',monospace;
+      color:var(--gray);
+      text-align:center;
+    }
+    table.sorteo-table td.pts{
+      font-family:'Share Tech Mono',monospace;
+      color:var(--gold);
+      font-weight:700;
+      text-align:center;
+      white-space:nowrap;
+    }
+    table.sorteo-table td.price{
+      font-family:'Share Tech Mono',monospace;
+      color:var(--gold);
+      white-space:nowrap;
+      text-align:right;
+    }
   </style>
 </head>
 <body>
@@ -203,7 +283,7 @@
 
 <div class="ticker-bar">
   <span class="ticker-track" id="ticker-text">
-    ⚡ TEMPORADA 1 EN MARCHA · 8 IAs · 8 EQUIPOS · 28 JORNADAS &nbsp;│&nbsp; 🎲 Sistema de dados por OVR &nbsp;│&nbsp; 📰 Crónicas jornada a jornada &nbsp;│&nbsp; 💰 Mercado abierto cada martes &nbsp;│&nbsp;
+    ⚡ TEMPORADA 1 EN MARCHA · 7 IAs · 8 EQUIPOS · 28 JORNADAS &nbsp;│&nbsp; 🎲 Sistema de dados por OVR &nbsp;│&nbsp; 📰 Crónicas jornada a jornada &nbsp;│&nbsp; 💰 Mercado abierto cada martes &nbsp;│&nbsp;
   </span>
 </div>
 
@@ -233,13 +313,13 @@
       <span class="title-liga">LIGA</span><br>
       <span class="title-fantas">FANTAS</span><span style="color:var(--green-bright)">-</span><span class="title-ia">IA</span>
     </h1>
-    <p class="hero-subtitle">8 inteligencias artificiales compiten gestionando equipos de fútbol inventado. Dados, crónicas, fichajes y una liga completa de 28 jornadas.</p>
+    <p class="hero-subtitle">7 inteligencias artificiales compiten gestionando equipos de fútbol inventado. Dados, crónicas, fichajes y una liga completa de 28 jornadas.</p>
     <div class="hero-ctas">
       <a href="#clasificacion" class="btn-primary">🏆 Ver Clasificación</a>
       <a href="#como-funciona" class="btn-secondary">¿Cómo funciona?</a>
     </div>
     <div class="hero-stats">
-      <div class="stat-item"><span class="stat-num">8</span><span class="stat-label">IAs participantes</span></div>
+      <div class="stat-item"><span class="stat-num">7</span><span class="stat-label">IAs participantes</span></div>
       <div class="stat-item"><span class="stat-num">8</span><span class="stat-label">Equipos</span></div>
       <div class="stat-item"><span class="stat-num">28</span><span class="stat-label">Jornadas</span></div>
       <div class="stat-item"><span class="stat-num">100M</span><span class="stat-label">Presupuesto</span></div>
@@ -367,9 +447,24 @@
 <section id="ias">
   <div class="section-inner">
     <div class="section-tag">/ Participantes</div>
-    <h2 class="section-title">Las 8 <em>IAs</em> que compiten</h2>
-    <p class="section-desc">Ocho de los modelos más avanzados del mundo se enfrentan en igualdad de condiciones. Mismo presupuesto, misma información, distintos algoritmos.</p>
+    <h2 class="section-title">Las 7 <em>IAs</em> que compiten</h2>
+    <p class="section-desc">Siete de los modelos más avanzados del mundo se enfrentan en igualdad de condiciones. Mismo presupuesto, misma información, distintos algoritmos.</p>
     <div class="ias-grid" id="ias-grid"></div>
+  </div>
+</section>
+
+<div class="pitch-divider"></div>
+
+<!-- SORTEO INICIAL -->
+<section id="sorteo-inicial">
+  <div class="section-inner">
+    <div class="section-tag">/ Sorteo Inicial</div>
+    <h2 class="section-title">Plantilla asignada por <em>IA</em></h2>
+    <p class="section-desc">
+      Aquí salen las <strong>7 IAs</strong> y sus <strong>11 jugadores</strong>.
+      El apartado se rellena solo si existen datos en <code>localStorage</code> (desde admin). Si no, usa el bloque <code>SORTEO_MANUAL</code> para que lo completes a mano.
+    </p>
+    <div id="sorteo-inicial-grid" class="sorteo-grid"></div>
   </div>
 </section>
 
@@ -490,7 +585,6 @@ function renderIAsGrid(){
     {id:'grok',      color:'#e33d3d', avatar:'⚡', desc:'El rebelde. Acceso a X/Twitter y análisis no convencional.'},
     {id:'perplexity',color:'#20b2aa', avatar:'🔍', desc:'Motor de búsqueda IA. Datos frescos y razonamiento preciso.'},
     {id:'mistral',   color:'#ff9500', avatar:'🌊', desc:'La apuesta europea. Veloz, eficiente y con foco en fútbol.'},
-    {id:'nu',        color:'#ff7043', avatar:'🌍', desc:'IA emergente con visión global. Gestiona a los Nómadas United.'},
   ];
   const state=LIGA.load('state',{});
   grid.innerHTML=IAS_INFO.map(ia=>{
@@ -507,6 +601,144 @@ function renderIAsGrid(){
     </div>`;
   }).join('');
   setTimeout(()=>document.querySelectorAll('.ia-card.reveal').forEach(el=>revealObserver.observe(el)),100);
+}
+
+// ============================================================
+//  SORTEO INICIAL (7 IAs) - edición manual en el código
+// ============================================================
+// Si usas el panel de admin para sortear y guardar datos, este
+// apartado se rellena automáticamente desde localStorage (`state.sorteo`,
+// `state.budgets` y `state.puntos`).
+//
+// Si no tienes datos en localStorage, rellena a mano estos huecos:
+//   { name:'Nombre', pos:'POR|DEF|MED|EXT|DEL', pot:75, cal:70, vel:45, vis:82, price:'4.2M' }
+const SORTEO_MANUAL = {
+  chatgpt:    { presupuestoInicial: 100, jugadores: Array(11).fill(null) },
+  gemini:     { presupuestoInicial: 100, jugadores: Array(11).fill(null) },
+  claude:     { presupuestoInicial: 100, jugadores: Array(11).fill(null) },
+  copilot:    { presupuestoInicial: 100, jugadores: Array(11).fill(null) },
+  grok:       { presupuestoInicial: 100, jugadores: Array(11).fill(null) },
+  perplexity: { presupuestoInicial: 100, jugadores: Array(11).fill(null) },
+  mistral:    { presupuestoInicial: 100, jugadores: Array(11).fill(null) },
+};
+
+function parsePriceToMillions(v){
+  if(v===undefined||v===null) return 0;
+  const s=String(v).trim().replace(/M/ig,'').replace(',','.');
+  const n=parseFloat(s);
+  return Number.isFinite(n) ? n : 0;
+}
+function formatPriceMillions(v){
+  const m=parsePriceToMillions(v);
+  if(m<=0 && (v===0 || v==='0' || v===null || v===undefined || v==='')) return '—';
+  // Una decimal ayuda a reflejar los precios con 1 decimal (como el admin).
+  const fixed=m.toFixed(1);
+  return fixed.replace(/\.0$/,'')+'M';
+}
+function safeNum(v){
+  return (v===undefined||v===null||v==='') ? '—' : String(v);
+}
+
+function playerPointsTotal(state, iaId, playerName){
+  const puntos=state.puntos || {};
+  if(!playerName) return 0;
+  let total=0;
+  for(const jornadaMap of Object.values(puntos)){
+    if(!jornadaMap) continue;
+    const key=`${iaId}_${playerName}`;
+    const v=jornadaMap[key];
+    if(v) total += (v.dado||0) + (v.cronica||0);
+  }
+  return total;
+}
+
+function renderSorteoInicial(){
+  const grid=document.getElementById('sorteo-inicial-grid');
+  if(!grid) return;
+
+  const state=LIGA.load('state',{});
+  const sorteo=state.sorteo || {};
+  const budgets=state.budgets || {};
+
+  grid.innerHTML=LIGA.IAS.map(ia=>{
+    const manualCfg=SORTEO_MANUAL[ia.id] || {presupuestoInicial:100,jugadores:[]};
+    const fromStorage=Array.isArray(sorteo[ia.id]) ? sorteo[ia.id] : null;
+    const basePlayers = fromStorage && fromStorage.length ? fromStorage : (manualCfg.jugadores || []);
+
+    const players11 = Array.from({length:11},(_,i)=>basePlayers[i] || null);
+
+    const initial=manualCfg.presupuestoInicial ?? 100;
+    const spent = players11.reduce((s,p)=>s+(p ? parsePriceToMillions(p.price||0) : 0),0);
+    const remaining = (budgets && budgets[ia.id]!==undefined && budgets[ia.id]!==null)
+      ? parseFloat(budgets[ia.id])
+      : Math.max(0, initial-spent);
+
+    const rows = players11.map((p,i)=>{
+      const name = p && p.name ? p.name : '';
+      const pos  = p && p.pos ? p.pos : '';
+      let ovr = null;
+      if(p){
+        const calc = LIGA.calcOVR(p);
+        ovr = Number.isFinite(calc) ? calc : null;
+      }
+      const pts  = (p && name) ? playerPointsTotal(state, ia.id, name) : 0;
+      const pot  = p ? p.pot : '';
+      const cal  = p ? p.cal : '';
+      const vel  = p ? p.vel : '';
+      const vis  = p ? p.vis : '';
+      const price= p ? p.price : '';
+
+      return `
+        <tr>
+          <td class="num">${i+1}</td>
+          <td>${name || '—'}</td>
+          <td>${pos || '—'}</td>
+          <td>${ovr!==null ? ovr : '—'}</td>
+          <td class="pts">${Number.isFinite(pts) ? pts : 0}</td>
+          <td>${safeNum(pot)}</td>
+          <td>${safeNum(cal)}</td>
+          <td>${safeNum(vel)}</td>
+          <td>${safeNum(vis)}</td>
+          <td class="price">${formatPriceMillions(price)}</td>
+        </tr>`;
+    }).join('');
+
+    return `
+      <div class="sorteo-card">
+        <div class="sorteo-card-head">
+          <div>
+            <div class="sorteo-card-title">${ia.emoji} ${ia.name}</div>
+            <div class="sorteo-card-budget">
+              Presupuesto: ${initial}M · Gastado: ${spent.toFixed(1)}M · Restante: ${remaining.toFixed(1)}M
+            </div>
+          </div>
+          <div class="sorteo-card-budget" style="text-align:left;">
+            <!-- Huecos manuales -->
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="sorteo-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Jugador</th>
+                <th>Pos</th>
+                <th>OVR</th>
+                <th>Pts</th>
+                <th>POT</th>
+                <th>CAL</th>
+                <th>VEL</th>
+                <th>VIS</th>
+                <th>💶 PRECIO</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows}
+            </tbody>
+          </table>
+        </div>
+      </div>`;
+  }).join('');
 }
 
 // ========== CLASIFICACION ==========
@@ -671,6 +903,7 @@ function updateTicker(){
 
 // ========== INIT ==========
 renderIAsGrid();
+renderSorteoInicial();
 renderClasificacion();
 renderJornadas();
 renderCronicas();
@@ -678,6 +911,7 @@ updateTicker();
 
 // Escuchar cambios de localStorage (desde admin)
 window.addEventListener('storage',()=>{
+  renderSorteoInicial();
   renderClasificacion();
   renderJornadas();
   renderCronicas();

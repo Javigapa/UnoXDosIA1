@@ -450,6 +450,8 @@ function rollFrom(range){return range[Math.floor(Math.random()*range.length)];}
 // ============================================================
 let currentPosFilter='ALL';
 let diceRolled={elite:null,alto:null,bajo:null};
+// Puntos asignados aleatoriamente por jugador (se recalcula cuando se tienen los 3 dados)
+let dicePlayerPts={};
 
 function init(){
   // Poblar selects de jornada
@@ -568,6 +570,8 @@ function rollSingle(tipo){
   const colors={elite:'var(--gold)',alto:'var(--green-bright)',bajo:'var(--gray)'};
   const val=rollFrom(ranges[tipo]);
   diceRolled[tipo]=val;
+  // Si el usuario vuelve a tirar un dado, invalidamos la asignación por jugador.
+  dicePlayerPts={};
   animateDice(`dado-${tipo}-result`,val,colors[tipo]);
   document.getElementById(`dado-${tipo}`).classList.add('rolled');
   checkShowResumen();
@@ -587,16 +591,61 @@ function checkShowResumen(){
   }
 }
 
+function generateDicePlayerPts(){
+  const sorteo=LIGA.load('sorteo',{});
+  const ranges={elite:[4,5,6],alto:[3,4,5,6],bajo:[1,2,3,4,5,6]};
+
+  const result={};
+  LIGA.IAS.forEach(ia=>{
+    const players=sorteo[ia.id]||[];
+
+    // Generar pts aleatorios por jugador dentro del rango de su ovrGroup.
+    const ptsArr=players.map(p=>{
+      const ovr=calcOVR(p);
+      const tipo=ovrGroup(ovr);
+      return rollFrom(ranges[tipo]);
+    });
+
+    // Garantizar que no se queden todos iguales por grupo/tirada (si hay variedad posible).
+    // (Si solo hay 1 jugador, da igual.)
+    if(ptsArr.length>1){
+      const allSame=ptsArr.every(v=>v===ptsArr[0]);
+      if(allSame){
+        // Reasignar un jugador al azar a otro valor del rango que le corresponda.
+        const idx=Math.floor(Math.random()*ptsArr.length);
+        const ovr=calcOVR(players[idx]);
+        const tipo=ovrGroup(ovr);
+        const alt=[...ranges[tipo]];
+        // Quitar el valor actual para elegir uno distinto.
+        const cur=ptsArr[idx];
+        const filtered=alt.filter(x=>x!==cur);
+        ptsArr[idx]=filtered.length?filtered[Math.floor(Math.random()*filtered.length)]:cur;
+      }
+    }
+
+    ptsArr.forEach((pts,i)=>{
+      const p=players[i];
+      const key=`${ia.id}_${p.name}`;
+      result[key]=pts;
+    });
+  });
+
+  dicePlayerPts=result;
+}
+
 function renderDiceResumen(){
   const sorteo=LIGA.load('sorteo',{});
+  if(!dicePlayerPts || !Object.keys(dicePlayerPts).length){
+    generateDicePlayerPts();
+  }
   let html='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;">';
   LIGA.IAS.forEach(ia=>{
     const players=sorteo[ia.id]||[];
     let total=0;
     const rows=players.map(p=>{
       const ovr=calcOVR(p);
-      const tipo=ovrGroup(ovr);
-      const pts=diceRolled[tipo]||0;
+      const key=`${ia.id}_${p.name}`;
+      const pts=dicePlayerPts[key]||0;
       total+=pts;
       return `<div style="display:flex;justify-content:space-between;font-size:.8rem;padding:.15rem 0;border-bottom:1px solid rgba(76,175,80,.08);">
         <span>${p.name.split('"')[0].trim()}</span>
@@ -618,6 +667,10 @@ function saveDiceResults(){
   if(!jornada){toast('Selecciona una jornada primero','#e53935');return;}
   if(!diceRolled.elite||!diceRolled.alto||!diceRolled.bajo){toast('Tira primero los 3 dados','#e53935');return;}
 
+  if(!dicePlayerPts || !Object.keys(dicePlayerPts).length){
+    generateDicePlayerPts();
+  }
+
   const sorteo=LIGA.load('sorteo',{});
   const state=LIGA.load('state',{});
   if(!state.puntos)state.puntos={};
@@ -626,17 +679,15 @@ function saveDiceResults(){
   LIGA.IAS.forEach(ia=>{
     const players=sorteo[ia.id]||[];
     players.forEach(p=>{
-      const ovr=calcOVR(p);
-      const tipo=ovrGroup(ovr);
-      const pts=diceRolled[tipo]||0;
       const key=`${ia.id}_${p.name}`;
+      const pts=dicePlayerPts[key]||0;
       if(!state.puntos[jornada][key])state.puntos[jornada][key]={dado:0,cronica:0};
       state.puntos[jornada][key].dado=pts;
     });
     // Acumular total IA
     const total=players.reduce((s,p)=>{
-      const ovr=calcOVR(p);
-      return s+(diceRolled[ovrGroup(ovr)]||0);
+      const key=`${ia.id}_${p.name}`;
+      return s+(dicePlayerPts[key]||0);
     },0);
     if(!state.ias)state.ias={};
     state.ias[ia.id]=(state.ias[ia.id]||0)+total;
