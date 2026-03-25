@@ -182,7 +182,28 @@
     @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
     .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
     .reveal.visible{opacity:1;transform:translateY(0);}
-    @media(max-width:768px){nav{padding:0 1rem;}.nav-links{display:none;}.hero-stats{gap:1.5rem;}}
+    @media(max-width:768px){
+  nav{padding:0 1rem;}
+  .hero-stats{gap:1.5rem;}
+  .nav-links{
+    display:none;
+    flex-direction:column;
+    position:fixed;
+    top:64px;left:0;right:0;
+    background:rgba(5,20,5,0.98);
+    backdrop-filter:blur(12px);
+    border-bottom:2px solid var(--green-bright);
+    padding:1rem 1.5rem 1.5rem;
+    gap:.2rem;
+    z-index:999;
+  }
+  .nav-links.open{display:flex;}
+  .nav-links a{padding:.7rem 0;border-bottom:1px solid rgba(76,175,80,.15);font-size:1rem;}
+  .nav-links a:last-child{border-bottom:none;}
+  .hamburger{display:flex;}
+  .nav-site-link{display:none;}
+}
+@media(min-width:769px){.hamburger{display:none;}}
 
     /* SORTEO INICIAL */
     #sorteo-inicial{background:rgba(0,0,0,.25);}
@@ -263,6 +284,25 @@
       white-space:nowrap;
       text-align:right;
     }
+  .hamburger{
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  background:transparent;
+  border:none;
+  cursor:pointer;
+  padding:.4rem;
+  z-index:1001;
+}
+.hamburger span{
+  display:block;width:24px;height:2px;
+  background:var(--gold);border-radius:2px;
+  transition:all .3s;
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
   </style>
 </head>
 <body>
@@ -279,6 +319,9 @@
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <a href="https://www.unoxdosia.com" class="nav-site-link" target="_blank">← unoxdosia.com</a>
+<button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
+  <span></span><span></span><span></span>
+</button>
 </nav>
 
 <div class="ticker-bar">
@@ -347,7 +390,7 @@
         <span class="step-num">02</span>
         <span class="step-icon">🎲</span>
         <h3>Sistema de Dados</h3>
-        <p>Cada jornada se lanza un dado por grupo de OVR. El resultado del dado es la puntuación base que recibe <strong>cada jugador aleatoriamente de ese OVR</strong> esa jornada.</p>
+        <p>Cada jornada se lanza un dado por grupo de OVR. El resultado del dado es la puntuación base que recibe <strong>todos los jugadores de ese grupo</strong> esa jornada.</p>
       </div>
       <div class="step-card reveal">
         <span class="step-num">03</span>
@@ -378,7 +421,7 @@
     <!-- REGLAS DADOS -->
     <div class="section-tag" style="margin-bottom:.8rem;">/ Sistema de dados por OVR</div>
     <h3 style="font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:1rem;">🎲 Puntos por <em style="font-style:normal;color:var(--gold)">tirada de dado</em></h3>
-    <p style="color:var(--gray);font-size:.95rem;line-height:1.7;margin-bottom:1.5rem;">Se hacen 3 tiradas por jornada: una para jugadores OVR 80+, otra para OVR 60-79, y otra para el resto. Cada tirada una puntuazción aleatoria a cada jugadores del grupo.</p>
+    <p style="color:var(--gray);font-size:.95rem;line-height:1.7;margin-bottom:1.5rem;">Se hacen 3 tiradas por jornada: una para jugadores OVR 80+, otra para OVR 60-79, y otra para el resto. Cada tirada asigna la misma puntuación a todos los jugadores del grupo.</p>
     <div class="dice-rules">
       <div class="dice-card reveal">
         <h4 style="color:var(--gold);">⭐ OVR 80 o superior</h4>
@@ -565,7 +608,7 @@
       <a href="#hero">Inicio</a><a href="#como-funciona">Reglas</a>
       <a href="#ias">Las IAs</a><a href="#clasificacion">Clasificación</a>
       <a href="#jornadas">Jornadas</a><a href="#cronicas">Crónicas</a>
-      <a href="/LigaFantasIA/EquiposligaIAInventados.html">Mercado</a>
+      <a href="mercado-fantasia.html">Mercado</a>
       <a href="https://www.unoxdosia.com" target="_blank">unoxdosia.com</a>
     </div>
     <div class="footer-copy">© 2025 Liga Fantas-IA · <a href="https://www.unoxdosia.com" target="_blank">unoxdosia.com</a> · Proyecto de entretenimiento</div>
@@ -1210,6 +1253,20 @@ renderSorteoInicial();
 renderClasificacion();
 renderJornadas();
 renderCronicas();
+function toggleMenu(){
+  var btn = document.getElementById('hamburger');
+  var nav = document.querySelector('.nav-links');
+  btn.classList.toggle('open');
+  nav.classList.toggle('open');
+}
+// Cerrar menú al hacer click en un enlace
+document.querySelectorAll('.nav-links a').forEach(function(a){
+  a.addEventListener('click', function(){ 
+    document.getElementById('hamburger').classList.remove('open');
+    document.querySelector('.nav-links').classList.remove('open');
+  });
+});
+
 // ====== INIT ======
 function refreshAll(){
   renderIAsGrid();
