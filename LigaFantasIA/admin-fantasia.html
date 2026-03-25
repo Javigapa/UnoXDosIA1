@@ -195,6 +195,42 @@
           </button>
         </div>
         <p style="font-size:.85rem;color:var(--gray);">Se mezclan todos los jugadores de los 8 equipos y se reparten 11 a cada IA. Los costes se descuentan automáticamente del presupuesto de 100M.</p>
+
+        <div style="margin-top:1rem;background:rgba(0,0,0,.25);border:1px dashed var(--border);border-radius:10px;padding:1rem;">
+          <div style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:.35rem;">
+            🔁 Sincronizar sorteo (local → internet)
+          </div>
+          <div style="font-size:.82rem;color:var(--gray);line-height:1.45;margin-bottom:.75rem;">
+            El sorteo se guarda en <code>localStorage</code>, que no se comparte entre tu PC y el servidor online.
+            Exporta el JSON desde local y pégalo aquí en el admin online.
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div>
+              <div style="font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;color:var(--green-bright);margin-bottom:.35rem;">
+                ⬇️ Exportar (botón)
+              </div>
+              <div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-bottom:.5rem;">
+                <button onclick="exportSorteoJSON()" class="btn-save-puntos" style="margin-top:0;background:var(--gold);">
+                  Rellenar JSON
+                </button>
+              </div>
+              <textarea id="sorteo-export-json" rows="8" style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:8px;padding:.7rem .9rem;color:var(--white);font-family:'Share Tech Mono',monospace;font-size:.8rem;resize:vertical;" placeholder="Aquí aparecerá el JSON exportado..."></textarea>
+            </div>
+
+            <div>
+              <div style="font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;color:var(--orange);margin-bottom:.35rem;">
+                ⬆️ Importar (pegar + botón)
+              </div>
+              <textarea id="sorteo-import-json" rows="8" style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:8px;padding:.7rem .9rem;color:var(--white);font-family:'Share Tech Mono',monospace;font-size:.8rem;resize:vertical;" placeholder="Pega aquí el JSON exportado desde local..."></textarea>
+              <div style="margin-top:.6rem;">
+                <button onclick="importSorteoJSON()" class="btn-save-puntos" style="margin-top:0;width:100%;">
+                  Importar sorteo
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="sorteo-grid" id="sorteo-result"></div>
@@ -550,6 +586,66 @@ function renderSorteo(){
       <div class="sorteo-budget">💰 Presupuesto restante: ${budget.toFixed(1)}M</div>
     </div>`;
   }).join('');
+}
+
+function exportSorteoJSON(){
+  const payload={
+    state: LIGA.load('state',{}),
+    sorteo: LIGA.load('sorteo',{}),
+    budgets: LIGA.load('budgets',{}),
+    exportedAt: Date.now(),
+  };
+  const text=JSON.stringify(payload);
+  const ta=document.getElementById('sorteo-export-json');
+  if(ta) ta.value=text;
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text);
+      toast('✅ JSON copiado al portapapeles');
+    } else {
+      toast('✅ JSON preparado en el cuadro');
+    }
+  }catch(e){
+    toast('✅ JSON preparado en el cuadro');
+  }
+}
+
+function importSorteoJSON(){
+  const ta=document.getElementById('sorteo-import-json');
+  const text=(ta?ta.value:'').trim();
+  if(!text){toast('Pega el JSON antes','#e53935');return;}
+  let payload;
+  try{
+    payload=JSON.parse(text);
+  }catch(e){
+    toast('JSON inválido','#e53935');
+    return;
+  }
+
+  // Guardar claves base necesarias para que `fantas-ia-v2.html` muestre jugadores.
+  if(payload.sorteo) LIGA.save('sorteo',payload.sorteo);
+  if(payload.budgets) LIGA.save('budgets',payload.budgets);
+  if(payload.state) LIGA.save('state',payload.state);
+
+  // Si `state` venía incompleto, reconstruimos mínimos a partir de sorteo.
+  const state=LIGA.load('state',{});
+  if(!state.sorteo || !Object.keys(state.sorteo).length){
+    state.sorteo=LIGA.load('sorteo',state.sorteo||{});
+  }
+  if(!state.budgets || !Object.keys(state.budgets).length){
+    state.budgets=LIGA.load('budgets',state.budgets||{});
+  }
+  if(!state.assignments || !Object.keys(state.assignments).length){
+    state.assignments={};
+    const sorteo=LIGA.load('sorteo',{});
+    LIGA.IAS.forEach(ia=>{
+      state.assignments[ia.id]=sorteo[ia.id]?.[0]?.teamName || '—';
+    });
+  }
+  LIGA.save('state',state);
+
+  renderSorteo();
+  toast('✅ Sorteo importado. Recarga la web para verla');
 }
 
 // ============================================================
