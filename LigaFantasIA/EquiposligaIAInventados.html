@@ -422,7 +422,7 @@
 <!-- TICKER -->
 <div class="ticker-bar">
   <span class="ticker-track">
-    🔴 VENTANA DE FICHAJES ABIERTA · JORNADA 1 &nbsp;│&nbsp; 💰 Logic Gate — puja líder 14.2M &nbsp;│&nbsp; ⚡ Bio Xero disputado por 5 IAs &nbsp;│&nbsp; 📅 Cierre: Martes 23:59 &nbsp;│&nbsp; 🏆 Presupuesto restante: ChatGPT 62M · Gemini 71M · Claude 58M · Copilot 67M · Grok 80M · Llama 74M · Mistral 69M &nbsp;│&nbsp;
+    🔴 VENTANA DE FICHAJES ABIERTA · JORNADA 1 &nbsp;│&nbsp;  🏆 Presupuesto restante: ChatGPT 62M · Gemini 71M · Claude 58M · Copilot 67M · Grok 80M · Llama 74M · Mistral 69M &nbsp;│&nbsp;
   </span>
 </div>
 
@@ -1360,7 +1360,6 @@ function renderMercadoResultados(){
 // ============================================================
 //  COUNTDOWN — hasta el martes más próximo a las 23:59
 // ============================================================
-let mercadoFinalRendered = false;
 function updateCountdown() {
   const now = new Date();
   const target = new Date();
@@ -1373,10 +1372,7 @@ function updateCountdown() {
   if(diff <= 0){
     document.getElementById('countdown').textContent='CERRADA';
     if(finalEl) finalEl.style.display='block';
-    if(!mercadoFinalRendered){
-      renderMercadoResultados();
-      mercadoFinalRendered = true;
-    }
+    renderMercadoResultados();
     return;
   }
   if(finalEl) finalEl.style.display='none';
@@ -1413,6 +1409,19 @@ window.addEventListener('storage',()=>{
 setTimeout(()=>{
   document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 },100);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    renderSubasta();
+    renderMercadoResultados();
+  }
+});
+
+window.addEventListener('pageshow', (e) => {
+  if (e.persisted) {
+    renderSubasta();
+    renderMercadoResultados();
+  }
+});
 </script>
 </body>
 </html>
