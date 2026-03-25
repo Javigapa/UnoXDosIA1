@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🔐 Admin · Liga Fantas-IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --green-bright:#4caf50;--green-light:#81c784;--green-mid:#1a5c1a;
+      --gold:#ffd700;--white:#f0f0f0;--gray:#b0b0b0;
+      --dark:#0d1b0d;--card-bg:rgba(10,46,10,0.92);--border:rgba(76,175,80,0.3);
+      --red:#e53935;--blue:#42a5f5;--orange:#ff9500;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Rajdhani',sans-serif;background:#080f08;color:var(--white);min-height:100vh;}
+    body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-gradient(160deg,#060e06 0%,#0d1b0d 100%);}
+
+    /* LOGIN */
+    #login-screen{position:fixed;inset:0;z-index:9999;background:#060e06;display:flex;align-items:center;justify-content:center;}
+    .login-box{background:var(--card-bg);border:2px solid var(--green-bright);border-radius:12px;padding:3rem;text-align:center;max-width:380px;width:90%;}
+    .login-box h1{font-family:'Oswald',sans-serif;font-size:2rem;color:var(--gold);margin-bottom:.5rem;}
+    .login-box p{color:var(--gray);font-size:.9rem;margin-bottom:2rem;}
+    .login-input{width:100%;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:6px;padding:.8rem 1rem;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:1.1rem;text-align:center;letter-spacing:4px;margin-bottom:1rem;transition:border-color .25s;}
+    .login-input:focus{outline:none;border-color:var(--green-bright);}
+    .login-btn{width:100%;background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;letter-spacing:1px;padding:.9rem;border:none;border-radius:6px;cursor:pointer;transition:all .25s;}
+    .login-btn:hover{background:#ffe040;}
+    .login-error{color:var(--red);font-size:.85rem;margin-top:.5rem;display:none;}
+
+    /* LAYOUT */
+    #admin-app{display:none;}
+    .admin-nav{background:rgba(5,20,5,.97);border-bottom:2px solid var(--green-bright);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+    .admin-logo{font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:700;color:var(--gold);}
+    .admin-logo span{color:var(--green-bright);}
+    .admin-tabs{display:flex;gap:.5rem;flex-wrap:wrap;}
+    .atab{font-family:'Oswald',sans-serif;font-size:.82rem;font-weight:600;padding:.4rem 1rem;border:1px solid var(--border);background:transparent;color:var(--gray);border-radius:4px;cursor:pointer;transition:all .2s;}
+    .atab.active,.atab:hover{background:var(--green-bright);color:#060e06;border-color:var(--green-bright);}
+    .admin-links{display:flex;gap:.8rem;align-items:center;}
+    .admin-links a{font-size:.78rem;color:var(--gray);text-decoration:none;border:1px solid var(--border);padding:.25rem .7rem;border-radius:15px;transition:all .2s;}
+    .admin-links a:hover{color:var(--green-bright);border-color:var(--green-bright);}
+    .btn-logout{font-size:.78rem;color:var(--red);background:transparent;border:1px solid rgba(229,57,53,.4);padding:.25rem .7rem;border-radius:15px;cursor:pointer;transition:all .2s;}
+    .btn-logout:hover{border-color:var(--red);}
+
+    .admin-main{max-width:1300px;margin:0 auto;padding:2rem;}
+
+    /* PANELS */
+    .panel{display:none;}
+    .panel.active{display:block;}
+    .panel-title{font-family:'Oswald',sans-serif;font-size:1.6rem;font-weight:700;color:var(--gold);margin-bottom:.4rem;}
+    .panel-desc{color:var(--gray);font-size:.95rem;margin-bottom:2rem;}
+
+    /* CARDS */
+    .card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-bottom:1.5rem;}
+    .card-title{font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:600;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+
+    /* DADO */
+    .dado-section{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-bottom:1.5rem;}
+    .dado-card{background:rgba(0,0,0,.3);border:2px solid var(--border);border-radius:10px;padding:1.5rem;text-align:center;transition:border-color .3s;}
+    .dado-card.rolled{border-color:var(--gold);}
+    .dado-card h3{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;margin-bottom:.4rem;}
+    .dado-card .dado-desc{font-size:.82rem;color:var(--gray);margin-bottom:1rem;}
+    .dado-result{font-family:'Oswald',sans-serif;font-size:4rem;font-weight:700;line-height:1;margin:1rem 0;transition:all .3s;}
+    .dado-result.rolling{animation:diceRoll .6s ease;}
+    @keyframes diceRoll{0%,100%{transform:scale(1);}50%{transform:scale(1.3) rotate(15deg);}}
+    .dado-btn{background:var(--green-bright);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.6rem 1.5rem;border:none;border-radius:6px;cursor:pointer;transition:all .2s;width:100%;}
+    .dado-btn:hover{background:#66bb6a;}
+    .dado-cara-info{font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--gray);margin-top:.5rem;}
+
+    .btn-all-dice{width:100%;background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:1px;padding:1rem;border:none;border-radius:8px;cursor:pointer;transition:all .25s;box-shadow:0 4px 20px rgba(255,215,0,.25);margin-bottom:1.5rem;}
+    .btn-all-dice:hover{background:#ffe040;transform:translateY(-2px);}
+
+    /* ASIGNACION IA */
+    .sorteo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
+    .sorteo-card{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:1rem;}
+    .sorteo-ia{font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;margin-bottom:.4rem;}
+    .sorteo-players{display:flex;flex-direction:column;gap:.2rem;max-height:200px;overflow-y:auto;}
+    .sorteo-player{font-size:.8rem;padding:.25rem .5rem;background:rgba(76,175,80,.06);border-radius:3px;display:flex;justify-content:space-between;}
+    .sorteo-player .sp-name{flex:1;}
+    .sorteo-player .sp-price{color:var(--gold);font-family:'Share Tech Mono',monospace;font-size:.72rem;}
+    .sorteo-budget{font-family:'Share Tech Mono',monospace;font-size:.78rem;margin-top:.5rem;padding:.3rem .5rem;background:rgba(255,215,0,.08);border-radius:4px;color:var(--gold);}
+
+    /* PUNTOS */
+    .puntos-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;}
+    .pf-btn{font-family:'Oswald',sans-serif;font-size:.8rem;font-weight:600;padding:.3rem .8rem;border:1px solid var(--border);background:transparent;color:var(--gray);border-radius:20px;cursor:pointer;transition:all .2s;}
+    .pf-btn.active,.pf-btn:hover{background:var(--green-bright);color:#060e06;border-color:var(--green-bright);}
+    .puntos-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+    .puntos-table th{font-family:'Oswald',sans-serif;font-weight:600;color:var(--green-light);padding:.6rem .8rem;text-align:left;background:rgba(76,175,80,.1);border-bottom:1px solid var(--border);}
+    .puntos-table td{padding:.5rem .8rem;border-bottom:1px solid rgba(76,175,80,.07);}
+    .puntos-table tr:hover td{background:rgba(76,175,80,.05);}
+    .puntos-input{width:55px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:4px;padding:.3rem .5rem;color:var(--white);font-family:'Share Tech Mono',monospace;font-size:.85rem;text-align:center;}
+    .puntos-input:focus{outline:none;border-color:var(--gold);}
+    .ovr-badge{font-family:'Oswald',sans-serif;font-size:.75rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;}
+    .ovr-elite{background:rgba(255,215,0,.2);color:var(--gold);}
+    .ovr-high{background:rgba(76,175,80,.2);color:var(--green-bright);}
+    .ovr-mid{background:rgba(100,181,246,.2);color:#64b5f6;}
+    .ovr-low{background:rgba(255,138,101,.2);color:#ff8a65;}
+    .btn-save-puntos{background:var(--green-bright);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.7rem 2rem;border:none;border-radius:6px;cursor:pointer;margin-top:1rem;transition:all .2s;}
+    .btn-save-puntos:hover{background:#66bb6a;}
+
+    /* CRONICAS */
+    .cronicas-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-bottom:1.5rem;}
+    .cronica-input-card{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:1.2rem;}
+    .cronica-label{font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;color:var(--gold);margin-bottom:.6rem;display:block;}
+    .cronica-textarea{width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:6px;padding:.7rem .9rem;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:.9rem;resize:vertical;min-height:100px;transition:border-color .25s;}
+    .cronica-textarea:focus{outline:none;border-color:var(--green-bright);}
+    .cronica-pts{display:flex;gap:.5rem;align-items:center;margin-top:.5rem;}
+    .cronica-pts label{font-size:.8rem;color:var(--gray);}
+    .cronica-pts input{width:55px;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:4px;padding:.3rem .5rem;color:var(--white);font-family:'Share Tech Mono',monospace;font-size:.85rem;text-align:center;}
+    .cronica-pts input:focus{outline:none;border-color:var(--gold);}
+
+    .cronica-assign-result{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1rem;}
+    .car-card{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:1rem;}
+    .car-match{font-family:'Share Tech Mono',monospace;font-size:.75rem;color:var(--gold);margin-bottom:.4rem;}
+    .car-text{font-size:.85rem;color:var(--white);line-height:1.5;font-style:italic;}
+    .car-pts{font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--green-bright);margin-top:.4rem;}
+
+    /* JORNADA ACTIVA */
+    .jornada-selector{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;margin-bottom:1.5rem;}
+    .jornada-selector label{font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;color:var(--white);}
+    .jornada-select{background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:6px;padding:.5rem 1rem;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:.95rem;cursor:pointer;}
+    .jornada-select:focus{outline:none;border-color:var(--green-bright);}
+
+    /* RESULTADO */
+    .resultado-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:1rem;}
+    .resultado-card{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:1rem;}
+    .resultado-match{font-size:.8rem;color:var(--gray);margin-bottom:.5rem;}
+    .resultado-inputs{display:flex;align-items:center;gap:.5rem;}
+    .resultado-input{width:50px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:4px;padding:.4rem;color:var(--white);font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700;text-align:center;}
+    .resultado-input:focus{outline:none;border-color:var(--gold);}
+    .resultado-vs{font-family:'Share Tech Mono',monospace;font-size:.8rem;color:var(--gray);}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:2rem;right:2rem;z-index:9999;background:var(--green-bright);color:#060e06;font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;padding:.8rem 1.5rem;border-radius:6px;box-shadow:0 4px 20px rgba(0,0,0,.4);transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.175,.885,.32,1.275);}
+    .toast.show{transform:translateY(0);opacity:1;}
+
+    /* TABLE OVERFLOW */
+    .table-wrap{overflow-x:auto;}
+    .pos-tag{font-family:'Oswald',sans-serif;font-size:.72rem;font-weight:600;padding:.1rem .4rem;border-radius:3px;}
+    .pos-POR{background:rgba(255,193,7,.15);color:#ffc107;}
+    .pos-DEF{background:rgba(33,150,243,.15);color:#64b5f6;}
+    .pos-MED{background:rgba(76,175,80,.15);color:#81c784;}
+    .pos-EXT{background:rgba(255,152,0,.15);color:#ffb74d;}
+    .pos-DEL{background:rgba(244,67,54,.15);color:#ef9a9a;}
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div style="font-size:3rem;margin-bottom:.5rem;">🔐</div>
+    <h1>Admin Panel</h1>
+    <p>Liga Fantas-IA · Acceso restringido</p>
+    <input type="password" class="login-input" id="pw-input" placeholder="Contraseña" onkeydown="if(event.key==='Enter')checkLogin()"/>
+    <button class="login-btn" onclick="checkLogin()">ENTRAR</button>
+    <div class="login-error" id="login-error">❌ Contraseña incorrecta</div>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div id="admin-app">
+  <nav class="admin-nav">
+    <div class="admin-logo">🔐 Admin <span>Fantas-IA</span></div>
+    <div class="admin-tabs">
+      <button class="atab active" onclick="showPanel('sorteo',this)">🎯 Sorteo</button>
+      <button class="atab" onclick="showPanel('dados',this)">🎲 Dados</button>
+      <button class="atab" onclick="showPanel('puntos',this)">📊 Puntos</button>
+      <button class="atab" onclick="showPanel('cronicas',this)">📰 Crónicas</button>
+      <button class="atab" onclick="showPanel('resultados',this)">⚽ Resultados</button>
+      <button class="atab" onclick="showPanel('mercado',this)">💰 Mercado</button>
+    </div>
+    <div class="admin-links">
+      <a href="fantas-ia-v2.html" target="_blank">Ver web</a>
+      <a href="mercado-fantasia.html" target="_blank">Mercado</a>
+      <button class="btn-logout" onclick="logout()">Salir</button>
+    </div>
+  </nav>
+
+  <div class="admin-main">
+
+    <!-- ===== PANEL: SORTEO INICIAL ===== -->
+    <div class="panel active" id="panel-sorteo">
+      <div class="panel-title">🎯 Sorteo Inicial de Jugadores</div>
+      <div class="panel-desc">Asigna aleatoriamente 11 jugadores a cada IA. El coste se descuenta del presupuesto de 100M.</div>
+
+      <div class="card">
+        <div class="card-title">⚙️ Configuración del sorteo</div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <button onclick="runSorteo()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;padding:.8rem 2rem;border:none;border-radius:6px;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='#ffe040'" onmouseout="this.style.background='var(--gold)'">
+            🎲 SORTEAR JUGADORES AHORA
+          </button>
+          <button onclick="clearSorteo()" style="background:transparent;color:var(--red);border:1px solid rgba(229,57,53,.4);font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;padding:.8rem 1.5rem;border-radius:6px;cursor:pointer;">
+            ↺ Resetear sorteo
+          </button>
+        </div>
+        <p style="font-size:.85rem;color:var(--gray);">Se mezclan todos los jugadores de los 8 equipos y se reparten 11 a cada IA. Los costes se descuentan automáticamente del presupuesto de 100M.</p>
+      </div>
+
+      <div class="sorteo-grid" id="sorteo-result"></div>
+    </div>
+
+    <!-- ===== PANEL: DADOS ===== -->
+    <div class="panel" id="panel-dados">
+      <div class="panel-title">🎲 Tirada de Dados por Jornada</div>
+      <div class="panel-desc">Una tirada por grupo de OVR. El resultado se aplica a todos los jugadores del grupo esa jornada.</div>
+
+      <div class="jornada-selector">
+        <label>Jornada activa:</label>
+        <select class="jornada-select" id="dado-jornada-sel">
+          <option value="">— Selecciona jornada —</option>
+        </select>
+      </div>
+
+      <button class="btn-all-dice" onclick="rollAllDice()">
+        🎲 TIRAR LOS 3 DADOS DE GOLPE
+      </button>
+
+      <div class="dado-section">
+        <div class="dado-card" id="dado-elite">
+          <h3 style="color:var(--gold);">⭐ OVR 80+</h3>
+          <div class="dado-desc">Solo caras altas. Jugadores de élite.</div>
+          <div class="dado-result" id="dado-elite-result" style="color:var(--gold);">?</div>
+          <div class="dado-cara-info">Caras posibles: 4 · 5 · 6</div>
+          <button class="dado-btn" onclick="rollSingle('elite')" style="margin-top:.8rem;">🎲 Tirar dado élite</button>
+        </div>
+        <div class="dado-card" id="dado-alto">
+          <h3 style="color:var(--green-bright);">🔵 OVR 60–79</h3>
+          <div class="dado-desc">Jugadores de nivel medio-alto.</div>
+          <div class="dado-result" id="dado-alto-result" style="color:var(--green-bright);">?</div>
+          <div class="dado-cara-info">Caras posibles: 3 · 4 · 5 · 6</div>
+          <button class="dado-btn" onclick="rollSingle('alto')" style="margin-top:.8rem;background:var(--green-bright);">🎲 Tirar dado alto</button>
+        </div>
+        <div class="dado-card" id="dado-bajo">
+          <h3 style="color:var(--gray);">⚪ OVR &lt;60</h3>
+          <div class="dado-desc">Jugadores del montón. Todo puede pasar.</div>
+          <div class="dado-result" id="dado-bajo-result" style="color:var(--gray);">?</div>
+          <div class="dado-cara-info">Caras posibles: 1 · 2 · 3 · 4 · 5 · 6</div>
+          <button class="dado-btn" onclick="rollSingle('bajo')" style="margin-top:.8rem;background:#78909c;">🎲 Tirar dado bajo</button>
+        </div>
+      </div>
+
+      <div class="card" id="dado-resumen" style="display:none;">
+        <div class="card-title">📊 Resumen de puntos esta jornada</div>
+        <div id="dado-resumen-content"></div>
+        <button onclick="saveDiceResults()" class="btn-save-puntos" style="margin-top:1rem;">💾 Guardar y aplicar puntos</button>
+      </div>
+    </div>
+
+    <!-- ===== PANEL: PUNTOS MANUALES ===== -->
+    <div class="panel" id="panel-puntos">
+      <div class="panel-title">📊 Puntos Manuales por Jugador</div>
+      <div class="panel-desc">Ajusta o introduce los puntos de cada jugador de forma manual. Los cambios se reflejan en la web principal.</div>
+
+      <div class="jornada-selector">
+        <label>Jornada:</label>
+        <select class="jornada-select" id="puntos-jornada-sel" onchange="renderPuntosTable()">
+          <option value="">— Selecciona jornada —</option>
+        </select>
+        <label>Filtrar por IA:</label>
+        <select class="jornada-select" id="puntos-ia-sel" onchange="renderPuntosTable()">
+          <option value="all">Todas las IAs</option>
+        </select>
+      </div>
+
+      <div class="puntos-filters" id="puntos-pos-filters">
+        <span style="font-size:.8rem;color:var(--gray);margin-right:.3rem;">Posición:</span>
+        <button class="pf-btn active" onclick="setPosFilter('ALL',this)">Todos</button>
+        <button class="pf-btn" onclick="setPosFilter('POR',this)">POR</button>
+        <button class="pf-btn" onclick="setPosFilter('DEF',this)">DEF</button>
+        <button class="pf-btn" onclick="setPosFilter('MED',this)">MED</button>
+        <button class="pf-btn" onclick="setPosFilter('EXT',this)">EXT</button>
+        <button class="pf-btn" onclick="setPosFilter('DEL',this)">DEL</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="puntos-table">
+          <thead><tr>
+            <th>Jugador</th><th>Equipo</th><th>IA</th><th>Pos</th><th>OVR</th><th>Dado</th><th>Crónica</th><th>Total</th><th>Editar</th>
+          </tr></thead>
+          <tbody id="puntos-tbody"></tbody>
+        </table>
+      </div>
+      <button class="btn-save-puntos" onclick="savePuntos()">💾 Guardar todos los puntos</button>
+    </div>
+
+    <!-- ===== PANEL: CRÓNICAS ===== -->
+    <div class="panel" id="panel-cronicas">
+      <div class="panel-title">📰 Crónicas de Jornada</div>
+      <div class="panel-desc">Escribe 4 crónicas y asígnalas aleatoriamente a los 4 partidos de la jornada. Indica los puntos extra que otorga cada crónica al equipo ganador.</div>
+
+      <div class="jornada-selector">
+        <label>Jornada:</label>
+        <select class="jornada-select" id="cronica-jornada-sel" onchange="updateCronicaMatches()">
+          <option value="">— Selecciona jornada —</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="card-title">✍️ Escribe las 4 crónicas</div>
+        <div class="cronicas-form">
+          <div class="cronica-input-card">
+            <span class="cronica-label">📰 Crónica A</span>
+            <textarea class="cronica-textarea" id="cronica-a" placeholder="Narra el partido de forma dramática y épica..."></textarea>
+            <div class="cronica-pts">
+              <label>Puntos extra al ganador:</label>
+              <input type="number" id="cronica-a-pts" value="2" min="0" max="10"/>
+            </div>
+          </div>
+          <div class="cronica-input-card">
+            <span class="cronica-label">📰 Crónica B</span>
+            <textarea class="cronica-textarea" id="cronica-b" placeholder="Describe una victoria aplastante o una remontada épica..."></textarea>
+            <div class="cronica-pts">
+              <label>Puntos extra al ganador:</label>
+              <input type="number" id="cronica-b-pts" value="1" min="0" max="10"/>
+            </div>
+          </div>
+          <div class="cronica-input-card">
+            <span class="cronica-label">📰 Crónica C</span>
+            <textarea class="cronica-textarea" id="cronica-c" placeholder="Un empate dramático o una derrota inesperada..."></textarea>
+            <div class="cronica-pts">
+              <label>Puntos extra al ganador:</label>
+              <input type="number" id="cronica-c-pts" value="3" min="0" max="10"/>
+            </div>
+          </div>
+          <div class="cronica-input-card">
+            <span class="cronica-label">📰 Crónica D</span>
+            <textarea class="cronica-textarea" id="cronica-d" placeholder="El partido de la jornada. Goles, polémica y emoción..."></textarea>
+            <div class="cronica-pts">
+              <label>Puntos extra al ganador:</label>
+              <input type="number" id="cronica-d-pts" value="2" min="0" max="10"/>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <button onclick="assignCronicas()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;padding:.8rem 2rem;border:none;border-radius:6px;cursor:pointer;">
+            🎲 ASIGNAR ALEATORIAMENTE A PARTIDOS
+          </button>
+          <button onclick="saveCronicas()" style="background:var(--green-bright);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.8rem 1.5rem;border:none;border-radius:6px;cursor:pointer;">
+            💾 Guardar y publicar
+          </button>
+        </div>
+      </div>
+
+      <div id="cronicas-assigned" style="display:none;">
+        <div class="card-title" style="margin-bottom:1rem;">🎯 Asignación aleatoria</div>
+        <div class="cronica-assign-result" id="cronicas-assign-result"></div>
+      </div>
+    </div>
+
+    <!-- ===== PANEL: RESULTADOS ===== -->
+    <div class="panel" id="panel-resultados">
+      <div class="panel-title">⚽ Resultados de Partidos</div>
+      <div class="panel-desc">Introduce los resultados de los 4 partidos de cada jornada. Se actualizan en la clasificación de equipos.</div>
+
+      <div class="jornada-selector">
+        <label>Jornada:</label>
+        <select class="jornada-select" id="res-jornada-sel" onchange="renderResultados()">
+          <option value="">— Selecciona jornada —</option>
+        </select>
+        <button onclick="markJornadaPlayed()" style="background:var(--green-bright);color:#060e06;font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:700;padding:.5rem 1.2rem;border:none;border-radius:6px;cursor:pointer;">✓ Marcar como jugada</button>
+      </div>
+
+      <div class="resultado-grid" id="resultado-grid"></div>
+      <button onclick="saveResultados()" class="btn-save-puntos">💾 Guardar resultados</button>
+    </div>
+
+    <!-- ===== PANEL: MERCADO ===== -->
+    <div class="panel" id="panel-mercado">
+      <div class="panel-title">💰 Gestión del Mercado</div>
+      <div class="panel-desc">Publica los 7 jugadores de la semana, registra las pujas de las IAs y resuelve el mercado.</div>
+
+      <div class="card">
+        <div class="card-title">📋 Jugadores en subasta esta semana</div>
+        <p style="color:var(--gray);font-size:.85rem;margin-bottom:1rem;">Añade los jugadores que salen al mercado. Pueden ser del pool libre o puestos en venta por alguna IA.</p>
+        <div id="mercado-jugadores-form"></div>
+        <button onclick="addMercadoSlot()" style="background:transparent;border:1px solid var(--green-bright);color:var(--green-bright);font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;padding:.5rem 1.2rem;border-radius:6px;cursor:pointer;margin-top:.8rem;">+ Añadir jugador</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🤖 Registrar pujas de las IAs</div>
+        <div id="pujas-form"></div>
+        <button onclick="saveMercado()" class="btn-save-puntos" style="margin-top:1rem;">💾 Guardar y resolver mercado</button>
+      </div>
+    </div>
+
+  </div><!-- /admin-main -->
+</div><!-- /admin-app -->
+
+<div class="toast" id="toast"></div>
+
+<script src="liga-data.js"></script>
+<script>
+// ============================================================
+// CONTRASEÑA
+// ============================================================
+const ADMIN_PASS = '1234'; // ← CAMBIA ESTO
+
+function checkLogin(){
+  const pw=document.getElementById('pw-input').value;
+  if(pw===ADMIN_PASS){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('admin-app').style.display='block';
+    init();
+  } else {
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('pw-input').value='';
+    setTimeout(()=>document.getElementById('login-error').style.display='none',2000);
+  }
+}
+function logout(){document.getElementById('admin-app').style.display='none';document.getElementById('login-screen').style.display='flex';}
+document.getElementById('pw-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkLogin();});
+
+// ============================================================
+// PANEL NAVIGATION
+// ============================================================
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.atab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function toast(msg,color){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.background=color||'var(--green-bright)';
+  t.style.color=color?'#fff':'#060e06';
+  t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ============================================================
+// OVR Y GRUPO
+// ============================================================
+function ovrGroup(ovr){return ovr>=80?'elite':ovr>=60?'alto':'bajo';}
+function ovrClass(ovr){return ovr>=80?'ovr-elite':ovr>=72?'ovr-high':ovr>=60?'ovr-mid':'ovr-low';}
+function calcOVR(p){return Math.round((p.pot+p.cal+p.vel+p.vis)/4);}
+function diceRange(ovr){
+  if(ovr>=80)return [4,5,6];
+  if(ovr>=60)return [3,4,5,6];
+  return [1,2,3,4,5,6];
+}
+function rollFrom(range){return range[Math.floor(Math.random()*range.length)];}
+
+// ============================================================
+// INIT
+// ============================================================
+let currentPosFilter='ALL';
+let diceRolled={elite:null,alto:null,bajo:null};
+
+function init(){
+  // Poblar selects de jornada
+  ['dado-jornada-sel','puntos-jornada-sel','cronica-jornada-sel','res-jornada-sel'].forEach(selId=>{
+    const sel=document.getElementById(selId);
+    if(!sel)return;
+    sel.innerHTML='<option value="">— Selecciona jornada —</option>';
+    LIGA.CALENDAR.forEach(j=>{
+      const opt=document.createElement('option');
+      opt.value=j.j;opt.textContent=`Jornada ${j.j} · ${j.fecha}`;
+      sel.appendChild(opt);
+    });
+  });
+  // Poblar select de IAs en puntos
+  const iasSel=document.getElementById('puntos-ia-sel');
+  if(iasSel){
+    iasSel.innerHTML='<option value="all">Todas las IAs</option>';
+    LIGA.IAS.forEach(ia=>{
+      const opt=document.createElement('option');
+      opt.value=ia.id;opt.textContent=ia.emoji+' '+ia.name;
+      iasSel.appendChild(opt);
+    });
+  }
+  renderSorteo();
+  initMercado();
+}
+
+// ============================================================
+// SORTEO INICIAL
+// ============================================================
+function getAllPlayers(){
+  const all=[];
+  LIGA.TEAMS.forEach(t=>t.players.forEach(p=>all.push({...p,teamId:t.id,teamName:t.name,teamEmoji:t.emoji})));
+  return all;
+}
+
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function runSorteo(){
+  if(!confirm('¿Hacer el sorteo inicial? Esto asignará 11 jugadores aleatorios a cada IA.'))return;
+  const all=shuffle(getAllPlayers());
+  const assignments={};
+  const budgets={};
+  LIGA.IAS.forEach((ia,i)=>{
+    const slice=all.slice(i*11,(i+1)*11);
+    assignments[ia.id]=slice;
+    const spent=slice.reduce((s,p)=>s+parseFloat(p.price||0),0);
+    budgets[ia.id]=Math.max(0,100-spent);
+  });
+  const state=LIGA.load('state',{});
+  state.sorteo=assignments;
+  state.budgets=budgets;
+  state.assignments={};
+  LIGA.IAS.forEach((ia,i)=>{
+    state.assignments[ia.id]=assignments[ia.id][0]?.teamName||'—'; // equipo del primer jugador como referencia
+  });
+  LIGA.save('state',state);
+  LIGA.save('sorteo',assignments);
+  LIGA.save('budgets',budgets);
+  renderSorteo();
+  toast('✅ ¡Sorteo realizado! Jugadores asignados a cada IA.');
+}
+
+function clearSorteo(){
+  if(!confirm('¿Resetear el sorteo? Se borrarán todas las asignaciones.'))return;
+  const state=LIGA.load('state',{});
+  delete state.sorteo;delete state.budgets;delete state.assignments;
+  LIGA.save('state',state);
+  LIGA.save('sorteo',{});LIGA.save('budgets',{});
+  renderSorteo();toast('↺ Sorteo reseteado.','#e53935');
+}
+
+function renderSorteo(){
+  const sorteo=LIGA.load('sorteo',{});
+  const budgets=LIGA.load('budgets',{});
+  const grid=document.getElementById('sorteo-result');
+  if(!Object.keys(sorteo).length){
+    grid.innerHTML='<div style="color:var(--gray);font-family:Share Tech Mono,monospace;font-size:.85rem;padding:2rem;">Aún no se ha realizado el sorteo. Pulsa "SORTEAR JUGADORES AHORA".</div>';
+    return;
+  }
+  grid.innerHTML=LIGA.IAS.map(ia=>{
+    const players=sorteo[ia.id]||[];
+    const budget=budgets[ia.id]||100;
+    return `<div class="sorteo-card">
+      <div class="sorteo-ia">${ia.emoji} ${ia.name}</div>
+      <div class="sorteo-players">
+        ${players.map(p=>`<div class="sorteo-player">
+          <span class="sp-name">${p.name}</span>
+          <span class="sp-price">${p.price||'—'}</span>
+        </div>`).join('')}
+      </div>
+      <div class="sorteo-budget">💰 Presupuesto restante: ${budget.toFixed(1)}M</div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// DADOS
+// ============================================================
+function animateDice(elId,finalVal,color){
+  const el=document.getElementById(elId);
+  let count=0;const all=[1,2,3,4,5,6];
+  const iv=setInterval(()=>{
+    el.textContent=all[Math.floor(Math.random()*all.length)];
+    count++;
+    if(count>12){clearInterval(iv);el.textContent=finalVal;el.style.color=color||'#fff';}
+  },60);
+}
+
+function rollSingle(tipo){
+  const ranges={elite:[4,5,6],alto:[3,4,5,6],bajo:[1,2,3,4,5,6]};
+  const colors={elite:'var(--gold)',alto:'var(--green-bright)',bajo:'var(--gray)'};
+  const val=rollFrom(ranges[tipo]);
+  diceRolled[tipo]=val;
+  animateDice(`dado-${tipo}-result`,val,colors[tipo]);
+  document.getElementById(`dado-${tipo}`).classList.add('rolled');
+  checkShowResumen();
+}
+
+function rollAllDice(){
+  rollSingle('elite');
+  setTimeout(()=>rollSingle('alto'),200);
+  setTimeout(()=>rollSingle('bajo'),400);
+}
+
+function checkShowResumen(){
+  if(diceRolled.elite&&diceRolled.alto&&diceRolled.bajo){
+    const div=document.getElementById('dado-resumen');
+    div.style.display='block';
+    renderDiceResumen();
+  }
+}
+
+function renderDiceResumen(){
+  const sorteo=LIGA.load('sorteo',{});
+  let html='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;">';
+  LIGA.IAS.forEach(ia=>{
+    const players=sorteo[ia.id]||[];
+    let total=0;
+    const rows=players.map(p=>{
+      const ovr=calcOVR(p);
+      const tipo=ovrGroup(ovr);
+      const pts=diceRolled[tipo]||0;
+      total+=pts;
+      return `<div style="display:flex;justify-content:space-between;font-size:.8rem;padding:.15rem 0;border-bottom:1px solid rgba(76,175,80,.08);">
+        <span>${p.name.split('"')[0].trim()}</span>
+        <span style="color:var(--gold);font-family:Share Tech Mono,monospace;">${pts}pts</span>
+      </div>`;
+    }).join('');
+    html+=`<div style="background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:1rem;">
+      <div style="font-family:Oswald,sans-serif;font-size:.9rem;font-weight:600;color:var(--gold);margin-bottom:.5rem;">${ia.emoji} ${ia.name}</div>
+      ${rows}
+      <div style="margin-top:.5rem;font-family:Oswald,sans-serif;font-size:1.1rem;font-weight:700;color:var(--green-bright);">Total: ${total} pts</div>
+    </div>`;
+  });
+  html+='</div>';
+  document.getElementById('dado-resumen-content').innerHTML=html;
+}
+
+function saveDiceResults(){
+  const jornada=document.getElementById('dado-jornada-sel').value;
+  if(!jornada){toast('Selecciona una jornada primero','#e53935');return;}
+  if(!diceRolled.elite||!diceRolled.alto||!diceRolled.bajo){toast('Tira primero los 3 dados','#e53935');return;}
+
+  const sorteo=LIGA.load('sorteo',{});
+  const state=LIGA.load('state',{});
+  if(!state.puntos)state.puntos={};
+  if(!state.puntos[jornada])state.puntos[jornada]={};
+
+  LIGA.IAS.forEach(ia=>{
+    const players=sorteo[ia.id]||[];
+    players.forEach(p=>{
+      const ovr=calcOVR(p);
+      const tipo=ovrGroup(ovr);
+      const pts=diceRolled[tipo]||0;
+      const key=`${ia.id}_${p.name}`;
+      if(!state.puntos[jornada][key])state.puntos[jornada][key]={dado:0,cronica:0};
+      state.puntos[jornada][key].dado=pts;
+    });
+    // Acumular total IA
+    const total=players.reduce((s,p)=>{
+      const ovr=calcOVR(p);
+      return s+(diceRolled[ovrGroup(ovr)]||0);
+    },0);
+    if(!state.ias)state.ias={};
+    state.ias[ia.id]=(state.ias[ia.id]||0)+total;
+    if(!state.mejor)state.mejor={};
+    if(total>=(state.mejor[ia.id]||0))state.mejor[ia.id]=total;
+    if(!state.jornadas)state.jornadas={};
+    state.jornadas[ia.id]=(state.jornadas[ia.id]||0)+1;
+  });
+
+  LIGA.save('state',state);
+  toast('✅ Puntos de dados guardados y aplicados a la clasificación');
+}
+
+// ============================================================
+// PUNTOS MANUALES
+// ============================================================
+function setPosFilter(pos,btn){
+  currentPosFilter=pos;
+  document.querySelectorAll('.pf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPuntosTable();
+}
+
+function renderPuntosTable(){
+  const jornada=document.getElementById('puntos-jornada-sel').value;
+  const iaFilter=document.getElementById('puntos-ia-sel').value;
+  if(!jornada)return;
+  const sorteo=LIGA.load('sorteo',{});
+  const state=LIGA.load('state',{});
+  const puntos=(state.puntos&&state.puntos[jornada])||{};
+  const tbody=document.getElementById('puntos-tbody');
+  let rows=[];
+  LIGA.IAS.forEach(ia=>{
+    if(iaFilter!=='all'&&ia.id!==iaFilter)return;
+    const players=sorteo[ia.id]||[];
+    players.forEach(p=>{
+      if(currentPosFilter!=='ALL'&&p.pos!==currentPosFilter)return;
+      const ovr=calcOVR(p);
+      const key=`${ia.id}_${p.name}`;
+      const d=(puntos[key]&&puntos[key].dado)||0;
+      const c=(puntos[key]&&puntos[key].cronica)||0;
+      rows.push({ia,p,ovr,key,d,c});
+    });
+  });
+  tbody.innerHTML=rows.map(({ia,p,ovr,key,d,c})=>`
+    <tr data-key="${key}" data-pos="${p.pos}">
+      <td style="font-weight:600">${p.name}</td>
+      <td style="font-size:.82rem;color:var(--gray)">${p.teamEmoji||''} ${p.teamName||''}</td>
+      <td style="font-size:.82rem;color:${ia.color}">${ia.emoji} ${ia.name}</td>
+      <td><span class="pos-tag pos-${p.pos}">${p.pos}</span></td>
+      <td><span class="${ovrClass(ovr)} ovr-badge">${ovr}</span></td>
+      <td style="font-family:Share Tech Mono,monospace;color:var(--gold)">${d}</td>
+      <td style="font-family:Share Tech Mono,monospace;color:var(--green-bright)">${c}</td>
+      <td style="font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;color:var(--gold)">${d+c}</td>
+      <td>
+        <input type="number" class="puntos-input" data-key="${key}" data-type="total" value="${d+c}" min="0" max="99"/>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function savePuntos(){
+  const jornada=document.getElementById('puntos-jornada-sel').value;
+  if(!jornada){toast('Selecciona una jornada','#e53935');return;}
+  const state=LIGA.load('state',{});
+  if(!state.puntos)state.puntos={};
+  if(!state.puntos[jornada])state.puntos[jornada]={};
+
+  document.querySelectorAll('[data-type="total"]').forEach(input=>{
+    const key=input.dataset.key;
+    const val=parseInt(input.value)||0;
+    if(!state.puntos[jornada][key])state.puntos[jornada][key]={dado:0,cronica:0};
+    state.puntos[jornada][key].dado=val; // guardamos todo en dado por simplicidad
+  });
+
+  // Recalcular totales por IA
+  if(!state.ias)state.ias={};
+  LIGA.IAS.forEach(ia=>{
+    let total=0;
+    Object.entries(state.puntos[jornada]).forEach(([key,v])=>{
+      if(key.startsWith(ia.id+'_'))total+=(v.dado||0)+(v.cronica||0);
+    });
+    // Sumar a acumulado (con cuidado de no doblar)
+    // Se guardan puntos por jornada y se suman al vuelo
+  });
+
+  // Calcular totales acumulados desde cero
+  state.ias={};state.mejor={};state.jornadas={};
+  Object.entries(state.puntos).forEach(([jnum,jornadaPts])=>{
+    const iaJornada={};
+    Object.entries(jornadaPts).forEach(([key,v])=>{
+      const iaId=key.split('_')[0];
+      iaJornada[iaId]=(iaJornada[iaId]||0)+(v.dado||0)+(v.cronica||0);
+    });
+    Object.entries(iaJornada).forEach(([iaId,pts])=>{
+      state.ias[iaId]=(state.ias[iaId]||0)+pts;
+      state.jornadas[iaId]=(state.jornadas[iaId]||0)+1;
+      if(pts>=(state.mejor[iaId]||0))state.mejor[iaId]=pts;
+    });
+  });
+
+  LIGA.save('state',state);
+  toast('✅ Puntos guardados correctamente');
+}
+
+// ============================================================
+// CRÓNICAS
+// ============================================================
+let cronicaAssignment=[];
+
+function updateCronicaMatches(){
+  // Nada extra necesario
+}
+
+function assignCronicas(){
+  const jornada=document.getElementById('cronica-jornada-sel').value;
+  if(!jornada){toast('Selecciona una jornada','#e53935');return;}
+  const jornadaData=LIGA.CALENDAR.find(j=>j.j==jornada);
+  if(!jornadaData){toast('Jornada no encontrada','#e53935');return;}
+
+  const cronicas=[
+    {id:'a',texto:document.getElementById('cronica-a').value,pts:parseInt(document.getElementById('cronica-a-pts').value)||0},
+    {id:'b',texto:document.getElementById('cronica-b').value,pts:parseInt(document.getElementById('cronica-b-pts').value)||0},
+    {id:'c',texto:document.getElementById('cronica-c').value,pts:parseInt(document.getElementById('cronica-c-pts').value)||0},
+    {id:'d',texto:document.getElementById('cronica-d').value,pts:parseInt(document.getElementById('cronica-d-pts').value)||0},
+  ];
+
+  const shuffledCronicas=shuffle(cronicas);
+  cronicaAssignment=jornadaData.partidos.map((match,i)=>({
+    jornada,
+    partido:i+1,
+    equipos:`${match[0].toUpperCase()} vs ${match[1].toUpperCase()}`,
+    homeId:match[0],
+    awayId:match[1],
+    texto:shuffledCronicas[i].texto,
+    ptsExtra:shuffledCronicas[i].pts,
+  }));
+
+  const div=document.getElementById('cronicas-assigned');
+  div.style.display='block';
+  document.getElementById('cronicas-assign-result').innerHTML=cronicaAssignment.map(c=>{
+    const home=LIGA.teamById(c.homeId);
+    const away=LIGA.teamById(c.awayId);
+    return `<div class="car-card">
+      <div class="car-match">Partido ${c.partido}: ${home?.emoji||''} ${home?.name||c.homeId} vs ${away?.name||c.awayId} ${away?.emoji||''}</div>
+      <div class="car-text">${c.texto||'(Sin texto)'}</div>
+      <div class="car-pts">⭐ +${c.ptsExtra} pts extra al equipo ganador</div>
+    </div>`;
+  }).join('');
+}
+
+function saveCronicas(){
+  if(!cronicaAssignment.length){toast('Primero asigna las crónicas aleatoriamente','#e53935');return;}
+  const existing=LIGA.load('cronicas',[]);
+  const jornada=cronicaAssignment[0]?.jornada;
+  const filtered=existing.filter(c=>c.jornada!=jornada);
+  LIGA.save('cronicas',[...filtered,...cronicaAssignment]);
+  toast('✅ Crónicas publicadas en la web');
+}
+
+// ============================================================
+// RESULTADOS
+// ============================================================
+function renderResultados(){
+  const jornada=document.getElementById('res-jornada-sel').value;
+  if(!jornada)return;
+  const jornadaData=LIGA.CALENDAR.find(j=>j.j==jornada);
+  if(!jornadaData)return;
+  const state=LIGA.load('state',{});
+  const scores=(state.results&&state.results[jornada]&&state.results[jornada].scores)||{};
+
+  document.getElementById('resultado-grid').innerHTML=jornadaData.partidos.map(([h,a])=>{
+    const home=LIGA.teamById(h);
+    const away=LIGA.teamById(a);
+    const key=`${h}v${a}`;
+    const score=scores[key]||'';
+    const parts=score.split('-');
+    return `<div class="resultado-card">
+      <div class="resultado-match">${home?.emoji||''} ${home?.name||h} vs ${away?.name||a} ${away?.emoji||''}</div>
+      <div class="resultado-inputs">
+        <input type="number" class="resultado-input" id="r-${key}-h" value="${parts[0]||''}" min="0" max="20" placeholder="0"/>
+        <span class="resultado-vs">—</span>
+        <input type="number" class="resultado-input" id="r-${key}-a" value="${parts[1]||''}" min="0" max="20" placeholder="0"/>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function saveResultados(){
+  const jornada=document.getElementById('res-jornada-sel').value;
+  if(!jornada)return;
+  const jornadaData=LIGA.CALENDAR.find(j=>j.j==jornada);
+  if(!jornadaData)return;
+  const state=LIGA.load('state',{});
+  if(!state.results)state.results={};
+  if(!state.results[jornada])state.results[jornada]={scores:{},played:false};
+
+  // Recopilar resultados
+  const teamStats={};
+  jornadaData.partidos.forEach(([h,a])=>{
+    const key=`${h}v${a}`;
+    const hGoals=parseInt(document.getElementById(`r-${key}-h`)?.value)||0;
+    const aGoals=parseInt(document.getElementById(`r-${key}-a`)?.value)||0;
+    state.results[jornada].scores[key]=`${hGoals}-${aGoals}`;
+    // Actualizar stats de equipo
+    [h,a].forEach(id=>{if(!teamStats[id])teamStats[id]={pj:0,g:0,e:0,p:0,gf:0,gc:0};});
+    teamStats[h].pj++;teamStats[a].pj++;
+    teamStats[h].gf+=hGoals;teamStats[h].gc+=aGoals;
+    teamStats[a].gf+=aGoals;teamStats[a].gc+=hGoals;
+    if(hGoals>aGoals){teamStats[h].g++;teamStats[a].p++;}
+    else if(hGoals<aGoals){teamStats[a].g++;teamStats[h].p++;}
+    else{teamStats[h].e++;teamStats[a].e++;}
+  });
+
+  if(!state.teams)state.teams={};
+  Object.entries(teamStats).forEach(([id,s])=>{
+    if(!state.teams[id])state.teams[id]={pj:0,g:0,e:0,p:0,gf:0,gc:0};
+    Object.keys(s).forEach(k=>state.teams[id][k]=(state.teams[id][k]||0)+s[k]);
+  });
+
+  LIGA.save('state',state);
+  toast('✅ Resultados guardados');
+}
+
+function markJornadaPlayed(){
+  const jornada=document.getElementById('res-jornada-sel').value;
+  if(!jornada)return;
+  const state=LIGA.load('state',{});
+  if(!state.results)state.results={};
+  if(!state.results[jornada])state.results[jornada]={scores:{},played:false};
+  state.results[jornada].played=true;
+  LIGA.save('state',state);
+  toast('✅ Jornada marcada como jugada');
+}
+
+// ============================================================
+// MERCADO
+// ============================================================
+let mercadoJugadores=[];
+
+function initMercado(){
+  const saved=LIGA.load('mercado_jugadores',[]);
+  mercadoJugadores=saved.length?saved:[{nombre:'',precio:0,pujas:{}}];
+  renderMercadoForm();
+}
+
+function addMercadoSlot(){
+  mercadoJugadores.push({nombre:'',precio:0,pujas:{}});
+  renderMercadoForm();
+}
+
+function renderMercadoForm(){
+  const form=document.getElementById('mercado-jugadores-form');
+  form.innerHTML=mercadoJugadores.map((j,i)=>`
+    <div style="display:flex;gap:.8rem;align-items:center;margin-bottom:.6rem;flex-wrap:wrap;">
+      <input type="text" value="${j.nombre}" onchange="mercadoJugadores[${i}].nombre=this.value" placeholder="Nombre del jugador" style="flex:2;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Rajdhani,sans-serif;"/>
+      <input type="number" value="${j.precio}" onchange="mercadoJugadores[${i}].precio=parseFloat(this.value)||0" placeholder="Precio base (M)" step="0.1" style="width:110px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Share Tech Mono,monospace;"/>
+      <button onclick="mercadoJugadores.splice(${i},1);renderMercadoForm();" style="background:rgba(229,57,53,.2);border:1px solid rgba(229,57,53,.4);color:var(--red);font-size:.8rem;padding:.4rem .8rem;border-radius:5px;cursor:pointer;">✕</button>
+    </div>
+  `).join('');
+
+  // Pujas form
+  const pujasForm=document.getElementById('pujas-form');
+  pujasForm.innerHTML=mercadoJugadores.map((j,ji)=>`
+    <div style="margin-bottom:1rem;">
+      <div style="font-family:Oswald,sans-serif;font-size:.9rem;font-weight:600;color:var(--gold);margin-bottom:.4rem;">${j.nombre||`Jugador ${ji+1}`} (Base: ${j.precio}M)</div>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
+        ${LIGA.IAS.map(ia=>`
+          <div style="display:flex;align-items:center;gap:.4rem;">
+            <span style="font-size:.78rem;color:${ia.color}">${ia.emoji}</span>
+            <input type="number" value="${j.pujas&&j.pujas[ia.id]||''}" onchange="mercadoJugadores[${ji}].pujas['${ia.id}']=parseFloat(this.value)||0" placeholder="—" step="0.1" style="width:65px;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:4px;padding:.3rem .4rem;color:var(--white);font-family:Share Tech Mono,monospace;font-size:.82rem;text-align:center;"/>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function saveMercado(){
+  // Resolver: ganador = mayor puja
+  const results=mercadoJugadores.map(j=>{
+    let maxPuja=j.precio,winner=null;
+    Object.entries(j.pujas||{}).forEach(([iaId,puja])=>{
+      if(puja>maxPuja){maxPuja=puja;winner=iaId;}
+    });
+    return{jugador:j.nombre,precio:j.precio,winner,monto:maxPuja};
+  });
+
+  // Actualizar presupuestos
+  const budgets=LIGA.load('budgets',{});
+  results.forEach(r=>{
+    if(r.winner)budgets[r.winner]=Math.max(0,(budgets[r.winner]||100)-r.monto);
+  });
+  LIGA.save('budgets',budgets);
+  LIGA.save('mercado_jugadores',mercadoJugadores);
+  LIGA.save('mercado_results',results);
+
+  toast('✅ Mercado resuelto. '+ results.filter(r=>r.winner).map(r=>`${r.jugador}→${LIGA.IAS.find(ia=>ia.id===r.winner)?.name}`).join(', '));
+}
+
+</script>
+</body>
+</html>

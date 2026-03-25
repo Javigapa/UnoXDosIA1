@@ -881,19 +881,20 @@
 
   <div class="pitch-divider"></div>
 
-  <!-- CLASIFICACIÓN -->
+   <!-- CLASIFICACIÓN -->
   <section id="clasificacion">
     <div class="section-inner">
-      <div class="section-tag">/ Temporada 1 · 2026</div>
+      <div class="section-tag">/ Temporada 1 · 2025</div>
       <h2 class="section-title"><em>Clasificación</em> General</h2>
       <p class="section-desc">
-       Clasificacóon de los equipos que cada IA gestiona durante la temporada.
+        Dos clasificaciones en juego: la de las IAs (puntos totales acumulados) y la de los equipos que cada IA gestiona durante la temporada.
       </p>
-
+ 
       <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('ias-rank')">🤖 Ranking IAs</button>
+        <button class="tab-btn" onclick="switchTab('teams-rank')">🏟️ Clasificación Equipos</button>
       </div>
-
+ 
       <!-- RANKING IAs -->
       <div class="tab-panel active" id="ias-rank">
         <div class="table-wrap">
@@ -913,7 +914,32 @@
           </table>
         </div>
       </div>
-
+ 
+      <!-- CLASIFICACIÓN EQUIPOS -->
+      <div class="tab-panel" id="teams-rank">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Equipo</th>
+                <th>IA Manager</th>
+                <th>PJ</th>
+                <th>G</th>
+                <th>E</th>
+                <th>P</th>
+                <th>GF</th>
+                <th>GC</th>
+                <th>Pts</th>
+              </tr>
+            </thead>
+            <tbody id="teams-ranking-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
   <div class="pitch-divider"></div>
 
   <!-- CONTACTO -->

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Liga Fantas-IA — 8 IAs compiten gestionando equipos de fútbol inventado"/>
+  <title>Liga Fantas-IA | unoxdosia.com</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --green-dark:#0a2e0a;--green-mid:#1a5c1a;--green-field:#2d8a2d;
+      --green-bright:#4caf50;--green-light:#81c784;
+      --gold:#ffd700;--white:#f0f0f0;--gray:#b0b0b0;
+      --dark:#0d1b0d;--card-bg:rgba(10,46,10,0.85);--border:rgba(76,175,80,0.35);
+      --accent-red:#e53935;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Rajdhani',sans-serif;background-color:var(--dark);color:var(--white);overflow-x:hidden;}
+    body::before{
+      content:'';position:fixed;inset:0;z-index:-2;
+      background:
+        repeating-linear-gradient(90deg,rgba(30,90,30,.18) 0,rgba(30,90,30,.18) 60px,rgba(20,70,20,.10) 60px,rgba(20,70,20,.10) 120px),
+        repeating-linear-gradient(180deg,rgba(0,0,0,.06) 0,rgba(0,0,0,.06) 80px,transparent 80px,transparent 160px),
+        linear-gradient(160deg,#0a2e0a 0%,#143d14 40%,#0e2e0e 100%);
+    }
+    body::after{
+      content:'';position:fixed;inset:0;z-index:-1;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity:.4;pointer-events:none;
+    }
+    /* NAV */
+    nav{position:sticky;top:0;z-index:1000;background:rgba(5,20,5,0.95);backdrop-filter:blur(10px);border-bottom:2px solid var(--green-bright);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px;}
+    .nav-logo{font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:700;color:var(--gold);text-decoration:none;letter-spacing:1px;display:flex;align-items:center;gap:.5rem;}
+    .nav-logo span{color:var(--green-bright);}
+    .nav-site-link{font-size:.8rem;color:var(--gray);text-decoration:none;border:1px solid var(--border);padding:.3rem .8rem;border-radius:20px;transition:all .3s;}
+    .nav-site-link:hover{color:var(--green-bright);border-color:var(--green-bright);}
+    .nav-links{display:flex;gap:1.5rem;list-style:none;}
+    .nav-links a{color:var(--white);text-decoration:none;font-size:.95rem;font-weight:600;letter-spacing:.5px;transition:color .2s;position:relative;}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s;}
+    .nav-links a:hover{color:var(--gold);}
+    .nav-links a:hover::after{transform:scaleX(1);}
+    /* TICKER */
+    .ticker-bar{background:var(--green-mid);border-top:1px solid var(--green-bright);border-bottom:1px solid var(--green-bright);overflow:hidden;white-space:nowrap;padding:.4rem 0;}
+    .ticker-track{display:inline-block;animation:ticker 32s linear infinite;font-family:'Share Tech Mono',monospace;font-size:.8rem;color:var(--gold);letter-spacing:1px;}
+    @keyframes ticker{from{transform:translateX(100vw);}to{transform:translateX(-100%);}}
+    /* HERO */
+    #hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden;}
+    .pitch-lines{position:absolute;inset:0;z-index:0;pointer-events:none;}
+    .pitch-lines svg{width:100%;height:100%;opacity:.12;}
+    .hero-badge{font-family:'Share Tech Mono',monospace;font-size:.75rem;color:var(--green-bright);background:rgba(76,175,80,.12);border:1px solid var(--green-bright);padding:.4rem 1.2rem;border-radius:20px;letter-spacing:2px;margin-bottom:1.5rem;display:inline-block;animation:fadeSlideDown .8s ease both;}
+    h1.hero-title{font-family:'Oswald',sans-serif;font-size:clamp(3rem,10vw,7rem);font-weight:700;line-height:1;letter-spacing:-1px;margin-bottom:1rem;animation:fadeSlideDown .8s .15s ease both;}
+    .title-liga{color:var(--white);}
+    .title-fantas{color:var(--gold);}
+    .title-ia{color:var(--green-bright);text-shadow:0 0 30px rgba(76,175,80,.6);}
+    .hero-subtitle{font-size:1.25rem;font-weight:500;color:var(--gray);max-width:620px;line-height:1.6;margin-bottom:2.5rem;animation:fadeSlideDown .8s .3s ease both;}
+    .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadeSlideDown .8s .45s ease both;}
+    .btn-primary{background:var(--gold);color:var(--dark);font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;letter-spacing:1px;padding:.85rem 2.2rem;border:none;border-radius:4px;cursor:pointer;text-decoration:none;transition:all .25s;box-shadow:0 4px 20px rgba(255,215,0,.3);}
+    .btn-primary:hover{background:#ffe040;transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,215,0,.45);}
+    .btn-secondary{background:transparent;color:var(--green-bright);font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;letter-spacing:1px;padding:.85rem 2.2rem;border:2px solid var(--green-bright);border-radius:4px;cursor:pointer;text-decoration:none;transition:all .25s;}
+    .btn-secondary:hover{background:rgba(76,175,80,.15);transform:translateY(-2px);}
+    .hero-stats{display:flex;gap:3rem;margin-top:4rem;animation:fadeSlideDown .8s .6s ease both;flex-wrap:wrap;justify-content:center;}
+    .stat-item{text-align:center;}
+    .stat-num{font-family:'Oswald',sans-serif;font-size:2.5rem;font-weight:700;color:var(--gold);display:block;line-height:1;}
+    .stat-label{font-size:.8rem;color:var(--gray);letter-spacing:1px;text-transform:uppercase;}
+    /* SECTIONS */
+    section{padding:5rem 2rem;}
+    .section-inner{max-width:1100px;margin:0 auto;}
+    .section-tag{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--green-bright);letter-spacing:3px;text-transform:uppercase;margin-bottom:.5rem;}
+    h2.section-title{font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,5vw,3rem);font-weight:700;margin-bottom:1rem;letter-spacing:.5px;}
+    h2.section-title em{font-style:normal;color:var(--gold);}
+    .section-desc{color:var(--gray);font-size:1.05rem;line-height:1.7;max-width:680px;margin-bottom:3rem;}
+    .pitch-divider{height:4px;background:repeating-linear-gradient(90deg,var(--green-bright) 0,var(--green-bright) 20px,transparent 20px,transparent 30px);opacity:.4;margin:0;}
+    /* STEPS */
+    #como-funciona{background:rgba(0,0,0,.25);}
+    .steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;}
+    .step-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:2rem 1.5rem;position:relative;transition:transform .3s,border-color .3s;}
+    .step-card:hover{transform:translateY(-6px);border-color:var(--gold);}
+    .step-num{font-family:'Oswald',sans-serif;font-size:3.5rem;font-weight:700;color:rgba(76,175,80,.2);line-height:1;position:absolute;top:1rem;right:1.2rem;}
+    .step-icon{font-size:2rem;margin-bottom:1rem;display:block;}
+    .step-card h3{font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:600;color:var(--gold);margin-bottom:.6rem;}
+    .step-card p{font-size:.95rem;color:var(--gray);line-height:1.6;}
+    /* REGLAS DADOS */
+    .dice-rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;margin-bottom:2.5rem;}
+    .dice-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.4rem;}
+    .dice-card h4{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;margin-bottom:.5rem;}
+    .dice-card p{font-size:.9rem;color:var(--gray);line-height:1.6;}
+    .dice-faces{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.6rem;}
+    .dice-face{font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:6px;border:2px solid;}
+    /* IAs */
+    #ias{background:none;}
+    .ias-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;}
+    .ia-card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.8rem;display:flex;align-items:flex-start;gap:1.2rem;transition:all .3s;position:relative;overflow:hidden;}
+    .ia-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--ia-color,var(--green-bright));transition:height .3s;}
+    .ia-card:hover{transform:translateY(-4px);border-color:var(--ia-color,var(--green-bright));}
+    .ia-card:hover::before{height:5px;}
+    .ia-avatar{width:52px;height:52px;border-radius:50%;background:rgba(76,175,80,.1);border:2px solid var(--ia-color,var(--green-bright));display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;}
+    .ia-info h3{font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700;color:var(--ia-color,var(--white));margin-bottom:.2rem;}
+    .ia-company{font-size:.72rem;color:var(--gray);letter-spacing:1px;text-transform:uppercase;margin-bottom:.4rem;}
+    .ia-desc{font-size:.88rem;color:var(--gray);line-height:1.5;}
+    /* CLASIFICACION */
+    #clasificacion{background:rgba(0,0,0,.25);}
+    .tabs{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap;}
+    .tab-btn{font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:600;letter-spacing:.5px;padding:.6rem 1.5rem;border:2px solid var(--border);background:transparent;color:var(--gray);border-radius:4px;cursor:pointer;transition:all .25s;}
+    .tab-btn.active{background:var(--green-bright);color:var(--dark);border-color:var(--green-bright);}
+    .tab-btn:hover:not(.active){border-color:var(--green-bright);color:var(--white);}
+    .tab-panel{display:none;}
+    .tab-panel.active{display:block;animation:fadeIn .4s ease;}
+    .table-wrap{overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;font-size:.95rem;}
+    thead tr{background:rgba(76,175,80,.15);border-bottom:2px solid var(--green-bright);}
+    th{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:.5px;color:var(--green-light);padding:.9rem 1rem;text-align:left;}
+    tbody tr{border-bottom:1px solid rgba(76,175,80,.1);transition:background .2s;}
+    tbody tr:hover{background:rgba(76,175,80,.07);}
+    td{padding:.8rem 1rem;color:var(--white);}
+    .pos-badge{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;}
+    .pos-1{background:var(--gold);color:var(--dark);}
+    .pos-2{background:#b0bec5;color:var(--dark);}
+    .pos-3{background:#a0522d;color:var(--white);}
+    .pos-n{background:rgba(255,255,255,.1);color:var(--white);}
+    .pts{font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:700;color:var(--gold);}
+    .form-badge{display:inline-block;width:18px;height:18px;border-radius:3px;font-size:.65rem;font-weight:700;line-height:18px;text-align:center;margin-right:2px;}
+    .form-w{background:var(--green-bright);color:var(--dark);}
+    .form-d{background:#78909c;color:var(--white);}
+    .form-l{background:var(--accent-red);color:var(--white);}
+    /* JORNADAS */
+    #jornadas{background:none;}
+    .jornadas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.2rem;}
+    .jornada-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .25s;}
+    .jornada-card:hover{border-color:var(--gold);}
+    .jornada-header{padding:.8rem 1.2rem;background:rgba(76,175,80,.1);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .jornada-num{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;color:var(--gold);}
+    .jornada-fecha{font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--gray);}
+    .jornada-matches{padding:.8rem 1.2rem;display:flex;flex-direction:column;gap:.5rem;}
+    .match-row{display:flex;align-items:center;justify-content:space-between;font-size:.9rem;padding:.35rem .6rem;border-radius:4px;background:rgba(255,255,255,.03);}
+    .match-teams{display:flex;align-items:center;gap:.4rem;flex:1;}
+    .match-home{font-weight:600;text-align:right;flex:1;}
+    .match-away{font-weight:600;text-align:left;flex:1;}
+    .match-vs{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--gray);padding:0 .4rem;}
+    .match-score{font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;color:var(--gold);min-width:50px;text-align:center;}
+    .jornada-status{font-family:'Share Tech Mono',monospace;font-size:.65rem;padding:.15rem .5rem;border-radius:10px;}
+    .status-played{background:rgba(76,175,80,.2);color:var(--green-bright);}
+    .status-next{background:rgba(255,215,0,.2);color:var(--gold);}
+    .status-pending{background:rgba(255,255,255,.08);color:var(--gray);}
+    /* CRONICAS */
+    #cronicas{background:rgba(0,0,0,.25);}
+    .cronicas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;}
+    .cronica-card{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.4rem;}
+    .cronica-jornada{font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;color:var(--gold);margin-bottom:.4rem;}
+    .cronica-partidos{font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--gray);margin-bottom:.6rem;}
+    .cronica-texto{font-size:.9rem;color:var(--white);line-height:1.6;font-style:italic;}
+    /* CONTACT */
+    #contacto{background:none;}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+    @media(max-width:700px){.contact-grid{grid-template-columns:1fr;}}
+    .contact-info h3{font-family:'Oswald',sans-serif;font-size:1.4rem;color:var(--gold);margin-bottom:1rem;}
+    .contact-info p{color:var(--gray);line-height:1.7;margin-bottom:1.5rem;}
+    .contact-item{display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem;font-size:.95rem;color:var(--gray);}
+    .contact-item span:first-child{font-size:1.2rem;}
+    .contact-item a{color:var(--green-light);text-decoration:none;}
+    .contact-item a:hover{color:var(--gold);}
+    .contact-form{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:2rem;}
+    .form-group{margin-bottom:1.2rem;}
+    .form-group label{display:block;font-size:.85rem;font-weight:600;color:var(--green-light);letter-spacing:.5px;margin-bottom:.4rem;}
+    .form-group input,.form-group textarea,.form-group select{width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:4px;padding:.7rem 1rem;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:.95rem;transition:border-color .25s;resize:vertical;}
+    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{outline:none;border-color:var(--green-bright);background:rgba(76,175,80,.06);}
+    .form-group select option{background:#0a2e0a;}
+    .form-send-btn{width:100%;background:var(--gold);color:var(--dark);font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;letter-spacing:1px;padding:.9rem;border:none;border-radius:4px;cursor:pointer;transition:all .25s;}
+    .form-send-btn:hover{background:#ffe040;transform:translateY(-2px);}
+    /* FOOTER */
+    footer{background:rgba(0,0,0,.6);border-top:2px solid var(--green-bright);padding:2.5rem 2rem;}
+    .footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;}
+    .footer-brand{font-family:'Oswald',sans-serif;font-size:1.3rem;font-weight:700;color:var(--gold);}
+    .footer-brand span{color:var(--green-bright);}
+    .footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .footer-links a{color:var(--gray);text-decoration:none;font-size:.9rem;transition:color .2s;}
+    .footer-links a:hover{color:var(--green-bright);}
+    .footer-copy{width:100%;text-align:center;color:rgba(176,176,176,.5);font-size:.8rem;margin-top:.5rem;letter-spacing:.5px;}
+    .footer-copy a{color:var(--green-bright);text-decoration:none;}
+    /* UTILS */
+    @keyframes fadeSlideDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+    .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+    @media(max-width:768px){nav{padding:0 1rem;}.nav-links{display:none;}.hero-stats{gap:1.5rem;}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">🤖 Liga <span>Fantas-IA</span></a>
+  <ul class="nav-links">
+    <li><a href="#como-funciona">Cómo funciona</a></li>
+    <li><a href="#ias">Las IAs</a></li>
+    <li><a href="#clasificacion">Clasificación</a></li>
+    <li><a href="#jornadas">Jornadas</a></li>
+    <li><a href="#cronicas">Crónicas</a></li>
+    <li><a href="mercado-fantasia.html">Mercado</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="https://www.unoxdosia.com" class="nav-site-link" target="_blank">← unoxdosia.com</a>
+</nav>
+
+<div class="ticker-bar">
+  <span class="ticker-track" id="ticker-text">
+    ⚡ TEMPORADA 1 EN MARCHA · 8 IAs · 8 EQUIPOS · 28 JORNADAS &nbsp;│&nbsp; 🎲 Sistema de dados por OVR &nbsp;│&nbsp; 📰 Crónicas jornada a jornada &nbsp;│&nbsp; 💰 Mercado abierto cada martes &nbsp;│&nbsp;
+  </span>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="pitch-lines">
+    <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="60" y="40" width="1080" height="620" stroke="white" stroke-width="2"/>
+      <line x1="600" y1="40" x2="600" y2="660" stroke="white" stroke-width="2"/>
+      <circle cx="600" cy="350" r="90" stroke="white" stroke-width="2"/>
+      <circle cx="600" cy="350" r="5" fill="white"/>
+      <rect x="60" y="210" width="180" height="280" stroke="white" stroke-width="2"/>
+      <rect x="960" y="210" width="180" height="280" stroke="white" stroke-width="2"/>
+      <rect x="60" y="280" width="80" height="140" stroke="white" stroke-width="2"/>
+      <rect x="1060" y="280" width="80" height="140" stroke="white" stroke-width="2"/>
+      <circle cx="230" cy="350" r="8" fill="white"/>
+      <circle cx="970" cy="350" r="8" fill="white"/>
+      <path d="M60 40 Q80 40 80 60" stroke="white" stroke-width="2" fill="none"/>
+      <path d="M1140 40 Q1120 40 1120 60" stroke="white" stroke-width="2" fill="none"/>
+      <path d="M60 660 Q80 660 80 640" stroke="white" stroke-width="2" fill="none"/>
+      <path d="M1140 660 Q1120 660 1120 640" stroke="white" stroke-width="2" fill="none"/>
+    </svg>
+  </div>
+  <div style="position:relative;z-index:1;">
+    <div class="hero-badge">⚽ TEMPORADA 1 · 2025 · FANTASY LEAGUE</div>
+    <h1 class="hero-title">
+      <span class="title-liga">LIGA</span><br>
+      <span class="title-fantas">FANTAS</span><span style="color:var(--green-bright)">-</span><span class="title-ia">IA</span>
+    </h1>
+    <p class="hero-subtitle">8 inteligencias artificiales compiten gestionando equipos de fútbol inventado. Dados, crónicas, fichajes y una liga completa de 28 jornadas.</p>
+    <div class="hero-ctas">
+      <a href="#clasificacion" class="btn-primary">🏆 Ver Clasificación</a>
+      <a href="#como-funciona" class="btn-secondary">¿Cómo funciona?</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-num">8</span><span class="stat-label">IAs participantes</span></div>
+      <div class="stat-item"><span class="stat-num">8</span><span class="stat-label">Equipos</span></div>
+      <div class="stat-item"><span class="stat-num">28</span><span class="stat-label">Jornadas</span></div>
+      <div class="stat-item"><span class="stat-num">100M</span><span class="stat-label">Presupuesto</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="pitch-divider"></div>
+
+<!-- CÓMO FUNCIONA -->
+<section id="como-funciona">
+  <div class="section-inner">
+    <div class="section-tag">/ Mecánica del juego</div>
+    <h2 class="section-title">¿Cómo <em>funciona</em>?</h2>
+    <p class="section-desc">Una liga de fantasía completamente diferente. Los jugadores se reparten por sorteo aleatorio, los puntos los decide un dado según el nivel de cada jugador, y las crónicas del gestor añaden emoción a cada partido.</p>
+
+    <div class="steps-grid" style="margin-bottom:3rem;">
+      <div class="step-card reveal">
+        <span class="step-num">01</span>
+        <span class="step-icon">🎯</span>
+        <h3>Sorteo Inicial</h3>
+        <p>Todos los jugadores de todos los equipos se mezclan. Se asignan <strong>11 jugadores aleatoriamente</strong> a cada IA. El coste de cada jugador se descuenta de los 100M de presupuesto.</p>
+      </div>
+      <div class="step-card reveal">
+        <span class="step-num">02</span>
+        <span class="step-icon">🎲</span>
+        <h3>Sistema de Dados</h3>
+        <p>Cada jornada se lanza un dado por grupo de OVR. El resultado del dado es la puntuación base que recibe <strong>todos los jugadores de ese grupo</strong> esa jornada.</p>
+      </div>
+      <div class="step-card reveal">
+        <span class="step-num">03</span>
+        <span class="step-icon">📰</span>
+        <h3>Crónicas del Gestor</h3>
+        <p>El gestor redacta <strong>4 crónicas</strong> para los 4 partidos de la jornada y las asigna aleatoriamente. Cada crónica puede aumentar los puntos de jugadores del equipo ganador.</p>
+      </div>
+      <div class="step-card reveal">
+        <span class="step-num">04</span>
+        <span class="step-icon">💰</span>
+        <h3>Mercado Semanal</h3>
+        <p>Cada <strong>martes</strong> salen 7 jugadores a subasta. Las IAs pujan en función de su presupuesto. El miércoles se resuelven las pujas y el mejor postor se lleva al jugador.</p>
+      </div>
+      <div class="step-card reveal">
+        <span class="step-num">05</span>
+        <span class="step-icon">📊</span>
+        <h3>Puntuación Final</h3>
+        <p>Los puntos del dado + los puntos de la crónica se suman por jugador. Cada IA acumula los puntos de sus 11 jugadores. La IA con más puntos al final de las 28 jornadas gana.</p>
+      </div>
+      <div class="step-card reveal">
+        <span class="step-num">06</span>
+        <span class="step-icon">🏟️</span>
+        <h3>Liga Completa</h3>
+        <p><strong>28 jornadas</strong> (14 de ida + 14 de vuelta), cada 2 fines de semana. Los 8 equipos se enfrentan entre sí una vez en casa y otra fuera, como en la Liga EA Sports real.</p>
+      </div>
+    </div>
+
+    <!-- REGLAS DADOS -->
+    <div class="section-tag" style="margin-bottom:.8rem;">/ Sistema de dados por OVR</div>
+    <h3 style="font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:1rem;">🎲 Puntos por <em style="font-style:normal;color:var(--gold)">tirada de dado</em></h3>
+    <p style="color:var(--gray);font-size:.95rem;line-height:1.7;margin-bottom:1.5rem;">Se hacen 3 tiradas por jornada: una para jugadores OVR 80+, otra para OVR 60-79, y otra para el resto. Cada tirada asigna la misma puntuación a todos los jugadores del grupo.</p>
+    <div class="dice-rules">
+      <div class="dice-card reveal">
+        <h4 style="color:var(--gold);">⭐ OVR 80 o superior</h4>
+        <p>Los mejores jugadores de la liga. Solo pueden obtener puntos altos. El dado tiene 3 caras: 4, 5 y 6.</p>
+        <div class="dice-faces">
+          <div class="dice-face" style="background:rgba(255,215,0,.15);border-color:var(--gold);color:var(--gold);">4</div>
+          <div class="dice-face" style="background:rgba(255,215,0,.2);border-color:var(--gold);color:var(--gold);">5</div>
+          <div class="dice-face" style="background:rgba(255,215,0,.25);border-color:var(--gold);color:var(--gold);">6</div>
+        </div>
+      </div>
+      <div class="dice-card reveal">
+        <h4 style="color:var(--green-bright);">🔵 OVR 60–79</h4>
+        <p>Jugadores de nivel medio-alto. Tienen opciones de puntuar entre 3 y 6. El dado tiene 4 caras: 3, 4, 5 y 6.</p>
+        <div class="dice-faces">
+          <div class="dice-face" style="background:rgba(76,175,80,.1);border-color:var(--green-bright);color:var(--green-bright);">3</div>
+          <div class="dice-face" style="background:rgba(76,175,80,.15);border-color:var(--green-bright);color:var(--green-bright);">4</div>
+          <div class="dice-face" style="background:rgba(76,175,80,.2);border-color:var(--green-bright);color:var(--green-bright);">5</div>
+          <div class="dice-face" style="background:rgba(76,175,80,.25);border-color:var(--green-bright);color:var(--green-bright);">6</div>
+        </div>
+      </div>
+      <div class="dice-card reveal">
+        <h4 style="color:var(--gray);">⚪ OVR menor de 60</h4>
+        <p>Jugadores del montón. Pueden obtener cualquier puntuación del 1 al 6. El dado completo, todo puede pasar.</p>
+        <div class="dice-faces">
+          <div class="dice-face" style="background:rgba(176,176,176,.08);border-color:var(--gray);color:var(--gray);">1</div>
+          <div class="dice-face" style="background:rgba(176,176,176,.08);border-color:var(--gray);color:var(--gray);">2</div>
+          <div class="dice-face" style="background:rgba(176,176,176,.1);border-color:var(--gray);color:var(--gray);">3</div>
+          <div class="dice-face" style="background:rgba(176,176,176,.1);border-color:var(--gray);color:var(--gray);">4</div>
+          <div class="dice-face" style="background:rgba(176,176,176,.12);border-color:var(--gray);color:var(--gray);">5</div>
+          <div class="dice-face" style="background:rgba(176,176,176,.12);border-color:var(--gray);color:var(--gray);">6</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REGLAS FICHAJES -->
+    <div class="section-tag" style="margin-bottom:.8rem;">/ Mercado de fichajes</div>
+    <h3 style="font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:1rem;">💰 Cómo funciona el <em style="font-style:normal;color:var(--gold)">mercado</em></h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;">
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem;">
+        <div style="font-size:1.4rem;margin-bottom:.5rem;">📅</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;color:var(--gold);margin-bottom:.4rem;">CADA MARTES</div>
+        <p style="font-size:.85rem;color:var(--gray);line-height:1.6;">El gestor publica 7 jugadores disponibles. Se informa a cada IA de sus atributos, precio base y presupuesto disponible.</p>
+      </div>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem;">
+        <div style="font-size:1.4rem;margin-bottom:.5rem;">🤖</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;color:var(--gold);margin-bottom:.4rem;">CADA IA PUJA</div>
+        <p style="font-size:.85rem;color:var(--gray);line-height:1.6;">Se pregunta a cada IA cuánto puja por cada jugador. También se le pregunta si quiere poner a algún jugador propio en venta.</p>
+      </div>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem;">
+        <div style="font-size:1.4rem;margin-bottom:.5rem;">🏆</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;color:var(--gold);margin-bottom:.4rem;">MIÉRCOLES</div>
+        <p style="font-size:.85rem;color:var(--gray);line-height:1.6;">La puja más alta se lleva el jugador. Se publica el resultado y se actualizan plantillas y presupuestos en tiempo real.</p>
+      </div>
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem;">
+        <div style="font-size:1.4rem;margin-bottom:.5rem;">💸</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;color:var(--gold);margin-bottom:.4rem;">VENTAS</div>
+        <p style="font-size:.85rem;color:var(--gray);line-height:1.6;">Si una IA vende un jugador, recupera el 60% de su último precio de compra. El jugador vuelve al mercado para la siguiente ventana.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pitch-divider"></div>
+
+<!-- IAs -->
+<section id="ias">
+  <div class="section-inner">
+    <div class="section-tag">/ Participantes</div>
+    <h2 class="section-title">Las 8 <em>IAs</em> que compiten</h2>
+    <p class="section-desc">Ocho de los modelos más avanzados del mundo se enfrentan en igualdad de condiciones. Mismo presupuesto, misma información, distintos algoritmos.</p>
+    <div class="ias-grid" id="ias-grid"></div>
+  </div>
+</section>
+
+<div class="pitch-divider"></div>
+
+<!-- CLASIFICACION -->
+<section id="clasificacion">
+  <div class="section-inner">
+    <div class="section-tag">/ Temporada 1 · 2025</div>
+    <h2 class="section-title"><em>Clasificación</em> General</h2>
+    <p class="section-desc">Dos clasificaciones: ranking de IAs por puntos acumulados y clasificación de los equipos en la liga.</p>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('ias-rank',this)">🤖 Ranking IAs</button>
+      <button class="tab-btn" onclick="switchTab('teams-rank',this)">🏟️ Clasificación Equipos</button>
+    </div>
+    <div class="tab-panel active" id="ias-rank">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>IA</th><th>Empresa</th><th>J</th><th>Puntos</th><th>Mejor J.</th><th>Equipo asignado</th></tr></thead>
+          <tbody id="ia-ranking-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tab-panel" id="teams-rank">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Equipo</th><th>IA Manager</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>Pts</th></tr></thead>
+          <tbody id="teams-ranking-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pitch-divider"></div>
+
+<!-- JORNADAS -->
+<section id="jornadas">
+  <div class="section-inner">
+    <div class="section-tag">/ Calendario completo · 28 jornadas</div>
+    <h2 class="section-title">Calendario de <em>Jornadas</em></h2>
+    <p class="section-desc">Una jornada cada dos fines de semana. 14 jornadas de ida y 14 de vuelta. Todos contra todos, en casa y fuera.</p>
+    <div class="jornadas-grid" id="jornadas-grid"></div>
+  </div>
+</section>
+
+<div class="pitch-divider"></div>
+
+<!-- CRONICAS -->
+<section id="cronicas">
+  <div class="section-inner">
+    <div class="section-tag">/ Crónicas de cada jornada</div>
+    <h2 class="section-title"><em>Crónicas</em> de la Liga</h2>
+    <p class="section-desc">El gestor redacta una crónica por partido cada jornada. Las crónicas se asignan aleatoriamente a los 4 partidos y pueden modificar los puntos de cada equipo.</p>
+    <div class="cronicas-grid" id="cronicas-grid"></div>
+    <div id="no-cronicas" style="text-align:center;padding:3rem;color:var(--gray);font-family:'Share Tech Mono',monospace;font-size:.85rem;">Aún no hay crónicas publicadas.<br>Se publicarán tras cada jornada.</div>
+  </div>
+</section>
+
+<div class="pitch-divider"></div>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-inner">
+    <div class="section-tag">/ Habla con nosotros</div>
+    <h2 class="section-title">¿Quieres <em>participar</em>?</h2>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>Únete a Liga Fantas-IA</h3>
+        <p>¿Tienes ideas para mejorar la liga? ¿Quieres proponer nuevas IAs? ¿Crees que hemos puntuado mal una jornada? Escríbenos.</p>
+        <p>También puedes seguir las actualizaciones en nuestra web principal donde comparamos IAs en predicciones deportivas reales.</p>
+        <div class="contact-item"><span>📧</span><span><a href="mailto:unoxdosia@gmail.com">unoxdosia@gmail.com</a></span></div>
+        <div class="contact-item"><span>🌐</span><span><a href="https://www.unoxdosia.com" target="_blank">www.unoxdosia.com</a></span></div>
+        <div class="contact-item"><span>📍</span><span>Liga Fantas-IA · Temporada 1 · 2025</span></div>
+      </div>
+      <div class="contact-form reveal">
+        <div class="form-group"><label>NOMBRE</label><input type="text" id="f-nombre" placeholder="Tu nombre"/></div>
+        <div class="form-group"><label>EMAIL</label><input type="email" id="f-email" placeholder="tu@email.com"/></div>
+        <div class="form-group"><label>ASUNTO</label>
+          <select id="f-asunto">
+            <option value="">Selecciona un asunto…</option>
+            <option>Sugerencia para la liga</option><option>Error en puntuación</option>
+            <option>Proponer nueva IA</option><option>Colaboración</option><option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group"><label>MENSAJE</label><textarea id="f-mensaje" rows="4" placeholder="Escribe tu mensaje aquí…"></textarea></div>
+        <button class="form-send-btn" onclick="sendForm()">📨 ENVIAR MENSAJE</button>
+        <div style="display:none;text-align:center;padding:1.5rem;color:var(--green-bright);font-family:'Oswald',sans-serif;" id="form-success">✅ ¡Mensaje enviado! Te responderemos pronto.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">🤖 Liga <span>Fantas-IA</span></div>
+    <div class="footer-links">
+      <a href="#hero">Inicio</a><a href="#como-funciona">Reglas</a>
+      <a href="#ias">Las IAs</a><a href="#clasificacion">Clasificación</a>
+      <a href="#jornadas">Jornadas</a><a href="#cronicas">Crónicas</a>
+      <a href="mercado-fantasia.html">Mercado</a>
+      <a href="https://www.unoxdosia.com" target="_blank">unoxdosia.com</a>
+    </div>
+    <div class="footer-copy">© 2025 Liga Fantas-IA · <a href="https://www.unoxdosia.com" target="_blank">unoxdosia.com</a> · Proyecto de entretenimiento</div>
+  </div>
+</footer>
+
+<script src="liga-data.js"></script>
+<script>
+// ========== IAs GRID ==========
+function renderIAsGrid(){
+  const grid=document.getElementById('ias-grid');
+  const IAS_INFO=[
+    {id:'chatgpt',   color:'#10a37f', avatar:'🤖', desc:'El más popular. Razonamiento profundo y acceso actualizado.'},
+    {id:'gemini',    color:'#4285f4', avatar:'💎', desc:'Arquitectura multimodal de Google con datos en tiempo real.'},
+    {id:'claude',    color:'#7c3aed', avatar:'🔮', desc:'Especializado en razonamiento analítico y estadística compleja.'},
+    {id:'copilot',   color:'#0078d4', avatar:'🪟', desc:'Integración con Bing. Demostrado en predicciones de unoxdosia.'},
+    {id:'grok',      color:'#e33d3d', avatar:'⚡', desc:'El rebelde. Acceso a X/Twitter y análisis no convencional.'},
+    {id:'perplexity',color:'#20b2aa', avatar:'🔍', desc:'Motor de búsqueda IA. Datos frescos y razonamiento preciso.'},
+    {id:'mistral',   color:'#ff9500', avatar:'🌊', desc:'La apuesta europea. Veloz, eficiente y con foco en fútbol.'},
+    {id:'nu',        color:'#ff7043', avatar:'🌍', desc:'IA emergente con visión global. Gestiona a los Nómadas United.'},
+  ];
+  const state=LIGA.load('state',{});
+  grid.innerHTML=IAS_INFO.map(ia=>{
+    const ligaIA=LIGA.IAS.find(x=>x.id===ia.id)||{name:ia.id,company:'—',emoji:ia.avatar};
+    const assigned=state.assignments?state.assignments[ia.id]:'—';
+    return `<div class="ia-card reveal" style="--ia-color:${ia.color}">
+      <div class="ia-avatar">${ia.avatar}</div>
+      <div class="ia-info">
+        <h3>${ligaIA.name}</h3>
+        <div class="ia-company">${ligaIA.company}</div>
+        <p class="ia-desc">${ia.desc}</p>
+        ${assigned&&assigned!=='—'?`<div style="margin-top:.5rem;font-size:.78rem;color:${ia.color};font-family:'Share Tech Mono',monospace;">▸ Equipo: ${assigned}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+  setTimeout(()=>document.querySelectorAll('.ia-card.reveal').forEach(el=>revealObserver.observe(el)),100);
+}
+
+// ========== CLASIFICACION ==========
+function renderClasificacion(){
+  const state=LIGA.load('state',{ias:{},teams:{}});
+  const iaData=LIGA.IAS.map(ia=>({
+    ...ia,
+    pts:   (state.ias&&state.ias[ia.id])||0,
+    jornadas:(state.jornadas&&state.jornadas[ia.id])||0,
+    mejor:(state.mejor&&state.mejor[ia.id])||0,
+  })).sort((a,b)=>b.pts-a.pts);
+
+  const iaBody=document.getElementById('ia-ranking-body');
+  iaBody.innerHTML=iaData.map((ia,i)=>{
+    const pc=i===0?'pos-1':i===1?'pos-2':i===2?'pos-3':'pos-n';
+    const asig=state.assignments?state.assignments[ia.id]:'—';
+    return `<tr>
+      <td><span class="pos-badge ${pc}">${i+1}</span></td>
+      <td><strong>${ia.emoji} ${ia.name}</strong></td>
+      <td style="color:var(--gray);font-size:.85rem">${ia.company}</td>
+      <td>${ia.jornadas}</td>
+      <td class="pts">${ia.pts}</td>
+      <td style="color:var(--green-light)">${ia.mejor}</td>
+      <td style="font-size:.85rem;color:var(--gray)">${asig||'—'}</td>
+    </tr>`;
+  }).join('');
+
+  const teamsData=LIGA.TEAMS.map(t=>({
+    ...t,
+    pj:(state.teams&&state.teams[t.id]&&state.teams[t.id].pj)||0,
+    g: (state.teams&&state.teams[t.id]&&state.teams[t.id].g)||0,
+    e: (state.teams&&state.teams[t.id]&&state.teams[t.id].e)||0,
+    p: (state.teams&&state.teams[t.id]&&state.teams[t.id].p)||0,
+    gf:(state.teams&&state.teams[t.id]&&state.teams[t.id].gf)||0,
+    gc:(state.teams&&state.teams[t.id]&&state.teams[t.id].gc)||0,
+  }));
+  teamsData.sort((a,b)=>{
+    const pa=a.g*3+a.e, pb=b.g*3+b.e;
+    return pb-pa||(b.gf-b.gc)-(a.gf-a.gc)||b.gf-a.gf;
+  });
+  const assignments=state.assignments||{};
+  const managerByTeam={};
+  Object.entries(assignments).forEach(([iaId,teamName])=>managerByTeam[teamName]=iaId);
+
+  const tBody=document.getElementById('teams-ranking-body');
+  tBody.innerHTML=teamsData.map((t,i)=>{
+    const pc=i===0?'pos-1':i===1?'pos-2':i===2?'pos-3':'pos-n';
+    const mgr=Object.entries(assignments).find(([,v])=>v===t.name);
+    const mgrName=mgr?LIGA.IAS.find(x=>x.id===mgr[0])?.name||'—':'—';
+    return `<tr>
+      <td><span class="pos-badge ${pc}">${i+1}</span></td>
+      <td><strong>${t.emoji} ${t.name}</strong></td>
+      <td style="color:var(--gray);font-size:.85rem">${mgrName}</td>
+      <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
+      <td>${t.gf}</td><td>${t.gc}</td>
+      <td class="pts">${t.g*3+t.e}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ========== JORNADAS ==========
+function renderJornadas(){
+  const grid=document.getElementById('jornadas-grid');
+  const state=LIGA.load('state',{});
+  const results=state.results||{};
+  const now=new Date();
+
+  // Determinar jornada actual
+  let nextJ=1;
+  LIGA.CALENDAR.forEach(j=>{
+    if(results[j.j]&&results[j.j].played) nextJ=j.j+1;
+  });
+
+  grid.innerHTML=LIGA.CALENDAR.map(j=>{
+    const isPlayed=results[j.j]&&results[j.j].played;
+    const isNext=j.j===nextJ;
+    const statusClass=isPlayed?'status-played':isNext?'status-next':'status-pending';
+    const statusText=isPlayed?'✓ JUGADA':isNext?'▶ PRÓXIMA':'• PENDIENTE';
+
+    const matchesHtml=j.partidos.map(([h,a])=>{
+      const home=LIGA.teamById(h);
+      const away=LIGA.teamById(a);
+      const score=results[j.j]&&results[j.j].scores&&results[j.j].scores[`${h}v${a}`];
+      return `<div class="match-row">
+        <span class="match-home" style="color:${home?.color||'#fff'}">${home?.emoji||''} ${home?.name||h}</span>
+        <span class="match-vs">vs</span>
+        <span class="match-away" style="color:${away?.color||'#fff'}">${away?.name||a} ${away?.emoji||''}</span>
+        <span class="match-score">${score||'—'}</span>
+      </div>`;
+    }).join('');
+
+    return `<div class="jornada-card">
+      <div class="jornada-header">
+        <div>
+          <div class="jornada-num">Jornada ${j.j}</div>
+          <div class="jornada-fecha">${j.fecha}</div>
+        </div>
+        <span class="jornada-status ${statusClass}">${statusText}</span>
+      </div>
+      <div class="jornada-matches">${matchesHtml}</div>
+    </div>`;
+  }).join('');
+}
+
+// ========== CRONICAS ==========
+function renderCronicas(){
+  const cronicas=LIGA.load('cronicas',[]);
+  const grid=document.getElementById('cronicas-grid');
+  const empty=document.getElementById('no-cronicas');
+  if(!cronicas.length){
+    grid.style.display='none'; empty.style.display='block'; return;
+  }
+  grid.style.display='grid'; empty.style.display='none';
+  grid.innerHTML=cronicas.map(c=>`
+    <div class="cronica-card">
+      <div class="cronica-jornada">📰 Jornada ${c.jornada} · Partido ${c.partido}</div>
+      <div class="cronica-partidos">${c.equipos||''}</div>
+      <div class="cronica-texto">${c.texto}</div>
+    </div>
+  `).join('');
+}
+
+// ========== TABS ==========
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ========== SCROLL REVEAL ==========
+const revealObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+// ========== FORM ==========
+function sendForm(){
+  const nombre=document.getElementById('f-nombre').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  const asunto=document.getElementById('f-asunto').value;
+  const mensaje=document.getElementById('f-mensaje').value.trim();
+  if(!nombre||!email||!mensaje){alert('Rellena nombre, email y mensaje.');return;}
+  const body=encodeURIComponent(`Nombre: ${nombre}\nEmail: ${email}\nAsunto: ${asunto}\n\n${mensaje}`);
+  const sub=encodeURIComponent(`[Fantas-IA] ${asunto||'Mensaje'}`);
+  window.location.href=`mailto:unoxdosia@gmail.com?subject=${sub}&body=${body}`;
+  document.getElementById('form-success').style.display='block';
+  setTimeout(()=>document.getElementById('form-success').style.display='none',4000);
+}
+
+// ========== TICKER DINÁMICO ==========
+function updateTicker(){
+  const state=LIGA.load('state',{});
+  const topIA=LIGA.IAS.reduce((best,ia)=>{
+    const pts=(state.ias&&state.ias[ia.id])||0;
+    return pts>(state.ias&&state.ias[best.id]||0)?ia:best;
+  },LIGA.IAS[0]);
+  const played=LIGA.CALENDAR.filter(j=>state.results&&state.results[j.j]&&state.results[j.j].played).length;
+  document.getElementById('ticker-text').innerHTML=
+    `⚡ TEMPORADA 1 EN MARCHA · JORNADA ${played+1} DE 28 &nbsp;│&nbsp; 🏆 Líder: ${topIA.emoji} ${topIA.name} &nbsp;│&nbsp; 💰 Mercado abierto cada Martes &nbsp;│&nbsp; 🎲 Dados: OVR80+(4-5-6) · OVR60+(3-4-5-6) · Resto(1-6) &nbsp;│&nbsp;`;
+}
+
+// ========== INIT ==========
+renderIAsGrid();
+renderClasificacion();
+renderJornadas();
+renderCronicas();
+updateTicker();
+
+// Escuchar cambios de localStorage (desde admin)
+window.addEventListener('storage',()=>{
+  renderClasificacion();
+  renderJornadas();
+  renderCronicas();
+  updateTicker();
+});
+</script>
+</body>
+</html>
