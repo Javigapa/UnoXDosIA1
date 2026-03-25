@@ -1026,12 +1026,21 @@ let mercadoJugadores=[];
 
 function initMercado(){
   const saved=LIGA.load('mercado_jugadores',[]);
-  mercadoJugadores=saved.length?saved:[{nombre:'',precio:0,pujas:{}}];
+  const base=[{nombre:'',precio:0,origen:'admin',iaOrigenId:'',pujas:{}}];
+  mercadoJugadores=(saved.length?saved:base).map(j=>{
+    return {
+      nombre: j.nombre || '',
+      precio: parseFloat(j.precio)||0,
+      origen: j.origen || 'admin',
+      iaOrigenId: j.iaOrigenId || j.iaOrigen || '',
+      pujas: j.pujas || {},
+    };
+  });
   renderMercadoForm();
 }
 
 function addMercadoSlot(){
-  mercadoJugadores.push({nombre:'',precio:0,pujas:{}});
+  mercadoJugadores.push({nombre:'',precio:0,origen:'admin',iaOrigenId:'',pujas:{}});
   renderMercadoForm();
 }
 
@@ -1041,6 +1050,14 @@ function renderMercadoForm(){
     <div style="display:flex;gap:.8rem;align-items:center;margin-bottom:.6rem;flex-wrap:wrap;">
       <input type="text" value="${j.nombre}" onchange="mercadoJugadores[${i}].nombre=this.value" placeholder="Nombre del jugador" style="flex:2;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Rajdhani,sans-serif;"/>
       <input type="number" value="${j.precio}" onchange="mercadoJugadores[${i}].precio=parseFloat(this.value)||0" placeholder="Precio base (M)" step="0.1" style="width:110px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Share Tech Mono,monospace;"/>
+      <select onchange="mercadoJugadores[${i}].origen=this.value" style="background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Rajdhani,sans-serif;min-width:120px;">
+        <option value="admin" ${j.origen==='admin'?'selected':''}>Puesto por Admin</option>
+        <option value="ia" ${j.origen==='ia'?'selected':''}>Puesto por IA</option>
+      </select>
+      <select onchange="mercadoJugadores[${i}].iaOrigenId=this.value" style="background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Rajdhani,sans-serif;min-width:160px;" ${j.origen==='ia'?'':'disabled'}>
+        <option value="">— IA —</option>
+        ${LIGA.IAS.map(ia=>`<option value="${ia.id}" ${j.iaOrigenId===ia.id?'selected':''}>${ia.emoji} ${ia.name}</option>`).join('')}
+      </select>
       <button onclick="mercadoJugadores.splice(${i},1);renderMercadoForm();" style="background:rgba(229,57,53,.2);border:1px solid rgba(229,57,53,.4);color:var(--red);font-size:.8rem;padding:.4rem .8rem;border-radius:5px;cursor:pointer;">✕</button>
     </div>
   `).join('');
@@ -1054,7 +1071,18 @@ function renderMercadoForm(){
         ${LIGA.IAS.map(ia=>`
           <div style="display:flex;align-items:center;gap:.4rem;">
             <span style="font-size:.78rem;color:${ia.color}">${ia.emoji}</span>
-            <input type="number" value="${j.pujas&&j.pujas[ia.id]||''}" onchange="mercadoJugadores[${ji}].pujas['${ia.id}']=parseFloat(this.value)||0" placeholder="—" step="0.1" style="width:65px;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:4px;padding:.3rem .4rem;color:var(--white);font-family:Share Tech Mono,monospace;font-size:.82rem;text-align:center;"/>
+            <input id="bid-${ji}-${ia.id}" type="number"
+              value="${(j.pujas&&j.pujas[ia.id]!==null&&j.pujas&&j.pujas[ia.id]!==undefined)?j.pujas[ia.id]:''}"
+              onchange="const v=parseFloat(this.value)||0; mercadoJugadores[${ji}].pujas['${ia.id}']=v>0?v:null;"
+              placeholder="—" step="0.1"
+              ${j.pujas&&j.pujas[ia.id]===null?'disabled':''}
+              style="width:65px;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:4px;padding:.3rem .4rem;color:var(--white);font-family:Share Tech Mono,monospace;font-size:.82rem;text-align:center;"/>
+            <label style="display:flex;align-items:center;gap:.25rem;color:var(--gray);font-size:.75rem;font-family:'Share Tech Mono',monospace;">
+              <input type="checkbox"
+                ${j.pujas&&j.pujas[ia.id]===null?'checked':''}
+                onchange="const inp=document.getElementById('bid-${ji}-${ia.id}'); inp.disabled=this.checked; mercadoJugadores[${ji}].pujas['${ia.id}']=this.checked?null:((parseFloat(inp.value)||0)>0?(parseFloat(inp.value)||0):null);"/>
+              No puja
+            </label>
           </div>
         `).join('')}
       </div>
@@ -1065,23 +1093,43 @@ function renderMercadoForm(){
 function saveMercado(){
   // Resolver: ganador = mayor puja
   const results=mercadoJugadores.map(j=>{
-    let maxPuja=j.precio,winner=null;
+    const precioBase=parseFloat(j.precio)||0;
+    let maxPuja=precioBase,winner=null;
     Object.entries(j.pujas||{}).forEach(([iaId,puja])=>{
-      if(puja>maxPuja){maxPuja=puja;winner=iaId;}
+      const v=(puja===null||puja===undefined||puja==='')?0:parseFloat(puja)||0;
+      if(v>maxPuja){maxPuja=v;winner=iaId;}
     });
-    return{jugador:j.nombre,precio:j.precio,winner,monto:maxPuja};
+    const montoGanador=winner?maxPuja:0;
+    return{
+      jugador:j.nombre,
+      precioBase,
+      ganadorIAId:winner,
+      montoGanador,
+      origen:j.origen||'admin',
+      iaOrigenId:j.iaOrigenId||'',
+      pujas:j.pujas||{},
+    };
   });
 
   // Actualizar presupuestos
   const budgets=LIGA.load('budgets',{});
   results.forEach(r=>{
-    if(r.winner)budgets[r.winner]=Math.max(0,(budgets[r.winner]||100)-r.monto);
+    if(r.ganadorIAId){
+      const iaId=r.ganadorIAId;
+      budgets[iaId]=Math.max(0,(budgets[iaId]||100)-r.montoGanador);
+    }
   });
   LIGA.save('budgets',budgets);
   LIGA.save('mercado_jugadores',mercadoJugadores);
   LIGA.save('mercado_results',results);
 
-  toast('✅ Mercado resuelto. '+ results.filter(r=>r.winner).map(r=>`${r.jugador}→${LIGA.IAS.find(ia=>ia.id===r.winner)?.name}`).join(', '));
+  toast('✅ Mercado resuelto. '+ results
+    .filter(r=>r.ganadorIAId)
+    .map(r=>{
+      const ia=LIGA.IAS.find(ia=>ia.id===r.ganadorIAId);
+      return `${r.jugador}→${ia?.name||r.ganadorIAId}`;
+    })
+    .join(', '));
 }
 
 </script>

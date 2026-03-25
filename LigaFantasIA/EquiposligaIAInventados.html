@@ -473,8 +473,8 @@
       <div class="meta-card reveal">
         <span class="meta-icon">💸</span>
         <div class="meta-title">PUJA MÁS ALTA</div>
-        <div class="meta-val">14.2M</div>
-        <p>Logic Gate · ChatGPT lidera</p>
+        <div class="meta-val" id="puja-mas-alta">14.2M</div>
+        <p id="puja-mas-alta-leader">—</p>
       </div>
       <div class="meta-card reveal">
         <span class="meta-icon">⏱️</span>
@@ -494,6 +494,13 @@
     </div>
 
     <div class="jugadores-subasta" id="subasta-cards"></div>
+
+    <!-- RESULTADO FINAL DEL MERCADO -->
+    <div id="mercado-final" style="display:none;margin-top:2rem;">
+      <div class="section-tag" style="margin-bottom:.8rem;">/ Resultado del Mercado</div>
+      <h2 class="section-title" style="margin-bottom:1rem;">Fichajes de la <em>Semana</em></h2>
+      <div id="mercado-final-body"></div>
+    </div>
 
     <div class="pitch-divider" style="margin:1rem 0"></div>
 
@@ -1100,63 +1107,260 @@ function filterPlayers(teamId, pos, btn) {
 // ============================================================
 //  RENDER SUBASTA
 // ============================================================
+function normalizeName(s){
+  return String(s||'')
+    .toLowerCase()
+    .replace(/["']/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+function findPlayerByName(playerName){
+  const target = normalizeName(playerName);
+  if(!target) return null;
+  for(const team of (TEAMS||[])){
+    for(const p of (team.players||[])){
+      if(normalizeName(p.name) === target){
+        return { team, player: p };
+      }
+    }
+  }
+  return null;
+}
+
+function formatMillions(v){
+  const n = typeof v === 'number' ? v : parseFloat(v);
+  if(!Number.isFinite(n)) return '—';
+  const fixed = n.toFixed(1);
+  return (fixed.endsWith('.0') ? fixed.slice(0,-2) : fixed) + 'M';
+}
+
+function loadMercado(){
+  const mercadoJugadores = (typeof LIGA !== 'undefined' && LIGA.load)
+    ? LIGA.load('mercado_jugadores',[])
+    : [];
+  return mercadoJugadores;
+}
+
+function loadMercadoResultados(){
+  const mercado_results = (typeof LIGA !== 'undefined' && LIGA.load)
+    ? LIGA.load('mercado_results',[])
+    : [];
+  return mercado_results;
+}
+
 function renderSubasta() {
   const container = document.getElementById('subasta-cards');
-  document.getElementById('total-subasta').textContent = SUBASTA.length;
-  container.innerHTML = SUBASTA.map(j => {
-    const ovr = calcOVR(j);
-    const precioActual = j.pujas.length
-      ? Math.max(...j.pujas.map(p=>p.monto))
-      : j.precioBase;
-    const leader = j.pujas.find(p=>p.leader);
+  const totalEl = document.getElementById('total-subasta');
+  const mercado = loadMercado();
+
+  // Fallback para cuando no exista almacenamiento (ej. primera carga / archivo viejo)
+  const items = mercado && mercado.length
+    ? mercado
+    : SUBASTA.map(x => ({
+        nombre: x.name,
+        precio: x.precioBase,
+        origen: 'admin',
+        iaOrigenId: '',
+        pujas: Object.fromEntries((x.pujas||[]).map(p => [p.ia, p.monto])),
+      }));
+
+  if(totalEl) totalEl.textContent = String(items.length);
+  if(!container) return;
+
+  // Actualizar "PUJA MÁS ALTA" (global) en el meta
+  let globalMaxBid = 0;
+  let globalLeaderIAId = null;
+  items.forEach(slot => {
+    const pujasObj = slot.pujas || {};
+    Object.entries(pujasObj).forEach(([iaId,monto])=>{
+      const v = (monto===null||monto===undefined||monto==='') ? 0 : parseFloat(monto) || 0;
+      if(v > globalMaxBid){
+        globalMaxBid = v;
+        globalLeaderIAId = iaId;
+      }
+    });
+  });
+  const pujaMasAltaEl = document.getElementById('puja-mas-alta');
+  const pujaMasAltaLeaderEl = document.getElementById('puja-mas-alta-leader');
+  if(pujaMasAltaEl){
+    pujaMasAltaEl.textContent = formatMillions(globalMaxBid || 0);
+  }
+  if(pujaMasAltaLeaderEl){
+    if(globalLeaderIAId){
+      const ia = (typeof LIGA !== 'undefined' && Array.isArray(LIGA.IAS)) ? LIGA.IAS.find(x=>x.id===globalLeaderIAId) : null;
+      pujaMasAltaLeaderEl.textContent = `${ia ? ia.emoji+' '+ia.name : globalLeaderIAId} lidera`;
+    } else {
+      pujaMasAltaLeaderEl.textContent = '—';
+    }
+  }
+
+  container.innerHTML = items.map(j => {
+    const playerLookup = findPlayerByName(j.nombre);
+    const player = playerLookup?.player || {};
+    const team = playerLookup?.team || {};
+
+    const pot = player.pot ?? j.pot;
+    const cal = player.cal ?? j.cal;
+    const vel = player.vel ?? j.vel;
+    const vis = player.vis ?? j.vis;
+    const pos = player.pos ?? j.pos;
+
+    let ovr = null;
+    if(pot!==undefined && cal!==undefined && vel!==undefined && vis!==undefined){
+      ovr = calcOVR({pot,cal,vel,vis});
+    }
+
+    const pujasObj = j.pujas || {};
+    const bidEntries = Object.entries(pujasObj)
+      .map(([iaId,monto]) => ({
+        iaId,
+        monto: (monto===null||monto===undefined||monto==='') ? 0 : parseFloat(monto) || 0
+      }))
+      .filter(x => x.monto > 0);
+
+    const maxBid = bidEntries.length ? Math.max(...bidEntries.map(b=>b.monto)) : 0;
+    const precioBase = (j.precio!==undefined && j.precio!==null) ? parseFloat(j.precio) || 0 : (j.precioBase||0);
+
+    const origin = j.origen || 'admin';
+    const originIAId = j.iaOrigenId || '';
+    const originIA = (typeof LIGA !== 'undefined' && LIGA.IAS)
+      ? LIGA.IAS.find(x=>x.id===originIAId) || null
+      : null;
+    const originLabel = origin === 'ia'
+      ? (originIA ? `${originIA.emoji} ${originIA.name}` : (originIAId || 'IA'))
+      : 'Admin';
+
     return `
       <div class="jugador-subasta-card">
         <div class="jsc-header">
           <div>
-            <div class="jsc-name">${j.name}</div>
-            <div class="jsc-team">${j.teamEmoji} ${j.team}</div>
+            <div class="jsc-name">${player.name || j.nombre || '—'}</div>
+            <div class="jsc-team">${team.emoji || ''} ${team.name || ''}</div>
+            <div style="font-size:.72rem;color:var(--gray);margin-top:.15rem;font-family:'Share Tech Mono',monospace;">
+              Origen: ${originLabel}
+            </div>
           </div>
-          <span class="td-pos pos-${j.pos}">${j.pos}</span>
+          <span class="td-pos pos-${pos || ''}">${pos || '—'}</span>
         </div>
         <div class="jsc-body">
           <div class="jsc-info">
-            <span class="overall-badge ${ovrClass(ovr)}" style="font-size:1.1rem">OVR ${ovr}</span>
+            <span class="overall-badge ${ovr!==null ? ovrClass(ovr) : ''}" style="font-size:1.1rem">
+              ${ovr!==null ? 'OVR '+ovr : 'OVR —'}
+            </span>
           </div>
           <div class="jsc-attrs">
-            <div class="jsc-attr pot"><span class="alabel">POT</span><span class="aval">${j.pot}</span></div>
-            <div class="jsc-attr cal"><span class="alabel">CAL</span><span class="aval">${j.cal}</span></div>
-            <div class="jsc-attr vel"><span class="alabel">VEL</span><span class="aval">${j.vel}</span></div>
-            <div class="jsc-attr vis"><span class="alabel">VIS</span><span class="aval">${j.vis}</span></div>
+            <div class="jsc-attr pot"><span class="alabel">POT</span><span class="aval">${pot ?? '—'}</span></div>
+            <div class="jsc-attr cal"><span class="alabel">CAL</span><span class="aval">${cal ?? '—'}</span></div>
+            <div class="jsc-attr vel"><span class="alabel">VEL</span><span class="aval">${vel ?? '—'}</span></div>
+            <div class="jsc-attr vis"><span class="alabel">VIS</span><span class="aval">${vis ?? '—'}</span></div>
           </div>
-          ${j.pujas.length ? `
+          ${bidEntries.length ? `
           <div class="pujas-section">
-            <h4>PUJAS (${j.pujas.length} IAs)</h4>
+            <h4>PUJAS (${bidEntries.length} IAs)</h4>
             <div class="pujas-list">
-              ${j.pujas.map(p=>`
-                <div class="puja-row">
-                  <div class="puja-ia">
-                    <div class="ia-dot" style="background:${p.color}"></div>
-                    <span>${p.ia}</span>
-                    ${p.leader?'<span class="puja-leader">LÍDER</span>':''}
-                  </div>
-                  <span class="puja-amount">${p.monto}M</span>
-                </div>
-              `).join('')}
+              ${bidEntries
+                .sort((a,b)=>b.monto-a.monto)
+                .map(b=>{
+                  const ia = (typeof LIGA !== 'undefined' && LIGA.IAS) ? LIGA.IAS.find(x=>x.id===b.iaId) : null;
+                  const isLeader = b.monto === maxBid;
+                  return `
+                    <div class="puja-row">
+                      <div class="puja-ia">
+                        <div class="ia-dot" style="background:${ia?.color || '#999'}"></div>
+                        <span>${ia ? ia.name : b.iaId}</span>
+                        ${isLeader ? '<span class="puja-leader">LÍDER</span>' : ''}
+                      </div>
+                      <span class="puja-amount">${b.monto}M</span>
+                    </div>
+                  `;
+                }).join('')}
             </div>
           </div>` : '<div class="pujas-section"><h4>SIN PUJAS AÚN</h4></div>'}
         </div>
         <div class="jsc-footer">
-          <div class="precio-base">Base: <strong>${j.precioBase}M</strong></div>
-          <div class="precio-actual">${precioActual.toFixed(1)}M${leader?` · ${leader.ia}`:''}</div>
+          <div class="precio-base">Base: <strong>${precioBase}M</strong></div>
+          <div class="precio-actual">
+            ${(maxBid || precioBase).toFixed(1)}M${maxBid ? ' · Líder en curso' : ''}
+          </div>
         </div>
       </div>
     `;
   }).join('');
 }
 
+function renderMercadoResultados(){
+  const wrap = document.getElementById('mercado-final-body');
+  if(!wrap) return;
+
+  const resultados = loadMercadoResultados();
+  const mercado = loadMercado();
+
+  if(!resultados || !resultados.length){
+    wrap.innerHTML = `<div style="text-align:center;color:var(--gray);font-family:'Share Tech Mono',monospace;padding:1.5rem;">
+      Aún no hay resultados de mercado.
+    </div>`;
+    return;
+  }
+
+  const winByJugador = new Map();
+  resultados.forEach(r=>{
+    const jugador = r.jugador || r.nombre;
+    winByJugador.set(jugador, r);
+  });
+
+  const iaIds = (typeof LIGA !== 'undefined' && Array.isArray(LIGA.IAS)) ? LIGA.IAS.map(x=>x.id) : [];
+
+  // Listado de comprados / no comprados
+  const compradosPorIA = {};
+  iaIds.forEach(id => { compradosPorIA[id] = []; });
+  const sinComprador = [];
+
+  for(const item of (mercado||[])){
+    const nombre = item.nombre;
+    const r = winByJugador.get(nombre);
+    const winner = r?.ganadorIAId || r?.winnerIAId || r?.winner || null;
+    if(winner){
+      compradosPorIA[winner] = compradosPorIA[winner] || [];
+      compradosPorIA[winner].push({ nombre });
+    }else{
+      sinComprador.push(nombre);
+    }
+  }
+
+  // Render
+  wrap.innerHTML = iaIds.map(ia=>{
+    const iaObj = LIGA.IAS.find(x=>x.id===ia);
+    const list = compradosPorIA[ia] || [];
+    const title = `${iaObj.emoji} ${iaObj.name}`;
+    return `
+      <div class="meta-card reveal" style="margin-bottom:1rem;">
+        <div class="meta-title" style="margin-bottom:.4rem;color:var(--gold);">${title}</div>
+        <div class="meta-val" style="color:var(--green-bright);margin-bottom:.6rem;">
+          ${list.length} fichajes
+        </div>
+        <p style="margin-top:.2rem;font-size:.82rem;color:var(--gray);line-height:1.6;">
+          ${list.length ? list.map(x=>`• ${x.nombre}`).join('<br>') : '— Ninguno —'}
+        </p>
+      </div>
+    `;
+  }).join('') + `
+    <div class="meta-card reveal" style="margin-top:1rem;">
+      <div class="meta-title" style="margin-bottom:.4rem;color:var(--gold);">Jugadores sin comprador</div>
+      <div class="meta-val" style="color:var(--accent-red);margin-bottom:.6rem;">
+        ${sinComprador.length} sin vender
+      </div>
+      <p style="margin-top:.2rem;font-size:.82rem;color:var(--gray);line-height:1.6;">
+        ${sinComprador.length ? sinComprador.map(x=>`• ${x}`).join('<br>') : '— Ninguno —'}
+      </p>
+    </div>
+  `;
+}
+
 // ============================================================
 //  COUNTDOWN — hasta el martes más próximo a las 23:59
 // ============================================================
+let mercadoFinalRendered = false;
 function updateCountdown() {
   const now = new Date();
   const target = new Date();
@@ -1165,7 +1369,17 @@ function updateCountdown() {
   target.setDate(now.getDate() + daysToTue);
   target.setHours(23,59,0,0);
   const diff = target - now;
-  if(diff <= 0){ document.getElementById('countdown').textContent='CERRADA'; return; }
+  const finalEl = document.getElementById('mercado-final');
+  if(diff <= 0){
+    document.getElementById('countdown').textContent='CERRADA';
+    if(finalEl) finalEl.style.display='block';
+    if(!mercadoFinalRendered){
+      renderMercadoResultados();
+      mercadoFinalRendered = true;
+    }
+    return;
+  }
+  if(finalEl) finalEl.style.display='none';
   const h = Math.floor(diff/3600000);
   const m = Math.floor((diff%3600000)/60000);
   const s = Math.floor((diff%60000)/1000);
@@ -1188,6 +1402,12 @@ renderTeams();
 renderSubasta();
 updateCountdown();
 setInterval(updateCountdown,1000);
+
+// Si el mercado cambia en el admin (mismo navegador/origen), refrescamos.
+window.addEventListener('storage',()=>{
+  renderSubasta();
+  renderMercadoResultados();
+});
 
 // Reveal after render
 setTimeout(()=>{
