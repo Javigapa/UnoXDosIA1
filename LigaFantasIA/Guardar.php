@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$DATA_FILE = __DIR__ . '/datos-liga.json';
+$DATA_FILE = __DIR__ . '/Datosliga.json';
 
 // ——— GET: devolver los datos actuales ———
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
