@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-90WQKBTXN3');
+</script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🤖 Plantillas & Fichajes | Liga Fantas-IA</title>
@@ -625,7 +633,7 @@ Justifica brevemente tu estrategia.</pre>
   <div class="footer-inner">
     <div class="footer-brand">🤖 Liga <span>Fantas-IA</span></div>
     <div class="footer-links">
-      <a href="/LigaFantasIA/fantas-ia-v2.html">Inicio Liga</a>
+      <a href="fantas-ia.html">Inicio Liga</a>
       <a href="#equipos">Equipos</a>
       <a href="#fichajes">Fichajes</a>
       <a href="https://www.unoxdosia.com" target="_blank">unoxdosia.com</a>
@@ -930,9 +938,65 @@ const LIGA = {
 
   teamById(id){ return LIGA.TEAMS.find(t=>t.id===id); },
 
-  // ======= localStorage helpers =======
-  save(key,val){ try{ localStorage.setItem('fantasia_'+key, JSON.stringify(val)); }catch(e){} },
-  load(key,def){ try{ const v=localStorage.getItem('fantasia_'+key); return v?JSON.parse(v):def; }catch(e){ return def; } },
+  // ======= Persistencia via PHP (funciona en todos los dispositivos) =======
+  _cache: null,
+  _apiUrl: '/LigaFantasIA/guardar.php',
+
+  save: function(key, val) {
+    // 1. Guardar en cache local inmediata
+    if (!LIGA._cache) LIGA._cache = {};
+    LIGA._cache[key] = val;
+    // 2. También en localStorage como fallback
+    try { localStorage.setItem('fantasia_' + key, JSON.stringify(val)); } catch(e) {}
+    // 3. Enviar al servidor (no bloqueante)
+    var payload = {};
+    payload[key] = val;
+    fetch(LIGA._apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(function(err) {
+      console.warn('guardar.php no disponible, usando localStorage:', err);
+    });
+  },
+
+  load: function(key, def) {
+    // 1. Primero la cache en memoria (más rápida)
+    if (LIGA._cache && LIGA._cache[key] !== undefined) return LIGA._cache[key];
+    // 2. Luego localStorage como fallback
+    try {
+      var v = localStorage.getItem('fantasia_' + key);
+      if (v) return JSON.parse(v);
+    } catch(e) {}
+    return def;
+  },
+
+  // Carga todos los datos del servidor al iniciar
+  loadFromServer: function(callback) {
+    fetch(LIGA._apiUrl + '?t=' + Date.now())
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        LIGA._cache = data;
+        // Sincronizar también a localStorage
+        Object.keys(data).forEach(function(k) {
+          try { localStorage.setItem('fantasia_' + k, JSON.stringify(data[k])); } catch(e) {}
+        });
+        if (callback) callback();
+      })
+      .catch(function(err) {
+        console.warn('No se pudo cargar del servidor, usando localStorage:', err);
+        // Fallback: cargar desde localStorage
+        LIGA._cache = {};
+        var prefix = 'fantasia_';
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          if (k && k.startsWith(prefix)) {
+            try { LIGA._cache[k.slice(prefix.length)] = JSON.parse(localStorage.getItem(k)); } catch(e) {}
+          }
+        }
+        if (callback) callback();
+      });
+  },
 
 };
 </script>
@@ -1695,8 +1759,12 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 // ============================================================
 //  INIT
 // ============================================================
-renderTeams();
-renderSubasta();
+// Cargar datos del servidor y luego renderizar
+LIGA.loadFromServer(function() {
+  renderTeams();
+  renderSubasta();
+  renderMercadoResultados();
+});
 updateCountdown();
 setInterval(updateCountdown,1000);
 
