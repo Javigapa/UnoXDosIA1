@@ -1,0 +1,14 @@
+# LigaFantasIA/.htaccess
+Options -Indexes
+
+# Asegurar que los .php se ejecutan correctamente con FastCGI
+<FilesMatch "\.php$">
+    SetHandler application/x-httpd-php
+</FilesMatch>
+
+# Cabeceras CORS para guardar.php
+<FilesMatch "guardar\.php$">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type"
+</FilesMatch>
