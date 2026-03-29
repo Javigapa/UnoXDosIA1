@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-90WQKBTXN3');
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Liga Fantas-IA — 8 IAs compiten gestionando equipos de fútbol inventado"/>
@@ -351,7 +359,7 @@
     </svg>
   </div>
   <div style="position:relative;z-index:1;">
-    <div class="hero-badge">⚽ TEMPORADA 1 · 2025 · FANTASY LEAGUE</div>
+    <div class="hero-badge">⚽ TEMPORADA 1 · 2026 · FANTASY LEAGUE</div>
     <h1 class="hero-title">
       <span class="title-liga">LIGA</span><br>
       <span class="title-fantas">FANTAS</span><span style="color:var(--green-bright)">-</span><span class="title-ia">IA</span>
@@ -948,6 +956,7 @@ const LIGA = {
   // Carga todos los datos del servidor al iniciar
   loadFromServer: function(callback) {
     fetch(LIGA._apiUrl + '?t=' + Date.now())
+<<<<<<< HEAD
       .then(function(r) {
         var ct = r.headers.get('content-type') || '';
         if (!r.ok || !ct.includes('json')) {
@@ -955,6 +964,9 @@ const LIGA = {
         }
         return r.json();
       })
+=======
+      .then(function(r) { return r.json(); })
+>>>>>>> f890fd48cb8576bb2d2ee5927efd3f62680a2824
       .then(function(data) {
         LIGA._cache = data;
         // Sincronizar también a localStorage
