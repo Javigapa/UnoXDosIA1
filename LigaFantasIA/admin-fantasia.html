@@ -765,7 +765,13 @@ const LIGA = {
   // Carga todos los datos del servidor al iniciar
   loadFromServer: function(callback) {
     fetch(LIGA._apiUrl + '?t=' + Date.now())
-      .then(function(r) { return r.json(); })
+      .then(function(r) {
+        var ct = r.headers.get('content-type') || '';
+        if (!r.ok || !ct.includes('json')) {
+          throw new Error('Respuesta no JSON del servidor (status ' + r.status + ')');
+        }
+        return r.json();
+      })
       .then(function(data) {
         LIGA._cache = data;
         // Sincronizar también a localStorage
@@ -1510,7 +1516,13 @@ function showDiagnostic(){
   if(!diagDiv) return;
   diagDiv.innerHTML = '<div style="color:var(--gray);font-size:.85rem;padding:.5rem;">Comprobando servidor...</div>';
   fetch(LIGA._apiUrl + '?t=' + Date.now())
-    .then(r => r.json())
+    .then(r => {
+      var ct = r.headers.get('content-type') || '';
+      if (!r.ok || !ct.includes('json')) {
+        return r.text().then(t => { throw new Error(t.slice(0,80)); });
+      }
+      return r.json();
+    })
     .then(data => {
       let html = '<div style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:var(--gray);margin-top:.5rem;padding:1rem;background:rgba(0,0,0,.4);border:1px solid rgba(76,175,80,.3);border-radius:6px;">';
       html += '<div style="color:var(--gold);font-family:Oswald,sans-serif;font-size:.9rem;font-weight:600;margin-bottom:.5rem;">📊 Datos guardados en el servidor</div>';

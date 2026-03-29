@@ -1,8 +1,10 @@
 <?php
 // ============================================================
 // guardar.php — API de datos Liga Fantas-IA
+// Ubicación: /LigaFantasIA/guardar.php
 // ============================================================
 
+// Solo permite peticiones desde tu propio dominio
 header('Access-Control-Allow-Origin: https://www.unoxdosia.com');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -13,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$DATA_FILE = __DIR__ . '/Datosliga.json';
+$DATA_FILE = __DIR__ . '/datos-liga.json';
 
 // ——— GET: devolver los datos actuales ———
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -41,26 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Si ya hay datos guardados, hacer merge (no sobrescribir claves que no vengan)
     $existing = [];
     if (file_exists($DATA_FILE)) {
         $existing = json_decode(file_get_contents($DATA_FILE), true) ?? [];
     }
     $merged = array_merge($existing, $data);
 
-    // --- NUEVA LÓGICA DE PERMISOS ---
-    // Si el archivo no existe, lo creamos vacío primero
-    if (!file_exists($DATA_FILE)) {
-        file_put_contents($DATA_FILE, json_encode((object)[]));
-    }
-    // Forzamos el permiso 666 para que el servidor siempre pueda leer/escribir
-    chmod($DATA_FILE, 0666); 
-    // --------------------------------
-
     $ok = file_put_contents($DATA_FILE, json_encode($merged, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
-    
     if ($ok === false) {
         http_response_code(500);
-        echo json_encode(['error' => 'No se pudo escribir. Revisa permisos de la CARPETA.']);
+        echo json_encode(['error' => 'No se pudo escribir el archivo. Revisa permisos.']);
         exit;
     }
 
