@@ -403,7 +403,59 @@
     @media(max-width:768px){
       .nav-links{display:none;}
       table.players-table .attr-bar-wrap{display:none;}
-    }
+  
+    .hamburger{
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  background:transparent;
+  border:none;
+  cursor:pointer;
+  padding:.4rem;
+  z-index:1001;
+  flex-shrink:0;
+}
+.hamburger span{
+  display:block;width:26px;height:2px;
+  background:var(--gold);border-radius:2px;
+  transition:all .3s;
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;width:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+@media(max-width:768px){
+  nav{padding:0 1rem;}
+  .nav-site-link{display:none;}
+  .hamburger{display:flex;}
+  .nav-links{
+    display:none;
+    flex-direction:column;
+    position:fixed;
+    top:62px;left:0;right:0;bottom:0;
+    background:rgba(5,20,5,0.97);
+    backdrop-filter:blur(12px);
+    border-bottom:2px solid var(--green-bright);
+    padding:1.5rem 2rem 2rem;
+    gap:0;
+    z-index:999;
+    overflow-y:auto;
+  }
+  .nav-links.open{display:flex;}
+  .nav-links li{list-style:none;}
+  .nav-links a{
+    display:block;
+    padding:.9rem 0;
+    border-bottom:1px solid rgba(76,175,80,.15);
+    font-size:1.1rem;
+    font-family:'Oswald',sans-serif;
+    font-weight:600;
+    color:var(--white);
+    text-decoration:none;
+  }
+  .nav-links a:last-child{border-bottom:none;}
+  .nav-links a:hover{color:var(--gold);}
+}}
   </style>
 </head>
 <body>
@@ -416,7 +468,10 @@
     <li><a href="#fichajes">Fichajes</a></li>
     <li><a href="#mecanica">Mecánica</a></li>
   </ul>
-  <a href="https://www.unoxdosia.com" class="nav-back" target="_blank">← unoxdosia.com</a>
+<a href="https://www.unoxdosia.com" class="nav-back" target="_blank">← unoxdosia.com</a>
+<button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
+  <span></span><span></span><span></span>
+</button>
 </nav>
 
 <!-- TICKER -->
@@ -1758,6 +1813,19 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 //  INIT
 // ============================================================
 // Cargar datos del servidor y luego renderizar
+  function toggleMenu(){
+  var btn = document.getElementById('hamburger');
+  var nav = document.querySelector('.nav-links');
+  btn.classList.toggle('open');
+  nav.classList.toggle('open');
+}
+document.querySelectorAll('.nav-links a').forEach(function(a){
+  a.addEventListener('click', function(){
+    document.getElementById('hamburger').classList.remove('open');
+    document.querySelector('.nav-links').classList.remove('open');
+  });
+});
+
 LIGA.loadFromServer(function() {
   renderTeams();
   renderSubasta();
