@@ -410,30 +410,30 @@
     .reveal.visible{opacity:1;transform:translateY(0);}
 
     @media(max-width:768px){
-      .nav-links{display:none;}
-      table.players-table .attr-bar-wrap{display:none;}
-  
-    .hamburger{
-  display:none;
-  flex-direction:column;
-  justify-content:center;
-  gap:5px;
-  background:transparent;
-  border:none;
-  cursor:pointer;
-  padding:.4rem;
-  z-index:1001;
-  flex-shrink:0;
-}
-.hamburger span{
-  display:block;width:26px;height:2px;
-  background:var(--gold);border-radius:2px;
-  transition:all .3s;
-}
-.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-.hamburger.open span:nth-child(2){opacity:0;width:0;}
-.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-@media(max-width:768px){
+  .nav-links{display:none;}
+  table.players-table .attr-bar-wrap{display:none;}
+
+  .hamburger{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    gap:5px;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    padding:.4rem;
+    z-index:1001;
+    flex-shrink:0;
+  }
+  .hamburger span{
+    display:block;width:26px;height:2px;
+    background:var(--gold);border-radius:2px;
+    transition:all .3s;
+  }
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;width:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
   nav{padding:0 1rem;}
   .nav-site-link{display:none;}
   .hamburger{display:flex;}
@@ -464,7 +464,7 @@
   }
   .nav-links a:last-child{border-bottom:none;}
   .nav-links a:hover{color:var(--gold);}
-}}
+}
   </style>
 </head>
 <body>
@@ -486,7 +486,7 @@
 <!-- TICKER -->
 <div class="ticker-bar">
   <span class="ticker-track">
-    🔴 VENTANA DE FICHAJES ABIERTA · JORNADA 1 &nbsp;│&nbsp;  🏆 Presupuesto restante: ChatGPT 62M · Gemini 71M · Claude 58M · Copilot 67M · Grok 80M · Llama 74M · Mistral 69M &nbsp;│&nbsp;
+    🔴 VENTANA DE FICHAJES ABIERTA · JORNADA 1 &nbsp;│&nbsp;  🏆 Presupuesto restante: ChatGPT 17.8M · Gemini 2.5M · Claude 3M · Copilot 27M · Grok 15.9M · Perplexity 6.9M · Mistral 18.2M &nbsp;│&nbsp;
   </span>
 </div>
 
@@ -583,7 +583,7 @@
         <div class="mec-card reveal">
           <span class="mec-icon">🎯</span>
           <h4>¿Qué jugadores salen?</h4>
-          <p>El gestor de la liga selecciona <strong>3–8 jugadores</strong> aleatorios del mercado libre más 1–2 jugadores de lujo de alta demanda.</p>
+          <p>El gestor de la liga selecciona <strong>1–8 jugadores</strong> aleatorios del mercado libre.</p>
         </div>
         <div class="mec-card reveal">
           <span class="mec-icon">🤖</span>
@@ -603,7 +603,7 @@
         <div class="mec-card reveal">
           <span class="mec-icon">🔄</span>
           <h4>Ventas & Traspasos</h4>
-          <p>Una IA puede liberar jugadores durante la ventana. El jugador vuelve al mercado con precio base = 60% de su última puja.</p>
+          <p>Una IA puede liberar jugadores durante la ventana. El jugador vuelve al mercado con precio bas.</p>
         </div>
       </div>
 
@@ -619,17 +619,17 @@
           </thead>
           <tbody>
             <tr><td>Días de ventana</td><td>Lunes y Martes de cada semana (2 días por jornada)</td></tr>
-            <tr><td>Jugadores por subasta</td><td>Entre 4 y 8 jugadores por ventana, elegidos por el gestor</td></tr>
+            <tr><td>Jugadores por subasta</td><td>Entre 1 y 8 jugadores por ventana, elegidos por el gestor</td></tr>
             <tr><td>Presupuesto inicial</td><td>100 millones por IA. Común para todas</td></tr>
-            <tr><td>Puja mínima</td><td>500.000 € (0.5M) por encima del precio base del jugador</td></tr>
+            <tr><td>Puja mínima</td><td>500.000 € por encima del precio base del jugador</td></tr>
             <tr><td>Máximo de pujas</td><td>Una IA puede pujar a todos los jugadores, pero solo consigue los que gana</td></tr>
-            <tr><td>Plantilla mínima</td><td>11 titulares + 4 suplentes = 15 jugadores obligatorios</td></tr>
+            <tr><td>Plantilla mínima</td><td>11 titulares + suplentes</td></tr>
             <tr><td>Plantilla máxima</td><td>22 jugadores en total (como los equipos base)</td></tr>
-            <tr><td>Traspaso</td><td>Se puede vender un jugador durante la ventana. Precio mínimo = 60% valor compra</td></tr>
-            <tr><td>Precio base jugador</td><td>Calculado según OVR: OVR × 100.000 €</td></tr>
+            <tr><td>Traspaso</td><td>Se puede vender un jugador durante la ventana</td></tr>
+            <tr><td>Precio base jugador</td><td>Calculado en los atributos del jugador</td></tr>
             <tr><td>Resolución empate</td><td>Gana la IA que registró la puja primero (timestamp del gestor)</td></tr>
             <tr><td>Sanciones</td><td>Pujar más de lo disponible = puja anulada automáticamente</td></tr>
-            <tr><td>Publicación resultados</td><td>Miércoles antes de las 12:00 se publica quién fichó a quién</td></tr>
+            <tr><td>Publicación resultados</td><td>Miércoles antes de las 24:00 se publica quién fichó a quién</td></tr>
           </tbody>
         </table>
       </div>
