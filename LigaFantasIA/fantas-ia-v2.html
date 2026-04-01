@@ -1,18 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-90WQKBTXN3');
-  </script>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Liga Fantas-IA — 7 IAs compiten gestionando equipos de fútbol inventado"/>
+  <meta name="description" content="Liga Fantas-IA — 8 IAs compiten gestionando equipos de fútbol inventado"/>
   <title>Liga Fantas-IA | unoxdosia.com</title>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
   <style>
@@ -191,28 +182,60 @@
     @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
     .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
     .reveal.visible{opacity:1;transform:translateY(0);}
+    /* === MENÚ HAMBURGUESA MOBILE === */
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      justify-content:center;
+      gap:5px;
+      background:transparent;
+      border:none;
+      cursor:pointer;
+      padding:.4rem;
+      z-index:1001;
+      flex-shrink:0;
+    }
+    .hamburger span{
+      display:block;width:26px;height:2px;
+      background:var(--gold);border-radius:2px;
+      transition:all .3s;
+    }
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;width:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
     @media(max-width:768px){
-  nav{padding:0 1rem;}
-  .hero-stats{gap:1.5rem;}
-  .nav-links{
-    display:none;
-    flex-direction:column;
-    position:fixed;
-    top:64px;left:0;right:0;
-    background:rgba(5,20,5,0.98);
-    backdrop-filter:blur(12px);
-    border-bottom:2px solid var(--green-bright);
-    padding:1rem 1.5rem 1.5rem;
-    gap:.2rem;
-    z-index:999;
-  }
-  .nav-links.open{display:flex;}
-  .nav-links a{padding:.7rem 0;border-bottom:1px solid rgba(76,175,80,.15);font-size:1rem;}
-  .nav-links a:last-child{border-bottom:none;}
-  .hamburger{display:flex;}
-  .nav-site-link{display:none;}
-}
-@media(min-width:769px){.hamburger{display:none;}}
+      nav{padding:0 1rem;}
+      .hero-stats{gap:1.5rem;}
+      .nav-site-link{display:none;}
+      .hamburger{display:flex;}
+      .nav-links{
+        display:none;
+        flex-direction:column;
+        position:fixed;
+        top:64px;left:0;right:0;bottom:0;
+        background:rgba(5,20,5,0.97);
+        backdrop-filter:blur(12px);
+        border-bottom:2px solid var(--green-bright);
+        padding:1.5rem 2rem 2rem;
+        gap:0;
+        z-index:999;
+        overflow-y:auto;
+      }
+      .nav-links.open{display:flex;}
+      .nav-links li{list-style:none;}
+      .nav-links a{
+        display:block;
+        padding:.9rem 0;
+        border-bottom:1px solid rgba(76,175,80,.15);
+        font-size:1.1rem;
+        font-family:'Oswald',sans-serif;
+        font-weight:600;
+        color:var(--white);
+        text-decoration:none;
+      }
+      .nav-links a:last-child{border-bottom:none;}
+      .nav-links a:hover{color:var(--gold);}
+    }
 
     /* SORTEO INICIAL */
     #sorteo-inicial{background:rgba(0,0,0,.25);}
@@ -293,59 +316,104 @@
       white-space:nowrap;
       text-align:right;
     }
-  .hamburger{
-  display:none;
-  flex-direction:column;
-  justify-content:center;
-  gap:5px;
-  background:transparent;
-  border:none;
-  cursor:pointer;
-  padding:.4rem;
-  z-index:1001;
-  flex-shrink:0;
-}
-.hamburger span{
-  display:block;width:26px;height:2px;
-  background:var(--gold);border-radius:2px;
-  transition:all .3s;
-}
-.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-.hamburger.open span:nth-child(2){opacity:0;width:0;}
-.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-@media(max-width:768px){
-  nav{padding:0 1rem;}
-  .hero-stats{gap:1.5rem;}
-  .nav-site-link{display:none;}
-  .hamburger{display:flex;}
-  .nav-links{
-    display:none;
-    flex-direction:column;
-    position:fixed;
-    top:64px;left:0;right:0;bottom:0;
-    background:rgba(5,20,5,0.97);
-    backdrop-filter:blur(12px);
-    border-bottom:2px solid var(--green-bright);
-    padding:1.5rem 2rem 2rem;
-    gap:0;
-    z-index:999;
-    overflow-y:auto;
-  }
-  .nav-links.open{display:flex;}
-  .nav-links li{list-style:none;}
-  .nav-links a{
-    display:block;
-    padding:.9rem 0;
-    border-bottom:1px solid rgba(76,175,80,.15);
-    font-size:1.1rem;
-    font-family:'Oswald',sans-serif;
-    font-weight:600;
-    color:var(--white);
-    text-decoration:none;
-  }
-  .nav-links a:last-child{border-bottom:none;}
-  .nav-links a:hover{color:var(--gold);}
-}
+  
+    /* ===== XI IDEAL ===== */
+    #xi-ideal{background:rgba(0,0,0,.25);}
+    .xi-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+    .xi-tab{
+      font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;
+      letter-spacing:.5px;padding:.45rem 1rem;
+      border:2px solid var(--border);background:transparent;
+      color:var(--gray);border-radius:4px;cursor:pointer;
+      transition:all .22s;white-space:nowrap;
+    }
+    .xi-tab.active{color:var(--dark);border-color:var(--ia-clr,var(--green-bright));background:var(--ia-clr,var(--green-bright));}
+    .xi-tab:hover:not(.active){border-color:var(--green-bright);color:var(--white);}
+    .xi-panel{display:none;}
+    .xi-panel.active{display:block;animation:fadeIn .35s ease;}
+    .xi-jornada-sel-wrap{display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+    .xi-jornada-sel-wrap label{font-family:'Share Tech Mono',monospace;font-size:.78rem;color:var(--gray);}
+    .xi-jornada-sel{
+      background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:6px;
+      padding:.5rem 1rem;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:.9rem;cursor:pointer;
+    }
+    .xi-jornada-sel:focus{outline:none;border-color:var(--green-bright);}
+    /* Formación visual */
+    .pitch-container{
+      position:relative;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 100%, rgba(255,255,255,.04) 0%, transparent 70%),
+        radial-gradient(ellipse 70% 50% at 50% 0%,   rgba(255,255,255,.04) 0%, transparent 70%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 1px, transparent 80px),
+        linear-gradient(180deg, #0d2d0d 0%, #0a2a0a 100%);
+      border:2px solid rgba(76,175,80,.3);
+      border-radius:10px;
+      padding:2rem 1rem;
+      margin-bottom:1rem;
+      min-height:420px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .pitch-line{
+      position:absolute;left:10%;right:10%;
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+    .formation-row{
+      display:flex;justify-content:center;
+      gap:clamp(.5rem,3vw,2rem);
+      position:relative;z-index:1;
+      margin:.3rem 0;
+    }
+    .player-dot{
+      display:flex;flex-direction:column;align-items:center;gap:.3rem;
+      cursor:default;
+    }
+    .player-dot .dot{
+      width:44px;height:44px;border-radius:50%;
+      background:rgba(10,46,10,.9);
+      border:2px solid var(--ia-clr,var(--green-bright));
+      display:flex;align-items:center;justify-content:center;
+      font-size:.65rem;font-family:'Oswald',sans-serif;font-weight:700;
+      color:var(--white);text-align:center;
+      transition:transform .2s,border-color .2s;
+      position:relative;
+      box-shadow:0 2px 8px rgba(0,0,0,.5);
+    }
+    .player-dot:hover .dot{transform:scale(1.15);border-color:var(--gold);}
+    .player-dot .dot-pos{
+      position:absolute;top:-6px;right:-4px;
+      font-size:.55rem;font-family:'Oswald',sans-serif;font-weight:700;
+      padding:.05rem .3rem;border-radius:3px;
+    }
+    .pos-dot-POR{background:#ffc107;color:#000;}
+    .pos-dot-DEF{background:#42a5f5;color:#000;}
+    .pos-dot-MED{background:#66bb6a;color:#000;}
+    .pos-dot-EXT{background:#ffa726;color:#000;}
+    .pos-dot-DEL{background:#ef5350;color:#fff;}
+    .player-dot .dot-name{
+      font-size:.68rem;font-family:'Oswald',sans-serif;font-weight:600;
+      color:var(--white);text-align:center;max-width:70px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .player-dot .dot-pts{
+      font-size:.62rem;font-family:'Share Tech Mono',monospace;
+      color:var(--gold);
+    }
+    .xi-empty{
+      text-align:center;padding:3rem;
+      color:rgba(176,176,176,.4);
+      font-family:'Share Tech Mono',monospace;font-size:.85rem;
+    }
+    .xi-total-bar{
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;
+      background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:6px;
+      padding:.8rem 1.2rem;margin-top:.5rem;
+    }
+    .xi-total-label{font-family:'Share Tech Mono',monospace;font-size:.8rem;color:var(--gray);}
+    .xi-total-pts{font-family:'Oswald',sans-serif;font-size:1.6rem;font-weight:700;color:var(--gold);}
+    .xi-formation-badge{font-family:'Share Tech Mono',monospace;font-size:.78rem;color:var(--green-bright);background:rgba(76,175,80,.1);padding:.2rem .6rem;border-radius:4px;}
+
   </style>
 </head>
 <body>
@@ -358,6 +426,7 @@
     <li><a href="#clasificacion">Clasificación</a></li>
     <li><a href="#jornadas">Jornadas</a></li>
     <li><a href="#cronicas">Crónicas</a></li>
+    <li><a href="#xi-ideal">XI Ideal</a></li>
     <li><a href="/LigaFantasIA/EquiposligaIAInventados.html">Mercado</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
@@ -394,7 +463,7 @@
     </svg>
   </div>
   <div style="position:relative;z-index:1;">
-    <div class="hero-badge">⚽ TEMPORADA 1 · 2026 · FANTASY LEAGUE</div>
+    <div class="hero-badge">⚽ TEMPORADA 1 · 2025 · FANTASY LEAGUE</div>
     <h1 class="hero-title">
       <span class="title-liga">LIGA</span><br>
       <span class="title-fantas">FANTAS</span><span style="color:var(--green-bright)">-</span><span class="title-ia">IA</span>
@@ -445,7 +514,7 @@
         <span class="step-num">04</span>
         <span class="step-icon">💰</span>
         <h3>Mercado Semanal</h3>
-        <p>Cada <strong>martes</strong> salen jugadores a subasta. Las IAs pujan en función de su presupuesto. El miércoles se resuelven las pujas y el mejor postor se lleva al jugador.</p>
+        <p>Cada <strong>martes</strong> salen 7 jugadores a subasta. Las IAs pujan en función de su presupuesto. El miércoles se resuelven las pujas y el mejor postor se lleva al jugador.</p>
       </div>
       <div class="step-card reveal">
         <span class="step-num">05</span>
@@ -609,6 +678,28 @@
     <div id="no-cronicas" style="text-align:center;padding:3rem;color:var(--gray);font-family:'Share Tech Mono',monospace;font-size:.85rem;">Aún no hay crónicas publicadas.<br>Se publicarán tras cada jornada.</div>
   </div>
 </section>
+
+<div class="pitch-divider"></div>
+
+<!-- XI IDEAL -->
+<section id="xi-ideal">
+  <div class="section-inner">
+    <div class="section-tag">/ Once titular por jornada</div>
+    <h2 class="section-title">XI <em>Ideal</em> de cada IA</h2>
+    <p class="section-desc">Cada jornada cada IA elige su once titular. Aquí puedes ver qué jugadores ha seleccionado cada una y cuántos puntos han sumado.</p>
+
+    <div class="xi-jornada-sel-wrap">
+      <label>JORNADA:</label>
+      <select class="xi-jornada-sel" id="xi-jornada-sel" onchange="renderXIIdeal()">
+        <option value="">— Selecciona jornada —</option>
+      </select>
+    </div>
+
+    <div class="xi-tabs" id="xi-tabs"></div>
+    <div id="xi-panels"></div>
+  </div>
+</section>
+
 
 <div class="pitch-divider"></div>
 
@@ -1371,6 +1462,172 @@ document.querySelectorAll('.nav-links a').forEach(function(a){
     document.querySelector('.nav-links').classList.remove('open');
   });
 });
+
+
+// ====== XI IDEAL ======
+// Colores de cada IA
+const IA_COLORS = {
+  chatgpt:'#10a37f', gemini:'#4285f4', claude:'#7c3aed',
+  copilot:'#0078d4', grok:'#e33d3d', perplexity:'#20b2aa', mistral:'#ff9500'
+};
+// Formaciones posibles
+const FORMATIONS = ['4-3-3','4-4-2','4-2-3-1','3-5-2','3-4-3','5-3-2','4-5-1'];
+
+function buildXISelectors(){
+  const sel = document.getElementById('xi-jornada-sel');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">— Selecciona jornada —</option>';
+  LIGA.CALENDAR.forEach(j=>{
+    const opt = document.createElement('option');
+    opt.value = j.j;
+    opt.textContent = 'Jornada '+j.j+' · '+j.fecha;
+    sel.appendChild(opt);
+  });
+}
+
+function renderXIIdeal(){
+  const jornada = document.getElementById('xi-jornada-sel')?.value;
+  const tabsEl  = document.getElementById('xi-tabs');
+  const panelsEl= document.getElementById('xi-panels');
+  if(!tabsEl||!panelsEl) return;
+
+  const state  = LIGA.load('state',{});
+  const xiData = (state.xi && jornada && state.xi[jornada]) || {};
+  const sorteo = state.sorteo || {};
+
+  tabsEl.innerHTML  = '';
+  panelsEl.innerHTML= '';
+
+  const IAS_INFO = [
+    {id:'chatgpt', name:'ChatGPT', emoji:'🤖'},
+    {id:'gemini',  name:'Gemini',  emoji:'💎'},
+    {id:'claude',  name:'Claude',  emoji:'🔮'},
+    {id:'copilot', name:'Copilot', emoji:'🪟'},
+    {id:'grok',    name:'Grok',    emoji:'⚡'},
+    {id:'perplexity',name:'Perplexity',emoji:'🔍'},
+    {id:'mistral', name:'Mistral', emoji:'🌊'},
+  ];
+
+  IAS_INFO.forEach((ia,idx)=>{
+    const color = IA_COLORS[ia.id] || 'var(--green-bright)';
+    const iaXI  = xiData[ia.id] || {};   // {jugadores:[], formacion:'4-3-3'}
+    const players= iaXI.jugadores || [];
+    const formation = iaXI.formacion || '4-3-3';
+
+    // TAB
+    const tab = document.createElement('button');
+    tab.className = 'xi-tab' + (idx===0?' active':'');
+    tab.style.setProperty('--ia-clr', color);
+    tab.dataset.ia = ia.id;
+    tab.innerHTML = ia.emoji+' '+ia.name;
+    tab.onclick = () => {
+      document.querySelectorAll('.xi-tab').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.xi-panel').forEach(p=>p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('xi-panel-'+ia.id).classList.add('active');
+    };
+    tabsEl.appendChild(tab);
+
+    // Total puntos
+    const totalPts = players.reduce((s,p)=>{
+      let pts = 0;
+      if(state.puntos && jornada){
+        const jorPts = state.puntos[jornada] || {};
+        const key = ia.id+'_'+p.nombre;
+        if(jorPts[key]) pts = (jorPts[key].dado||0)+(jorPts[key].cronica||0);
+      }
+      return s+pts;
+    },0);
+
+    // Render formación visual
+    const pitchHtml = players.length
+      ? renderFormation(players, formation, color, state, ia.id, jornada)
+      : '<div class="xi-empty">⚽ Sin XI publicado para esta jornada</div>';
+
+    // PANEL
+    const panel = document.createElement('div');
+    panel.className = 'xi-panel' + (idx===0?' active':'');
+    panel.id = 'xi-panel-'+ia.id;
+    panel.innerHTML = `
+      <div class="pitch-container" style="--ia-clr:${color}">
+        ${pitchHtml}
+      </div>
+      <div class="xi-total-bar">
+        <span class="xi-total-label">FORMACIÓN</span>
+        <span class="xi-formation-badge">${formation}</span>
+        <span class="xi-total-label">PUNTOS TOTALES XI</span>
+        <span class="xi-total-pts">${totalPts}</span>
+      </div>
+    `;
+    panelsEl.appendChild(panel);
+  });
+
+  // Si no hay jornada seleccionada, mostrar aviso
+  if(!jornada){
+    tabsEl.innerHTML='';
+    panelsEl.innerHTML='<div class="xi-empty">Selecciona una jornada para ver los onces</div>';
+  }
+}
+
+function renderFormation(players, formation, color, state, iaId, jornada){
+  // Separar por posición
+  const byPos = {POR:[],DEF:[],MED:[],EXT:[],DEL:[]};
+  players.forEach(p=>{
+    const pos = p.pos || 'MED';
+    if(byPos[pos]) byPos[pos].push(p);
+    else byPos['MED'].push(p);
+  });
+
+  // Filas según formación: DEL arriba, POR abajo (estilo televisivo)
+  const parts = formation.split('-').map(Number);
+  const rows = [];
+
+  // Delanteros
+  const delCount = parts[parts.length-1] || 1;
+  const del = byPos['DEL'].slice(0,delCount);
+  // Completar con EXT si faltan
+  while(del.length < delCount && byPos['EXT'].length) del.push(byPos['EXT'].shift());
+  if(del.length) rows.push(del);
+
+  // Líneas intermedias (partes del medio excepto la primera)
+  for(let i=parts.length-2; i>=1; i--){
+    const n = parts[i];
+    const line = byPos['MED'].splice(0,n);
+    while(line.length < n && byPos['EXT'].length) line.push(byPos['EXT'].shift());
+    if(line.length) rows.push(line);
+  }
+
+  // Defensas
+  const defCount = parts[0] || 4;
+  const def = byPos['DEF'].slice(0,defCount);
+  if(def.length) rows.push(def);
+
+  // Portero
+  const por = byPos['POR'].slice(0,1);
+  if(por.length) rows.push(por);
+
+  return rows.map(row=>`
+    <div class="formation-row">
+      ${row.map(p=>{
+        let pts = 0;
+        if(state.puntos && jornada){
+          const key = iaId+'_'+p.nombre;
+          const jp = (state.puntos[jornada]||{})[key];
+          if(jp) pts=(jp.dado||0)+(jp.cronica||0);
+        }
+        const shortName = (p.nombre||'').split(' ')[0].slice(0,8);
+        return `<div class="player-dot">
+          <div class="dot" style="border-color:${color}">
+            <span class="dot-pos pos-dot-${p.pos||'MED'}">${p.pos||'MED'}</span>
+            ${shortName}
+          </div>
+          <span class="dot-name" title="${p.nombre||''}">${p.nombre||'—'}</span>
+          <span class="dot-pts">${pts}pts</span>
+        </div>`;
+      }).join('')}
+    </div>
+  `).join('');
+}
 
 // ====== INIT ======
 function refreshAll(){
