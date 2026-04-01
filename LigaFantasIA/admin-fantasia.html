@@ -169,6 +169,7 @@
       <button class="atab" onclick="showPanel('cronicas',this)">📰 Crónicas</button>
       <button class="atab" onclick="showPanel('resultados',this)">⚽ Resultados</button>
       <button class="atab" onclick="showPanel('mercado',this)">💰 Mercado</button>
+      <button class="atab" onclick="showPanel('xi',this)">⚽ XI Ideal</button>
     </div>
     <div class="admin-links">
       <a href="fantas-ia-v2.html" target="_blank">Ver web</a>
@@ -426,6 +427,24 @@
           <div id="diagnostic-output" style="margin-top:.8rem;"></div>
         </div>
       </div>
+    </div>
+
+
+    <!-- ===== PANEL: XI IDEAL ===== -->
+    <div class="panel" id="panel-xi">
+      <div class="panel-title">⚽ XI Ideal por Jornada</div>
+      <div class="panel-desc">Introduce el once titular de cada IA para la jornada seleccionada. Los jugadores deben estar en la plantilla asignada a esa IA.</div>
+
+      <div class="jornada-selector">
+        <label>Jornada:</label>
+        <select class="jornada-select" id="xi-jornada-admin" onchange="loadXIAdmin()">
+          <option value="">— Selecciona jornada —</option>
+        </select>
+      </div>
+
+      <div id="xi-ia-panels" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.2rem;"></div>
+
+      <button onclick="saveXI()" class="btn-save-puntos" style="margin-top:1.5rem;">💾 Guardar XI de todas las IAs</button>
     </div>
 
   </div><!-- /admin-main -->
@@ -926,6 +945,7 @@ function runSorteo(){
   LIGA.save('sorteo',assignments);
   LIGA.save('budgets',budgets);
   renderSorteo();
+  initXISelects();
   toast('✅ ¡Sorteo realizado! Jugadores asignados a cada IA.');
 }
 
@@ -1019,6 +1039,7 @@ function importSorteoJSON(){
   LIGA.save('state',state);
 
   renderSorteo();
+  initXISelects();
   toast('✅ Sorteo importado. Recarga la web para verla');
 }
 
@@ -1546,6 +1567,119 @@ function clearAll(){
   localStorage.clear();
   LIGA._cache = {};
   toast('🗑️ Datos borrados','#e53935');
+}
+
+
+// ============================================================
+// XI IDEAL — ADMIN
+// ============================================================
+const FORMACIONES = ['4-3-3','4-4-2','4-2-3-1','3-5-2','3-4-3','5-3-2','4-5-1'];
+const IAS_LIST = [
+  {id:'chatgpt',name:'ChatGPT',emoji:'🤖',color:'#10a37f'},
+  {id:'gemini', name:'Gemini', emoji:'💎',color:'#4285f4'},
+  {id:'claude', name:'Claude', emoji:'🔮',color:'#7c3aed'},
+  {id:'copilot',name:'Copilot',emoji:'🪟',color:'#0078d4'},
+  {id:'grok',   name:'Grok',   emoji:'⚡',color:'#e33d3d'},
+  {id:'perplexity',name:'Perplexity',emoji:'🔍',color:'#20b2aa'},
+  {id:'mistral',name:'Mistral',emoji:'🌊',color:'#ff9500'},
+];
+const POSITIONS = ['POR','DEF','MED','EXT','DEL'];
+
+function initXISelects(){
+  const sel = document.getElementById('xi-jornada-admin');
+  if(!sel||sel.options.length>1) return;
+  LIGA.CALENDAR.forEach(j=>{
+    const opt = document.createElement('option');
+    opt.value = j.j; opt.textContent = 'Jornada '+j.j;
+    sel.appendChild(opt);
+  });
+}
+
+function loadXIAdmin(){
+  const jornada = document.getElementById('xi-jornada-admin').value;
+  const container = document.getElementById('xi-ia-panels');
+  if(!container) return;
+  if(!jornada){ container.innerHTML=''; return; }
+
+  const state  = LIGA.load('state',{});
+  const sorteo = state.sorteo || {};
+  const xiData = (state.xi && state.xi[jornada]) || {};
+
+  container.innerHTML = IAS_LIST.map(ia=>{
+    const iaPlayers = sorteo[ia.id] || [];
+    const saved = xiData[ia.id] || {formacion:'4-3-3', jugadores:[]};
+    const savedNames = saved.jugadores.map(p=>p.nombre);
+
+    const playerOptions = iaPlayers.map(p=>`
+      <label style="display:flex;align-items:center;gap:.5rem;padding:.25rem 0;font-size:.85rem;cursor:pointer;border-bottom:1px solid rgba(76,175,80,.07);">
+        <input type="checkbox" value="${p.name}" data-pos="${p.pos}"
+          ${savedNames.includes(p.name)?'checked':''}
+          onchange="updateXICount('${ia.id}')"/>
+        <span style="flex:1">${p.name}</span>
+        <span style="font-size:.72rem;color:var(--gray);font-family:Share Tech Mono,monospace;">${p.pos}</span>
+      </label>
+    `).join('');
+
+    return `<div style="background:var(--card-bg);border:1px solid var(--border);border-top:3px solid ${ia.color};border-radius:8px;overflow:hidden;">
+      <div style="padding:.8rem 1rem;background:rgba(0,0,0,.2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;color:${ia.color};">${ia.emoji} ${ia.name}</div>
+        <span id="xi-count-${ia.id}" style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--gray);">0/11</span>
+      </div>
+      <div style="padding:.8rem 1rem;">
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;">
+          <label style="font-size:.8rem;color:var(--gray);font-family:Share Tech Mono,monospace;">FORMACIÓN:</label>
+          <select id="xi-form-${ia.id}" style="background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:4px;padding:.3rem .6rem;color:var(--white);font-family:Rajdhani,sans-serif;">
+            ${FORMACIONES.map(f=>`<option ${f===saved.formacion?'selected':''}>${f}</option>`).join('')}
+          </select>
+        </div>
+        <div id="xi-players-${ia.id}" style="max-height:260px;overflow-y:auto;padding-right:.3rem;">
+          ${iaPlayers.length ? playerOptions : '<div style="color:var(--gray);font-size:.82rem;font-family:Share Tech Mono,monospace;">Sin jugadores asignados</div>'}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Actualizar contadores
+  IAS_LIST.forEach(ia=>updateXICount(ia.id));
+}
+
+function updateXICount(iaId){
+  const checked = document.querySelectorAll(`#xi-players-${iaId} input:checked`).length;
+  const el = document.getElementById('xi-count-'+iaId);
+  if(el){
+    el.textContent = checked+'/11';
+    el.style.color = checked===11?'var(--green-bright)':checked>11?'var(--red)':'var(--gray)';
+  }
+}
+
+function saveXI(){
+  const jornada = document.getElementById('xi-jornada-admin').value;
+  if(!jornada){ toast('Selecciona una jornada','#e53935'); return; }
+
+  const state = LIGA.load('state',{});
+  if(!state.xi) state.xi = {};
+  if(!state.xi[jornada]) state.xi[jornada] = {};
+
+  let errors = [];
+  IAS_LIST.forEach(ia=>{
+    const checked = Array.from(document.querySelectorAll(`#xi-players-${ia.id} input:checked`));
+    if(checked.length > 0 && checked.length !== 11){
+      errors.push(`${ia.name}: ${checked.length} jugadores (necesitas 11)`);
+    }
+    const formacion = document.getElementById('xi-form-'+ia.id)?.value || '4-3-3';
+    state.xi[jornada][ia.id] = {
+      formacion,
+      jugadores: checked.map(inp=>({ nombre: inp.value, pos: inp.dataset.pos }))
+    };
+  });
+
+  if(errors.length){
+    toast('⚠️ '+errors.join(' · '),'#e53935');
+    return;
+  }
+
+  LIGA.save('state', state);
+  toast('✅ XI guardados para la jornada '+jornada);
 }
 
 </script>
