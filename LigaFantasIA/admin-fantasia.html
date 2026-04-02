@@ -1552,25 +1552,75 @@ function saveMercado(){
     };
   });
 
-  // Actualizar presupuestos
+  // ── Actualizar presupuestos ──
   const budgets=LIGA.load('budgets',{});
   results.forEach(r=>{
     if(r.ganadorIAId){
-      const iaId=r.ganadorIAId;
-      budgets[iaId]=Math.max(0,(budgets[iaId]||100)-r.montoGanador);
+      budgets[r.ganadorIAId]=Math.max(0,(budgets[r.ganadorIAId]||100)-r.montoGanador);
+    }
+    // Si lo vendía una IA, devolver el 60% del precio base
+    if(r.origen==='ia' && r.iaOrigenId){
+      budgets[r.iaOrigenId]=(budgets[r.iaOrigenId]||0)+(r.precioBase*0.6);
     }
   });
+
+  // ── Actualizar plantillas en state.sorteo ──
+  const state=LIGA.load('state',{});
+  if(!state.sorteo) state.sorteo={};
+
+  results.forEach(r=>{
+    if(!r.ganadorIAId) return; // nadie pujó, el jugador queda libre
+
+    const nombreJugador=r.jugador;
+
+    // 1. Quitar al jugador de la IA vendedora (si lo tenía alguna IA)
+    LIGA.IAS.forEach(ia=>{
+      if(!state.sorteo[ia.id]) return;
+      state.sorteo[ia.id]=state.sorteo[ia.id].filter(p=>p.name!==nombreJugador);
+    });
+
+    // 2. Buscar los datos completos del jugador (en LIGA.TEAMS o en la plantilla actual)
+    let playerData=null;
+    LIGA.TEAMS.forEach(t=>{
+      const found=t.players.find(p=>p.name===nombreJugador);
+      if(found) playerData={...found, teamId:t.id, teamName:t.name, teamEmoji:t.emoji};
+    });
+    // Si no está en los equipos base, buscar en el sorteo de otras IAs (ya era de mercado)
+    if(!playerData){
+      for(const ia of LIGA.IAS){
+        const found=(state.sorteo[ia.id]||[]).find(p=>p.name===nombreJugador);
+        if(found){ playerData=found; break; }
+      }
+    }
+    // Fallback: crear objeto mínimo con el nombre
+    if(!playerData) playerData={name:nombreJugador, pos:'MED', pot:70, cal:70, vel:70, vis:70, price:r.montoGanador+'M'};
+
+    // Actualizar el precio al precio de compra
+    playerData={...playerData, price:r.montoGanador.toFixed(1)+'M'};
+
+    // 3. Añadir al comprador
+    if(!state.sorteo[r.ganadorIAId]) state.sorteo[r.ganadorIAId]=[];
+    state.sorteo[r.ganadorIAId].push(playerData);
+  });
+
+  // ── Guardar todo ──
   LIGA.save('budgets',budgets);
+  LIGA.save('sorteo', state.sorteo);
+  LIGA.save('state', state);
   LIGA.save('mercado_jugadores',mercadoJugadores);
   LIGA.save('mercado_results',results);
 
-  toast('✅ Mercado resuelto. '+ results
+  // ── Resumen ──
+  const resumen=results
     .filter(r=>r.ganadorIAId)
     .map(r=>{
       const ia=LIGA.IAS.find(ia=>ia.id===r.ganadorIAId);
-      return `${r.jugador}→${ia?.name||r.ganadorIAId}`;
-    })
-    .join(', '));
+      const vendedor=r.iaOrigenId?(' (de '+((LIGA.IAS.find(x=>x.id===r.iaOrigenId)||{}).name||r.iaOrigenId)+')'):'';
+      return r.jugador+'→'+(ia?.name||r.ganadorIAId)+vendedor;
+    }).join(' | ');
+
+  renderSorteo();
+  toast('✅ Plantillas actualizadas. '+resumen);
 }
 
 
