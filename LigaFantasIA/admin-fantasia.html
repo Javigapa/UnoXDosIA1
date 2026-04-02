@@ -170,6 +170,7 @@
       <button class="atab" onclick="showPanel('resultados',this)">⚽ Resultados</button>
       <button class="atab" onclick="showPanel('mercado',this)">💰 Mercado</button>
       <button class="atab" onclick="showPanel('xi',this)">⚽ XI Ideal</button>
+      <button class="atab" onclick="showPanel('analisis',this)">📰 Análisis</button>
     </div>
     <div class="admin-links">
       <a href="fantas-ia-v2.html" target="_blank">Ver web</a>
@@ -445,6 +446,47 @@
       <div id="xi-ia-panels" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.2rem;"></div>
 
       <button onclick="saveXI()" class="btn-save-puntos" style="margin-top:1.5rem;">💾 Guardar XI de todas las IAs</button>
+    </div>
+
+
+    <!-- ===== PANEL: ANÁLISIS DE JORNADA ===== -->
+    <div class="panel" id="panel-analisis">
+      <div class="panel-title">📰 Análisis de Jornada</div>
+      <div class="panel-desc">Escribe el análisis de cada jornada después de jugarse. Se publicará en la web pública inmediatamente.</div>
+
+      <div class="jornada-selector">
+        <label>Jornada:</label>
+        <select class="jornada-select" id="analisis-jornada-admin" onchange="loadAnalisisAdmin()">
+          <option value="">— Selecciona jornada —</option>
+        </select>
+      </div>
+
+      <div id="analisis-admin-form" style="display:none;">
+        <div class="card">
+          <div class="card-title">✍️ Análisis de la jornada</div>
+
+          <div class="form-group" style="margin-bottom:1rem;">
+            <label style="display:block;font-family:Oswald,sans-serif;font-size:.85rem;font-weight:600;color:var(--green-light);letter-spacing:.5px;margin-bottom:.4rem;">TEXTO DEL ANÁLISIS</label>
+            <textarea id="analisis-texto" rows="8"
+              style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:6px;padding:.8rem 1rem;color:var(--white);font-family:Rajdhani,sans-serif;font-size:.95rem;resize:vertical;line-height:1.6;"
+              placeholder="Describe lo que ha pasado en esta jornada: resultados sorprendentes, puntuaciones destacadas, cambios en la clasificación..."></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom:1.2rem;">
+            <label style="display:block;font-family:Oswald,sans-serif;font-size:.85rem;font-weight:600;color:var(--green-light);letter-spacing:.5px;margin-bottom:.4rem;">⭐ JUGADOR/ES DESTACADO/S <span style="color:var(--gray);font-weight:400;">(opcional)</span></label>
+            <input type="text" id="analisis-destacados"
+              style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:6px;padding:.7rem 1rem;color:var(--white);font-family:Rajdhani,sans-serif;font-size:.95rem;"
+              placeholder="Ej: Logic Gate (Sintéticos) — 6 puntos, MVP de la jornada"/>
+          </div>
+
+          <button onclick="saveAnalisis()" class="btn-save-puntos">💾 Publicar análisis</button>
+        </div>
+
+        <div id="analisis-preview" style="display:none;margin-top:1rem;">
+          <div class="card-title" style="margin-bottom:.8rem;">👁️ Vista previa</div>
+          <div id="analisis-preview-content" style="background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:1.2rem;font-size:.95rem;color:var(--white);line-height:1.8;white-space:pre-line;"></div>
+        </div>
+      </div>
     </div>
 
   </div><!-- /admin-main -->
@@ -884,7 +926,7 @@ let dicePlayerPts={};
 
 function init(){
   // Poblar selects de jornada
-  ['dado-jornada-sel','puntos-jornada-sel','cronica-jornada-sel','res-jornada-sel'].forEach(selId=>{
+  ['dado-jornada-sel','puntos-jornada-sel','cronica-jornada-sel','res-jornada-sel','analisis-jornada-admin','xi-jornada-admin'].forEach(selId=>{
     const sel=document.getElementById(selId);
     if(!sel)return;
     sel.innerHTML='<option value="">— Selecciona jornada —</option>';
@@ -906,6 +948,8 @@ function init(){
   }
   renderSorteo();
   initMercado();
+  initXISelects();
+  initAnalisisAdmin();
 }
 
 // ============================================================
@@ -946,6 +990,7 @@ function runSorteo(){
   LIGA.save('budgets',budgets);
   renderSorteo();
   initXISelects();
+  initAnalisisAdmin();
   toast('✅ ¡Sorteo realizado! Jugadores asignados a cada IA.');
 }
 
@@ -1040,6 +1085,7 @@ function importSorteoJSON(){
 
   renderSorteo();
   initXISelects();
+  initAnalisisAdmin();
   toast('✅ Sorteo importado. Recarga la web para verla');
 }
 
@@ -1680,6 +1726,69 @@ function saveXI(){
 
   LIGA.save('state', state);
   toast('✅ XI guardados para la jornada '+jornada);
+}
+
+
+// ============================================================
+// ANÁLISIS DE JORNADA — ADMIN
+// ============================================================
+function initAnalisisAdmin(){
+  const sel = document.getElementById('analisis-jornada-admin');
+  if(!sel||sel.options.length>1) return;
+  LIGA.CALENDAR.forEach(j=>{
+    const opt = document.createElement('option');
+    opt.value = j.j;
+    opt.textContent = 'Jornada '+j.j+' · '+j.fecha;
+    sel.appendChild(opt);
+  });
+}
+
+function loadAnalisisAdmin(){
+  const j = document.getElementById('analisis-jornada-admin').value;
+  const form = document.getElementById('analisis-admin-form');
+  if(!form) return;
+  if(!j){ form.style.display='none'; return; }
+  form.style.display='block';
+
+  // Cargar análisis existente si lo hay
+  const state = LIGA.load('state',{});
+  const data = state.analisis && state.analisis[j];
+  document.getElementById('analisis-texto').value = data ? data.texto||'' : '';
+  document.getElementById('analisis-destacados').value = data ? data.destacados||'' : '';
+
+  // Actualizar preview
+  updateAnalisisPreview();
+}
+
+function updateAnalisisPreview(){
+  const texto = document.getElementById('analisis-texto').value.trim();
+  const preview = document.getElementById('analisis-preview');
+  const previewContent = document.getElementById('analisis-preview-content');
+  if(texto && preview && previewContent){
+    preview.style.display='block';
+    previewContent.textContent = texto;
+  }
+}
+
+// Preview en tiempo real
+document.addEventListener('DOMContentLoaded', function(){
+  const ta = document.getElementById('analisis-texto');
+  if(ta) ta.addEventListener('input', updateAnalisisPreview);
+});
+
+function saveAnalisis(){
+  const j = document.getElementById('analisis-jornada-admin').value;
+  if(!j){ toast('Selecciona una jornada','#e53935'); return; }
+  const texto = document.getElementById('analisis-texto').value.trim();
+  if(!texto){ toast('Escribe el análisis antes de guardar','#e53935'); return; }
+  const destacados = document.getElementById('analisis-destacados').value.trim();
+
+  const state = LIGA.load('state',{});
+  if(!state.analisis) state.analisis = {};
+  state.analisis[j] = { texto, destacados, fecha: new Date().toLocaleDateString('es-ES') };
+  LIGA.save('state', state);
+  toast('✅ Análisis de la jornada '+j+' publicado');
+  updateAnalisisPreview();
 }
 
 </script>
