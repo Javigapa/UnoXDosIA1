@@ -1532,95 +1532,110 @@ function renderMercadoForm(){
 }
 
 function saveMercado(){
-  // Resolver: ganador = mayor puja
-  const results=mercadoJugadores.map(j=>{
-    const precioBase=parseFloat(j.precio)||0;
-    let maxPuja=precioBase,winner=null;
+  const state  = LIGA.load('state',{});
+  const budgets= LIGA.load('budgets',{});
+  if(!state.sorteo) state.sorteo={};
+
+  // ── Paso 1: resolver ganador de cada jugador ──
+  const results = mercadoJugadores.map(j=>{
+    const precioBase = parseFloat(j.precio)||0;
+    let maxPuja = precioBase, winner = null;
     Object.entries(j.pujas||{}).forEach(([iaId,puja])=>{
-      const v=(puja===null||puja===undefined||puja==='')?0:parseFloat(puja)||0;
-      if(v>maxPuja){maxPuja=v;winner=iaId;}
+      const v = (puja===null||puja===undefined||puja==='') ? 0 : parseFloat(puja)||0;
+      if(v > maxPuja){ maxPuja=v; winner=iaId; }
     });
-    const montoGanador=winner?maxPuja:0;
-    return{
-      jugador:j.nombre,
+    // Si era de una IA y nadie pujó → el sistema lo "compra" al precio base
+    // y devuelve el precio base completo a la IA vendedora
+    const nadiePujo = !winner;
+    const origenIA  = j.origen==='ia' && j.iaOrigenId;
+    if(nadiePujo && origenIA){
+      winner = '__sistema__'; // token especial: se queda libre pero la IA cobra
+    }
+    return {
+      jugador    : j.nombre,
       precioBase,
-      ganadorIAId:winner,
-      montoGanador,
-      origen:j.origen||'admin',
-      iaOrigenId:j.iaOrigenId||'',
-      pujas:j.pujas||{},
+      ganadorIAId: winner,
+      montoGanador: winner==='__sistema__' ? 0 : (winner ? maxPuja : 0),
+      nadiePujo,
+      origen     : j.origen||'admin',
+      iaOrigenId : j.iaOrigenId||'',
+      pujas      : j.pujas||{},
     };
   });
 
-  // ── Actualizar presupuestos ──
-  const budgets=LIGA.load('budgets',{});
-  results.forEach(r=>{
-    if(r.ganadorIAId){
-      budgets[r.ganadorIAId]=Math.max(0,(budgets[r.ganadorIAId]||100)-r.montoGanador);
+  // ── Paso 2: buscar datos del jugador en las plantillas y equipos base ──
+  function findPlayerData(nombre){
+    // Buscar en plantillas actuales (ya pudo haber sido comprado antes)
+    for(const ia of LIGA.IAS){
+      const p = (state.sorteo[ia.id]||[]).find(x=>x.name===nombre);
+      if(p) return {...p};
     }
-    // Si lo vendía una IA, devolver el 60% del precio base
-    if(r.origen==='ia' && r.iaOrigenId){
-      budgets[r.iaOrigenId]=(budgets[r.iaOrigenId]||0)+(r.precioBase*0.6);
+    // Buscar en equipos base originales
+    for(const t of LIGA.TEAMS){
+      const p = t.players.find(x=>x.name===nombre);
+      if(p) return {...p, teamId:t.id, teamName:t.name, teamEmoji:t.emoji};
     }
-  });
+    // Fallback mínimo
+    return {name:nombre, pos:'MED', pot:70, cal:70, vel:70, vis:70, price:'5.0M'};
+  }
 
-  // ── Actualizar plantillas en state.sorteo ──
-  const state=LIGA.load('state',{});
-  if(!state.sorteo) state.sorteo={};
+  // ── Paso 3: mover jugadores y actualizar presupuestos ──
+  const resumenLineas = [];
 
   results.forEach(r=>{
-    if(!r.ganadorIAId) return; // nadie pujó, el jugador queda libre
+    const nombre = r.jugador;
+    let playerData = findPlayerData(nombre);
+    playerData = {...playerData, price: r.montoGanador > 0 ? r.montoGanador.toFixed(1)+'M' : r.precioBase.toFixed(1)+'M'};
 
-    const nombreJugador=r.jugador;
-
-    // 1. Quitar al jugador de la IA vendedora (si lo tenía alguna IA)
+    // Quitar de CUALQUIER plantilla donde esté (vendedor o no)
     LIGA.IAS.forEach(ia=>{
-      if(!state.sorteo[ia.id]) return;
-      state.sorteo[ia.id]=state.sorteo[ia.id].filter(p=>p.name!==nombreJugador);
+      if(state.sorteo[ia.id])
+        state.sorteo[ia.id] = state.sorteo[ia.id].filter(p=>p.name!==nombre);
     });
 
-    // 2. Buscar los datos completos del jugador (en LIGA.TEAMS o en la plantilla actual)
-    let playerData=null;
-    LIGA.TEAMS.forEach(t=>{
-      const found=t.players.find(p=>p.name===nombreJugador);
-      if(found) playerData={...found, teamId:t.id, teamName:t.name, teamEmoji:t.emoji};
-    });
-    // Si no está en los equipos base, buscar en el sorteo de otras IAs (ya era de mercado)
-    if(!playerData){
-      for(const ia of LIGA.IAS){
-        const found=(state.sorteo[ia.id]||[]).find(p=>p.name===nombreJugador);
-        if(found){ playerData=found; break; }
+    if(r.ganadorIAId === '__sistema__'){
+      // Nadie lo compró → queda libre. La IA vendedora cobra el precio base completo.
+      if(r.iaOrigenId){
+        budgets[r.iaOrigenId] = (budgets[r.iaOrigenId]||0) + r.precioBase;
+        const vendIA = LIGA.IAS.find(x=>x.id===r.iaOrigenId);
+        resumenLineas.push('⚪ '+nombre+' no comprado — '+r.precioBase+'M devueltos a '+(vendIA?.name||r.iaOrigenId));
       }
+      // El jugador queda en el mercado libre (no en ninguna plantilla)
+      return;
     }
-    // Fallback: crear objeto mínimo con el nombre
-    if(!playerData) playerData={name:nombreJugador, pos:'MED', pot:70, cal:70, vel:70, vis:70, price:r.montoGanador+'M'};
 
-    // Actualizar el precio al precio de compra
-    playerData={...playerData, price:r.montoGanador.toFixed(1)+'M'};
+    if(!r.ganadorIAId) return; // jugador libre de admin, nadie pujó
 
-    // 3. Añadir al comprador
+    // Cobrar al comprador
+    budgets[r.ganadorIAId] = Math.max(0,(budgets[r.ganadorIAId]||100) - r.montoGanador);
+
+    // Si venía de una IA → la IA vendedora ingresa el precio de venta (no el 60%, sino lo que se pagó)
+    if(r.origen==='ia' && r.iaOrigenId && r.iaOrigenId!==r.ganadorIAId){
+      budgets[r.iaOrigenId] = (budgets[r.iaOrigenId]||0) + r.montoGanador;
+      const vendIA = LIGA.IAS.find(x=>x.id===r.iaOrigenId);
+      const compIA = LIGA.IAS.find(x=>x.id===r.ganadorIAId);
+      resumenLineas.push('✅ '+nombre+': '+(vendIA?.name||r.iaOrigenId)+' → '+(compIA?.name||r.ganadorIAId)+' ('+r.montoGanador+'M)');
+    } else {
+      const compIA = LIGA.IAS.find(x=>x.id===r.ganadorIAId);
+      resumenLineas.push('✅ '+nombre+' → '+(compIA?.name||r.ganadorIAId)+' ('+r.montoGanador+'M)');
+    }
+
+    // Añadir a la plantilla del comprador
     if(!state.sorteo[r.ganadorIAId]) state.sorteo[r.ganadorIAId]=[];
     state.sorteo[r.ganadorIAId].push(playerData);
   });
 
-  // ── Guardar todo ──
-  LIGA.save('budgets',budgets);
-  LIGA.save('sorteo', state.sorteo);
-  LIGA.save('state', state);
-  LIGA.save('mercado_jugadores',mercadoJugadores);
-  LIGA.save('mercado_results',results);
-
-  // ── Resumen ──
-  const resumen=results
-    .filter(r=>r.ganadorIAId)
-    .map(r=>{
-      const ia=LIGA.IAS.find(ia=>ia.id===r.ganadorIAId);
-      const vendedor=r.iaOrigenId?(' (de '+((LIGA.IAS.find(x=>x.id===r.iaOrigenId)||{}).name||r.iaOrigenId)+')'):'';
-      return r.jugador+'→'+(ia?.name||r.ganadorIAId)+vendedor;
-    }).join(' | ');
+  // ── Paso 4: guardar todo de golpe ──
+  state.budgets = budgets;
+  LIGA.save('state',   state);
+  LIGA.save('sorteo',  state.sorteo);
+  LIGA.save('budgets', budgets);
+  LIGA.save('mercado_jugadores', mercadoJugadores);
+  LIGA.save('mercado_results',   results);
 
   renderSorteo();
-  toast('✅ Plantillas actualizadas. '+resumen);
+  const msg = resumenLineas.length ? resumenLineas.join(' | ') : 'Sin movimientos';
+  toast('✅ Mercado resuelto — '+msg);
 }
 
 
