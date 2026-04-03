@@ -790,32 +790,53 @@ const LIGA = {
 
   teamById(id){ return LIGA.TEAMS.find(t=>t.id===id); },
 
-  // ======= Persistencia via PHP (funciona en todos los dispositivos) =======
+  // ======= Persistencia via PHP — UNA sola petición por guardado =======
   _cache: null,
   _apiUrl: '/LigaFantasIA/guardar.php',
 
+  // Guardar una clave en cache y localStorage (sin fetch individual)
   save: function(key, val) {
-    // 1. Guardar en cache local inmediata
     if (!LIGA._cache) LIGA._cache = {};
     LIGA._cache[key] = val;
-    // 2. También en localStorage como fallback
     try { localStorage.setItem('fantasia_' + key, JSON.stringify(val)); } catch(e) {}
-    // 3. Enviar al servidor (no bloqueante)
-    var payload = {};
-    payload[key] = val;
+    // NO hace fetch aquí — usa saveAll() para mandar todo de golpe
+  },
+
+  // Enviar TODO el cache al servidor en UNA sola petición (evita race conditions)
+  saveAll: function(callback) {
+    if (!LIGA._cache) LIGA._cache = {};
+    // Sincronizar localStorage → cache por si acaso
+    var prefix = 'fantasia_';
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (k && k.startsWith(prefix)) {
+        var key = k.slice(prefix.length);
+        if (LIGA._cache[key] === undefined) {
+          try { LIGA._cache[key] = JSON.parse(localStorage.getItem(k)); } catch(e) {}
+        }
+      }
+    }
     fetch(LIGA._apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).catch(function(err) {
-      console.warn('guardar.php no disponible, usando localStorage:', err);
+      body: JSON.stringify(LIGA._cache)
+    })
+    .then(function(r) {
+      var ct = r.headers.get('content-type') || '';
+      if (!r.ok || !ct.includes('json')) return r.text().then(function(t){ throw new Error(t.slice(0,80)); });
+      return r.json();
+    })
+    .then(function(res) {
+      if (callback) callback(null, res);
+    })
+    .catch(function(err) {
+      console.warn('saveAll error:', err);
+      if (callback) callback(err);
     });
   },
 
   load: function(key, def) {
-    // 1. Primero la cache en memoria (más rápida)
     if (LIGA._cache && LIGA._cache[key] !== undefined) return LIGA._cache[key];
-    // 2. Luego localStorage como fallback
     try {
       var v = localStorage.getItem('fantasia_' + key);
       if (v) return JSON.parse(v);
@@ -828,22 +849,18 @@ const LIGA = {
     fetch(LIGA._apiUrl + '?t=' + Date.now())
       .then(function(r) {
         var ct = r.headers.get('content-type') || '';
-        if (!r.ok || !ct.includes('json')) {
-          throw new Error('Respuesta no JSON del servidor (status ' + r.status + ')');
-        }
+        if (!r.ok || !ct.includes('json')) throw new Error('No JSON (status ' + r.status + ')');
         return r.json();
       })
       .then(function(data) {
         LIGA._cache = data;
-        // Sincronizar también a localStorage
         Object.keys(data).forEach(function(k) {
           try { localStorage.setItem('fantasia_' + k, JSON.stringify(data[k])); } catch(e) {}
         });
         if (callback) callback();
       })
       .catch(function(err) {
-        console.warn('No se pudo cargar del servidor, usando localStorage:', err);
-        // Fallback: cargar desde localStorage
+        console.warn('loadFromServer falló, usando localStorage:', err);
         LIGA._cache = {};
         var prefix = 'fantasia_';
         for (var i = 0; i < localStorage.length; i++) {
@@ -988,10 +1005,13 @@ function runSorteo(){
   LIGA.save('state',state);
   LIGA.save('sorteo',assignments);
   LIGA.save('budgets',budgets);
-  renderSorteo();
-  initXISelects();
-  initAnalisisAdmin();
-  toast('✅ ¡Sorteo realizado! Jugadores asignados a cada IA.');
+  LIGA.saveAll(function(err){
+    if(err) toast('⚠️ Solo guardado en local: '+err.message,'#e53935');
+    else    toast('✅ Sorteo realizado y guardado en servidor');
+    renderSorteo();
+    initXISelects();
+    initAnalisisAdmin();
+  });
 }
 
 function clearSorteo(){
@@ -1235,7 +1255,7 @@ function saveDiceResults(){
   });
 
   LIGA.save('state',state);
-  toast('✅ Puntos de dados guardados y aplicados a la clasificación');
+  LIGA.saveAll(function(err){ toast(err?'⚠️ Solo local':'✅ Dados guardados en servidor'); });
 }
 
 // ============================================================
@@ -1327,7 +1347,7 @@ function savePuntos(){
   });
 
   LIGA.save('state',state);
-  toast('✅ Puntos guardados correctamente');
+  LIGA.saveAll(function(err){ toast(err?'⚠️ Solo local':'✅ Puntos guardados en servidor'); });
 }
 
 // ============================================================
@@ -1382,7 +1402,7 @@ function saveCronicas(){
   const jornada=cronicaAssignment[0]?.jornada;
   const filtered=existing.filter(c=>c.jornada!=jornada);
   LIGA.save('cronicas',[...filtered,...cronicaAssignment]);
-  toast('✅ Crónicas publicadas en la web');
+  LIGA.saveAll(function(err){ toast(err?'⚠️ Solo local':'✅ Crónicas publicadas'); });
 }
 
 // ============================================================
@@ -1446,7 +1466,7 @@ function saveResultados(){
   });
 
   LIGA.save('state',state);
-  toast('✅ Resultados guardados');
+  LIGA.saveAll(function(err){ toast(err?'⚠️ Solo local':'✅ Resultados guardados en servidor'); });
 }
 
 function markJornadaPlayed(){
@@ -1457,7 +1477,7 @@ function markJornadaPlayed(){
   if(!state.results[jornada])state.results[jornada]={scores:{},played:false};
   state.results[jornada].played=true;
   LIGA.save('state',state);
-  toast('✅ Jornada marcada como jugada');
+  LIGA.saveAll(function(err){ toast(err?'⚠️ Solo local':'✅ Jornada guardada en servidor'); });
 }
 
 // ============================================================
@@ -1625,17 +1645,25 @@ function saveMercado(){
     state.sorteo[r.ganadorIAId].push(playerData);
   });
 
-  // ── Paso 4: guardar todo de golpe ──
+  // ── Paso 4: guardar todo de golpe en UNA sola petición ──
   state.budgets = budgets;
-  LIGA.save('state',   state);
-  LIGA.save('sorteo',  state.sorteo);
-  LIGA.save('budgets', budgets);
-  LIGA.save('mercado_jugadores', mercadoJugadores);
-  LIGA.save('mercado_results',   results);
+  LIGA.save('state',              state);
+  LIGA.save('sorteo',             state.sorteo);
+  LIGA.save('budgets',            budgets);
+  LIGA.save('mercado_jugadores',  mercadoJugadores);
+  LIGA.save('mercado_results',    results);
 
-  renderSorteo();
   const msg = resumenLineas.length ? resumenLineas.join(' | ') : 'Sin movimientos';
-  toast('✅ Mercado resuelto — '+msg);
+
+  // UNA sola petición al servidor con todo el cache
+  LIGA.saveAll(function(err) {
+    if(err){
+      toast('⚠️ Guardado solo en local — '+err.message, '#e53935');
+    } else {
+      toast('✅ Mercado guardado en servidor — '+msg);
+    }
+    renderSorteo();
+  });
 }
 
 
@@ -1790,7 +1818,7 @@ function saveXI(){
   }
 
   LIGA.save('state', state);
-  toast('✅ XI guardados para la jornada '+jornada);
+  LIGA.saveAll(function(err){ toast(err?'⚠️ Solo local':'✅ XI guardados en servidor'); });
 }
 
 
@@ -1852,7 +1880,7 @@ function saveAnalisis(){
   if(!state.analisis) state.analisis = {};
   state.analisis[j] = { texto, destacados, fecha: new Date().toLocaleDateString('es-ES') };
   LIGA.save('state', state);
-  toast('✅ Análisis de la jornada '+j+' publicado');
+  LIGA.saveAll(function(err){ toast(err?'⚠️ Solo local':'✅ Análisis de la jornada '+j+' publicado'); });
   updateAnalisisPreview();
 }
 

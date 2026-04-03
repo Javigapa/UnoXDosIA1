@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-90WQKBTXN3');
-  </script>
-
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🤖 Plantillas & Fichajes | Liga Fantas-IA</title>
@@ -410,83 +401,28 @@
     .reveal.visible{opacity:1;transform:translateY(0);}
 
     @media(max-width:768px){
-  .nav-links{display:none;}
-  table.players-table .attr-bar-wrap{display:none;}
-
-  .hamburger{
-    display:none;
-    flex-direction:column;
-    justify-content:center;
-    gap:5px;
-    background:transparent;
-    border:none;
-    cursor:pointer;
-    padding:.4rem;
-    z-index:1001;
-    flex-shrink:0;
-  }
-  .hamburger span{
-    display:block;width:26px;height:2px;
-    background:var(--gold);border-radius:2px;
-    transition:all .3s;
-  }
-  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-  .hamburger.open span:nth-child(2){opacity:0;width:0;}
-  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-
-  nav{padding:0 1rem;}
-  .nav-site-link{display:none;}
-  .hamburger{display:flex;}
-  .nav-links{
-    display:none;
-    flex-direction:column;
-    position:fixed;
-    top:62px;left:0;right:0;bottom:0;
-    background:rgba(5,20,5,0.97);
-    backdrop-filter:blur(12px);
-    border-bottom:2px solid var(--green-bright);
-    padding:1.5rem 2rem 2rem;
-    gap:0;
-    z-index:999;
-    overflow-y:auto;
-  }
-  .nav-links.open{display:flex;}
-  .nav-links li{list-style:none;}
-  .nav-links a{
-    display:block;
-    padding:.9rem 0;
-    border-bottom:1px solid rgba(76,175,80,.15);
-    font-size:1.1rem;
-    font-family:'Oswald',sans-serif;
-    font-weight:600;
-    color:var(--white);
-    text-decoration:none;
-  }
-  .nav-links a:last-child{border-bottom:none;}
-  .nav-links a:hover{color:var(--gold);}
-}
+      .nav-links{display:none;}
+      table.players-table .attr-bar-wrap{display:none;}
+    }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="/LigaFantasIA/fantas-ia-v2.html" class="nav-logo">🤖 Liga <span>Fantas-IA</span></a>
+  <a href="fantas-ia.html" class="nav-logo">🤖 Liga <span>Fantas-IA</span></a>
   <ul class="nav-links">
     <li><a href="#equipos">Equipos</a></li>
     <li><a href="#fichajes">Fichajes</a></li>
     <li><a href="#mecanica">Mecánica</a></li>
   </ul>
-<a href="https://www.unoxdosia.com" class="nav-back" target="_blank">← unoxdosia.com</a>
-<button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
-  <span></span><span></span><span></span>
-</button>
+  <a href="https://www.unoxdosia.com" class="nav-back" target="_blank">← unoxdosia.com</a>
 </nav>
 
 <!-- TICKER -->
 <div class="ticker-bar">
   <span class="ticker-track">
-    🔴 VENTANA DE FICHAJES ABIERTA · JORNADA 1 &nbsp;│&nbsp;  🏆 Presupuesto restante: ChatGPT 17.8M · Gemini 2.5M · Claude 3M · Copilot 27M · Grok 15.9M · Perplexity 6.9M · Mistral 18.2M &nbsp;│&nbsp;
+    🔴 VENTANA DE FICHAJES ABIERTA · JORNADA 1 &nbsp;│&nbsp;  🏆 Presupuesto restante: ChatGPT 62M · Gemini 71M · Claude 58M · Copilot 67M · Grok 80M · Llama 74M · Mistral 69M &nbsp;│&nbsp;
   </span>
 </div>
 
@@ -583,7 +519,7 @@
         <div class="mec-card reveal">
           <span class="mec-icon">🎯</span>
           <h4>¿Qué jugadores salen?</h4>
-          <p>El gestor de la liga selecciona <strong>1–8 jugadores</strong> aleatorios del mercado libre.</p>
+          <p>El gestor de la liga selecciona <strong>3–8 jugadores</strong> aleatorios del mercado libre más 1–2 jugadores de lujo de alta demanda.</p>
         </div>
         <div class="mec-card reveal">
           <span class="mec-icon">🤖</span>
@@ -603,7 +539,7 @@
         <div class="mec-card reveal">
           <span class="mec-icon">🔄</span>
           <h4>Ventas & Traspasos</h4>
-          <p>Una IA puede liberar jugadores durante la ventana. El jugador vuelve al mercado con precio bas.</p>
+          <p>Una IA puede liberar jugadores durante la ventana. El jugador vuelve al mercado con precio base = 60% de su última puja.</p>
         </div>
       </div>
 
@@ -619,17 +555,17 @@
           </thead>
           <tbody>
             <tr><td>Días de ventana</td><td>Lunes y Martes de cada semana (2 días por jornada)</td></tr>
-            <tr><td>Jugadores por subasta</td><td>Entre 1 y 8 jugadores por ventana, elegidos por el gestor</td></tr>
+            <tr><td>Jugadores por subasta</td><td>Entre 4 y 8 jugadores por ventana, elegidos por el gestor</td></tr>
             <tr><td>Presupuesto inicial</td><td>100 millones por IA. Común para todas</td></tr>
-            <tr><td>Puja mínima</td><td>500.000 € por encima del precio base del jugador</td></tr>
+            <tr><td>Puja mínima</td><td>500.000 € (0.5M) por encima del precio base del jugador</td></tr>
             <tr><td>Máximo de pujas</td><td>Una IA puede pujar a todos los jugadores, pero solo consigue los que gana</td></tr>
-            <tr><td>Plantilla mínima</td><td>11 titulares + suplentes</td></tr>
+            <tr><td>Plantilla mínima</td><td>11 titulares + 4 suplentes = 15 jugadores obligatorios</td></tr>
             <tr><td>Plantilla máxima</td><td>22 jugadores en total (como los equipos base)</td></tr>
-            <tr><td>Traspaso</td><td>Se puede vender un jugador durante la ventana</td></tr>
-            <tr><td>Precio base jugador</td><td>Calculado en los atributos del jugador</td></tr>
+            <tr><td>Traspaso</td><td>Se puede vender un jugador durante la ventana. Precio mínimo = 60% valor compra</td></tr>
+            <tr><td>Precio base jugador</td><td>Calculado según OVR: OVR × 100.000 €</td></tr>
             <tr><td>Resolución empate</td><td>Gana la IA que registró la puja primero (timestamp del gestor)</td></tr>
             <tr><td>Sanciones</td><td>Pujar más de lo disponible = puja anulada automáticamente</td></tr>
-            <tr><td>Publicación resultados</td><td>Miércoles antes de las 24:00 se publica quién fichó a quién</td></tr>
+            <tr><td>Publicación resultados</td><td>Miércoles antes de las 12:00 se publica quién fichó a quién</td></tr>
           </tbody>
         </table>
       </div>
@@ -999,21 +935,21 @@ const LIGA = {
   _apiUrl: '/LigaFantasIA/guardar.php',
 
   save: function(key, val) {
-    // 1. Guardar en cache local inmediata
     if (!LIGA._cache) LIGA._cache = {};
     LIGA._cache[key] = val;
-    // 2. También en localStorage como fallback
     try { localStorage.setItem('fantasia_' + key, JSON.stringify(val)); } catch(e) {}
-    // 3. Enviar al servidor (no bloqueante)
-    var payload = {};
-    payload[key] = val;
+  },
+
+  saveAll: function(callback) {
+    if (!LIGA._cache) LIGA._cache = {};
     fetch(LIGA._apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).catch(function(err) {
-      console.warn('guardar.php no disponible, usando localStorage:', err);
-    });
+      body: JSON.stringify(LIGA._cache)
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){ if(callback) callback(null,res); })
+    .catch(function(err){ if(callback) callback(err); });
   },
 
   load: function(key, def) {
@@ -1822,19 +1758,6 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 //  INIT
 // ============================================================
 // Cargar datos del servidor y luego renderizar
-  function toggleMenu(){
-  var btn = document.getElementById('hamburger');
-  var nav = document.querySelector('.nav-links');
-  btn.classList.toggle('open');
-  nav.classList.toggle('open');
-}
-document.querySelectorAll('.nav-links a').forEach(function(a){
-  a.addEventListener('click', function(){
-    document.getElementById('hamburger').classList.remove('open');
-    document.querySelector('.nav-links').classList.remove('open');
-  });
-});
-
 LIGA.loadFromServer(function() {
   renderTeams();
   renderSubasta();
