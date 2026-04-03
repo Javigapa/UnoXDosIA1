@@ -414,6 +414,62 @@
     .xi-total-pts{font-family:'Oswald',sans-serif;font-size:1.6rem;font-weight:700;color:var(--gold);}
     .xi-formation-badge{font-family:'Share Tech Mono',monospace;font-size:.78rem;color:var(--green-bright);background:rgba(76,175,80,.1);padding:.2rem .6rem;border-radius:4px;}
 
+
+    /* ===== ANÁLISIS DE JORNADA ===== */
+    #analisis-jornada{ background: none; }
+    .analisis-card{
+      background:var(--card-bg);
+      border:1px solid var(--border);
+      border-radius:10px;
+      overflow:hidden;
+    }
+    .analisis-header{
+      padding:1rem 1.4rem;
+      background:rgba(76,175,80,.1);
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;
+    }
+    .analisis-jornada-label{
+      font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700;color:var(--gold);
+    }
+    .analisis-fecha{
+      font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--gray);
+    }
+    .analisis-body{ padding:1.4rem; }
+    .analisis-texto{
+      font-size:1rem;color:var(--white);line-height:1.8;
+      white-space:pre-line;
+    }
+    .analisis-partidos{
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+      gap:.6rem;margin-bottom:1rem;
+    }
+    .analisis-match{
+      background:rgba(0,0,0,.3);border:1px solid rgba(76,175,80,.12);
+      border-radius:6px;padding:.5rem .8rem;
+      font-size:.85rem;display:flex;align-items:center;justify-content:space-between;
+    }
+    .analisis-match-teams{ color:var(--gray); }
+    .analisis-match-score{
+      font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;color:var(--gold);
+    }
+    .analisis-empty{
+      text-align:center;padding:3rem;
+      color:rgba(176,176,176,.4);
+      font-family:'Share Tech Mono',monospace;font-size:.85rem;
+    }
+    .analisis-jornada-nav{
+      display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.5rem;
+    }
+    .analisis-nav-btn{
+      font-family:'Oswald',sans-serif;font-size:.82rem;font-weight:600;
+      padding:.35rem .85rem;
+      border:1px solid var(--border);background:transparent;
+      color:var(--gray);border-radius:20px;cursor:pointer;transition:all .2s;
+    }
+    .analisis-nav-btn.active,
+    .analisis-nav-btn:hover{background:var(--green-bright);color:var(--dark);border-color:var(--green-bright);}
+
   </style>
 </head>
 <body>
@@ -427,6 +483,7 @@
     <li><a href="#jornadas">Jornadas</a></li>
     <li><a href="#cronicas">Crónicas</a></li>
     <li><a href="#xi-ideal">XI Ideal</a></li>
+    <li><a href="#analisis-jornada">Análisis</a></li>
     <li><a href="/LigaFantasIA/EquiposligaIAInventados.html">Mercado</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
@@ -638,7 +695,7 @@
     <div class="tab-panel active" id="ias-rank">
       <div class="table-wrap">
         <table>
-          <thead><tr><th>#</th><th>IA</th><th>Empresa</th><th>J</th><th>Puntos</th><th>Mejor J.</th><th>Equipo asignado</th></tr></thead>
+          <thead><tr><th>#</th><th>IA</th><th>Empresa</th><th>J</th><th>Puntos</th><th>Mejor J.</th></tr></thead>
           <tbody id="ia-ranking-body"></tbody>
         </table>
       </div>
@@ -646,7 +703,7 @@
     <div class="tab-panel" id="teams-rank">
       <div class="table-wrap">
         <table>
-          <thead><tr><th>#</th><th>Equipo</th><th>IA Manager</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>Pts</th></tr></thead>
+          <thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>Pts</th></tr></thead>
           <tbody id="teams-ranking-body"></tbody>
         </table>
       </div>
@@ -697,6 +754,20 @@
 
     <div class="xi-tabs" id="xi-tabs"></div>
     <div id="xi-panels"></div>
+  </div>
+</section>
+
+
+<div class="pitch-divider"></div>
+
+<!-- ANÁLISIS DE JORNADA -->
+<section id="analisis-jornada">
+  <div class="section-inner">
+    <div class="section-tag">/ Crónica del gestor</div>
+    <h2 class="section-title">Análisis de <em>Jornada</em></h2>
+    <p class="section-desc">Resumen de lo que pasó en cada jornada: resultados, puntuaciones destacadas y novedades de la liga.</p>
+    <div class="analisis-jornada-nav" id="analisis-nav"></div>
+    <div id="analisis-content"></div>
   </div>
 </section>
 
@@ -773,6 +844,7 @@ const LIGA = {
   TEAMS: [
     {
       id:'rv', name:'Realidad Virtual F.C.', emoji:'💻', color:'#00e5ff',
+      manager:'', // asignado al inicio
       desc:'Favorito al título. Patrocinado por tecnología. Muy alto en Visión y Calidad, algo endebles físicamente.',
       players:[
         {n:1,  name:'Áxel "Pixel" Vargas',       pos:'POR', pot:75, cal:70, vel:45, vis:82, price:'4.2M'},
@@ -801,6 +873,7 @@ const LIGA = {
     },
     {
       id:'ac', name:'Atlético Campero', emoji:'🌾', color:'#8d6e63',
+      manager:'',
       desc:'Tradición rural. Muy fuertes físicamente (POT) pero con poca visión. Luchan por no descender.',
       players:[
         {n:1,  name:'Berto "Yugo" Díaz',           pos:'POR', pot:82, cal:45, vel:41, vis:40, price:'1.2M'},
@@ -829,6 +902,7 @@ const LIGA = {
     },
     {
       id:'ce', name:'Cemento Armónico C.F.', emoji:'🏗️', color:'#90a4ae',
+      manager:'',
       desc:'Equipo obrero. Sólidos atrás, toscos en ataque. Muy irregulares a lo largo de la temporada.',
       players:[
         {n:1,  name:'Ladislao "Bloque" Hormigo',   pos:'POR', pot:80, cal:55, vel:32, vis:53, price:'3.2M'},
@@ -857,6 +931,7 @@ const LIGA = {
     },
     {
       id:'si', name:'Sintéticos F.C.', emoji:'🧬', color:'#b39ddb',
+      manager:'',
       desc:'Creados en laboratorio. Estadísticas muy balanceadas y altas. Máximos rivales de Realidad Virtual.',
       players:[
         {n:1,  name:'Zero Uno',     pos:'POR', pot:86, cal:82, vel:60, vis:85, price:'12.0M'},
@@ -885,6 +960,7 @@ const LIGA = {
     },
     {
       id:'ip', name:'Los Infrapagados', emoji:'💸', color:'#ef9a9a',
+      manager:'',
       desc:'Mucho talento (CAL y VIS alta) pero nulo físico por las largas jornadas laborales. Dan sorpresas.',
       players:[
         {n:1,  name:'Evaristo "Mileurista" Plaza',    pos:'POR', pot:48, cal:75, vel:30, vis:74, price:'2.5M'},
@@ -913,6 +989,7 @@ const LIGA = {
     },
     {
       id:'nb', name:'Nebulosa F.C.', emoji:'🌫️', color:'#78909c',
+      manager:'',
       desc:'Equipo misterioso de zona de niebla. Muy veloces e impredecibles. Calidad media-baja.',
       players:[
         {n:1,  name:'Niebla Bruma',       pos:'POR', pot:70, cal:58, vel:48, vis:55, price:'3.2M'},
@@ -941,6 +1018,7 @@ const LIGA = {
     },
     {
       id:'me', name:'Metrópoli S.C.', emoji:'🏙️', color:'#ffd54f',
+      manager:'',
       desc:'Equipo de gran ciudad, elegante. Buen equilibrio, aspiran a Europa. Jugadores con clase.',
       players:[
         {n:1,  name:'Darío Alameda',        pos:'POR', pot:78, cal:74, vel:50, vis:73, price:'6.8M'},
@@ -969,6 +1047,7 @@ const LIGA = {
     },
     {
       id:'nu', name:'Nómadas United', emoji:'🌍', color:'#ff7043',
+      manager:'',
       desc:'Equipo de jugadores sin patria fija. Extranjeros de todo el mundo unidos por el fútbol. Físicos e impredecibles, con un talento especial en las bandas.',
       players:[
         {n:1,  name:'Kasimir "Errante" Volkov',    pos:'POR', pot:76, cal:68, vel:52, vis:64, price:'5.2M'},
@@ -1296,7 +1375,6 @@ function renderClasificacion(){
       <td>${ia.jornadas}</td>
       <td class="pts">${ia.pts}</td>
       <td style="color:var(--green-light)">${ia.mejor}</td>
-      <td style="font-size:.85rem;color:var(--gray)">${asig||'—'}</td>
     </tr>`;
   }).join('');
 
@@ -1313,19 +1391,12 @@ function renderClasificacion(){
     const pa=a.g*3+a.e, pb=b.g*3+b.e;
     return pb-pa||(b.gf-b.gc)-(a.gf-a.gc)||b.gf-a.gf;
   });
-  const assignments=state.assignments||{};
-  const managerByTeam={};
-  Object.entries(assignments).forEach(([iaId,teamName])=>managerByTeam[teamName]=iaId);
-
   const tBody=document.getElementById('teams-ranking-body');
   tBody.innerHTML=teamsData.map((t,i)=>{
     const pc=i===0?'pos-1':i===1?'pos-2':i===2?'pos-3':'pos-n';
-    const mgr=Object.entries(assignments).find(([,v])=>v===t.name);
-    const mgrName=mgr?LIGA.IAS.find(x=>x.id===mgr[0])?.name||'—':'—';
     return `<tr>
       <td><span class="pos-badge ${pc}">${i+1}</span></td>
       <td><strong>${t.emoji} ${t.name}</strong></td>
-      <td style="color:var(--gray);font-size:.85rem">${mgrName}</td>
       <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td>
       <td>${t.gf}</td><td>${t.gc}</td>
       <td class="pts">${t.g*3+t.e}</td>
@@ -1621,6 +1692,96 @@ function renderFormation(players, formation, color, state, iaId, jornada){
   `).join('');
 }
 
+
+// ====== ANÁLISIS DE JORNADA ======
+let analisisJornadaActiva = null;
+
+function buildAnalisisSelectors(){
+  const nav = document.getElementById('analisis-nav');
+  if(!nav) return;
+  const state = LIGA.load('state',{});
+  const analisis = state.analisis || {};
+  // Mostrar solo jornadas que tengan análisis publicado
+  const jornadasConAnalisis = LIGA.CALENDAR.filter(j => analisis[j.j]);
+  if(!jornadasConAnalisis.length){
+    nav.innerHTML = '';
+    return;
+  }
+  nav.innerHTML = jornadasConAnalisis.map(j=>`
+    <button class="analisis-nav-btn ${analisisJornadaActiva==j.j?'active':''}"
+      onclick="selectAnalisisJornada(${j.j})">
+      J${j.j}
+    </button>
+  `).join('');
+  // Seleccionar la más reciente por defecto
+  if(!analisisJornadaActiva && jornadasConAnalisis.length){
+    analisisJornadaActiva = jornadasConAnalisis[jornadasConAnalisis.length-1].j;
+  }
+}
+
+function selectAnalisisJornada(j){
+  analisisJornadaActiva = j;
+  document.querySelectorAll('.analisis-nav-btn').forEach(b=>{
+    b.classList.toggle('active', parseInt(b.textContent.replace('J',''))===j);
+  });
+  renderAnalisisJornada();
+}
+
+function renderAnalisisJornada(){
+  const content = document.getElementById('analisis-content');
+  const nav = document.getElementById('analisis-nav');
+  if(!content) return;
+
+  const state = LIGA.load('state',{});
+  const analisis = state.analisis || {};
+  const results  = state.results  || {};
+
+  // Reconstruir nav siempre
+  buildAnalisisSelectors();
+
+  if(!analisisJornadaActiva){
+    content.innerHTML = '<div class="analisis-empty">📋 Aún no hay análisis publicados.<br>Se publicarán tras cada jornada.</div>';
+    return;
+  }
+
+  const j = analisisJornadaActiva;
+  const data = analisis[j];
+  const jornadaInfo = LIGA.CALENDAR.find(x=>x.j==j);
+
+  if(!data){
+    content.innerHTML = '<div class="analisis-empty">Sin análisis para esta jornada.</div>';
+    return;
+  }
+
+  // Resultados de los partidos
+  const scores = (results[j] && results[j].scores) || {};
+  const matchesHtml = (jornadaInfo?.partidos||[]).map(([h,a])=>{
+    const home = LIGA.teamById(h);
+    const away = LIGA.teamById(a);
+    const score = scores[h+'v'+a] || '— : —';
+    return `<div class="analisis-match">
+      <span class="analisis-match-teams">${home?.emoji||''} ${home?.name||h} vs ${away?.name||a} ${away?.emoji||''}</span>
+      <span class="analisis-match-score">${score}</span>
+    </div>`;
+  }).join('');
+
+  content.innerHTML = `
+    <div class="analisis-card">
+      <div class="analisis-header">
+        <div>
+          <div class="analisis-jornada-label">📰 Jornada ${j}</div>
+          <div class="analisis-fecha">${jornadaInfo?.fecha||''}</div>
+        </div>
+      </div>
+      <div class="analisis-body">
+        ${matchesHtml ? `<div class="analisis-partidos">${matchesHtml}</div>` : ''}
+        <div class="analisis-texto">${data.texto || '(Sin texto)'}</div>
+        ${data.destacados ? `<div style="margin-top:1rem;padding:.8rem 1rem;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.2);border-radius:6px;font-size:.9rem;color:var(--gold);">⭐ ${data.destacados}</div>` : ''}
+      </div>
+    </div>
+  `;
+}
+
 // ====== INIT ======
 function refreshAll(){
   renderIAsGrid();
@@ -1628,11 +1789,15 @@ function refreshAll(){
   renderClasificacion();
   renderJornadas();
   renderCronicas();
+  renderXIIdeal();
+  renderAnalisisJornada();
   updateTicker();
 }
 
 // Cargar datos del servidor y luego renderizar
 LIGA.loadFromServer(function() {
+  buildXISelectors();
+  buildAnalisisSelectors();
   refreshAll();
 });
 
