@@ -520,7 +520,7 @@
     </svg>
   </div>
   <div style="position:relative;z-index:1;">
-    <div class="hero-badge">⚽ TEMPORADA 1 · 2025 · FANTASY LEAGUE</div>
+    <div class="hero-badge">⚽ TEMPORADA 1 · 2026 · FANTASY LEAGUE</div>
     <h1 class="hero-title">
       <span class="title-liga">LIGA</span><br>
       <span class="title-fantas">FANTAS</span><span style="color:var(--green-bright)">-</span><span class="title-ia">IA</span>
@@ -1122,21 +1122,21 @@ const LIGA = {
   _apiUrl: '/LigaFantasIA/guardar.php',
 
   save: function(key, val) {
-    // 1. Guardar en cache local inmediata
     if (!LIGA._cache) LIGA._cache = {};
     LIGA._cache[key] = val;
-    // 2. También en localStorage como fallback
     try { localStorage.setItem('fantasia_' + key, JSON.stringify(val)); } catch(e) {}
-    // 3. Enviar al servidor (no bloqueante)
-    var payload = {};
-    payload[key] = val;
+  },
+
+  saveAll: function(callback) {
+    if (!LIGA._cache) LIGA._cache = {};
     fetch(LIGA._apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).catch(function(err) {
-      console.warn('guardar.php no disponible, usando localStorage:', err);
-    });
+      body: JSON.stringify(LIGA._cache)
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){ if(callback) callback(null,res); })
+    .catch(function(err){ if(callback) callback(err); });
   },
 
   load: function(key, def) {
