@@ -171,6 +171,7 @@
       <button class="atab" onclick="showPanel('mercado',this)">💰 Mercado</button>
       <button class="atab" onclick="showPanel('xi',this)">⚽ XI Ideal</button>
       <button class="atab" onclick="showPanel('analisis',this)">📰 Análisis</button>
+      <button class="atab" style="background:rgba(255,215,0,0.1);color:var(--gold);border-color:var(--gold);" onclick="showPanel('export',this)">📦 EXPORTAR HTML</button>
     </div>
     <div class="admin-links">
       <a href="fantas-ia-v2.html" target="_blank">Ver web</a>
@@ -430,6 +431,43 @@
       </div>
     </div>
 
+    <!-- ===== PANEL: EXPORTAR HTML (NUEVO) ===== -->
+    <div class="panel" id="panel-export">
+      <div class="panel-title">📦 Generador de Bloques HTML</div>
+      <div class="panel-desc">Usa estos botones para generar el código que debes pegar en <strong>fantas-ia-v2.html</strong> o <strong>EquiposligaIAInventados.html</strong>.</div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:1.5rem;">
+        
+        <div class="card">
+          <div class="card-title">🚀 Para la página Principal (fantas-ia-v2.html)</div>
+          <div style="display:flex; flex-direction:column; gap:0.8rem;">
+            <button class="dado-btn" onclick="exportHTML('sorteo-inicial')">📋 Copiar Sorteo Inicial / Plantillas IAs</button>
+            <button class="dado-btn" onclick="exportHTML('clasificacion-ia')">📋 Copiar Ranking IAs</button>
+            <button class="dado-btn" onclick="exportHTML('clasificacion-equipos')">📋 Copiar Clasificación Equipos</button>
+            <button class="dado-btn" onclick="exportHTML('jornadas')">📋 Copiar Calendario / Resultados</button>
+            <button class="dado-btn" onclick="exportHTML('cronicas')">📋 Copiar Crónicas</button>
+            <button class="dado-btn" onclick="exportHTML('xi-ideal')">📋 Copiar XI Ideal (Tabs y Campo)</button>
+            <button class="dado-btn" onclick="exportHTML('analisis')">📋 Copiar Análisis de Jornada</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">👕 Para la página de Equipos (EquiposligaIAInventados.html)</div>
+          <div style="display:flex; flex-direction:column; gap:0.8rem;">
+            <button class="dado-btn" style="background:var(--blue);" onclick="exportHTML('plantillas-equipos')">📋 Copiar Plantillas de los 8 Equipos</button>
+            <button class="dado-btn" style="background:var(--blue);" onclick="exportHTML('mercado-subasta')">📋 Copiar Jugadores en Subasta</button>
+            <button class="dado-btn" style="background:var(--blue);" onclick="exportHTML('mercado-resultados')">📋 Copiar Resultados de Fichajes</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card" style="margin-top:1.5rem;">
+        <div class="card-title">📄 Código Generado</div>
+        <textarea id="export-output" rows="10" style="width:100%; background:rgba(0,0,0,0.5); color:#a5d6a7; font-family:'Share Tech Mono',monospace; padding:1rem; border:1px solid var(--border); border-radius:8px;" readonly placeholder="El código aparecerá aquí al pulsar un botón..."></textarea>
+        <p style="font-size:0.8rem; color:var(--gray); margin-top:0.5rem;">Haz clic en el área de texto para seleccionar todo y cópialo.</p>
+      </div>
+    </div>
 
     <!-- ===== PANEL: XI IDEAL ===== -->
     <div class="panel" id="panel-xi">
@@ -1882,6 +1920,106 @@ function saveAnalisis(){
   LIGA.save('state', state);
   LIGA.saveAll(function(err){ toast(err?'⚠️ Solo local':'✅ Análisis de la jornada '+j+' publicado'); });
   updateAnalisisPreview();
+}
+
+// ============================================================
+// GENERADORES DE HTML (EL NUEVO MOTOR)
+// ============================================================
+function exportHTML(tipo) {
+  const state = LIGA.load('state', {});
+  const sorteo = LIGA.load('sorteo', {});
+  const output = document.getElementById('export-output');
+  let html = '';
+
+  switch(tipo) {
+    case 'sorteo-inicial':
+      // Lógica de renderSorteoInicial adaptada a string
+      html = LIGA.IAS.map(ia => {
+        const players = sorteo[ia.id] || [];
+        const budgets = LIGA.load('budgets',{});
+        const budget = budgets[ia.id] || 100;
+        const rows = players.map((p, i) => `<tr><td class="num">${i+1}</td><td>${p.name}</td><td>${p.pos}</td><td>${calcOVR(p)}</td><td class="pts">${playerPointsTotal(state, ia.id, p.name)}</td><td>${p.pot}</td><td>${p.cal}</td><td>${p.vel}</td><td>${p.vis}</td><td class="price">${p.price||'—'}</td></tr>`).join('');
+        return `<div class="sorteo-card"><div class="sorteo-card-head"><div><div class="sorteo-card-title">${ia.emoji} ${ia.name}</div><div class="sorteo-card-budget">Presupuesto Restante: ${budget.toFixed(1)}M</div></div></div><div class="table-wrap"><table class="sorteo-table"><thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th>Pts</th><th>POT</th><th>CAL</th><th>VEL</th><th>VIS</th><th>💶 PRECIO</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+      }).join('\n');
+      break;
+
+    case 'clasificacion-ia':
+      const iaData = LIGA.IAS.map(ia => ({ ...ia, pts: state.ias?.[ia.id] || 0, jornadas: state.jornadas?.[ia.id] || 0, mejor: state.mejor?.[ia.id] || 0 })).sort((a,b) => b.pts - a.pts);
+      html = iaData.map((ia, i) => `<tr><td><span class="pos-badge ${i<3?`pos-${i+1}`:'pos-n'}">${i+1}</span></td><td><strong>${ia.emoji} ${ia.name}</strong></td><td style="color:var(--gray);font-size:.85rem">${ia.company}</td><td>${ia.jornadas}</td><td class="pts">${ia.pts}</td><td style="color:var(--green-light)">${ia.mejor}</td></tr>`).join('\n');
+      break;
+
+    case 'clasificacion-equipos':
+      const teamsData = LIGA.TEAMS.map(t => ({ ...t, pj: state.teams?.[t.id]?.pj || 0, g: state.teams?.[t.id]?.g || 0, e: state.teams?.[t.id]?.e || 0, p: state.teams?.[t.id]?.p || 0, gf: state.teams?.[t.id]?.gf || 0, gc: state.teams?.[t.id]?.gc || 0 }));
+      teamsData.sort((a,b) => (b.g*3+b.e) - (a.g*3+a.e) || (b.gf-b.gc) - (a.gf-a.gc));
+      html = teamsData.map((t, i) => `<tr><td><span class="pos-badge ${i<3?`pos-${i+1}`:'pos-n'}">${i+1}</span></td><td><strong>${t.emoji} ${t.name}</strong></td><td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td><td>${t.gf}</td><td>${t.gc}</td><td class="pts">${t.g*3+t.e}</td></tr>`).join('\n');
+      break;
+
+    case 'jornadas':
+      const results = state.results || {};
+      html = LIGA.CALENDAR.map(j => {
+        const isPlayed = results[j.j]?.played;
+        const statusClass = isPlayed ? 'status-played' : 'status-pending';
+        const matches = j.partidos.map(([h,a]) => {
+          const home = LIGA.teamById(h); const away = LIGA.teamById(a);
+          const score = results[j.j]?.scores?.[`${h}v${a}`] || '— : —';
+          return `<div class="match-row"><span class="match-home">${home.emoji} ${home.name}</span><span class="match-score">${score}</span><span class="match-away">${away.name} ${away.emoji}</span></div>`;
+        }).join('');
+        return `<div class="jornada-card"><div class="jornada-header"><div class="jornada-num">Jornada ${j.j}</div><span class="jornada-status ${statusClass}">${isPlayed?'JUGADA':'PENDIENTE'}</span></div><div class="jornada-matches">${matches}</div></div>`;
+      }).join('\n');
+      break;
+
+    case 'cronicas':
+      const cronicas = LIGA.load('cronicas', []);
+      html = cronicas.map(c => `<div class="cronica-card"><div class="cronica-jornada">📰 Jornada ${c.jornada}</div><div class="cronica-partidos">${c.equipos}</div><div class="cronica-texto">${c.texto}</div></div>`).join('\n');
+      break;
+
+    case 'xi-ideal':
+      // Generamos los botones de tabs y los paneles del campo
+      let tabs = ''; let panels = '';
+      const currentJ = document.getElementById('xi-jornada-admin').value || 1;
+      const xiData = state.xi?.[currentJ] || {};
+      LIGA.IAS.forEach((ia, idx) => {
+        const data = xiData[ia.id] || {formacion:'4-3-3', jugadores:[]};
+        tabs += `<button class="xi-tab ${idx===0?'active':''}" style="--ia-clr:${ia.color}" onclick="document.querySelectorAll('.xi-panel').forEach(p=>p.classList.remove('active')); document.getElementById('xi-panel-${ia.id}').classList.add('active'); document.querySelectorAll('.xi-tab').forEach(t=>t.classList.remove('active')); this.classList.add('active');">${ia.emoji} ${ia.name}</button>`;
+        // Simplificado: aquí iría la llamada a renderFormation convertida a string estático
+        panels += `<div class="xi-panel ${idx===0?'active':''}" id="xi-panel-${ia.id}"><div class="pitch-container" style="--ia-clr:${ia.color}"><!-- Inserta aquí visualización manual si prefieres --> <div style="text-align:center; padding:2rem;">Formación: ${data.formacion}<br>${data.jugadores.map(p=>p.nombre).join(', ')}</div></div></div>`;
+      });
+      html = `<!-- TABS -->\n<div class="xi-tabs">${tabs}</div>\n<!-- PANELES -->\n<div id="xi-panels">${panels}</div>`;
+      break;
+
+    case 'analisis':
+      const jAnalisis = document.getElementById('analisis-jornada-admin').value;
+      const dataA = state.analisis?.[jAnalisis];
+      if(!dataA) { html = 'Selecciona una jornada con análisis primero.'; break; }
+      html = `<div class="analisis-card"><div class="analisis-header"><div class="analisis-jornada-label">📰 Jornada ${jAnalisis}</div></div><div class="analisis-body"><div class="analisis-texto">${dataA.texto}</div>${dataA.destacados ? `<div style="margin-top:1rem;color:var(--gold)">⭐ ${dataA.destacados}</div>`:''}</div></div>`;
+      break;
+
+    case 'plantillas-equipos':
+      // Genera los tabs y tablas para EquiposligaIAInventados.html
+      let pTabs = ''; let pPanels = '';
+      LIGA.TEAMS.forEach((team, idx) => {
+        pTabs += `<button class="team-tab ${idx===0?'active':''}" style="--team-color:${team.color}" onclick="switchTeam('${team.id}')">${team.emoji} ${team.name}</button>`;
+        const rows = team.players.map(p => {
+          const ovr = calcOVR(p);
+          return `<tr><td>${p.n}</td><td>${p.name}</td><td><span class="td-pos pos-${p.pos}">${p.pos}</span></td><td>${ovr}</td><td>${p.pot}</td><td>${p.cal}</td><td>${p.vel}</td><td>${p.vis}</td><td>${p.price||'—'}</td></tr>`;
+        }).join('');
+        pPanels += `<div class="team-panel ${idx===0?'active':''}" id="panel-${team.id}"><div class="team-header" style="border-top-color:${team.color}"><h3>${team.emoji} ${team.name}</h3><p>${team.desc}</p></div><div class="table-wrap"><table class="players-table"><thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th>POT</th><th>CAL</th><th>VEL</th><th>VIS</th><th>💶 PRECIO</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+      });
+      html = `<!-- TABS -->\n<div class="teams-tabs">${pTabs}</div>\n<!-- PANELES -->\n<div id="teams-panels">${pPanels}</div>`;
+      break;
+
+    case 'mercado-subasta':
+      const merc = LIGA.load('mercado_jugadores', []);
+      html = merc.map(j => {
+        return `<div class="jugador-subasta-card"><div class="jsc-header"><div><div class="jsc-name">${j.nombre}</div></div><span class="td-pos">MERCADO</span></div><div class="jsc-body"><div class="precio-base">Precio Base: <strong>${j.precio}M</strong></div></div></div>`;
+      }).join('\n');
+      break;
+  }
+
+  output.value = html;
+  output.select();
+  document.execCommand('copy');
+  toast('✅ Código generado y copiado al portapapeles');
 }
 
 </script>
