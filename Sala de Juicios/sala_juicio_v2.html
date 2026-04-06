@@ -549,48 +549,60 @@ body {
 
 /* score-bar eliminado */
 
-@media(max-width:800px){
-  /* Intro */
-  .intro-wrap{ grid-template-columns:1fr; }
-  .intro-right{ display:none; }
-  .hero-art{ width:220px; height:120px; }
-  .hero-title{ font-size:2.6rem; }
-  .hero-desc{ font-size:0.95rem; }
+/* ── Elementos solo-móvil: ocultos por defecto en escritorio ── */
+.mobile-tabs    { display: none; }
+.sidebar-overlay{ display: none; }
 
-  /* Layout sala — una sola columna, altura completa */
-  .main-layout{
+/* ══════════════════ MEDIA QUERY MÓVIL ══════════════════ */
+@media(max-width:800px){
+
+  /* ── Intro ── */
+  .intro-wrap  { grid-template-columns: 1fr; }
+  .intro-right { display: none; }
+  .hero-art    { width: 220px; height: 120px; }
+  .hero-title  { font-size: 2.6rem; }
+  .hero-desc   { font-size: 0.95rem; }
+
+  /* ── Sala: una sola columna ── */
+  .main-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
     position: relative;
   }
 
-  /* Sidebar izquierdo: en móvil es un panel superpuesto */
-  .sidebar-left{
-    display: flex;
+  /* ── Sidebar: panel deslizante superpuesto ── */
+  .sidebar-left {
     position: fixed;
-    inset: 50px 0 0 0;
+    inset: 50px 0 56px 0;   /* deja espacio para topbar y tab bar */
     z-index: 50;
-    background: var(--surface);
     transform: translateX(-100%);
     transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
     border-right: none;
     border-top: 1px solid var(--border);
+    flex-direction: column;
+    display: flex;            /* siempre flex en móvil, la posición lo oculta */
   }
-  .sidebar-left.open{
-    transform: translateX(0);
-  }
+  .sidebar-left.open { transform: translateX(0); }
 
-  /* Barra de pestañas inferior */
-  .mobile-tabs{
-    display: flex;
+  /* ── Overlay ── */
+  .sidebar-overlay {
+    position: fixed;
+    inset: 50px 0 56px 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 40;
+  }
+  .sidebar-overlay.open { display: block; }
+
+  /* ── Tab bar ── */
+  .mobile-tabs {
     position: fixed;
     bottom: 0; left: 0; right: 0;
     z-index: 60;
     background: var(--surface);
     border-top: 1px solid var(--border);
     height: 56px;
+    display: none; /* initMobileTabs() la muestra cuando corresponde */
   }
-  .mobile-tab{
+  .mobile-tab {
     flex: 1;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
@@ -602,42 +614,30 @@ body {
     border: none; background: none;
     font-family: 'Crimson Pro', serif;
     -webkit-tap-highlight-color: transparent;
+    position: relative;
   }
-  .mobile-tab .tab-icon{ font-size: 1.2rem; line-height:1; }
-  .mobile-tab.active{ color: var(--gold); }
-  .mobile-tab .tab-badge{
-    position: absolute;
-    top: 6px;
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--red);
-    display: none;
+  .mobile-tab .tab-icon  { font-size: 1.2rem; line-height: 1; }
+  .mobile-tab.active     { color: var(--gold); }
+  .mobile-tab .tab-badge {
+    position: absolute; top: 6px; right: calc(50% - 18px);
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--red); display: none;
   }
-  .mobile-tab .tab-badge.show{ display: block; }
+  .mobile-tab .tab-badge.show { display: block; }
 
-  /* Overlay oscuro detrás del panel de pruebas */
-  .sidebar-overlay{
-    display: none;
-    position: fixed; inset: 50px 0 56px 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 40;
-  }
-  .sidebar-overlay.open{ display: block; }
+  /* ── Court center: padding para que el input no quede bajo la tab bar ── */
+  .court-center { padding-bottom: 56px; }
 
-  /* El court-center ocupa todo pero deja espacio para la tab bar */
-  .court-center{
-    padding-bottom: 56px;
-  }
+  /* ── Topbar compacta ── */
+  .topbar       { padding: 0 0.85rem; }
+  .topbar-title { font-size: 0.82rem; }
+  .topbar-case  { display: none; }
+  #ai-badge     { display: none; }
 
-  /* Input placeholder más corto en móvil */
-  .free-input{ font-size: 0.9rem; }
-
-  /* Topbar más compacta */
-  .topbar{ padding: 0 0.85rem; }
-  .topbar-title{ font-size: 0.82rem; }
-  #ai-badge{ display: none; } /* se muestra en la tab */
-  .topbar-case{ display: none; }
+  /* ── Input ── */
+  .free-input { font-size: 0.9rem; }
 }
+/* ═══════════════════════════════════════════════════════ */
 </style>
 </head>
 <body>
@@ -1433,7 +1433,14 @@ function handleKey(e){
 const isMobile = () => window.innerWidth <= 800;
 
 function initMobileTabs(){
-  if(!isMobile()) return;
+  if(!isMobile()){
+    // Escritorio: asegurarse de que el sidebar es visible y sin transforms
+    const sidebar = document.getElementById('sidebar-left');
+    sidebar.style.transform = '';
+    sidebar.style.position  = '';
+    document.getElementById('mobile-tabs').style.display = 'none';
+    return;
+  }
   document.getElementById('mobile-tabs').style.display = 'flex';
 }
 
@@ -1496,6 +1503,13 @@ function afterEvidencePresented(){
 
 /* ═══════════════════════ INIT ═══════════════════════ */
 renderIntro();
+
+// Recalcular si cambia el tamaño de ventana (rotación, resize)
+window.addEventListener('resize', ()=>{
+  if(document.getElementById('court').style.display !== 'none'){
+    initMobileTabs();
+  }
+});
 </script>
 </body>
 </html>
