@@ -550,12 +550,93 @@ body {
 /* score-bar eliminado */
 
 @media(max-width:800px){
-  .main-layout{ grid-template-columns:1fr; grid-template-rows:auto 1fr auto; }
-  .sidebar-left{ display:none; }
+  /* Intro */
   .intro-wrap{ grid-template-columns:1fr; }
   .intro-right{ display:none; }
-  .hero-art{ width:240px; height:130px; }
-  .hero-title{ font-size:3rem; }
+  .hero-art{ width:220px; height:120px; }
+  .hero-title{ font-size:2.6rem; }
+  .hero-desc{ font-size:0.95rem; }
+
+  /* Layout sala — una sola columna, altura completa */
+  .main-layout{
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    position: relative;
+  }
+
+  /* Sidebar izquierdo: en móvil es un panel superpuesto */
+  .sidebar-left{
+    display: flex;
+    position: fixed;
+    inset: 50px 0 0 0;
+    z-index: 50;
+    background: var(--surface);
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+    border-right: none;
+    border-top: 1px solid var(--border);
+  }
+  .sidebar-left.open{
+    transform: translateX(0);
+  }
+
+  /* Barra de pestañas inferior */
+  .mobile-tabs{
+    display: flex;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 60;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    height: 56px;
+  }
+  .mobile-tab{
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 2px;
+    cursor: pointer;
+    color: var(--text-dim);
+    font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.15s;
+    border: none; background: none;
+    font-family: 'Crimson Pro', serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-tab .tab-icon{ font-size: 1.2rem; line-height:1; }
+  .mobile-tab.active{ color: var(--gold); }
+  .mobile-tab .tab-badge{
+    position: absolute;
+    top: 6px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--red);
+    display: none;
+  }
+  .mobile-tab .tab-badge.show{ display: block; }
+
+  /* Overlay oscuro detrás del panel de pruebas */
+  .sidebar-overlay{
+    display: none;
+    position: fixed; inset: 50px 0 56px 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 40;
+  }
+  .sidebar-overlay.open{ display: block; }
+
+  /* El court-center ocupa todo pero deja espacio para la tab bar */
+  .court-center{
+    padding-bottom: 56px;
+  }
+
+  /* Input placeholder más corto en móvil */
+  .free-input{ font-size: 0.9rem; }
+
+  /* Topbar más compacta */
+  .topbar{ padding: 0 0.85rem; }
+  .topbar-title{ font-size: 0.82rem; }
+  #ai-badge{ display: none; } /* se muestra en la tab */
+  .topbar-case{ display: none; }
 }
 </style>
 </head>
@@ -754,8 +835,11 @@ body {
 
   <div class="main-layout">
 
+    <!-- Overlay oscuro (móvil) -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
     <!-- Izquierda: Expediente + Pruebas -->
-    <div class="sidebar-left">
+    <div class="sidebar-left" id="sidebar-left">
       <div class="sidebar-section">
         <div class="sidebar-section-head">📁 Expediente</div>
         <div class="dossier-body" id="dossier-body"></div>
@@ -780,13 +864,30 @@ body {
       <div class="input-zone">
         <label>Alegación libre del letrado defensor —</label>
         <div class="input-row">
-          <textarea id="free-input" class="free-input" placeholder="Argumente ante el tribunal... (las pruebas se presentan desde el panel izquierdo)" rows="2" onkeydown="handleKey(event)"></textarea>
+          <textarea id="free-input" class="free-input" placeholder="Argumente ante el tribunal..." rows="2" onkeydown="handleKey(event)"></textarea>
           <button class="btn-alegar" id="btn-alegar" onclick="submitFree()">Alegar ▶</button>
           <button class="btn-veredicto" id="btn-veredicto" onclick="requestVerdict()">Pedir<br>veredicto</button>
         </div>
       </div>
     </div>
 
+  </div>
+
+  <!-- Barra de pestañas móvil -->
+  <div class="mobile-tabs" id="mobile-tabs" style="display:none">
+    <button class="mobile-tab active" id="tab-juicio" onclick="switchTab('juicio')">
+      <span class="tab-icon">⚖️</span>
+      <span>Juicio</span>
+    </button>
+    <button class="mobile-tab" id="tab-pruebas" onclick="switchTab('pruebas')">
+      <span class="tab-icon">🗂</span>
+      <span>Pruebas</span>
+      <span class="tab-badge" id="tab-pruebas-badge"></span>
+    </button>
+    <button class="mobile-tab" id="tab-expediente" onclick="switchTab('expediente')">
+      <span class="tab-icon">📁</span>
+      <span>Expediente</span>
+    </button>
   </div>
 </div>
 
@@ -988,6 +1089,7 @@ async function startGame(){
   document.getElementById('tb-case').textContent=`${activeCase.tag}: ${activeCase.name}`;
   renderDossier();
   renderEvidences();
+  initMobileTabs();
   openingStatement();
 }
 
@@ -1068,10 +1170,11 @@ async function presentEvidence(ev){
   // Mandar al juez
   const judgePrompt=`[ABOGADO PRESENTA PRUEBA DOCUMENTAL]\nPrueba: "${ev.name}" (${ev.type})\nContenido completo: ${ev.content}`;
   history.push({role:'user', content:judgePrompt});
+  afterEvidencePresented(); // en móvil: vuelve al chat
   setEnabled(false); showTyping(true);
   const resp = await callJudge();
   showTyping(false); setEnabled(true);
-  if(resp){ addMsg('judge','⚖️ Magistrado',resp); history.push({role:'assistant',content:resp}); }
+  if(resp){ addMsg('judge','⚖️ Magistrado',resp); history.push({role:'assistant',content:resp}); notifyMobilePruebas(); }
 }
 
 /* ═══════════════════════ ALEGACIÓN LIBRE ═══════════════════════ */
@@ -1324,6 +1427,71 @@ function setEnabled(on){
 
 function handleKey(e){
   if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); submitFree(); }
+}
+
+/* ═══════════════════════ MÓVIL — PESTAÑAS ═══════════════════════ */
+const isMobile = () => window.innerWidth <= 800;
+
+function initMobileTabs(){
+  if(!isMobile()) return;
+  document.getElementById('mobile-tabs').style.display = 'flex';
+}
+
+function switchTab(tab){
+  if(!isMobile()) return;
+
+  // Resetear tabs
+  document.querySelectorAll('.mobile-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(`tab-${tab}`).classList.add('active');
+
+  const sidebar  = document.getElementById('sidebar-left');
+  const overlay  = document.getElementById('sidebar-overlay');
+
+  if(tab === 'pruebas' || tab === 'expediente'){
+    // Abrir el panel lateral — scroll al área correcta
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+
+    // Scroll al expediente o a las pruebas dentro del mismo panel
+    if(tab === 'expediente'){
+      const dossier = document.getElementById('dossier-body');
+      if(dossier) dossier.scrollIntoView({behavior:'smooth', block:'start'});
+    } else {
+      const evidences = document.getElementById('evidences-scroll');
+      if(evidences) evidences.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    // Quitar badge de pruebas al abrirlas
+    document.getElementById('tab-pruebas-badge').classList.remove('show');
+  } else {
+    // Pestaña juicio — cerrar panel
+    closeSidebar();
+    document.getElementById('tab-juicio').classList.add('active');
+    // Scroll al final del transcript
+    const tr = document.getElementById('transcript');
+    if(tr) tr.scrollTop = tr.scrollHeight;
+  }
+}
+
+function closeSidebar(){
+  document.getElementById('sidebar-left').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+// Cuando llega un mensaje del juez en móvil, avisar con badge en pestaña pruebas
+function notifyMobilePruebas(){
+  if(!isMobile()) return;
+  const activeTab = document.querySelector('.mobile-tab.active');
+  if(activeTab && activeTab.id !== 'tab-pruebas'){
+    document.getElementById('tab-pruebas-badge').classList.add('show');
+  }
+}
+
+// Cerrar sidebar al presentar una prueba (volver al juicio)
+function afterEvidencePresented(){
+  if(isMobile()){
+    closeSidebar();
+    switchTab('juicio');
+  }
 }
 
 /* ═══════════════════════ INIT ═══════════════════════ */
