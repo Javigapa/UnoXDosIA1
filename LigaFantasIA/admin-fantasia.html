@@ -178,6 +178,7 @@
       <button class="atab" onclick="showPanel('puntos',this)">📊 Puntos</button>
       <button class="atab" onclick="showPanel('cronicas',this)">📰 Crónicas</button>
       <button class="atab" onclick="showPanel('resultados',this)">⚽ Resultados</button>
+      <button class="atab" onclick="showPanel('clasificacion',this)">🏆 Clasificación</button>
       <button class="atab" onclick="showPanel('mercado',this)">💰 Mercado</button>
       <button class="atab" onclick="showPanel('xi',this)">⚽ XI Ideal</button>
       <button class="atab" onclick="showPanel('analisis',this)">🔍 Análisis</button>
@@ -453,6 +454,41 @@
           <button class="copy-html-btn" onclick="copyOutput('code-jornadas')">📋 Copiar HTML</button>
         </div>
         <div class="output-code" id="code-jornadas"></div>
+      </div>
+    </div>
+
+
+    <!-- ===== PANEL: CLASIFICACIÓN ===== -->
+    <div class="panel" id="panel-clasificacion">
+      <div class="panel-title">🏆 Clasificación</div>
+      <div class="panel-desc">Introduce los datos actualizados. El HTML generado son solo las <strong>filas</strong> de cada tabla — pégalas directamente dentro del <code>&lt;tbody&gt;</code> correspondiente en fantas-ia-v2.html.</div>
+
+      <div class="card">
+        <div class="card-title">🤖 Ranking IAs</div>
+        <p style="font-size:.82rem;color:var(--gray);margin-bottom:.8rem;">Una IA por línea: <code>NombreIA | Empresa | Jornadas | Puntos | MejorJornada</code></p>
+        <textarea id="clas-ias" rows="8" style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:6px;padding:.7rem .9rem;color:var(--white);font-family:'Share Tech Mono',monospace;font-size:.8rem;resize:vertical;" placeholder="ChatGPT | OpenAI | 1 | 47 | 47&#10;Gemini | Google DeepMind | 1 | 43 | 43&#10;Claude | Anthropic | 1 | 41 | 41&#10;Copilot | Microsoft | 1 | 38 | 38&#10;Grok | xAI | 1 | 35 | 35&#10;Perplexity | Perplexity AI | 1 | 32 | 32&#10;Mistral | Mistral AI | 1 | 29 | 29"></textarea>
+        <button onclick="generarFilasIAs()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.6rem 1.4rem;border:none;border-radius:6px;cursor:pointer;margin-top:.4rem;">📋 Generar filas IAs</button>
+        <div class="output-section" id="out-clas-ias" style="display:none;margin-top:.8rem;">
+          <div class="output-header">
+            <div class="output-title">✅ Pega estas filas dentro del <code>&lt;tbody id="ia-ranking-body"&gt;</code> en fantas-ia-v2.html</div>
+            <button class="copy-html-btn" onclick="copyOutput('code-clas-ias')">📋 Copiar</button>
+          </div>
+          <div class="output-code" id="code-clas-ias"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏟️ Clasificación Equipos</div>
+        <p style="font-size:.82rem;color:var(--gray);margin-bottom:.8rem;">Un equipo por línea: <code>Nombre | Emoji | PJ | G | E | P | GF | GC</code> (los Pts se calculan solos: G×3+E)</p>
+        <textarea id="clas-equipos" rows="9" style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:6px;padding:.7rem .9rem;color:var(--white);font-family:'Share Tech Mono',monospace;font-size:.8rem;resize:vertical;" placeholder="Realidad Virtual F.C. | 💻 | 1 | 1 | 0 | 0 | 3 | 1&#10;Sintéticos F.C. | 🧬 | 1 | 1 | 0 | 0 | 4 | 2&#10;Metrópoli S.C. | 🏙️ | 1 | 0 | 1 | 0 | 1 | 1&#10;Nómadas United | 🌍 | 1 | 0 | 1 | 0 | 1 | 1&#10;Atlético Campero | 🌾 | 1 | 0 | 0 | 1 | 0 | 2&#10;Cemento Armónico C.F. | 🏗️ | 1 | 0 | 0 | 1 | 0 | 2&#10;Los Infrapagados | 💸 | 1 | 1 | 0 | 0 | 3 | 1&#10;Nebulosa F.C. | 🌫️ | 1 | 0 | 0 | 1 | 1 | 3"></textarea>
+        <button onclick="generarFilasEquipos()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.6rem 1.4rem;border:none;border-radius:6px;cursor:pointer;margin-top:.4rem;">📋 Generar filas Equipos</button>
+        <div class="output-section" id="out-clas-equipos" style="display:none;margin-top:.8rem;">
+          <div class="output-header">
+            <div class="output-title">✅ Pega estas filas dentro del <code>&lt;tbody id="teams-ranking-body"&gt;</code> en fantas-ia-v2.html</div>
+            <button class="copy-html-btn" onclick="copyOutput('code-clas-equipos')">📋 Copiar</button>
+          </div>
+          <div class="output-code" id="code-clas-equipos"></div>
+        </div>
       </div>
     </div>
 
@@ -843,45 +879,10 @@ const LIGA = {
 
   teamById(id){ return LIGA.TEAMS.find(t=>t.id===id); },
 
-  // ======= Persistencia via PHP (Sincronización real) =======
+  // ======= Persistencia solo localStorage (datos de sesión) =======
+  save(key,val){ if(!LIGA._cache)LIGA._cache={}; LIGA._cache[key]=val; try{ localStorage.setItem('fantasia_'+key, JSON.stringify(val)); }catch(e){} },
+  load(key,def){ if(LIGA._cache&&LIGA._cache[key]!==undefined)return LIGA._cache[key]; try{ const v=localStorage.getItem('fantasia_'+key); return v?JSON.parse(v):def; }catch(e){ return def; } },
   _cache: null,
-  _apiUrl: '/LigaFantasIA/guardar.php',
-
-  save(key, val) {
-    if (!LIGA._cache) LIGA._cache = {};
-    LIGA._cache[key] = val;
-    try { localStorage.setItem('fantasia_' + key, JSON.stringify(val)); } catch(e) {}
-  },
-
-  saveAll(callback) {
-    if (!LIGA._cache) LIGA._cache = {};
-    fetch(LIGA._apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(LIGA._cache)
-    })
-    .then(r => r.json())
-    .then(res => { if(callback) callback(null, res); })
-    .catch(err => { if(callback) callback(err); });
-  },
-
-  load(key, def) {
-    if (LIGA._cache && LIGA._cache[key] !== undefined) return LIGA._cache[key];
-    try {
-      const v = localStorage.getItem('fantasia_' + key);
-      return v ? JSON.parse(v) : def;
-    } catch(e) { return def; }
-  },
-
-  loadFromServer(callback) {
-    fetch(LIGA._apiUrl + '?t=' + Date.now())
-      .then(r => r.json())
-      .then(data => {
-        LIGA._cache = data;
-        if (callback) callback();
-      })
-      .catch(err => { if (callback) callback(); });
-  }
 
 };
 
@@ -1563,17 +1564,13 @@ function renderMercadoForm(){
 }
 
 function saveMercado(){
-  const sorteo = LIGA.load('sorteo', {});
-  const budgets = LIGA.load('budgets', {});
-  const masterPlayers = getAllPlayers(); // Referencia de todos los jugadores con sus stats
-
   // Resolver: ganador = mayor puja
   const results=mercadoJugadores.map(j=>{
     const precioBase=parseFloat(j.precio)||0;
     let maxPuja=precioBase,winner=null;
     Object.entries(j.pujas||{}).forEach(([iaId,puja])=>{
       const v=(puja===null||puja===undefined||puja==='')?0:parseFloat(puja)||0;
-      if(v >= maxPuja && v > 0){maxPuja=v;winner=iaId;}
+      if(v>maxPuja){maxPuja=v;winner=iaId;}
     });
     const montoGanador=winner?maxPuja:0;
     return{
@@ -1587,56 +1584,25 @@ function saveMercado(){
     };
   });
 
+  // Actualizar presupuestos
+  const budgets=LIGA.load('budgets',{});
   results.forEach(r=>{
-    // 1. Procesar Ventas (La IA vendedora pierde al jugador y gana dinero)
-    if (r.origen === 'ia' && r.iaOrigenId) {
-      const sellerId = r.iaOrigenId;
-      if (sorteo[sellerId]) {
-        sorteo[sellerId] = sorteo[sellerId].filter(p => p.name !== r.jugador);
-      }
-      // Si se vendió, sumamos el dinero al vendedor
-      if (r.ganadorIAId) {
-        budgets[sellerId] = (budgets[sellerId] || 0) + r.montoGanador;
-      }
-    }
-
-    // 2. Procesar Compras (La IA ganadora pierde dinero y gana al jugador)
-    if (r.ganadorIAId) {
-      const winnerId = r.ganadorIAId;
-      budgets[winnerId] = Math.max(0, (budgets[winnerId] || 100) - r.montoGanador);
-
-      // Buscar datos completos del jugador (stats) para añadirlo a la plantilla
-      const pData = masterPlayers.find(mp => mp.name === r.jugador) || { name: r.jugador };
-      if (!sorteo[winnerId]) sorteo[winnerId] = [];
-      
-      // Evitar duplicados y añadir
-      if (!sorteo[winnerId].some(p => p.name === r.jugador)) {
-        sorteo[winnerId].push({ ...pData, price: r.montoGanador + 'M' });
-      }
+    if(r.ganadorIAId){
+      const iaId=r.ganadorIAId;
+      budgets[iaId]=Math.max(0,(budgets[iaId]||100)-r.montoGanador);
     }
   });
-
-  // Guardar todo
-  LIGA.save('sorteo', sorteo);
-  LIGA.save('budgets', budgets);
+  LIGA.save('budgets',budgets);
   LIGA.save('mercado_jugadores',mercadoJugadores);
   LIGA.save('mercado_results',results);
 
-  // Actualizar estado global para la web
-  const state = LIGA.load('state', {});
-  state.sorteo = sorteo;
-  state.budgets = budgets;
-  LIGA.save('state', state);
-
-  toast('✅ Mercado aplicado. ' + results
+  toast('✅ Mercado resuelto. '+ results
     .filter(r=>r.ganadorIAId)
     .map(r=>{
       const ia=LIGA.IAS.find(ia=>ia.id===r.ganadorIAId);
       return `${r.jugador}→${ia?.name||r.ganadorIAId}`;
     })
     .join(', '));
-    
-  renderSorteo(); // Refrescar la vista previa en el panel de admin
 }
 
 
@@ -1672,22 +1638,13 @@ function parsePriceMillion(priceStr){
 function generarHTMLSorteo(){
   const sorteo=LIGA.load('sorteo',{});
   const budgets=LIGA.load('budgets',{});
-  const state=LIGA.load('state',{});
   if(!Object.keys(sorteo).length){toast('Primero realiza el sorteo','#e53935');return;}
   const html=LIGA.IAS.map(ia=>{
     const players=sorteo[ia.id]||[];
     const budget=(budgets[ia.id]||100).toFixed(1);
     const rows=players.map((p,i)=>{
-      const ovr=LIGA.calcOVR(p);
-      const name = p.name || '';
-      let pts = 0;
-      if(state.puntos){
-        Object.values(state.puntos).forEach(jMap => {
-          if(jMap && jMap[ia.id+'_'+name]) pts += (jMap[ia.id+'_'+name].dado||0) + (jMap[ia.id+'_'+name].cronica||0);
-        });
-      }
-      const s = (v) => (v===undefined||v===null||v==='') ? '—' : v;
-      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">${i+1}</td><td style="font-weight:600">${esc(name)}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">${esc(p.pos||'—')}</span></td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">${ovr}</td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#ffd700;text-align:center;font-weight:700">${pts}</td><td style="text-align:center;color:#90a4ae">${s(p.pot)}</td><td style="text-align:center;color:#90a4ae">${s(p.cal)}</td><td style="text-align:center;color:#90a4ae">${s(p.vel)}</td><td style="text-align:center;color:#90a4ae">${s(p.vis)}</td><td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right">${esc(p.price||'—')}</td></tr>`;
+      const ovr=Math.round(((p.pot||70)+(p.cal||70)+(p.vel||70)+(p.vis||70))/4);
+      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">${i+1}</td><td style="font-weight:600">${esc(p.name)}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">${esc(p.pos||'—')}</span></td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">${ovr}</td><td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right">${esc(p.price||'—')}</td></tr>`;
     }).join('');
     return `<div class="sorteo-card">
   <div class="sorteo-card-head">
@@ -1695,8 +1652,8 @@ function generarHTMLSorteo(){
     <div class="sorteo-card-budget">${ia.company} · 💰 Restante: ${budget}M</div>
   </div>
   <div class="table-wrap"><table class="sorteo-table">
-    <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th>Pts</th><th>POT</th><th>CAL</th><th>VEL</th><th>VIS</th><th style="text-align:right">💶 Precio</th></tr></thead>
-    <tbody>${rows||'<tr><td colspan="10" style="color:#78909c;text-align:center;padding:1rem">Sin jugadores</td></tr>'}</tbody>
+    <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th style="text-align:right">💶 Precio</th></tr></thead>
+    <tbody>${rows||'<tr><td colspan="5" style="color:#78909c;text-align:center;padding:1rem">Sin jugadores</td></tr>'}</tbody>
   </table></div>
 </div>`;
   }).join('');
@@ -1813,21 +1770,12 @@ function generarHTMLSorteoInterno(){
   // Igual que generarHTMLSorteo pero muestra en el output de "tras mercado"
   const sorteo=LIGA.load('sorteo',{});
   const budgets=LIGA.load('budgets',{});
-  const state=LIGA.load('state',{});
   const html=LIGA.IAS.map(ia=>{
     const players=sorteo[ia.id]||[];
     const budget=(budgets[ia.id]||100).toFixed(1);
     const rows=players.map((p,i)=>{
-      const ovr=LIGA.calcOVR(p);
-      const name = p.name || '';
-      let pts = 0;
-      if(state.puntos){
-        Object.values(state.puntos).forEach(jMap => {
-          if(jMap && jMap[ia.id+'_'+name]) pts += (jMap[ia.id+'_'+name].dado||0) + (jMap[ia.id+'_'+name].cronica||0);
-        });
-      }
-      const s = (v) => (v===undefined||v===null||v==='') ? '—' : v;
-      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">${i+1}</td><td style="font-weight:600">${esc(name)}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">${esc(p.pos||'—')}</span></td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">${ovr}</td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#ffd700;text-align:center;font-weight:700">${pts}</td><td style="text-align:center;color:#90a4ae">${s(p.pot)}</td><td style="text-align:center;color:#90a4ae">${s(p.cal)}</td><td style="text-align:center;color:#90a4ae">${s(p.vel)}</td><td style="text-align:center;color:#90a4ae">${s(p.vis)}</td><td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right">${esc(p.price||'—')}</td></tr>`;
+      const ovr=Math.round(((p.pot||70)+(p.cal||70)+(p.vel||70)+(p.vis||70))/4);
+      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">${i+1}</td><td style="font-weight:600">${esc(p.name)}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">${esc(p.pos||'—')}</span></td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">${ovr}</td><td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right">${esc(p.price||'—')}</td></tr>`;
     }).join('');
     return `<div class="sorteo-card">
   <div class="sorteo-card-head">
@@ -1835,8 +1783,8 @@ function generarHTMLSorteoInterno(){
     <div class="sorteo-card-budget">${ia.company} · 💰 Restante: ${budget}M</div>
   </div>
   <div class="table-wrap"><table class="sorteo-table">
-    <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th>Pts</th><th>POT</th><th>CAL</th><th>VEL</th><th>VIS</th><th style="text-align:right">💶 Precio</th></tr></thead>
-    <tbody>${rows||'<tr><td colspan="10" style="color:#78909c;text-align:center;padding:1rem">Sin jugadores</td></tr>'}</tbody>
+    <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th style="text-align:right">💶 Precio</th></tr></thead>
+    <tbody>${rows||'<tr><td colspan="5" style="color:#78909c;text-align:center;padding:1rem">Sin jugadores</td></tr>'}</tbody>
   </table></div>
 </div>`;
   }).join('');
@@ -1897,6 +1845,47 @@ function generarHTMLAnalisis(){
 </div>`;
   showOutput('out-analisis','code-analisis',html);
   toast('✅ Análisis generado');
+}
+
+
+// ── CLASIFICACIÓN: filas por separado ──
+function generarFilasIAs(){
+  const lineas = document.getElementById('clas-ias').value.trim().split('\n').filter(Boolean);
+  if(!lineas.length){ toast('Introduce datos de IAs','#e53935'); return; }
+  const filas = lineas.map((l,i) => {
+    const p = l.split('|').map(s=>s.trim());
+    const name=p[0]||'—', comp=p[1]||'—', j=p[2]||0, pts=p[3]||0, mejor=p[4]||0;
+    const ia = LIGA.IAS.find(x=>x.name.toLowerCase()===name.toLowerCase()) || {emoji:'🤖',color:'#4caf50'};
+    const pc = i===0?'pos-1':i===1?'pos-2':i===2?'pos-3':'pos-n';
+    return '<tr><td><span class="pos-badge '+pc+'">'+(i+1)+'</span></td>'
+      +'<td><strong>'+ia.emoji+' '+esc(name)+'</strong></td>'
+      +'<td style="color:var(--gray);font-size:.85rem">'+esc(comp)+'</td>'
+      +'<td>'+j+'</td>'
+      +'<td class="pts">'+pts+'</td>'
+      +'<td style="color:var(--green-light)">'+mejor+'</td></tr>';
+  }).join('');
+  showOutput('out-clas-ias','code-clas-ias', filas);
+  toast('✅ Filas IAs generadas');
+}
+
+function generarFilasEquipos(){
+  const lineas = document.getElementById('clas-equipos').value.trim().split('\n').filter(Boolean);
+  if(!lineas.length){ toast('Introduce datos de equipos','#e53935'); return; }
+  const filas = lineas.map((l,i) => {
+    const p = l.split('|').map(s=>s.trim());
+    const name=p[0]||'—', emj=p[1]||'⚽', pj=parseInt(p[2])||0,
+          g=parseInt(p[3])||0, e=parseInt(p[4])||0, per=parseInt(p[5])||0,
+          gf=parseInt(p[6])||0, gc=parseInt(p[7])||0;
+    const pts = g*3 + e;
+    const pc = i===0?'pos-1':i===1?'pos-2':i===2?'pos-3':'pos-n';
+    return '<tr><td><span class="pos-badge '+pc+'">'+(i+1)+'</span></td>'
+      +'<td><strong>'+emj+' '+esc(name)+'</strong></td>'
+      +'<td>'+pj+'</td><td>'+g+'</td><td>'+e+'</td><td>'+per+'</td>'
+      +'<td>'+gf+'</td><td>'+gc+'</td>'
+      +'<td class="pts">'+pts+'</td></tr>';
+  }).join('');
+  showOutput('out-clas-equipos','code-clas-equipos', filas);
+  toast('✅ Filas Equipos generadas');
 }
 
 </script>

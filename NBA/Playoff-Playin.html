@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());""
+
+  gtag('config', 'G-90WQKBTXN3');''
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Predicciones deportivas generadas por IA, ¿Que IA es mejor?"/>
+  <title>Predicciones Noche Playoffs / Play-in Uno X Dos IA</title>
+  <link rel="stylesheet" href="/index.css">
+    <link rel="icon" href="/Imagenes/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #c1731f;
+    }
+    /* Estilos específicos para la página de artículo */
+    .article-container {
+      max-width: 1000px;
+      /* Aumentamos el ancho para que las 3 columnas quepan bien */
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #cf914e;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .article-container h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 2.2em;
+    }
+    .article-meta {
+      color: #7f8c8d;
+      font-style: italic;
+      margin-bottom: 25px;
+      display: block;
+    }
+    .PartidosDelDia {
+      color: black;
+      font-size: 1.2em;
+      text-align: center;
+    }
+    /* Contenedor de las Tres Columnas (Para el ANÁLISIS) */
+    .tres-columnas {
+      display: grid;
+      /* Define 3 columnas de igual ancho */
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      /* Espacio entre las columnas */
+      margin: 30px 0;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+    /* Contenedor de las Dos Columnas (CLAVE para RESULTADOS) */
+    .dos-columnas {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* Define 2 columnas de igual ancho */
+      gap: 15px;
+      /* Reducimos el gap para ganar espacio */
+      margin: 30px auto;
+      /* Usamos margin auto para centrar el contenedor */
+      max-width: 98%;
+      /* Le damos un ancho máximo grande */
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+
+
+    /* Estilo para los Títulos de las Columnas */
+    .col-title {
+      background-color: #34495e;
+      /* Gris Azulado */
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 0;
+      /* Asegura que no haya espacio extra sobre el contenido */
+      height: fit-content;
+      /* Se ajusta a la altura del texto */
+    }
+
+    /* Estilo para el Texto de las Columnas */
+    .col-text {
+      background-color: #ecf0f1;
+      /* Gris Claro */
+      padding: 15px;
+      border-radius: 0 0 5px 5px;
+      border: 1px solid #bdc3c7;
+      margin-top: 0;
+      /* Pega el texto al título */
+    }
+    .col-text p {
+      margin: 0;
+      line-height: 1.5;
+    }
+    /* --- Estilos para la Tabla de Resultados (7 columnas) --- */
+    .results-table-container {
+      margin: 5px auto;
+      /* Reducido para ahorrar espacio vertical */
+      width: 100%;
+      /* Ocupa el 100% de su contenedor (col-text) */
+      overflow-x: auto;
+      /* Permite desplazamiento horizontal si la tabla es muy ancha */
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      /* Une los bordes de las celdas */
+      text-align: center;
+      font-size: 1em;
+      /* Ligeramente más pequeña la fuente */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .results-table th, .results-table td {
+      padding: 6px 4px;
+      /* Reducción drástica del padding para que quepa */
+      border: 1px solid #ddd;
+      white-space: nowrap;
+    }
+
+    .results-table thead th {
+      background-color: #34495e;
+      /* Encabezado Oscuro */
+      color: white;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    /* Columna de Equipos (Primera columna) */
+    .results-table tbody tr td:first-child {
+      background-color: #ecf0f1;
+      /* Fondo claro */
+      font-weight: bold;
+      text-align: left;
+      padding-left: 8px;
+      /* Reducido */
+      color: #2c3e50;
+    }
+
+    /* Columna de Resultado Final (Columna más grande y destacada) */
+    .final-score {
+      background-color: #e74c3c;
+      /* Rojo Destacado */
+      color: white;
+      font-size: 1.2em;
+      /* Ligeramente más pequeña */
+      font-weight: 900;
+      width: 15%;
+    }
+
+    /* --- MEDIA QUERY para MOVILES: Las columnas se apilan en 1 --- */
+    @media (max-width: 768px) {
+      .tres-columnas, .dos-columnas {
+        /* Aplica a ambos tipos de columna */
+        grid-template-columns: 1fr;
+        /* Una sola columna en móvil */
+      }
+      .article-container {
+        padding: 15px;
+        /* Reducir padding en móvil */
+      }
+    }
+     nav {
+  background: rgba(19,34,56,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 8px 20px;
+  position: relative;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-hamburger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #ffffff;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  transition: background 0.2s;
+}
+
+.nav-hamburger:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.ham-icon { font-size: 1.3em; }
+.ham-label { letter-spacing: 0.5px; }
+
+.nav-menu {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  background: rgba(13,27,42,0.98);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 8px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 220px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  z-index: 200;
+}
+
+.nav-menu.open {
+  display: flex;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border-radius: 7px;
+  text-decoration: none;
+  font-size: 0.92em;
+  font-weight: 600;
+  color: #8fa3b8;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+  background: rgba(255,255,255,0.07);
+}
+
+.nav-link.active {
+  color: #00c896;
+  background: rgba(0,200,150,0.1);
+  border-color: rgba(0,200,150,0.25);
+}
+
+.nav-emoji { font-size: 1.1em; }
+  </style>
+</head>
+<body>
+
+<header style="position:relative;z-index:10;background:linear-gradient(180deg,rgba(13,27,42,0.98),rgba(13,27,42,0.85));border-bottom:1px solid rgba(0,200,150,0.2);padding:16px 24px;display:flex;align-items:center;backdrop-filter:blur(10px);">
+  <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+    <div style="width:42px;height:42px;background:linear-gradient(135deg,#00c896,#00a87d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3em;box-shadow:0 0 18px rgba(0,200,150,0.3);">⚽</div>
+    <div>
+      <span style="display:block;font-family:'Bebas Neue',sans-serif;font-size:1.5em;letter-spacing:2px;color:#ffffff;line-height:1;">UNO X DOS IA</span>
+      <small style="font-size:0.6em;color:#00c896;letter-spacing:1px;font-weight:500;">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+    </div>
+  </a>
+</header>
+
+<nav aria-label="Navegación principal">
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+    <span class="ham-icon">☰</span>
+    <span class="ham-label">Secciones</span>
+  </button>
+  <div class="nav-menu" id="navMenu">
+    <a href="../index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
+    <a href="../NBA.html"         class="nav-link active"><span class="nav-emoji">🏀</span> NBA</a>
+    <a href="../LigaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
+    <a href="../Hypermotion.html" class="nav-link "><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+    <a href="../Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+  </div>
+</nav>
+  <div class="article-container">
+    <div class="PartidosDelDia">
+<div class="col-text">
+    <h1>Playoffs / Play-in</h1>
+
+<h2>Conferencia Este</h2>
+
+<h3>Detroit Pistons</h3>
+Lo que aseguró: Un puesto en los playoffs, título de la División Central, sembrado No. 1
+<br><br>
+Los Pistons aseguraron su puesto en los playoffs tras una racha dominante en la Conferencia Este. Es la primera vez que llegan a los playoffs en años consecutivos desde que terminó una racha de ocho años en 2009. La última vez que fueron cabeza de serie en el Este fue en la temporada 2006-07.
+<br><br><br>
+
+<h3>Boston Celtics</h3>
+Lo que aseguró: Un puesto en los playoffs
+<br><br>
+Los Celtics se han asegurado un puesto en los playoffs por 12ma temporada consecutiva, la racha activa más larga de la NBA. Esta aparición en los playoffs llega solo dos temporadas después de que los Celtics ganaran las Finales de la NBA de 2024 contra los Dallas Mavericks, consiguiendo el 18vo campeonato de la franquicia.
+<br><br><br>
+
+<h3>New York Knicks</h3>
+Lo que aseguró: Un puesto en los playoffs
+<br><br>
+Nueva York no ha ganado un campeonato de la NBA desde 1973 y no ha llegado a las Finales de la NBA desde 1999. Los Knicks estuvieron cerca la temporada pasada, cuando se enfrentaron a los Indiana Pacers en las finales de la Conferencia Este.
+<br><br><br>
+
+<h3>Cleveland Cavaliers</h3>
+Lo que aseguró: Un puesto en los playoffs
+<br><br>
+Cleveland participará en la postemporada por cuarto año consecutivo, su racha más larga sin LeBron James desde la década de 1990.
+<br><br><br>
+
+<h3>Toronto Raptors</h3>
+Lo que aseguró: Al menos un puesto en el torneo play-in
+<br><br>
+Toronto participará al menos en el torneo play-in. Los Raptors no han llegado a los playoffs desde 2022.
+<br><br><br>
+
+<h3>Atlanta Hawks</h3>
+Lo que aseguró: Al menos un puesto en el torneo play-in
+<br><br>
+Atlanta ha participado en el torneo play-in todos los años desde 2022, pero no logró avanzar en 2024 ni en 2025.
+<br><br><br>
+
+<h3>Philadelphia 76ers</h3>
+Lo que aseguró: Al menos un puesto en el torneo play-in
+<br><br>
+Tras perderse los playoffs el año pasado, los 76ers regresarán a la postemporada. Filadelfia aún busca avanzar más allá de la segunda ronda por primera vez desde 2001.
+<br><br><br>
+
+<h3>Orlando Magic</h3>
+Lo que aseguró: Al menos un puesto en el torneo play-in
+<br><br>
+Orlando ha llegado a los playoffs en las últimas dos temporadas, pero no logró ganar ninguna serie.
+<br><br><br>
+
+<h3>Miami Heat</h3>
+Lo que aseguró: Un puesto en el torneo play-in (no pueden clasificar directamente para los playoffs)
+<br><br>
+En 2023, Miami se convirtió en el primer equipo en avanzar desde el torneo play-in hasta las Finales de la NBA. El Heat ha participado en el play-in las últimas tres temporadas.
+<br><br><br>
+
+<h3>Charlotte Hornets</h3>
+Lo que aseguró: Un puesto en el torneo play-in (no pueden clasificar directamente para los playoffs)
+<br><br>
+Esta será la primera vez desde 2022 que Charlotte participa en la postemporada. Los Hornets tienen un record de 0-2 en partidos de play-in y no han llegado a los playoffs desde 2016.
+<br><br><br>
+
+<h2>Conferencia Oeste</h2>
+
+<h3>Oklahoma City Thunder</h3>
+Lo que aseguró: Un puesto en los playoffs; sembrado No. 1, título de la División Noroeste
+<br><br>
+El Oklahoma City Thunder se convirtió en el primer equipo en asegurar al menos un puesto en la postemporada de la NBA el 1 de marzo con una victoria sobre los Dallas Mavericks. El equipo Thunder de la temporada pasada se aseguró el primer puesto en la Conferencia Oeste antes de luchar por los playoffs y ganar las Finales de la NBA. Oklahoma City busca convertirse en el primer campeón consecutivo desde los Golden State Warriors de 2017-18.
+<br><br><br>
+
+<h3>San Antonio Spurs</h3>
+Lo que aseguró: Un puesto en los playoffs; sembrado No. 2, título de la División Suroeste
+<br><br>
+Los San Antonio Spurs no pueden terminar peor que segundos en la Conferencia Oeste. La temporada 2018-19 fue la última vez que San Antonio llegó a los playoffs, terminando como séptimo clasificado antes de perder en la primera ronda contra los Denver Nuggets.
+<br><br><br>
+
+<h3>Los Angeles Lakers</h3>
+Lo que aseguró: Un puesto en los playoffs, título de la División Pacífico
+<br><br>
+Los Lakers también se han asegurado al menos un puesto en el play-in. Esta será la 19na aparición de LeBron James en la postemporada en sus 23 años de carrera.
+<br><br><br>
+
+<h3>Denver Nuggets</h3>
+Lo que aseguró: Un puesto en los playoffs
+<br><br>
+Los Nuggets han asegurado su octava clasificación consecutiva para los playoffs. Esto ocurre tres temporadas después de que los Nuggets y Nikola Jokic ganaran las Finales de la NBA de 2023 contra el Miami Heat en cinco partidos.
+<br><br><br>
+
+<h3>Houston Rockets</h3>
+Lo que aseguró: Un puesto en los playoffs
+<br><br>
+Esta será la 14ta aparición en postemporada para Kevin Durant y la primera en Houston.
+<br><br><br>
+
+<h3>Minnesota Timberwolves</h3>
+Lo que aseguró: Un puesto en los playoffs
+<br><br>
+Los Timberwolves buscarán regresar a las finales de la Conferencia Oeste por tercera vez consecutiva, tras ser eliminados por el Thunder y los Mavericks en las dos postemporadas anteriores.
+<br><br><br>
+
+<h3>Phoenix Suns</h3>
+Lo que aseguró: Al menos un puesto en el torneo play-in
+<br><br>
+Los Suns llegaron por última vez a las Finales de la NBA en 2021, cuando se enfrentaron a los Milwaukee Bucks y perdieron en seis partidos a pesar de ir ganando la serie 2-0.
+<br><br><br>
+
+<h3>LA Clippers</h3>
+Lo que aseguró: Un puesto en el torneo play-in (no pueden clasificar directamente para los playoffs)
+<br><br>
+La única aparición de los Clippers en el play-in fue en 2022, cuando perdieron 0-2 y se quedaron fuera de los playoffs por segunda vez en las últimas 14 temporadas.
+<br><br><br>
+
+<h3>Portland Trail Blazers</h3>
+Lo que aseguró: Un puesto en el torneo play-in (no pueden clasificar directamente para los playoffs)
+<br><br>
+Portland no ha llegado a los playoffs desde 2021. En 2020, los Blazers vencieron a los Grizzlies en el primer partido de play-in de la historia, disputado en la burbuja de la NBA.
+<br><br><br>
+
+<h3>Golden State Warriors</h3>
+Lo que aseguró: Un puesto en el torneo play-in como el sembrado No. 10
+<br><br>
+Los Warriors han participado en tres ocasiones en el play-in, perdiendo dos partidos en 2021 y uno en 2024, antes de ganar en 2025 y avanzar a los playoffs.
+<br><br><br>
+
+<p>Fuente: © ESPN</p>    </p>
+    </div>
+  </div>
+  </div>
+    <div class="volver">
+      <p>
+        <a href="../NBA.html">← Volver a la página principal de NBA</a>
+      </p>
+    </div>
+  </div>
+<footer style="background:rgba(13,27,42,0.9);border-top:1px solid rgba(255,255,255,0.05);text-align:center;padding:18px;font-size:0.78em;color:#8fa3b8;margin-top:60px;">
+  <p>© 2025 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
+  <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com" style="color:#8fa3b8;">Contacto</a></p>
+</footer>
+  <script>
+    function toggleDropdown() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Cierra el menú si el usuario hace clic fuera de él
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+        function toggleNav() {
+  const menu = document.getElementById('navMenu');
+  menu.classList.toggle('open');
+}
+
+// Cierra al hacer clic fuera
+document.addEventListener('click', function(e) {
+  const nav = document.querySelector('nav');
+  if (!nav.contains(e.target)) {
+    document.getElementById('navMenu').classList.remove('open');
+  }
+});
+
+// Cierra al navegar
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navMenu').classList.remove('open');
+  });
+});
+  </script>
+</body>
+</html>
