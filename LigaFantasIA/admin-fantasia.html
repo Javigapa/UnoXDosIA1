@@ -354,6 +354,13 @@
         <button class="btn-save-puntos" onclick="savePuntos()" style="margin-top:0;">💾 Guardar en sesión</button>
         <button onclick="generarHTMLPuntos()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.7rem 1.5rem;border:none;border-radius:6px;cursor:pointer;">📋 Generar HTML</button>
       </div>
+      <div class="output-section" id="out-puntos-manual" style="display:none;margin-top:1rem;">
+        <div class="output-header">
+          <div class="output-title">✅ Pega en <code>fantas-ia-v2.html</code> donde dice <code>&lt;!-- PUNTOS_HTML --&gt;</code></div>
+          <button class="copy-html-btn" onclick="copyOutput('code-puntos-manual')">📋 Copiar HTML</button>
+        </div>
+        <div class="output-code" id="code-puntos-manual"></div>
+      </div>
     </div>
 
     <!-- ===== PANEL: CRÓNICAS ===== -->
@@ -1280,6 +1287,14 @@ function setPosFilter(pos,btn){
   renderPuntosTable();
 }
 
+function updateRowTotal(el){
+  const tr = el.closest('tr');
+  const d = parseInt(tr.querySelector('[data-type="dado"]').value) || 0;
+  const c = parseInt(tr.querySelector('[data-type="cronica"]').value) || 0;
+  const totalEl = tr.querySelector('.row-total');
+  if(totalEl) totalEl.textContent = d + c;
+}
+
 function renderPuntosTable(){
   const jornada=document.getElementById('puntos-jornada-sel').value;
   const iaFilter=document.getElementById('puntos-ia-sel').value;
@@ -1308,12 +1323,13 @@ function renderPuntosTable(){
       <td style="font-size:.82rem;color:${ia.color}">${ia.emoji} ${ia.name}</td>
       <td><span class="pos-tag pos-${p.pos}">${p.pos}</span></td>
       <td><span class="${ovrClass(ovr)} ovr-badge">${ovr}</span></td>
-      <td style="font-family:Share Tech Mono,monospace;color:var(--gold)">${d}</td>
-      <td style="font-family:Share Tech Mono,monospace;color:var(--green-bright)">${c}</td>
-      <td style="font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;color:var(--gold)">${d+c}</td>
       <td>
-        <input type="number" class="puntos-input" data-key="${key}" data-type="total" value="${d+c}" min="0" max="99"/>
+        <input type="number" class="puntos-input" data-key="${key}" data-type="dado" value="${d}" min="0" max="9" oninput="updateRowTotal(this)"/>
       </td>
+      <td>
+        <input type="number" class="puntos-input" data-key="${key}" data-type="cronica" value="${c}" min="0" max="9" oninput="updateRowTotal(this)"/>
+      </td>
+      <td style="font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;color:var(--gold)" class="row-total">${d+c}</td>
     </tr>
   `).join('');
 }
@@ -1325,11 +1341,13 @@ function savePuntos(){
   if(!state.puntos)state.puntos={};
   if(!state.puntos[jornada])state.puntos[jornada]={};
 
-  document.querySelectorAll('[data-type="total"]').forEach(input=>{
-    const key=input.dataset.key;
-    const val=parseInt(input.value)||0;
-    if(!state.puntos[jornada][key])state.puntos[jornada][key]={dado:0,cronica:0};
-    state.puntos[jornada][key].dado=val; // guardamos todo en dado por simplicidad
+  // Recoger todos los valores actuales de la tabla (más robusto contra comillas en nombres)
+  document.querySelectorAll('.puntos-input').forEach(input => {
+    const key = input.dataset.key;
+    const type = input.dataset.type; // 'dado' o 'cronica'
+    const val = parseInt(input.value) || 0;
+    if(!state.puntos[jornada][key]) state.puntos[jornada][key] = {dado:0, cronica:0};
+    state.puntos[jornada][key][type] = val;
   });
 
   // Recalcular totales por IA
@@ -1679,12 +1697,12 @@ function generarHTMLPuntos(){
       const cr=(puntos[key]?.cronica)||0;
       const t=d+cr; total+=t;
       const ovr=Math.round(((p.pot||70)+(p.cal||70)+(p.vel||70)+(p.vis||70))/4);
-      return `<tr><td style="font-weight:600">${esc(p.name)}</td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">${ovr}</td><td style="text-align:center;color:#4caf50;font-family:Oswald,sans-serif;font-weight:700">${d}</td><td style="text-align:center;color:#ffa726;font-family:Oswald,sans-serif;font-weight:700">${cr||'—'}</td><td style="text-align:center;color:#ffd700;font-family:Oswald,sans-serif;font-size:1.05rem;font-weight:700">${t}</td></tr>`;
+      return `<tr><td style="font-weight:600">${esc(p.name)}</td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center"><span style="font-size:.72rem;font-weight:600;padding:.1rem .35rem;border-radius:3px;background:rgba(76,175,80,.1);color:#81c784">${esc(p.pos||'—')}</span> ${ovr}</td><td style="text-align:center;color:#4caf50;font-family:Oswald,sans-serif;font-weight:700;font-size:1rem">${d}</td><td style="text-align:center;color:#ffa726;font-family:Oswald,sans-serif;font-weight:700;font-size:1rem">${cr||'0'}</td><td style="text-align:center;color:#ffd700;font-family:Oswald,sans-serif;font-size:1.1rem;font-weight:700">${t}</td></tr>`;
     }).join('');
     return `<div class="sorteo-card" style="border-top:3px solid ${ia.color}">
   <div class="sorteo-card-head">
     <div class="sorteo-card-title" style="color:${ia.color}">${ia.emoji} ${ia.name}</div>
-    <div class="sorteo-card-budget">Jornada ${esc(jornada)} · Total: <strong style="color:#ffd700;font-size:1.1rem">${total} pts</strong></div>
+    <div class="sorteo-card-budget">Jornada ${esc(jornada)} · 💰 Total IA: <strong style="color:#ffd700;font-size:1.1rem">${total} pts</strong></div>
   </div>
   <div class="table-wrap"><table class="sorteo-table">
     <thead><tr><th>Jugador</th><th style="text-align:center">OVR</th><th style="text-align:center">Dado</th><th style="text-align:center">+Crónica</th><th style="text-align:center">Total</th></tr></thead>
@@ -1693,9 +1711,11 @@ function generarHTMLPuntos(){
 </div>`;
   }).join('');
 
-  // Mostrar en ambos posibles output boxes
-  showOutput('out-puntos-dados','code-puntos',html);
-  document.getElementById('out-puntos-dados').style.display='block';
+  // Mostrar en el panel activo (Dados o Puntos Manuales)
+  const isDados = document.getElementById('panel-dados').classList.contains('active');
+  const outId = isDados ? 'out-puntos-dados' : 'out-puntos-manual';
+  const codeId = isDados ? 'code-puntos' : 'code-puntos-manual';
+  showOutput(outId, codeId, html);
   toast('✅ HTML de puntos generado');
 }
 
