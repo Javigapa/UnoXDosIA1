@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-90WQKBTXN3');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Clasificación NBA Temporada Regular 2025-26 y Bracket de Playoffs. Conferencia Este y Oeste. Uno X Dos IA."/>
+  <title>Clasificación NBA 2025-26 | Uno X Dos IA</title>
+  <link rel="stylesheet" href="/index.css">
+  <link rel="icon" href="/Imagenes/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:    #0d1b2a;
+      --accent:  #00c896;
+      --accent2: #ff6b35;
+      --gold:    #f0c040;
+      --white:   #ffffff;
+      --text:    #e8ecf0;
+      --muted:   #8fa3b8;
+      --card-bg: rgba(255,255,255,0.05);
+      --card-border: rgba(255,255,255,0.08);
+      --radius:  12px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Outfit', sans-serif;
+      --este: #4285f4;
+      --oeste: #ff6b35;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 10% 20%, rgba(66,133,244,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 90% 80%, rgba(255,107,53,0.05) 0%, transparent 60%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: rgba(19,34,56,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 8px 20px;
+      position: relative; z-index: 100;
+      display: flex; justify-content: center;
+    }
+    .nav-hamburger {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #ffffff; font-size: 1em; font-weight: 600;
+      padding: 10px 18px; border-radius: 8px; cursor: pointer;
+      font-family: var(--font-body); transition: background 0.2s;
+    }
+    .nav-hamburger:hover { background: rgba(255,255,255,0.12); }
+    .nav-menu {
+      display: none; flex-direction: column; gap: 4px;
+      background: rgba(13,27,42,0.98);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; padding: 8px;
+      position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      min-width: 220px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); z-index: 200;
+    }
+    .nav-menu.open { display: flex; }
+    .nav-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 16px; border-radius: 7px; text-decoration: none;
+      font-size: 0.92em; font-weight: 600; color: var(--muted);
+      transition: all 0.2s; border: 1px solid transparent;
+    }
+    .nav-link:hover { color: #ffffff; background: rgba(255,255,255,0.07); }
+    .nav-link.active { color: var(--accent); background: rgba(0,200,150,0.1); border-color: rgba(0,200,150,0.25); }
+    .nav-emoji { font-size: 1.1em; }
+
+    /* ── HERO ── */
+    .page-hero {
+      position: relative; z-index: 1;
+      text-align: center; padding: 50px 24px 36px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,107,53,0.12); border: 1px solid rgba(255,107,53,0.3);
+      border-radius: 50px; padding: 6px 16px;
+      font-size: 0.78em; font-weight: 700; color: var(--accent2);
+      letter-spacing: 1px; text-transform: uppercase; margin-bottom: 18px;
+    }
+    .page-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5em, 6vw, 4.5em);
+      letter-spacing: 3px; color: var(--white); line-height: 1; margin-bottom: 10px;
+    }
+    .page-hero h1 span { color: var(--accent2); }
+    .page-hero p { color: var(--muted); font-size: 0.95em; margin-top: 10px; }
+
+    /* ── WRAP ── */
+    .page-wrap {
+      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto; padding: 40px 24px 60px;
+    }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 1.8em; letter-spacing: 2px; color: var(--white);
+      margin-bottom: 6px; margin-top: 50px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-label:first-child { margin-top: 0; }
+
+    .conf-badge {
+      font-size: 0.45em; font-family: var(--font-body);
+      font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 50px; vertical-align: middle;
+    }
+    .conf-badge.este  { background: rgba(66,133,244,0.15);  color: var(--este); }
+    .conf-badge.oeste { background: rgba(255,107,53,0.15); color: var(--oeste); }
+
+    .section-sub { color: var(--muted); font-size: 0.85em; margin-bottom: 20px; }
+
+    /* ── TABLA CLASIFICACIÓN ── */
+    .standings-wrap {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      margin-bottom: 14px;
+    }
+
+    table.standings {
+      width: 100%; border-collapse: collapse;
+      min-width: 700px;
+    }
+
+    .standings thead tr {
+      background: rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .standings th {
+      padding: 11px 10px;
+      font-size: 0.7em; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--muted); text-align: center;
+      white-space: nowrap;
+    }
+    .standings th:first-child { text-align: left; padding-left: 16px; min-width: 200px; }
+
+    .standings td {
+      padding: 10px 10px;
+      font-size: 0.85em; text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      white-space: nowrap; color: var(--text);
+    }
+    .standings td:first-child { text-align: left; padding-left: 16px; }
+
+    .standings tbody tr:hover { background: rgba(255,255,255,0.03); }
+
+    /* Separador playoffs / play-in / eliminados */
+    .standings tbody tr.separator-playin td {
+      border-top: 2px dashed rgba(240,192,64,0.4);
+    }
+    .standings tbody tr.separator-out td {
+      border-top: 2px solid rgba(255,80,80,0.25);
+    }
+
+    .team-cell { display: flex; align-items: center; gap: 10px; }
+
+    .pos-num {
+      font-family: var(--font-display);
+      font-size: 1.2em; letter-spacing: 1px;
+      color: var(--muted); width: 28px; text-align: center; flex-shrink: 0;
+    }
+    .pos-num.p1 { color: var(--gold); }
+    .pos-num.p2 { color: #c0cfd8; }
+    .pos-num.p3 { color: #cd7f50; }
+
+    .team-name-cell { font-weight: 700; color: var(--white); }
+    .team-suffix {
+      font-size: 0.72em; font-weight: 700;
+      padding: 2px 6px; border-radius: 4px;
+      letter-spacing: 0.5px; flex-shrink: 0;
+    }
+    .suffix-z  { background: rgba(0,200,150,0.15); color: var(--accent); }
+    .suffix-y  { background: rgba(66,133,244,0.15); color: #4285f4; }
+    .suffix-x  { background: rgba(255,255,255,0.1); color: #c0cfd8; }
+    .suffix-pb { background: rgba(240,192,64,0.15); color: var(--gold); }
+    .suffix-e  { background: rgba(255,80,80,0.1); color: #ff5050; }
+    .suffix-star { background: rgba(255,165,0,0.15); color: orange; }
+
+    .pct-cell { font-weight: 700; color: var(--accent); }
+
+    .diff-cell.pos { color: var(--accent); font-weight: 700; }
+    .diff-cell.neg { color: #ff5050; font-weight: 700; }
+    .diff-cell.neu { color: var(--muted); }
+
+    .result-cell { font-weight: 600; }
+    .result-cell.w { color: var(--accent); }
+    .result-cell.l { color: #ff5050; }
+
+    /* ── LEYENDA ── */
+    .legend {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      margin-bottom: 40px; font-size: 0.78em;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 6px; color: var(--muted);
+    }
+    .legend-dot {
+      width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0;
+    }
+
+    /* ── BRACKET PLAYOFFS ── */
+    .bracket-section { margin-top: 60px; }
+
+    .bracket-conf {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px; margin-bottom: 20px;
+    }
+
+    .bracket-conf-title {
+      font-family: var(--font-display);
+      font-size: 1.4em; letter-spacing: 2px;
+      margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+    }
+    .bracket-conf-title.este  { color: var(--este); }
+    .bracket-conf-title.oeste { color: var(--oeste); }
+
+    .matchups-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 600px) { .matchups-grid { grid-template-columns: 1fr; } }
+
+    .matchup-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 16px;
+      transition: border-color 0.2s;
+    }
+    .matchup-card:hover { border-color: rgba(255,255,255,0.15); }
+
+    .matchup-round {
+      font-size: 0.7em; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--muted); margin-bottom: 12px;
+    }
+
+    .matchup-team {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 12px; border-radius: 7px;
+      font-size: 0.88em; font-weight: 600;
+    }
+    .matchup-team:first-of-type { margin-bottom: 4px; }
+
+    .matchup-team.top {
+      background: rgba(255,255,255,0.06);
+      color: var(--white);
+    }
+    .matchup-team.bottom { color: var(--muted); }
+
+    .matchup-seed {
+      font-family: var(--font-display);
+      font-size: 1.2em; letter-spacing: 1px;
+      width: 28px; text-align: center; flex-shrink: 0;
+    }
+    .matchup-seed.s1 { color: var(--gold); }
+    .matchup-seed.s2 { color: #c0cfd8; }
+    .matchup-seed.s3, .matchup-seed.s4 { color: var(--accent); }
+    .matchup-seed.s5, .matchup-seed.s6 { color: var(--accent2); }
+    .matchup-seed.s7, .matchup-seed.s8,
+    .matchup-seed.s9, .matchup-seed.s10 { color: var(--gold); }
+
+    .vs-divider {
+      text-align: center; font-size: 0.7em; color: var(--muted);
+      font-weight: 700; letter-spacing: 2px; padding: 2px 0;
+    }
+
+    /* play-in section */
+    .playin-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      margin-top: 14px;
+    }
+    @media (max-width: 600px) { .playin-grid { grid-template-columns: 1fr; } }
+
+    .playin-card {
+      background: rgba(240,192,64,0.06);
+      border: 1px solid rgba(240,192,64,0.2);
+      border-radius: 10px; padding: 16px;
+    }
+
+    .playin-title {
+      font-size: 0.72em; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--gold); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 7px;
+    }
+
+    .playin-match {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 10px; border-radius: 6px;
+      font-size: 0.84em; font-weight: 600; color: var(--text);
+      margin-bottom: 4px;
+    }
+    .playin-match:last-child { margin-bottom: 0; color: var(--muted); font-size: 0.8em; }
+
+    /* ── VOLVER ── */
+    .volver-btn {
+      display: flex; width: fit-content; align-items: center; gap: 8px;
+      margin: 50px auto 0;
+      padding: 13px 28px; background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 9px;
+      color: var(--white); font-family: var(--font-body); font-size: 0.92em; font-weight: 600;
+      text-decoration: none; transition: all 0.25s;
+    }
+    .volver-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+    @media (max-width: 768px) {
+      .page-wrap { padding: 24px 16px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header style="position:relative;z-index:10;background:linear-gradient(180deg,rgba(13,27,42,0.98),rgba(13,27,42,0.85));border-bottom:1px solid rgba(0,200,150,0.2);padding:16px 24px;display:flex;align-items:center;backdrop-filter:blur(10px);">
+  <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+    <div style="width:42px;height:42px;background:linear-gradient(135deg,#00c896,#00a87d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3em;box-shadow:0 0 18px rgba(0,200,150,0.3);">⚽</div>
+    <div>
+      <span style="display:block;font-family:'Bebas Neue',sans-serif;font-size:1.5em;letter-spacing:2px;color:#ffffff;line-height:1;">UNO X DOS IA</span>
+      <small style="font-size:0.6em;color:#00c896;letter-spacing:1px;font-weight:500;">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+    </div>
+  </a>
+</header>
+
+<!-- NAV -->
+<nav aria-label="Navegación principal">
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+    <span class="nav-emoji">☰</span>
+    <span>Secciones</span>
+  </button>
+  <div class="nav-menu" id="navMenu">
+    <a href="../index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
+    <a href="../NBA.html"         class="nav-link active"><span class="nav-emoji">🏀</span> NBA</a>
+    <a href="../LigaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
+    <a href="../Hypermotion.html" class="nav-link"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+    <a href="../Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-badge">🏀 NBA · Temporada 2025-26</div>
+  <h1>CLASIFICACIÓN <span>TEMPORADA REGULAR</span></h1>
+  <p>Standings finales + Bracket de Playoffs 2026</p>
+</div>
+
+<div class="page-wrap">
+
+  <!-- LEYENDA -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#f0c040"></div>* / z — Mejor marca / División ganada + ventaja cancha</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4285f4"></div>y — División ganada</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c0cfd8"></div>x — Clasificado playoffs</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f0c040; opacity:0.7"></div>pb — Play-in (7º–10º)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ff5050"></div>e — Eliminado</div>
+  </div>
+
+  <!-- ═══════════════════════════════
+       CONFERENCIA ESTE
+  ═══════════════════════════════ -->
+  <p class="section-label">
+    CONFERENCIA
+    <span class="conf-badge este">ESTE</span>
+  </p>
+  <p class="section-sub">15 equipos · Standings finales temporada regular</p>
+
+  <div class="standings-wrap">
+    <table class="standings">
+      <thead>
+        <tr>
+          <th>Equipo</th>
+          <th>G</th><th>P</th><th>PCT</th><th>JD</th>
+          <th>Local</th><th>Visit.</th><th>Div.</th><th>Conf.</th>
+          <th>PPA</th><th>PPP</th><th>DIF</th>
+          <th>R</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 1 Detroit Pistons -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num p1">1</span><span class="team-suffix suffix-z">z</span><span class="team-name-cell">Detroit Pistons</span></div></td>
+          <td class="result-cell w">60</td><td class="result-cell l">22</td>
+          <td class="pct-cell">.732</td><td>—</td>
+          <td>32-9</td><td>28-13</td><td>12-4</td><td>39-13</td>
+          <td>117.8</td><td>109.6</td><td class="diff-cell pos">+8.2</td>
+          <td><span class="team-suffix suffix-z">G3</span></td>
+        </tr>
+        <!-- 2 Boston Celtics -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num p2">2</span><span class="team-suffix suffix-y">y</span><span class="team-name-cell">Boston Celtics</span></div></td>
+          <td class="result-cell w">56</td><td class="result-cell l">26</td>
+          <td class="pct-cell">.683</td><td>4</td>
+          <td>30-11</td><td>26-15</td><td>10-6</td><td>36-16</td>
+          <td>114.9</td><td>107.2</td><td class="diff-cell pos">+7.7</td>
+          <td><span class="team-suffix suffix-y">G2</span></td>
+        </tr>
+        <!-- 3 New York Knicks -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num p3">3</span><span class="team-suffix suffix-x">x</span><span class="team-name-cell">New York Knicks</span></div></td>
+          <td class="result-cell w">53</td><td class="result-cell l">29</td>
+          <td class="pct-cell">.646</td><td>7</td>
+          <td>30-10</td><td>22-19</td><td>14-3</td><td>35-17</td>
+          <td>116.5</td><td>110.1</td><td class="diff-cell pos">+6.4</td>
+          <td><span class="team-suffix suffix-x">P1</span></td>
+        </tr>
+        <!-- 4 Cleveland Cavaliers -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">4</span><span class="team-suffix suffix-x">x</span><span class="team-name-cell">Cleveland Cavaliers</span></div></td>
+          <td class="result-cell w">52</td><td class="result-cell l">30</td>
+          <td class="pct-cell">.634</td><td>8</td>
+          <td>27-14</td><td>25-16</td><td>11-5</td><td>33-19</td>
+          <td>119.5</td><td>115.4</td><td class="diff-cell pos">+4.1</td>
+          <td><span class="team-suffix suffix-x">G1</span></td>
+        </tr>
+        <!-- 5 Toronto Raptors -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">5</span><span class="team-suffix suffix-x">x</span><span class="team-name-cell">Toronto Raptors</span></div></td>
+          <td class="result-cell w">46</td><td class="result-cell l">36</td>
+          <td class="pct-cell">.561</td><td>14</td>
+          <td>24-17</td><td>22-19</td><td>5-12</td><td>33-19</td>
+          <td>114.6</td><td>111.8</td><td class="diff-cell pos">+2.8</td>
+          <td><span class="team-suffix suffix-x">G1</span></td>
+        </tr>
+        <!-- 6 Atlanta Hawks -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">6</span><span class="team-suffix suffix-y">y</span><span class="team-name-cell">Atlanta Hawks</span></div></td>
+          <td class="result-cell w">46</td><td class="result-cell l">36</td>
+          <td class="pct-cell">.561</td><td>14</td>
+          <td>24-17</td><td>22-19</td><td>9-7</td><td>27-25</td>
+          <td>118.5</td><td>116.0</td><td class="diff-cell pos">+2.5</td>
+          <td><span class="team-suffix suffix-y">P1</span></td>
+        </tr>
+        <!-- 7 Philadelphia 76ers — play-in -->
+        <tr class="separator-playin">
+          <td><div class="team-cell"><span class="pos-num">7</span><span class="team-suffix suffix-pb">pb</span><span class="team-name-cell">Philadelphia 76ers</span></div></td>
+          <td class="result-cell w">45</td><td class="result-cell l">37</td>
+          <td class="pct-cell">.549</td><td>15</td>
+          <td>23-18</td><td>22-19</td><td>9-7</td><td>27-25</td>
+          <td>115.9</td><td>116.1</td><td class="diff-cell neg">-0.2</td>
+          <td><span class="team-suffix suffix-pb">G2</span></td>
+        </tr>
+        <!-- 8 Orlando Magic -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">8</span><span class="team-suffix suffix-pb">pb</span><span class="team-name-cell">Orlando Magic</span></div></td>
+          <td class="result-cell w">44</td><td class="result-cell l">38</td>
+          <td class="pct-cell">.537</td><td>16</td>
+          <td>25-15</td><td>19-23</td><td>9-8</td><td>26-26</td>
+          <td>115.7</td><td>115.1</td><td class="diff-cell pos">+0.6</td>
+          <td><span class="team-suffix suffix-pb">P1</span></td>
+        </tr>
+        <!-- 9 Charlotte Hornets -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">9</span><span class="team-suffix suffix-pb">pb</span><span class="team-name-cell">Charlotte Hornets</span></div></td>
+          <td class="result-cell w">44</td><td class="result-cell l">38</td>
+          <td class="pct-cell">.537</td><td>16</td>
+          <td>21-20</td><td>23-18</td><td>11-5</td><td>26-26</td>
+          <td>116.0</td><td>111.2</td><td class="diff-cell pos">+4.8</td>
+          <td><span class="team-suffix suffix-pb">G1</span></td>
+        </tr>
+        <!-- 10 Miami Heat -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">10</span><span class="team-suffix suffix-pb">pb</span><span class="team-name-cell">Miami Heat</span></div></td>
+          <td class="result-cell w">43</td><td class="result-cell l">39</td>
+          <td class="pct-cell">.524</td><td>17</td>
+          <td>26-15</td><td>17-24</td><td>10-7</td><td>27-25</td>
+          <td>120.9</td><td>118.5</td><td class="diff-cell pos">+2.4</td>
+          <td><span class="team-suffix suffix-pb">G2</span></td>
+        </tr>
+        <!-- Eliminados -->
+        <tr class="separator-out">
+          <td><div class="team-cell"><span class="pos-num">11</span><span class="team-suffix suffix-e">e</span><span class="team-name-cell">Milwaukee Bucks</span></div></td>
+          <td class="result-cell l">32</td><td class="result-cell w">50</td>
+          <td class="pct-cell">.390</td><td>28</td>
+          <td>19-22</td><td>13-28</td><td>9-7</td><td>21-31</td>
+          <td>110.6</td><td>116.8</td><td class="diff-cell neg">-6.2</td>
+          <td><span class="team-suffix suffix-e">P1</span></td>
+        </tr>
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">12</span><span class="team-suffix suffix-e">e</span><span class="team-name-cell">Chicago Bulls</span></div></td>
+          <td class="result-cell l">31</td><td class="result-cell w">51</td>
+          <td class="pct-cell">.378</td><td>29</td>
+          <td>18-23</td><td>13-28</td><td>4-12</td><td>19-32</td>
+          <td>116.3</td><td>121.5</td><td class="diff-cell neg">-5.2</td>
+          <td><span class="team-suffix suffix-e">P2</span></td>
+        </tr>
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">13</span><span class="team-suffix suffix-e">e</span><span class="team-name-cell">Brooklyn Nets</span></div></td>
+          <td class="result-cell l">20</td><td class="result-cell w">62</td>
+          <td class="pct-cell">.244</td><td>40</td>
+          <td>12-29</td><td>8-33</td><td>3-13</td><td>14-37</td>
+          <td>105.9</td><td>115.9</td><td class="diff-cell neg">-10.0</td>
+          <td><span class="team-suffix suffix-e">P3</span></td>
+        </tr>
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">14</span><span class="team-suffix suffix-e">e</span><span class="team-name-cell">Indiana Pacers</span></div></td>
+          <td class="result-cell l">19</td><td class="result-cell w">63</td>
+          <td class="pct-cell">.232</td><td>41</td>
+          <td>11-30</td><td>8-33</td><td>4-12</td><td>15-37</td>
+          <td>112.4</td><td>120.4</td><td class="diff-cell neg">-8.0</td>
+          <td><span class="team-suffix suffix-e">P2</span></td>
+        </tr>
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">15</span><span class="team-suffix suffix-e">e</span><span class="team-name-cell">Washington Wizards</span></div></td>
+          <td class="result-cell l">17</td><td class="result-cell w">65</td>
+          <td class="pct-cell">.207</td><td>43</td>
+          <td>11-30</td><td>6-35</td><td>2-14</td><td>11-41</td>
+          <td>112.9</td><td>124.9</td><td class="diff-cell neg">-12.0</td>
+          <td><span class="team-suffix suffix-e">P1</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════
+       CONFERENCIA OESTE
+  ═══════════════════════════════ -->
+  <p class="section-label" style="margin-top:50px;">
+    CONFERENCIA
+    <span class="conf-badge oeste">OESTE</span>
+  </p>
+  <p class="section-sub">15 equipos · Standings finales temporada regular</p>
+
+  <div class="standings-wrap">
+    <table class="standings">
+      <thead>
+        <tr>
+          <th>Equipo</th>
+          <th>G</th><th>P</th><th>PCT</th><th>JD</th>
+          <th>Local</th><th>Visit.</th><th>Div.</th><th>Conf.</th>
+          <th>PPA</th><th>PPP</th><th>DIF</th>
+          <th>R</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 1 OKC Thunder -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num p1">1</span><span class="team-suffix suffix-star">*</span><span class="team-name-cell">Oklahoma City Thunder</span></div></td>
+          <td class="result-cell w">64</td><td class="result-cell l">18</td>
+          <td class="pct-cell">.780</td><td>—</td>
+          <td>34-7</td><td>30-10</td><td>12-4</td><td>41-11</td>
+          <td>119.0</td><td>107.9</td><td class="diff-cell pos">+11.1</td>
+          <td><span class="team-suffix suffix-star">P2</span></td>
+        </tr>
+        <!-- 2 San Antonio Spurs -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num p2">2</span><span class="team-suffix suffix-y">y</span><span class="team-name-cell">San Antonio Spurs</span></div></td>
+          <td class="result-cell w">62</td><td class="result-cell l">20</td>
+          <td class="pct-cell">.756</td><td>2</td>
+          <td>32-8</td><td>29-12</td><td>13-3</td><td>36-16</td>
+          <td>119.8</td><td>111.5</td><td class="diff-cell pos">+8.3</td>
+          <td><span class="team-suffix suffix-y">P1</span></td>
+        </tr>
+        <!-- 3 Denver Nuggets -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num p3">3</span><span class="team-suffix suffix-x">x</span><span class="team-name-cell">Denver Nuggets</span></div></td>
+          <td class="result-cell w">54</td><td class="result-cell l">28</td>
+          <td class="pct-cell">.659</td><td>10</td>
+          <td>28-13</td><td>26-15</td><td>11-5</td><td>36-16</td>
+          <td>122.1</td><td>116.9</td><td class="diff-cell pos">+5.2</td>
+          <td><span class="team-suffix suffix-x">G12</span></td>
+        </tr>
+        <!-- 4 Lakers -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">4</span><span class="team-suffix suffix-y">y</span><span class="team-name-cell">Los Angeles Lakers</span></div></td>
+          <td class="result-cell w">53</td><td class="result-cell l">29</td>
+          <td class="pct-cell">.646</td><td>11</td>
+          <td>28-13</td><td>25-16</td><td>10-7</td><td>33-19</td>
+          <td>116.3</td><td>114.6</td><td class="diff-cell pos">+1.7</td>
+          <td><span class="team-suffix suffix-y">G3</span></td>
+        </tr>
+        <!-- 5 Houston Rockets -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">5</span><span class="team-suffix suffix-x">x</span><span class="team-name-cell">Houston Rockets</span></div></td>
+          <td class="result-cell w">52</td><td class="result-cell l">30</td>
+          <td class="pct-cell">.634</td><td>12</td>
+          <td>30-11</td><td>22-19</td><td>10-6</td><td>29-23</td>
+          <td>115.2</td><td>110.0</td><td class="diff-cell pos">+5.2</td>
+          <td><span class="team-suffix suffix-x">G1</span></td>
+        </tr>
+        <!-- 6 Minnesota Timberwolves -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">6</span><span class="team-suffix suffix-x">x</span><span class="team-name-cell">Minnesota Timberwolves</span></div></td>
+          <td class="result-cell w">49</td><td class="result-cell l">33</td>
+          <td class="pct-cell">.598</td><td>15</td>
+          <td>26-15</td><td>23-18</td><td>9-7</td><td>31-21</td>
+          <td>118.0</td><td>114.6</td><td class="diff-cell pos">+3.4</td>
+          <td><span class="team-suffix suffix-x">G2</span></td>
+        </tr>
+        <!-- 7 Phoenix Suns — play-in -->
+        <tr class="separator-playin">
+          <td><div class="team-cell"><span class="pos-num">7</span><span class="team-suffix suffix-pb">pb</span><span class="team-name-cell">Phoenix Suns</span></div></td>
+          <td class="result-cell w">45</td><td class="result-cell l">37</td>
+          <td class="pct-cell">.549</td><td>19</td>
+          <td>25-16</td><td>20-21</td><td>10-7</td><td>29-23</td>
+          <td>112.6</td><td>111.1</td><td class="diff-cell pos">+1.5</td>
+          <td><span class="team-suffix suffix-pb">G2</span></td>
+        </tr>
+        <!-- 8 Portland -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">8</span><span class="team-suffix suffix-pb">pb</span><span class="team-name-cell">Portland Trail Blazers</span></div></td>
+          <td class="result-cell w">42</td><td class="result-cell l">40</td>
+          <td class="pct-cell">.512</td><td>22</td>
+          <td>24-17</td><td>18-23</td><td>7-9</td><td>29-23</td>
+          <td>115.5</td><td>115.8</td><td class="diff-cell neg">-0.3</td>
+          <td><span class="team-suffix suffix-pb">G1</span></td>
+        </tr>
+        <!-- 9 Clippers -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">9</span><span class="team-suffix suffix-pb">pb</span><span class="team-name-cell">LA Clippers</span></div></td>
+          <td class="result-cell w">42</td><td class="result-cell l">40</td>
+          <td class="pct-cell">.512</td><td>22</td>
+          <td>23-18</td><td>19-22</td><td>10-6</td><td>25-27</td>
+          <td>113.8</td><td>112.6</td><td class="diff-cell pos">+1.2</td>
+          <td><span class="team-suffix suffix-pb">G2</span></td>
+        </tr>
+        <!-- 10 Golden State Warriors -->
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">10</span><span class="team-suffix suffix-pb">pb</span><span class="team-name-cell">Golden State Warriors</span></div></td>
+          <td class="result-cell w">37</td><td class="result-cell l">45</td>
+          <td class="pct-cell">.451</td><td>27</td>
+          <td>22-19</td><td>15-26</td><td>7-9</td><td>24-28</td>
+          <td>114.6</td><td>115.2</td><td class="diff-cell neg">-0.6</td>
+          <td><span class="team-suffix suffix-pb">P3</span></td>
+        </tr>
+        <!-- Eliminados -->
+        <tr class="separator-out">
+          <td><div class="team-cell"><span class="pos-num">11</span><span class="team-suffix suffix-e">e</span><span class="team-name-cell">New Orleans Pelicans</span></div></td>
+          <td class="result-cell l">26</td><td class="result-cell w">56</td>
+          <td class="pct-cell">.317</td><td>38</td>
+          <td>17-24</td><td>9-32</td><td>7-9</td><td>17-34</td>
+          <td>115.5</td><td>120.0</td><td class="diff-cell neg">-4.5</td>
+          <td><span class="team-suffix suffix-e">P3</span></td>
+        </tr>
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">12</span><span class="team-suffix suffix-e">e</span><span class="team-name-cell">Dallas Mavericks</span></div></td>
+          <td class="result-cell l">26</td><td class="result-cell w">56</td>
+          <td class="pct-cell">.317</td><td>38</td>
+          <td>16-25</td><td>10-30</td><td>4-12</td><td>14-37</td>
+          <td>114.1</td><td>119.6</td><td class="diff-cell neg">-5.5</td>
+          <td><span class="team-suffix suffix-e">G1</span></td>
+        </tr>
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">13</span><span class="team-suffix suffix-e">e</span><span class="team-name-cell">Memphis Grizzlies</span></div></td>
+          <td class="result-cell l">25</td><td class="result-cell w">57</td>
+          <td class="pct-cell">.305</td><td>39</td>
+          <td>13-27</td><td>11-29</td><td>6-10</td><td>19-33</td>
+          <td>114.7</td><td>120.7</td><td class="diff-cell neg">-6.0</td>
+          <td><span class="team-suffix suffix-e">P8</span></td>
+        </tr>
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">14</span><span class="team-suffix suffix-e">e</span><span class="team-name-cell">Sacramento Kings</span></div></td>
+          <td class="result-cell l">22</td><td class="result-cell w">60</td>
+          <td class="pct-cell">.268</td><td>42</td>
+          <td>15-26</td><td>7-34</td><td>4-12</td><td>14-38</td>
+          <td>111.0</td><td>121.0</td><td class="diff-cell neg">-10.0</td>
+          <td><span class="team-suffix suffix-e">P1</span></td>
+        </tr>
+        <tr>
+          <td><div class="team-cell"><span class="pos-num">15</span><span class="team-suffix suffix-e">e</span><span class="team-name-cell">Utah Jazz</span></div></td>
+          <td class="result-cell l">22</td><td class="result-cell w">60</td>
+          <td class="pct-cell">.268</td><td>42</td>
+          <td>14-27</td><td>8-33</td><td>1-15</td><td>12-40</td>
+          <td>117.6</td><td>126.0</td><td class="diff-cell neg">-8.4</td>
+          <td><span class="team-suffix suffix-e">P1</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════
+       BRACKET PLAYOFFS
+  ═══════════════════════════════ -->
+  <div class="bracket-section">
+    <p class="section-label">🏆 BRACKET PLAYOFFS 2026</p>
+    <p class="section-sub">Primera ronda · Los cabezas de serie con menor número tienen ventaja de campo</p>
+
+    <!-- ESTE -->
+    <div class="bracket-conf">
+      <div class="bracket-conf-title este">
+        CONFERENCIA ESTE
+      </div>
+
+      <div class="matchups-grid">
+        <div class="matchup-card">
+          <div class="matchup-round">🏀 Primera Ronda</div>
+          <div class="matchup-team top">
+            <span class="matchup-seed s1">1</span>
+            Detroit Pistons
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="matchup-team bottom">
+            <span class="matchup-seed s8">8</span>
+            Ganador Play-in (7/8 o 9/10)
+          </div>
+        </div>
+
+        <div class="matchup-card">
+          <div class="matchup-round">🏀 Primera Ronda</div>
+          <div class="matchup-team top">
+            <span class="matchup-seed s2">2</span>
+            Boston Celtics
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="matchup-team bottom">
+            <span class="matchup-seed s7">7</span>
+            Ganador Play-in (7/8 o 9/10)
+          </div>
+        </div>
+
+        <div class="matchup-card">
+          <div class="matchup-round">🏀 Primera Ronda</div>
+          <div class="matchup-team top">
+            <span class="matchup-seed s3">3</span>
+            New York Knicks
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="matchup-team bottom">
+            <span class="matchup-seed s6">6</span>
+            Atlanta Hawks
+          </div>
+        </div>
+
+        <div class="matchup-card">
+          <div class="matchup-round">🏀 Primera Ronda</div>
+          <div class="matchup-team top">
+            <span class="matchup-seed s4">4</span>
+            Cleveland Cavaliers
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="matchup-team bottom">
+            <span class="matchup-seed s5">5</span>
+            Toronto Raptors
+          </div>
+        </div>
+      </div>
+
+      <!-- Play-in Este -->
+      <div class="playin-grid">
+        <div class="playin-card">
+          <div class="playin-title">🎯 Play-In Este — Partido 1</div>
+          <div class="playin-match">
+            <span class="matchup-seed s7" style="font-family:'Bebas Neue',sans-serif;font-size:1.1em;width:22px;">7</span>
+            Philadelphia 76ers
+          </div>
+          <div class="vs-divider" style="text-align:left;padding-left:30px;font-size:0.7em;">VS</div>
+          <div class="playin-match">
+            <span class="matchup-seed s8" style="font-family:'Bebas Neue',sans-serif;font-size:1.1em;width:22px;">8</span>
+            Orlando Magic
+          </div>
+          <div class="playin-match">→ Ganador clasifica directo (7º)</div>
+        </div>
+
+        <div class="playin-card">
+          <div class="playin-title">🎯 Play-In Este — Partido 2 y 3</div>
+          <div class="playin-match">
+            <span class="matchup-seed s9" style="font-family:'Bebas Neue',sans-serif;font-size:1.1em;width:22px;">9</span>
+            Charlotte Hornets
+          </div>
+          <div class="vs-divider" style="text-align:left;padding-left:30px;font-size:0.7em;">VS</div>
+          <div class="playin-match">
+            <span class="matchup-seed s10" style="font-family:'Bebas Neue',sans-serif;font-size:1.1em;width:22px;">10</span>
+            Miami Heat
+          </div>
+          <div class="playin-match">→ Perdedor 7/8 vs Ganador 9/10 → Plaza 8º</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OESTE -->
+    <div class="bracket-conf">
+      <div class="bracket-conf-title oeste">
+        CONFERENCIA OESTE
+      </div>
+
+      <div class="matchups-grid">
+        <div class="matchup-card">
+          <div class="matchup-round">🏀 Primera Ronda</div>
+          <div class="matchup-team top">
+            <span class="matchup-seed s1">1</span>
+            Oklahoma City Thunder
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="matchup-team bottom">
+            <span class="matchup-seed s8">8</span>
+            Ganador Play-in (7/8 o 9/10)
+          </div>
+        </div>
+
+        <div class="matchup-card">
+          <div class="matchup-round">🏀 Primera Ronda</div>
+          <div class="matchup-team top">
+            <span class="matchup-seed s2">2</span>
+            San Antonio Spurs
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="matchup-team bottom">
+            <span class="matchup-seed s7">7</span>
+            Ganador Play-in (7/8 o 9/10)
+          </div>
+        </div>
+
+        <div class="matchup-card">
+          <div class="matchup-round">🏀 Primera Ronda</div>
+          <div class="matchup-team top">
+            <span class="matchup-seed s3">3</span>
+            Denver Nuggets
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="matchup-team bottom">
+            <span class="matchup-seed s6">6</span>
+            Minnesota Timberwolves
+          </div>
+        </div>
+
+        <div class="matchup-card">
+          <div class="matchup-round">🏀 Primera Ronda</div>
+          <div class="matchup-team top">
+            <span class="matchup-seed s4">4</span>
+            Los Angeles Lakers
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="matchup-team bottom">
+            <span class="matchup-seed s5">5</span>
+            Houston Rockets
+          </div>
+        </div>
+      </div>
+
+      <!-- Play-in Oeste -->
+      <div class="playin-grid">
+        <div class="playin-card">
+          <div class="playin-title">🎯 Play-In Oeste — Partido 1</div>
+          <div class="playin-match">
+            <span class="matchup-seed s7" style="font-family:'Bebas Neue',sans-serif;font-size:1.1em;width:22px;">7</span>
+            Phoenix Suns
+          </div>
+          <div class="vs-divider" style="text-align:left;padding-left:30px;font-size:0.7em;">VS</div>
+          <div class="playin-match">
+            <span class="matchup-seed s8" style="font-family:'Bebas Neue',sans-serif;font-size:1.1em;width:22px;">8</span>
+            Portland Trail Blazers
+          </div>
+          <div class="playin-match">→ Ganador clasifica directo (7º)</div>
+        </div>
+
+        <div class="playin-card">
+          <div class="playin-title">🎯 Play-In Oeste — Partido 2 y 3</div>
+          <div class="playin-match">
+            <span class="matchup-seed s9" style="font-family:'Bebas Neue',sans-serif;font-size:1.1em;width:22px;">9</span>
+            LA Clippers
+          </div>
+          <div class="vs-divider" style="text-align:left;padding-left:30px;font-size:0.7em;">VS</div>
+          <div class="playin-match">
+            <span class="matchup-seed s10" style="font-family:'Bebas Neue',sans-serif;font-size:1.1em;width:22px;">10</span>
+            Golden State Warriors
+          </div>
+          <div class="playin-match">→ Perdedor 7/8 vs Ganador 9/10 → Plaza 8º</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /bracket-section -->
+
+  <a href="../NBA.html" class="volver-btn">← Volver a predicciones NBA</a>
+
+</div><!-- /page-wrap -->
+
+<footer style="background:rgba(13,27,42,0.9);border-top:1px solid rgba(255,255,255,0.05);text-align:center;padding:18px;font-size:0.78em;color:#8fa3b8;margin-top:60px;">
+  <p>© 2025 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
+  <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com" style="color:#8fa3b8;">Contacto</a></p>
+</footer>
+
+<script>
+  function toggleNav() {
+    document.getElementById('navMenu').classList.toggle('open');
+  }
+  document.addEventListener('click', function(e) {
+    const nav = document.querySelector('nav');
+    if (!nav.contains(e.target)) {
+      document.getElementById('navMenu').classList.remove('open');
+    }
+  });
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navMenu').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
