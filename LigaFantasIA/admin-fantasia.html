@@ -1582,45 +1582,99 @@ function renderMercadoForm(){
 }
 
 function saveMercado(){
-  // Resolver: ganador = mayor puja
-  const results=mercadoJugadores.map(j=>{
-    const precioBase=parseFloat(j.precio)||0;
-    let maxPuja=precioBase,winner=null;
-    Object.entries(j.pujas||{}).forEach(([iaId,puja])=>{
-      const v=(puja===null||puja===undefined||puja==='')?0:parseFloat(puja)||0;
-      if(v>maxPuja){maxPuja=v;winner=iaId;}
-    });
-    const montoGanador=winner?maxPuja:0;
-    return{
-      jugador:j.nombre,
-      precioBase,
-      ganadorIAId:winner,
-      montoGanador,
-      origen:j.origen||'admin',
-      iaOrigenId:j.iaOrigenId||'',
-      pujas:j.pujas||{},
-    };
-  });
+  const norm = (s) => String(s||'').toLowerCase().replace(/["']/g,'').replace(/\s+/g,' ').trim();
+  const sorteo = LIGA.load('sorteo', {});
+  const budgets = LIGA.load('budgets', {});
+  const state = LIGA.load('state', {});
 
-  // Actualizar presupuestos
-  const budgets=LIGA.load('budgets',{});
-  results.forEach(r=>{
-    if(r.ganadorIAId){
-      const iaId=r.ganadorIAId;
-      budgets[iaId]=Math.max(0,(budgets[iaId]||100)-r.montoGanador);
+  // Inicializar presupuestos si no existen
+  LIGA.IAS.forEach(ia => {
+    if (budgets[ia.id] === undefined) {
+      budgets[ia.id] = 100;
     }
   });
-  LIGA.save('budgets',budgets);
-  LIGA.save('mercado_jugadores',mercadoJugadores);
-  LIGA.save('mercado_results',results);
 
-  toast('✅ Mercado resuelto. '+ results
-    .filter(r=>r.ganadorIAId)
-    .map(r=>{
-      const ia=LIGA.IAS.find(ia=>ia.id===r.ganadorIAId);
-      return `${r.jugador}→${ia?.name||r.ganadorIAId}`;
-    })
-    .join(', '));
+  const results = mercadoJugadores.map(j => {
+    if (!j.nombre) return null;
+    const normalizedTarget = norm(j.nombre);
+    const precioBase = parseFloat(j.precio) || 0;
+    let maxPuja = precioBase;
+    let winner = null;
+
+    // Identificar ganador (mayor puja estrictamente superior a la base)
+    Object.entries(j.pujas || {}).forEach(([iaId, puja]) => {
+      const v = (puja === null || puja === undefined || puja === '') ? 0 : parseFloat(puja) || 0;
+      if (v > maxPuja) {
+        maxPuja = v;
+        winner = iaId;
+      }
+    });
+
+    const montoFinal = winner ? maxPuja : precioBase;
+    const origin = j.origen || 'admin';
+    const sellerId = j.iaOrigenId || '';
+
+    // Buscar objeto del jugador completo para no perder stats
+    let playerObj = null;
+    // 1. Buscar en sorteo actual (donde están si los vende una IA)
+    for (const id in sorteo) {
+      const found = sorteo[id].find(p => norm(p.name) === normalizedTarget);
+      if (found) { playerObj = { ...found }; break; }
+    }
+    // 2. Buscar en equipos base
+    if(!playerObj){
+      for (const t of LIGA.TEAMS) {
+        const found = t.players.find(p => norm(p.name) === normalizedTarget);
+        if (found) { playerObj = { ...found, teamId: t.id, teamName: t.name, teamEmoji: t.emoji }; break; }
+      }
+    }
+    if(!playerObj) playerObj = { name: j.nombre, price: precioBase + 'M', pot:70, cal:70, vel:70, vis:70, pos:'MED' };
+
+    // --- PROCESAR VENTA (Si el origen es una IA) ---
+    if (origin === 'ia' && sellerId) {
+      // Asegurarse de que el presupuesto actual del vendedor sea un número, por defecto 0 si es NaN o inválido.
+      const balanceVendedor = parseFloat(budgets[sellerId]) || 0; 
+      budgets[sellerId] = balanceVendedor + montoFinal;
+      if (sorteo[sellerId]) {
+        sorteo[sellerId] = sorteo[sellerId].filter(p => norm(p.name) !== normalizedTarget);
+      }
+    }
+
+    // --- PROCESAR COMPRA (Si hay un ganador) ---
+    if (winner) {
+      // Asegurarse de que el presupuesto actual del comprador sea un número, por defecto 0 si es NaN o inválido.
+      const balanceComprador = parseFloat(budgets[winner]) || 0; 
+      budgets[winner] = Math.max(0, balanceComprador - montoFinal);
+      if (!sorteo[winner]) sorteo[winner] = [];
+      // Añadimos el jugador con el precio de compra actualizado
+      const newPlayer = { ...playerObj, price: montoFinal.toFixed(1) + 'M' };
+      sorteo[winner].push(newPlayer);
+    }
+
+    return {
+      jugador: j.nombre,
+      precioBase,
+      ganadorIAId: winner,
+      montoGanador: winner ? maxPuja : 0,
+      montoFinal: montoFinal,
+      origen: origin,
+      iaOrigenId: sellerId,
+      pujas: j.pujas || {},
+    };
+  }).filter(Boolean);
+
+  // Guardar cambios en persistencia y sincronizar con el estado global
+  LIGA.save('budgets', budgets);
+  LIGA.save('sorteo', sorteo);
+  state.budgets = budgets;
+  state.sorteo = sorteo;
+  LIGA.save('state', state);
+  LIGA.save('mercado_jugadores', mercadoJugadores);
+  LIGA.save('mercado_results', results);
+
+  renderSorteo();
+  generarHTMLMercado(); // Actualiza los cuadros de texto para copiar
+  toast('✅ Mercado resuelto. Plantillas y presupuestos actualizados.');
 }
 
 
