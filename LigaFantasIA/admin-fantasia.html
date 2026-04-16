@@ -538,10 +538,10 @@ function initApp(){
   });
 
   // Plantillas en Mercado
-  document.getElementById('plantillas-mercado-grid').innerHTML = IAS.map(ia => `
+  document.getElementById('plantillas-post-grid').innerHTML = IAS.map(ia => `
     <div class="xi-ia-card" style="border-top: 3px solid ${ia.color};">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.5rem;">
-        <h4>${ia.emoji} ${ia.name}</h4>
+        <h4 style="margin:0;">${ia.emoji} ${ia.name}</h4>
         <input type="number" id="budget-${ia.id}" value="100" step="0.1" style="width:70px; margin-bottom:0; padding:.3rem;" title="Presupuesto restante"/>
       </div>
       <textarea id="plantilla-${ia.id}" rows="10" placeholder="Nombre | POS | OVR | PrecioM"></textarea>
@@ -833,7 +833,7 @@ function actualizarTablaPujas(){
 }
 
 function generarMercado(){
-  const slots=document.querySelectorAll('#mercado-slots .jugador-slot');
+  const slots=document.querySelectorAll('#mercado-slots-container .jugador-slot');
   const bids = document.querySelectorAll('.bid-input');
   
   if(!slots.length) { toast('Añade jugadores primero','#e53935'); return; }
@@ -884,13 +884,13 @@ function generarMercado(){
   toast('✅ HTML de resultados generado');
 }
 
-function generarPlantillasMercado(){
+function generarPlantillasFinales(){
   const html = IAS.map(ia => {
     const budget = document.getElementById(`budget-${ia.id}`).value || '0';
     const text = document.getElementById(`plantilla-${ia.id}`).value.trim();
     if(!text) return '';
     
-    const lines = text.split('\n').filter(Boolean);
+    const lines = text.split('\n').filter(l => l.trim() !== '');
     const rows = lines.map((l, i) => {
       const p = l.split('|').map(s => s.trim());
       const nombre = p[0]||'—', pos = p[1]||'MED', ovr = p[2]||'—', precio = p[3]||'—';
@@ -899,6 +899,7 @@ function generarPlantillasMercado(){
         <td style="font-weight:600;">${esc(nombre)}</td>
         <td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:600;padding:.12rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784;">${esc(pos)}</span></td>
         <td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center;">${esc(ovr)}</td>
+        <td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#ffd700;text-align:center;font-weight:700">0</td>
         <td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right;">${esc(precio)}</td>
       </tr>`;
     }).join('');
@@ -912,7 +913,7 @@ function generarPlantillasMercado(){
   </div>
   <div class="table-wrap">
     <table class="sorteo-table">
-      <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th style="text-align:right">💶 Precio</th></tr></thead>
+      <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th>Pts</th><th style="text-align:right">💶 Precio</th></tr></thead>
       <tbody>${rows}</tbody>
     </table>
   </div>
@@ -920,8 +921,20 @@ function generarPlantillasMercado(){
   }).filter(Boolean).join('\n');
 
   if(!html) { toast('Rellena al menos una plantilla','#e53935'); return; }
-  showOut('out-plantillas-mercado', 'html-plantillas-mercado', html);
+  showOut('out-plantillas-final', 'html-plantillas-final', html);
   toast('✅ HTML de plantillas generado');
+}
+
+function exportarDatosPlantillas(){
+  const data = {};
+  IAS.forEach(ia => {
+    data[ia.id] = {
+      budget: document.getElementById(`budget-${ia.id}`).value,
+      text: document.getElementById(`plantilla-${ia.id}`).value
+    };
+  });
+  localStorage.setItem('admin_fantas_ia_plantillas', JSON.stringify(data));
+  toast('💾 Borrador guardado en el navegador');
 }
 
 // ═══════════════════════════════════════════════════
@@ -1508,29 +1521,39 @@ function generarExtra(){
 
     <!-- ===== PANEL: MERCADO ===== -->
     <div class="panel" id="panel-mercado">
-      <div class="panel-title">💰 Gestión del Mercado</div>
-      <div class="panel-desc">Añade jugadores, registra pujas, resuelve la subasta y genera los HTMLs para la web.</div>
+      <div class="panel-title">💰 Gestión Total del Mercado</div>
+      <div class="panel-desc">Carga jugadores, gestiona pujas masivas y actualiza plantillas.</div>
 
-      <!-- PASO 1: jugadores en subasta -->
       <div class="card">
-        <div class="card-title">📋 1. Jugadores en subasta</div>
-        <p style="color:var(--gray);font-size:.85rem;margin-bottom:1rem;">Añade los jugadores que salen al mercado esta semana.</p>
-        <div id="mercado-jugadores-form"></div>
-        <button onclick="addMercadoSlot()" style="background:transparent;border:1px solid var(--green-bright);color:var(--green-bright);font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;padding:.5rem 1.2rem;border-radius:6px;cursor:pointer;margin-top:.8rem;">+ Añadir jugador</button>
+        <div class="card-title">📋 1. Carga de Jugadores</div>
+        <div class="instruccion">
+          Pega una lista o añade uno a uno.<br>
+          Formato: <code>Nombre | Equipo | POS | OVR | BaseM</code>
+        </div>
+        <textarea id="bulk-mercado-input" rows="4" placeholder="Ejemplo:&#10;Lamine Yamal | FC Barcelona | EXT | 92 | 28.0&#10;Mbappé | Real Madrid | DEL | 97 | 35.0"></textarea>
+        <div style="display:flex; gap:1rem; margin-top:0.5rem;">
+          <button class="btn-save-puntos" style="margin-top:0; background:var(--gold); color:black;" onclick="cargarMercadoMasivo()">📥 Cargar Lista</button>
+          <button class="btn-save-puntos" style="margin-top:0; background:transparent; border:1px solid var(--green-bright); color:var(--green-bright);" onclick="addMercadoSlot()">+ Añadir uno</button>
+        </div>
+        <div id="mercado-jugadores-form" style="margin-top:1.5rem;"></div>
       </div>
 
-      <!-- PASO 2: pujas -->
       <div class="card">
         <div class="card-title">🤖 2. Tabla de Pujas Masiva</div>
-        <div class="instruccion">Introduce las pujas de cada IA. Marca <strong>NP</strong> si no pujan. Los nombres se sincronizan según escribes arriba.</div>
+        <div class="instruccion">Escribe las pujas de cada IA. Pulsa <strong>🔄 Sincronizar</strong> si has hecho cambios arriba.</div>
+        <button onclick="renderMercadoForm()" class="btn-save-puntos" style="width:100%; margin-bottom:1rem; background:transparent; border:1px dashed var(--green-bright); color:var(--green-light);">🔄 Sincronizar Tabla de Pujas</button>
         <div class="table-wrap">
-          <table class="puntos-table" style="font-size:0.8rem;">
-            <thead id="pujas-thead"></thead>
-            <tbody id="pujas-tbody"></tbody>
+          <table class="puntos-table" id="tabla-pujas-masiva" style="font-size:0.8rem;">
+            <thead id="pujas-thead">
+              <!-- Generado por JS -->
+            </thead>
+            <tbody id="pujas-tbody">
+              <!-- Generado por JS -->
+            </tbody>
           </table>
         </div>
         <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem;">
-          <button onclick="saveMercado()" class="btn-save-puntos" style="margin-top:0;">💾 Guardar y Resolver Mercado</button>
+          <button onclick="saveMercado()" class="btn-save-puntos" style="margin-top:0;">💾 Resolver Subasta</button>
           <button onclick="generarHTMLMercado()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;padding:.7rem 1.8rem;border:none;border-radius:6px;cursor:pointer;">📋 Generar HTML resultado</button>
         </div>
         <div class="output-section" id="out-mercado" style="display:none;margin-top:1rem;">
@@ -1542,13 +1565,9 @@ function generarExtra(){
         </div>
       </div>
 
-      <!-- PASO 3: plantillas manuales por IA -->
       <div class="card">
-        <div class="card-title">📝 3. Plantillas actualizadas tras el mercado</div>
-        <p style="color:var(--gray);font-size:.85rem;margin-bottom:1rem;">
-          Introduce la plantilla definitiva de cada IA (un jugador por línea: <code>Nombre | POS | OVR | Precio</code>) y el presupuesto restante.
-          Pulsa <strong>📋 Generar HTML plantillas</strong> cuando acabes.
-        </p>
+        <div class="card-title">📝 3. Plantillas Finales</div>
+        <div class="instruccion">Edita las plantillas definitivas. Formato: <code>Nombre | POS | OVR | Precio</code></div>
         <div id="plantillas-ia-forms"></div>
         <button onclick="generarHTMLPlantillas()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;padding:.7rem 1.8rem;border:none;border-radius:6px;cursor:pointer;margin-top:1rem;">📋 Generar HTML plantillas</button>
         <div class="output-section" id="out-plantillas" style="display:none;margin-top:1rem;">
@@ -2531,15 +2550,32 @@ function markJornadaPlayed(){
 // ============================================================
 let mercadoJugadores=[];
 
+function cargarMercadoMasivo(){
+  const input = document.getElementById('bulk-mercado-input').value.trim();
+  if(!input) return;
+  syncMercadoData();
+  const lines = input.split('\n').filter(Boolean);
+  lines.forEach(l => {
+    const p = l.split('|').map(s=>s.trim());
+    mercadoJugadores.push({
+      nombre: p[0]||'', 
+      precio: parseFloat(p[4])||parseFloat(p[1])||0, 
+      origen: 'admin', 
+      iaOrigenId: '', 
+      pujas: {}
+    });
+  });
+  document.getElementById('bulk-mercado-input').value = '';
+  renderMercadoForm();
+  toast(`✅ ${lines.length} jugadores añadidos`);
+}
+
 function initMercado(){
   const saved=LIGA.load('mercado_jugadores',[]);
-  const base=[{nombre:'',precio:0,origen:'admin',iaOrigenId:'',pujas:{}}];
-  mercadoJugadores=(saved.length?saved:base).map(j=>{
+  mercadoJugadores=(saved||[]).map(j=>{
     return {
       nombre: j.nombre || '',
       precio: parseFloat(j.precio)||0,
-      origen: j.origen || 'admin',
-      iaOrigenId: j.iaOrigenId || j.iaOrigen || '',
       pujas: j.pujas || {},
     };
   });
@@ -2549,11 +2585,11 @@ function initMercado(){
 function addMercadoSlot(){
   syncMercadoData();
   mercadoJugadores.push({
-    nombre:'', 
-    precio:0, 
-    origen:'admin', 
-    iaOrigenId:'', 
-    pujas: Object.fromEntries(LIGA.IAS.map(ia => [ia.id, null]))
+    nombre: '', 
+    precio: 0, 
+    origen: 'admin', 
+    iaOrigenId: '', 
+    pujas: {}
   });
   renderMercadoForm();
 }
