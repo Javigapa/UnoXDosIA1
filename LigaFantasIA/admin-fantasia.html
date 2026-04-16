@@ -302,7 +302,7 @@ textarea{resize:vertical;min-height:80px;}
 <!-- PANEL: MERCADO                                         -->
 <!-- ═══════════════════════════════════════════════════════ -->
 <div class="panel" id="panel-mercado">
-  <div class="panel-title">💰 Mercado de Fichajes</div>
+  <div class="panel-title">💰 Gestión del Mercado</div>
   <div class="panel-desc">Gestiona los fichajes. El HTML va en <strong>EquiposligaIAInventados.html</strong> donde dice <code>&lt;!-- MERCADO_HTML --&gt;</code> y también en fantas-ia-v2.html si quieres actualizar plantillas allí.</div>
 
   <div class="card">
@@ -312,30 +312,51 @@ textarea{resize:vertical;min-height:80px;}
       <div class="jugador-slot">
         <input type="text" placeholder="Nombre jugador" style="flex:3;"/>
         <input type="text" placeholder="Equipo" style="flex:2;"/>
-        <input type="text" placeholder="POS" style="flex:.8;"/>
-        <input type="number" placeholder="OVR" style="flex:.8;"/>
-        <input type="number" placeholder="Base M" step="0.1" style="flex:.8;"/>
-        <input type="number" placeholder="Puja M" step="0.1" style="flex:.8;"/>
-        <input type="text" placeholder="IA ganadora" style="flex:1.5;"/>
+        <input type="text" placeholder="POS" style="flex:.7;"/>
+        <input type="number" placeholder="OVR" style="flex:.7;"/>
+        <input type="number" placeholder="Base M" step="0.1" style="flex:.7;"/>
         <button class="btn btn-red" onclick="this.closest('.jugador-slot').remove()" style="flex-shrink:0;">✕</button>
       </div>
     </div>
-    <button class="btn btn-outline" onclick="addMercadoSlot()" style="margin-bottom:.8rem;width:100%;">+ Añadir jugador</button>
-    <button class="btn btn-green" onclick="generarMercado()">📋 Generar HTML del mercado</button>
+    <button class="btn btn-outline" onclick="addMercadoSlot()" style="width:100%;">+ Añadir jugador al mercado</button>
+  </div>
+
+  <div class="card">
+    <h3>2. Pujas de las IAs</h3>
+    <div class="instruccion">Pulsa <strong>🔄 Actualizar tabla de pujas</strong> cada vez que añadas o quites jugadores arriba.</div>
+    <button class="btn btn-outline" onclick="actualizarTablaPujas()" style="margin-bottom:1rem; width:100%;">🔄 Actualizar tabla de pujas</button>
+    <div class="table-wrap">
+      <table class="puntos-table" id="tabla-pujas">
+        <thead id="thead-pujas"></thead>
+        <tbody id="tbody-pujas"></tbody>
+      </table>
+    </div>
+    <button class="btn btn-green" onclick="generarMercado()" style="margin-top:1rem;">📋 Generar HTML Resultados Subasta</button>
   </div>
 
   <div class="output-box" id="out-mercado" style="display:none">
-    <h4>HTML del mercado — pega en EquiposligaIAInventados.html donde dice <code>&lt;!-- MERCADO_HTML --&gt;</code>
+    <h4>HTML del resultado — pega en <code>EquiposligaIAInventados.html</code> o <code>fantas-ia-v2.html</code>
       <button class="copy-btn" onclick="copiar('html-mercado')">Copiar</button>
     </h4>
     <div class="output-code" id="html-mercado"></div>
   </div>
 
-  <div class="card" style="margin-top:1.2rem;">
-    <h3>Actualizar plantillas tras fichajes</h3>
-    <p style="font-size:.82rem;color:var(--gray);margin-bottom:.8rem;">
-      Después de resolver el mercado, ve al panel <strong>🎯 Sorteo</strong>, edita manualmente la plantilla de cada IA añadiendo o quitando los jugadores que corresponda, y regenera el HTML de sorteo.
+  <div class="card">
+    <h3>3. Plantillas actualizadas tras el mercado</h3>
+    <p style="font-size:.82rem;color:var(--gray);margin-bottom:1rem;">
+      Ajusta las plantillas finales de cada IA y su presupuesto restante. Un jugador por línea: <code>Nombre | POS | OVR | Precio</code>
     </p>
+    <div id="plantillas-mercado-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:1rem;">
+      <!-- Generado por JS -->
+    </div>
+    <button class="btn btn-green" onclick="generarPlantillasMercado()" style="margin-top:1.5rem; width:100%;">📋 Generar HTML Plantillas Actualizadas</button>
+  </div>
+
+  <div class="output-box" id="out-plantillas-mercado" style="display:none">
+    <h4>HTML Plantillas — pega en <code>fantas-ia-v2.html</code> entre <code>&lt;!-- SORTEO_HTML --&gt;</code> y <code>&lt;!-- /SORTEO_HTML --&gt;</code>
+      <button class="copy-btn" onclick="copiar('html-plantillas-mercado')">Copiar</button>
+    </h4>
+    <div class="output-code" id="html-plantillas-mercado"></div>
   </div>
 </div>
 
@@ -515,6 +536,18 @@ function initApp(){
     o.value=j.j; o.textContent='Jornada '+j.j+' · '+j.fecha;
     dadoSel.appendChild(o);
   });
+
+  // Plantillas en Mercado
+  document.getElementById('plantillas-mercado-grid').innerHTML = IAS.map(ia => `
+    <div class="xi-ia-card" style="border-top: 3px solid ${ia.color};">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.5rem;">
+        <h4>${ia.emoji} ${ia.name}</h4>
+        <input type="number" id="budget-${ia.id}" value="100" step="0.1" style="width:70px; margin-bottom:0; padding:.3rem;" title="Presupuesto restante"/>
+      </div>
+      <textarea id="plantilla-${ia.id}" rows="10" placeholder="Nombre | POS | OVR | PrecioM"></textarea>
+    </div>
+  `).join('');
+
   // Sorteo manual: crear textarea por IA
   document.getElementById('sorteo-manual').innerHTML=IAS.map(ia=>`
     <div style="margin-bottom:.8rem;">
@@ -758,35 +791,137 @@ function generarJornadas(){
 function addMercadoSlot(){
   const slot=document.createElement('div');
   slot.className='jugador-slot';
-  slot.innerHTML=`<input type="text" placeholder="Nombre jugador" style="flex:3;"/><input type="text" placeholder="Equipo" style="flex:2;"/><input type="text" placeholder="POS" style="flex:.8;"/><input type="number" placeholder="OVR" style="flex:.8;"/><input type="number" placeholder="Base M" step="0.1" style="flex:.8;"/><input type="number" placeholder="Puja M" step="0.1" style="flex:.8;"/><input type="text" placeholder="IA ganadora" style="flex:1.5;"/><button class="btn btn-red" onclick="this.closest('.jugador-slot').remove()" style="flex-shrink:0;">✕</button>`;
+  slot.innerHTML=`<input type="text" placeholder="Nombre jugador" style="flex:3;"/><input type="text" placeholder="Equipo" style="flex:2;"/><input type="text" placeholder="POS" style="flex:.7;"/><input type="number" placeholder="OVR" style="flex:.7;"/><input type="number" placeholder="Base M" step="0.1" style="flex:.7;"/><button class="btn btn-red" onclick="this.closest('.jugador-slot').remove()" style="flex-shrink:0;">✕</button>`;
   document.getElementById('mercado-slots').appendChild(slot);
+}
+
+function actualizarTablaPujas(){
+  const slots = document.querySelectorAll('#mercado-slots .jugador-slot');
+  const thead = document.getElementById('thead-pujas');
+  const tbody = document.getElementById('tbody-pujas');
+  
+  if(!slots.length) {
+    thead.innerHTML = ''; tbody.innerHTML = '';
+    return;
+  }
+
+  // Header
+  thead.innerHTML = `<tr>
+    <th style="text-align:left;">Jugador</th>
+    <th style="text-align:center;">Base</th>
+    ${IAS.map(ia => `<th style="text-align:center; color:${ia.color}; font-size:.7rem;">${ia.emoji}<br>${ia.name}</th>`).join('')}
+  </tr>`;
+
+  // Body
+  tbody.innerHTML = [...slots].map((s, idx) => {
+    const inputs = s.querySelectorAll('input');
+    const nombre = inputs[0].value || `Jugador ${idx+1}`;
+    const base = inputs[4].value || '0';
+    
+    return `<tr>
+      <td style="font-weight:600; font-size:.85rem;">${esc(nombre)}</td>
+      <td style="text-align:center; font-family:monospace; color:var(--gray);">${base}M</td>
+      ${IAS.map(ia => `
+        <td style="text-align:center;">
+          <input type="number" class="bid-input" data-player-idx="${idx}" data-ia-id="${ia.id}" placeholder="0" step="0.1" style="width:55px; padding:.2rem; margin:0; text-align:center; font-size:.8rem;"/>
+        </td>
+      `).join('')}
+    </tr>`;
+  }).join('');
+  
+  toast('✅ Tabla de pujas actualizada');
 }
 
 function generarMercado(){
   const slots=document.querySelectorAll('#mercado-slots .jugador-slot');
-  const cards=[...slots].map(s=>{
-    const ins=s.querySelectorAll('input');
-    const nombre=ins[0].value||'—',equipo=ins[1].value||'—',pos=ins[2].value||'—',
-          ovr=ins[3].value||'—',base=ins[4].value||'—',puja=ins[5].value||'—',ia=ins[6].value||'Sin pujas';
-    const hayGanador=ins[6].value.trim()!=='';
+  const bids = document.querySelectorAll('.bid-input');
+  
+  if(!slots.length) { toast('Añade jugadores primero','#e53935'); return; }
+
+  const results = [...slots].map((s, idx) => {
+    const ins = s.querySelectorAll('input');
+    const nombre = ins[0].value || '—';
+    const equipo = ins[1].value || '—';
+    const pos = ins[2].value || '—';
+    const ovr = ins[3].value || '—';
+    const base = parseFloat(ins[4].value) || 0;
+
+    // Buscar ganador entre las pujas de este jugador
+    let maxPuja = base;
+    let ganadorIA = null;
+    
+    [...bids].filter(b => parseInt(b.dataset.playerIdx) === idx).forEach(b => {
+      const val = parseFloat(b.value) || 0;
+      if(val > maxPuja) {
+        maxPuja = val;
+        ganadorIA = IAS.find(ia => ia.id === b.dataset.iaId);
+      }
+    });
+
+    return { nombre, equipo, pos, ovr, base, maxPuja, ganadorIA };
+  });
+
+  const html = results.map(r => {
+    const hayGanador = !!r.ganadorIA;
     return `<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
   <div style="padding:.8rem 1rem;background:rgba(76,175,80,.1);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-    <div><div style="font-family:Oswald,sans-serif;font-size:1.05rem;font-weight:700;">${esc(nombre)}</div><div style="font-size:.75rem;color:#b0b0b0;">${esc(equipo)}</div></div>
-    <span style="font-family:Oswald,sans-serif;font-size:.75rem;font-weight:600;padding:.15rem .5rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784;">${esc(pos)}</span>
+    <div><div style="font-family:Oswald,sans-serif;font-size:1.05rem;font-weight:700;">${esc(r.nombre)}</div><div style="font-size:.75rem;color:#b0b0b0;">${esc(r.equipo)}</div></div>
+    <span style="font-family:Oswald,sans-serif;font-size:.75rem;font-weight:600;padding:.15rem .5rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784;">${esc(r.pos)}</span>
   </div>
   <div style="padding:1rem;">
     <div style="display:flex;gap:1rem;margin-bottom:.6rem;">
-      <span style="font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;padding:.12rem .5rem;border-radius:4px;background:rgba(76,175,80,.15);color:#4caf50;">OVR ${esc(ovr)}</span>
+      <span style="font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;padding:.12rem .5rem;border-radius:4px;background:rgba(76,175,80,.15);color:#4caf50;">OVR ${esc(r.ovr)}</span>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(255,255,255,.04);border-radius:4px;">
-      <div style="font-size:.8rem;color:#b0b0b0;">Base: <strong style="color:#f0f0f0;">${esc(base)}M</strong></div>
-      <div style="font-family:Oswald,sans-serif;font-size:1.1rem;font-weight:700;color:#ffd700;">${hayGanador?esc(puja)+'M · '+esc(ia):'Sin pujas aún'}</div>
+      <div style="font-size:.8rem;color:#b0b0b0;">Base: <strong style="color:#f0f0f0;">${r.base}M</strong></div>
+      <div style="font-family:Oswald,sans-serif;font-size:1.1rem;font-weight:700;color:#ffd700;">${hayGanador ? r.maxPuja.toFixed(1)+'M · '+r.ganadorIA.emoji+' '+r.ganadorIA.name : 'Sin pujas — libre'}</div>
     </div>
   </div>
 </div>`;
   }).join('\n');
-  showOut('out-mercado','html-mercado',cards||'<!-- Sin jugadores en subasta -->');
-  toast('✅ Mercado generado');
+
+  showOut('out-mercado','html-mercado', html);
+  toast('✅ HTML de resultados generado');
+}
+
+function generarPlantillasMercado(){
+  const html = IAS.map(ia => {
+    const budget = document.getElementById(`budget-${ia.id}`).value || '0';
+    const text = document.getElementById(`plantilla-${ia.id}`).value.trim();
+    if(!text) return '';
+    
+    const lines = text.split('\n').filter(Boolean);
+    const rows = lines.map((l, i) => {
+      const p = l.split('|').map(s => s.trim());
+      const nombre = p[0]||'—', pos = p[1]||'MED', ovr = p[2]||'—', precio = p[3]||'—';
+      return `<tr>
+        <td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center;">${i+1}</td>
+        <td style="font-weight:600;">${esc(nombre)}</td>
+        <td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:600;padding:.12rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784;">${esc(pos)}</span></td>
+        <td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center;">${esc(ovr)}</td>
+        <td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right;">${esc(precio)}</td>
+      </tr>`;
+    }).join('');
+
+    return `<div class="sorteo-card" style="border-top: 3px solid ${ia.color};">
+  <div class="sorteo-card-head">
+    <div>
+      <div class="sorteo-card-title" style="color:${ia.color};">${ia.emoji} ${ia.name}</div>
+      <div class="sorteo-card-budget">${ia.company} · 💰 Restante: ${budget}M</div>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table class="sorteo-table">
+      <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th style="text-align:right">💶 Precio</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>
+</div>`;
+  }).filter(Boolean).join('\n');
+
+  if(!html) { toast('Rellena al menos una plantilla','#e53935'); return; }
+  showOut('out-plantillas-mercado', 'html-plantillas-mercado', html);
+  toast('✅ HTML de plantillas generado');
 }
 
 // ═══════════════════════════════════════════════════
@@ -874,6 +1009,2119 @@ function generarExtra(){
   showOut('out-extra','html-extra',html);
   toast('✅ Contenido generado');
 }
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🔐 Admin · Liga Fantas-IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --green-bright:#4caf50;--green-light:#81c784;--green-mid:#1a5c1a;
+      --gold:#ffd700;--white:#f0f0f0;--gray:#b0b0b0;
+      --dark:#0d1b0d;--card-bg:rgba(10,46,10,0.92);--border:rgba(76,175,80,0.3);
+      --red:#e53935;--blue:#42a5f5;--orange:#ff9500;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Rajdhani',sans-serif;background:#080f08;color:var(--white);min-height:100vh;}
+    body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-gradient(160deg,#060e06 0%,#0d1b0d 100%);}
+
+    /* LOGIN */
+    #login-screen{position:fixed;inset:0;z-index:9999;background:#060e06;display:flex;align-items:center;justify-content:center;}
+    .login-box{background:var(--card-bg);border:2px solid var(--green-bright);border-radius:12px;padding:3rem;text-align:center;max-width:380px;width:90%;}
+    .login-box h1{font-family:'Oswald',sans-serif;font-size:2rem;color:var(--gold);margin-bottom:.5rem;}
+    .login-box p{color:var(--gray);font-size:.9rem;margin-bottom:2rem;}
+    .login-input{width:100%;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:6px;padding:.8rem 1rem;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:1.1rem;text-align:center;letter-spacing:4px;margin-bottom:1rem;transition:border-color .25s;}
+    .login-input:focus{outline:none;border-color:var(--green-bright);}
+    .login-btn{width:100%;background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;letter-spacing:1px;padding:.9rem;border:none;border-radius:6px;cursor:pointer;transition:all .25s;}
+    .login-btn:hover{background:#ffe040;}
+    .login-error{color:var(--red);font-size:.85rem;margin-top:.5rem;display:none;}
+
+    /* LAYOUT */
+    #admin-app{display:none;}
+    .admin-nav{background:rgba(5,20,5,.97);border-bottom:2px solid var(--green-bright);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+    .admin-logo{font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:700;color:var(--gold);}
+    .admin-logo span{color:var(--green-bright);}
+    .admin-tabs{display:flex;gap:.5rem;flex-wrap:wrap;}
+    .atab{font-family:'Oswald',sans-serif;font-size:.82rem;font-weight:600;padding:.4rem 1rem;border:1px solid var(--border);background:transparent;color:var(--gray);border-radius:4px;cursor:pointer;transition:all .2s;}
+    .atab.active,.atab:hover{background:var(--green-bright);color:#060e06;border-color:var(--green-bright);}
+    .admin-links{display:flex;gap:.8rem;align-items:center;}
+    .admin-links a{font-size:.78rem;color:var(--gray);text-decoration:none;border:1px solid var(--border);padding:.25rem .7rem;border-radius:15px;transition:all .2s;}
+    .admin-links a:hover{color:var(--green-bright);border-color:var(--green-bright);}
+    .btn-logout{font-size:.78rem;color:var(--red);background:transparent;border:1px solid rgba(229,57,53,.4);padding:.25rem .7rem;border-radius:15px;cursor:pointer;transition:all .2s;}
+    .btn-logout:hover{border-color:var(--red);}
+
+    .admin-main{max-width:1300px;margin:0 auto;padding:2rem;}
+
+    /* PANELS */
+    .panel{display:none;}
+    .panel.active{display:block;}
+    .panel-title{font-family:'Oswald',sans-serif;font-size:1.6rem;font-weight:700;color:var(--gold);margin-bottom:.4rem;}
+    .panel-desc{color:var(--gray);font-size:.95rem;margin-bottom:2rem;}
+
+    /* CARDS */
+    .card{background:var(--card-bg);border:1px solid var(--border);border-radius:10px;padding:1.5rem;margin-bottom:1.5rem;}
+    .card-title{font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:600;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+
+    /* DADO */
+    .dado-section{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-bottom:1.5rem;}
+    .dado-card{background:rgba(0,0,0,.3);border:2px solid var(--border);border-radius:10px;padding:1.5rem;text-align:center;transition:border-color .3s;}
+    .dado-card.rolled{border-color:var(--gold);}
+    .dado-card h3{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;margin-bottom:.4rem;}
+    .dado-card .dado-desc{font-size:.82rem;color:var(--gray);margin-bottom:1rem;}
+    .dado-result{font-family:'Oswald',sans-serif;font-size:4rem;font-weight:700;line-height:1;margin:1rem 0;transition:all .3s;}
+    .dado-result.rolling{animation:diceRoll .6s ease;}
+    @keyframes diceRoll{0%,100%{transform:scale(1);}50%{transform:scale(1.3) rotate(15deg);}}
+    .dado-btn{background:var(--green-bright);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.6rem 1.5rem;border:none;border-radius:6px;cursor:pointer;transition:all .2s;width:100%;}
+    .dado-btn:hover{background:#66bb6a;}
+    .dado-cara-info{font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--gray);margin-top:.5rem;}
+
+    .btn-all-dice{width:100%;background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:1px;padding:1rem;border:none;border-radius:8px;cursor:pointer;transition:all .25s;box-shadow:0 4px 20px rgba(255,215,0,.25);margin-bottom:1.5rem;}
+    .btn-all-dice:hover{background:#ffe040;transform:translateY(-2px);}
+
+    /* ASIGNACION IA */
+    .sorteo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
+    .sorteo-card{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:1rem;}
+    .sorteo-ia{font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;margin-bottom:.4rem;}
+    .sorteo-players{display:flex;flex-direction:column;gap:.2rem;max-height:200px;overflow-y:auto;}
+    .sorteo-player{font-size:.8rem;padding:.25rem .5rem;background:rgba(76,175,80,.06);border-radius:3px;display:flex;justify-content:space-between;}
+    .sorteo-player .sp-name{flex:1;}
+    .sorteo-player .sp-price{color:var(--gold);font-family:'Share Tech Mono',monospace;font-size:.72rem;}
+    .sorteo-budget{font-family:'Share Tech Mono',monospace;font-size:.78rem;margin-top:.5rem;padding:.3rem .5rem;background:rgba(255,215,0,.08);border-radius:4px;color:var(--gold);}
+
+    /* PUNTOS */
+    .puntos-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;}
+    .pf-btn{font-family:'Oswald',sans-serif;font-size:.8rem;font-weight:600;padding:.3rem .8rem;border:1px solid var(--border);background:transparent;color:var(--gray);border-radius:20px;cursor:pointer;transition:all .2s;}
+    .pf-btn.active,.pf-btn:hover{background:var(--green-bright);color:#060e06;border-color:var(--green-bright);}
+    .puntos-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+    .puntos-table th{font-family:'Oswald',sans-serif;font-weight:600;color:var(--green-light);padding:.6rem .8rem;text-align:left;background:rgba(76,175,80,.1);border-bottom:1px solid var(--border);}
+    .puntos-table td{padding:.5rem .8rem;border-bottom:1px solid rgba(76,175,80,.07);}
+    .puntos-table tr:hover td{background:rgba(76,175,80,.05);}
+    .puntos-input{width:55px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:4px;padding:.3rem .5rem;color:var(--white);font-family:'Share Tech Mono',monospace;font-size:.85rem;text-align:center;}
+    .puntos-input:focus{outline:none;border-color:var(--gold);}
+    .ovr-badge{font-family:'Oswald',sans-serif;font-size:.75rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;}
+    .ovr-elite{background:rgba(255,215,0,.2);color:var(--gold);}
+    .ovr-high{background:rgba(76,175,80,.2);color:var(--green-bright);}
+    .ovr-mid{background:rgba(100,181,246,.2);color:#64b5f6;}
+    .ovr-low{background:rgba(255,138,101,.2);color:#ff8a65;}
+    .btn-save-puntos{background:var(--green-bright);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.7rem 2rem;border:none;border-radius:6px;cursor:pointer;margin-top:1rem;transition:all .2s;}
+    .btn-save-puntos:hover{background:#66bb6a;}
+
+    /* CRONICAS */
+    .cronicas-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;margin-bottom:1.5rem;}
+    .cronica-input-card{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:1.2rem;}
+    .cronica-label{font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;color:var(--gold);margin-bottom:.6rem;display:block;}
+    .cronica-textarea{width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:6px;padding:.7rem .9rem;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:.9rem;resize:vertical;min-height:100px;transition:border-color .25s;}
+    .cronica-textarea:focus{outline:none;border-color:var(--green-bright);}
+    .cronica-pts{display:flex;gap:.5rem;align-items:center;margin-top:.5rem;}
+    .cronica-pts label{font-size:.8rem;color:var(--gray);}
+    .cronica-pts input{width:55px;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:4px;padding:.3rem .5rem;color:var(--white);font-family:'Share Tech Mono',monospace;font-size:.85rem;text-align:center;}
+    .cronica-pts input:focus{outline:none;border-color:var(--gold);}
+
+    .cronica-assign-result{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1rem;}
+    .car-card{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:1rem;}
+    .car-match{font-family:'Share Tech Mono',monospace;font-size:.75rem;color:var(--gold);margin-bottom:.4rem;}
+    .car-text{font-size:.85rem;color:var(--white);line-height:1.5;font-style:italic;}
+    .car-pts{font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--green-bright);margin-top:.4rem;}
+
+    /* JORNADA ACTIVA */
+    .jornada-selector{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;margin-bottom:1.5rem;}
+    .jornada-selector label{font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;color:var(--white);}
+    .jornada-select{background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:6px;padding:.5rem 1rem;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:.95rem;cursor:pointer;}
+    .jornada-select:focus{outline:none;border-color:var(--green-bright);}
+
+    /* RESULTADO */
+    .resultado-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:1rem;}
+    .resultado-card{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:1rem;}
+    .resultado-match{font-size:.8rem;color:var(--gray);margin-bottom:.5rem;}
+    .resultado-inputs{display:flex;align-items:center;gap:.5rem;}
+    .resultado-input{width:50px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:4px;padding:.4rem;color:var(--white);font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700;text-align:center;}
+    .resultado-input:focus{outline:none;border-color:var(--gold);}
+    .resultado-vs{font-family:'Share Tech Mono',monospace;font-size:.8rem;color:var(--gray);}
+
+
+    /* OUTPUT HTML */
+    .output-section{margin-top:1.5rem;background:#050d05;border:2px solid var(--green-bright);border-radius:10px;padding:1.2rem;}
+    .output-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem;margin-bottom:.8rem;}
+    .output-title{font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;color:var(--green-bright);}
+    .output-title code{background:rgba(76,175,80,.15);color:var(--green-bright);padding:.1rem .3rem;border-radius:3px;font-size:.8rem;}
+    .copy-html-btn{background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.82rem;font-weight:700;padding:.4rem 1rem;border:none;border-radius:5px;cursor:pointer;white-space:nowrap;}
+    .copy-html-btn:hover{background:#ffe040;}
+    .output-code{font-family:'Share Tech Mono',monospace;font-size:.74rem;color:#a5d6a7;white-space:pre-wrap;word-break:break-all;max-height:300px;overflow-y:auto;line-height:1.7;background:rgba(0,0,0,.4);padding:.8rem;border-radius:6px;}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:2rem;right:2rem;z-index:9999;background:var(--green-bright);color:#060e06;font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;padding:.8rem 1.5rem;border-radius:6px;box-shadow:0 4px 20px rgba(0,0,0,.4);transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.175,.885,.32,1.275);}
+    .toast.show{transform:translateY(0);opacity:1;}
+
+    /* TABLE OVERFLOW */
+    .table-wrap{overflow-x:auto;}
+    .pos-tag{font-family:'Oswald',sans-serif;font-size:.72rem;font-weight:600;padding:.1rem .4rem;border-radius:3px;}
+    .pos-POR{background:rgba(255,193,7,.15);color:#ffc107;}
+    .pos-DEF{background:rgba(33,150,243,.15);color:#64b5f6;}
+    .pos-MED{background:rgba(76,175,80,.15);color:#81c784;}
+    .pos-EXT{background:rgba(255,152,0,.15);color:#ffb74d;}
+    .pos-DEL{background:rgba(244,67,54,.15);color:#ef9a9a;}
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div style="font-size:3rem;margin-bottom:.5rem;">🔐</div>
+    <h1>Admin Panel</h1>
+    <p>Liga Fantas-IA · Acceso restringido</p>
+    <input type="password" class="login-input" id="pw-input" placeholder="Contraseña" onkeydown="if(event.key==='Enter')checkLogin()"/>
+    <button class="login-btn" onclick="checkLogin()">ENTRAR</button>
+    <div class="login-error" id="login-error">❌ Contraseña incorrecta</div>
+  </div>
+</div>
+
+<!-- ADMIN APP -->
+<div id="admin-app">
+  <nav class="admin-nav">
+    <div class="admin-logo">🔐 Admin <span>Fantas-IA</span></div>
+    <div class="admin-tabs">
+      <button class="atab active" onclick="showPanel('sorteo',this)">🎯 Sorteo</button>
+      <button class="atab" onclick="showPanel('dados',this)">🎲 Dados</button>
+      <button class="atab" onclick="showPanel('puntos',this)">📊 Puntos</button>
+      <button class="atab" onclick="showPanel('cronicas',this)">📰 Crónicas</button>
+      <button class="atab" onclick="showPanel('resultados',this)">⚽ Resultados</button>
+      <button class="atab" onclick="showPanel('clasificacion',this)">🏆 Clasificación</button>
+      <button class="atab" onclick="showPanel('mercado',this)">💰 Mercado</button>
+      <button class="atab" onclick="showPanel('xi',this)">⚽ XI Ideal</button>
+      <button class="atab" onclick="showPanel('analisis',this)">🔍 Análisis</button>
+    </div>
+    <div class="admin-links">
+      <a href="fantas-ia-v2.html" target="_blank">Ver web</a>
+      <a href="mercado-fantasia.html" target="_blank">Mercado</a>
+      <button class="btn-logout" onclick="logout()">Salir</button>
+    </div>
+  </nav>
+
+  <div class="admin-main">
+
+    <!-- ===== PANEL: SORTEO INICIAL ===== -->
+    <div class="panel active" id="panel-sorteo">
+      <div class="panel-title">🎯 Sorteo Inicial de Jugadores</div>
+      <div class="panel-desc">Asigna aleatoriamente 11 jugadores a cada IA. El coste se descuenta del presupuesto de 100M.</div>
+
+      <div class="card">
+        <div class="card-title">⚙️ Configuración del sorteo</div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <button onclick="runSorteo()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;padding:.8rem 2rem;border:none;border-radius:6px;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='#ffe040'" onmouseout="this.style.background='var(--gold)'">
+            🎲 SORTEAR JUGADORES AHORA
+          </button>
+          <button onclick="clearSorteo()" style="background:transparent;color:var(--red);border:1px solid rgba(229,57,53,.4);font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;padding:.8rem 1.5rem;border-radius:6px;cursor:pointer;">
+            ↺ Resetear sorteo
+          </button>
+        </div>
+        <p style="font-size:.85rem;color:var(--gray);">Se mezclan todos los jugadores de los 8 equipos y se reparten 11 a cada IA. Los costes se descuentan automáticamente del presupuesto de 100M.</p>
+
+        <div style="margin-top:1rem;background:rgba(0,0,0,.25);border:1px dashed var(--border);border-radius:10px;padding:1rem;">
+          <div style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;color:var(--gold);margin-bottom:.35rem;">
+            🔁 Sincronizar sorteo (local → internet)
+          </div>
+          <div style="font-size:.82rem;color:var(--gray);line-height:1.45;margin-bottom:.75rem;">
+            El sorteo se guarda en <code>localStorage</code>, que no se comparte entre tu PC y el servidor online.
+            Exporta el JSON desde local y pégalo aquí en el admin online.
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div>
+              <div style="font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;color:var(--green-bright);margin-bottom:.35rem;">
+                ⬇️ Exportar (botón)
+              </div>
+              <div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-bottom:.5rem;">
+                <button onclick="exportSorteoJSON()" class="btn-save-puntos" style="margin-top:0;background:var(--gold);">
+                  Rellenar JSON
+                </button>
+              </div>
+              <textarea id="sorteo-export-json" rows="8" style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:8px;padding:.7rem .9rem;color:var(--white);font-family:'Share Tech Mono',monospace;font-size:.8rem;resize:vertical;" placeholder="Aquí aparecerá el JSON exportado..."></textarea>
+            </div>
+
+            <div>
+              <div style="font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;color:var(--orange);margin-bottom:.35rem;">
+                ⬆️ Importar (pegar + botón)
+              </div>
+              <textarea id="sorteo-import-json" rows="8" style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:8px;padding:.7rem .9rem;color:var(--white);font-family:'Share Tech Mono',monospace;font-size:.8rem;resize:vertical;" placeholder="Pega aquí el JSON exportado desde local..."></textarea>
+              <div style="margin-top:.6rem;">
+                <button onclick="importSorteoJSON()" class="btn-save-puntos" style="margin-top:0;width:100%;">
+                  Importar sorteo
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:.8rem;margin-bottom:1rem;flex-wrap:wrap;">
+      <button onclick="generarHTMLSorteo()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;padding:.7rem 1.8rem;border:none;border-radius:6px;cursor:pointer;">📋 Generar HTML del sorteo</button>
+    </div>
+    <div class="sorteo-grid" id="sorteo-result"></div>
+    <div class="output-section" id="out-sorteo" style="display:none">
+      <div class="output-header">
+        <div class="output-title">✅ Copia y pega en <code>fantas-ia-v2.html</code> donde dice <code>&lt;!-- SORTEO_HTML --&gt;</code></div>
+        <button class="copy-html-btn" onclick="copyOutput('code-sorteo')">📋 Copiar HTML</button>
+      </div>
+      <div class="output-code" id="code-sorteo"></div>
+    </div>
+    </div>
+
+    <!-- ===== PANEL: DADOS ===== -->
+    <div class="panel" id="panel-dados">
+      <div class="panel-title">🎲 Tirada de Dados por Jornada</div>
+      <div class="panel-desc">Una tirada por grupo de OVR. El resultado se aplica a todos los jugadores del grupo esa jornada.</div>
+
+      <div class="jornada-selector">
+        <label>Jornada activa:</label>
+        <select class="jornada-select" id="dado-jornada-sel">
+          <option value="">— Selecciona jornada —</option>
+        </select>
+      </div>
+
+      <button class="btn-all-dice" onclick="rollAllDice()">
+        🎲 TIRAR LOS 3 DADOS DE GOLPE
+      </button>
+
+      <div class="dado-section">
+        <div class="dado-card" id="dado-elite">
+          <h3 style="color:var(--gold);">⭐ OVR 80+</h3>
+          <div class="dado-desc">Solo caras altas. Jugadores de élite.</div>
+          <div class="dado-result" id="dado-elite-result" style="color:var(--gold);">?</div>
+          <div class="dado-cara-info">Caras posibles: 4 · 5 · 6</div>
+          <button class="dado-btn" onclick="rollSingle('elite')" style="margin-top:.8rem;">🎲 Tirar dado élite</button>
+        </div>
+        <div class="dado-card" id="dado-alto">
+          <h3 style="color:var(--green-bright);">🔵 OVR 60–79</h3>
+          <div class="dado-desc">Jugadores de nivel medio-alto.</div>
+          <div class="dado-result" id="dado-alto-result" style="color:var(--green-bright);">?</div>
+          <div class="dado-cara-info">Caras posibles: 3 · 4 · 5 · 6</div>
+          <button class="dado-btn" onclick="rollSingle('alto')" style="margin-top:.8rem;background:var(--green-bright);">🎲 Tirar dado alto</button>
+        </div>
+        <div class="dado-card" id="dado-bajo">
+          <h3 style="color:var(--gray);">⚪ OVR &lt;60</h3>
+          <div class="dado-desc">Jugadores del montón. Todo puede pasar.</div>
+          <div class="dado-result" id="dado-bajo-result" style="color:var(--gray);">?</div>
+          <div class="dado-cara-info">Caras posibles: 1 · 2 · 3 · 4 · 5 · 6</div>
+          <button class="dado-btn" onclick="rollSingle('bajo')" style="margin-top:.8rem;background:#78909c;">🎲 Tirar dado bajo</button>
+        </div>
+      </div>
+
+      <div class="card" id="dado-resumen" style="display:none;">
+        <div class="card-title">📊 Resumen de puntos esta jornada</div>
+        <div id="dado-resumen-content"></div>
+        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem;">
+          <button onclick="saveDiceResults()" class="btn-save-puntos" style="margin-top:0;">💾 Aplicar puntos en sesión</button>
+          <button onclick="generarHTMLPuntos()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.7rem 1.5rem;border:none;border-radius:6px;cursor:pointer;">📋 Generar HTML de puntos</button>
+        </div>
+        <div class="output-section" id="out-puntos-dados" style="display:none;margin-top:1rem;">
+          <div class="output-header">
+            <div class="output-title">✅ Pega en <code>fantas-ia-v2.html</code> donde dice <code>&lt;!-- PUNTOS_HTML --&gt;</code></div>
+            <button class="copy-html-btn" onclick="copyOutput('code-puntos')">📋 Copiar HTML</button>
+          </div>
+          <div class="output-code" id="code-puntos"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANEL: PUNTOS MANUALES ===== -->
+    <div class="panel" id="panel-puntos">
+      <div class="panel-title">📊 Puntos Manuales por Jugador</div>
+      <div class="panel-desc">Ajusta o introduce los puntos de cada jugador de forma manual. Los cambios se reflejan en la web principal.</div>
+
+      <div class="jornada-selector">
+        <label>Jornada:</label>
+        <select class="jornada-select" id="puntos-jornada-sel" onchange="renderPuntosTable()">
+          <option value="">— Selecciona jornada —</option>
+        </select>
+        <label>Filtrar por IA:</label>
+        <select class="jornada-select" id="puntos-ia-sel" onchange="renderPuntosTable()">
+          <option value="all">Todas las IAs</option>
+        </select>
+      </div>
+
+      <div class="puntos-filters" id="puntos-pos-filters">
+        <span style="font-size:.8rem;color:var(--gray);margin-right:.3rem;">Posición:</span>
+        <button class="pf-btn active" onclick="setPosFilter('ALL',this)">Todos</button>
+        <button class="pf-btn" onclick="setPosFilter('POR',this)">POR</button>
+        <button class="pf-btn" onclick="setPosFilter('DEF',this)">DEF</button>
+        <button class="pf-btn" onclick="setPosFilter('MED',this)">MED</button>
+        <button class="pf-btn" onclick="setPosFilter('EXT',this)">EXT</button>
+        <button class="pf-btn" onclick="setPosFilter('DEL',this)">DEL</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="puntos-table">
+          <thead><tr>
+            <th>Jugador</th><th>Equipo</th><th>IA</th><th>Pos</th><th>OVR</th><th>Dado</th><th>Crónica</th><th>Total</th><th>Editar</th>
+          </tr></thead>
+          <tbody id="puntos-tbody"></tbody>
+        </table>
+      </div>
+      <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:.8rem;">
+        <button class="btn-save-puntos" onclick="savePuntos()" style="margin-top:0;">💾 Guardar en sesión</button>
+        <button onclick="generarHTMLPuntos()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.7rem 1.5rem;border:none;border-radius:6px;cursor:pointer;">📋 Generar HTML</button>
+      </div>
+    </div>
+
+    <!-- ===== PANEL: CRÓNICAS ===== -->
+    <div class="panel" id="panel-cronicas">
+      <div class="panel-title">📰 Crónicas de Jornada</div>
+      <div class="panel-desc">Escribe 4 crónicas y asígnalas aleatoriamente a los 4 partidos de la jornada. Indica los puntos extra que otorga cada crónica al equipo ganador.</div>
+
+      <div class="jornada-selector">
+        <label>Jornada:</label>
+        <select class="jornada-select" id="cronica-jornada-sel" onchange="updateCronicaMatches()">
+          <option value="">— Selecciona jornada —</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="card-title">✍️ Escribe las 4 crónicas</div>
+        <div class="cronicas-form">
+          <div class="cronica-input-card">
+            <span class="cronica-label">📰 Crónica A</span>
+            <textarea class="cronica-textarea" id="cronica-a" placeholder="Narra el partido de forma dramática y épica..."></textarea>
+            <div class="cronica-pts">
+              <label>Puntos extra al ganador:</label>
+              <input type="number" id="cronica-a-pts" value="2" min="0" max="10"/>
+            </div>
+          </div>
+          <div class="cronica-input-card">
+            <span class="cronica-label">📰 Crónica B</span>
+            <textarea class="cronica-textarea" id="cronica-b" placeholder="Describe una victoria aplastante o una remontada épica..."></textarea>
+            <div class="cronica-pts">
+              <label>Puntos extra al ganador:</label>
+              <input type="number" id="cronica-b-pts" value="1" min="0" max="10"/>
+            </div>
+          </div>
+          <div class="cronica-input-card">
+            <span class="cronica-label">📰 Crónica C</span>
+            <textarea class="cronica-textarea" id="cronica-c" placeholder="Un empate dramático o una derrota inesperada..."></textarea>
+            <div class="cronica-pts">
+              <label>Puntos extra al ganador:</label>
+              <input type="number" id="cronica-c-pts" value="3" min="0" max="10"/>
+            </div>
+          </div>
+          <div class="cronica-input-card">
+            <span class="cronica-label">📰 Crónica D</span>
+            <textarea class="cronica-textarea" id="cronica-d" placeholder="El partido de la jornada. Goles, polémica y emoción..."></textarea>
+            <div class="cronica-pts">
+              <label>Puntos extra al ganador:</label>
+              <input type="number" id="cronica-d-pts" value="2" min="0" max="10"/>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <button onclick="assignCronicas()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;padding:.8rem 2rem;border:none;border-radius:6px;cursor:pointer;">
+            🎲 ASIGNAR ALEATORIAMENTE A PARTIDOS
+          </button>
+          <button onclick="saveCronicas()" style="background:var(--green-bright);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.8rem 1.5rem;border:none;border-radius:6px;cursor:pointer;">
+            💾 Guardar en sesión
+          </button>
+          <button onclick="generarHTMLCronicas()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;padding:.8rem 1.8rem;border:none;border-radius:6px;cursor:pointer;">
+            📋 Generar HTML crónicas
+          </button>
+        </div>
+      </div>
+
+      <div class="output-section" id="out-cronicas" style="display:none;margin-top:1rem;">
+        <div class="output-header">
+          <div class="output-title">✅ Pega en <code>fantas-ia-v2.html</code> donde dice <code>&lt;!-- CRONICAS_HTML --&gt;</code></div>
+          <button class="copy-html-btn" onclick="copyOutput('code-cronicas')">📋 Copiar HTML</button>
+        </div>
+        <div class="output-code" id="code-cronicas"></div>
+      </div>
+      <div id="cronicas-assigned" style="display:none;">
+        <div class="card-title" style="margin-bottom:1rem;">🎯 Asignación aleatoria</div>
+        <div class="cronica-assign-result" id="cronicas-assign-result"></div>
+      </div>
+    </div>
+
+    <!-- ===== PANEL: RESULTADOS ===== -->
+    <div class="panel" id="panel-resultados">
+      <div class="panel-title">⚽ Resultados de Partidos</div>
+      <div class="panel-desc">Introduce los resultados de los 4 partidos de cada jornada. Se actualizan en la clasificación de equipos.</div>
+
+      <div class="jornada-selector">
+        <label>Jornada:</label>
+        <select class="jornada-select" id="res-jornada-sel" onchange="renderResultados()">
+          <option value="">— Selecciona jornada —</option>
+        </select>
+        <button onclick="markJornadaPlayed()" style="background:var(--green-bright);color:#060e06;font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:700;padding:.5rem 1.2rem;border:none;border-radius:6px;cursor:pointer;">✓ Marcar como jugada</button>
+      </div>
+
+      <div class="resultado-grid" id="resultado-grid"></div>
+      <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:.8rem;">
+        <button onclick="saveResultados()" class="btn-save-puntos" style="margin-top:0;">💾 Guardar en sesión</button>
+        <button onclick="generarHTMLJornadas()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.7rem 1.5rem;border:none;border-radius:6px;cursor:pointer;">📋 Generar HTML jornadas</button>
+      </div>
+      <div class="output-section" id="out-jornadas" style="display:none;margin-top:1rem;">
+        <div class="output-header">
+          <div class="output-title">✅ Pega en <code>fantas-ia-v2.html</code> donde dice <code>&lt;!-- JORNADAS_HTML --&gt;</code></div>
+          <button class="copy-html-btn" onclick="copyOutput('code-jornadas')">📋 Copiar HTML</button>
+        </div>
+        <div class="output-code" id="code-jornadas"></div>
+      </div>
+    </div>
+
+
+    <!-- ===== PANEL: CLASIFICACIÓN ===== -->
+    <div class="panel" id="panel-clasificacion">
+      <div class="panel-title">🏆 Clasificación</div>
+      <div class="panel-desc">Introduce los datos actualizados. El HTML generado son solo las <strong>filas</strong> de cada tabla — pégalas directamente dentro del <code>&lt;tbody&gt;</code> correspondiente en fantas-ia-v2.html.</div>
+
+      <div class="card">
+        <div class="card-title">🤖 Ranking IAs</div>
+        <p style="font-size:.82rem;color:var(--gray);margin-bottom:.8rem;">Una IA por línea: <code>NombreIA | Empresa | Jornadas | Puntos | MejorJornada</code></p>
+        <textarea id="clas-ias" rows="8" style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:6px;padding:.7rem .9rem;color:var(--white);font-family:'Share Tech Mono',monospace;font-size:.8rem;resize:vertical;" placeholder="ChatGPT | OpenAI | 1 | 47 | 47&#10;Gemini | Google DeepMind | 1 | 43 | 43&#10;Claude | Anthropic | 1 | 41 | 41&#10;Copilot | Microsoft | 1 | 38 | 38&#10;Grok | xAI | 1 | 35 | 35&#10;Perplexity | Perplexity AI | 1 | 32 | 32&#10;Mistral | Mistral AI | 1 | 29 | 29"></textarea>
+        <button onclick="generarFilasIAs()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.6rem 1.4rem;border:none;border-radius:6px;cursor:pointer;margin-top:.4rem;">📋 Generar filas IAs</button>
+        <div class="output-section" id="out-clas-ias" style="display:none;margin-top:.8rem;">
+          <div class="output-header">
+            <div class="output-title">✅ Pega estas filas dentro del <code>&lt;tbody id="ia-ranking-body"&gt;</code> en fantas-ia-v2.html</div>
+            <button class="copy-html-btn" onclick="copyOutput('code-clas-ias')">📋 Copiar</button>
+          </div>
+          <div class="output-code" id="code-clas-ias"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏟️ Clasificación Equipos</div>
+        <p style="font-size:.82rem;color:var(--gray);margin-bottom:.8rem;">Un equipo por línea: <code>Nombre | Emoji | PJ | G | E | P | GF | GC</code> (los Pts se calculan solos: G×3+E)</p>
+        <textarea id="clas-equipos" rows="9" style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:6px;padding:.7rem .9rem;color:var(--white);font-family:'Share Tech Mono',monospace;font-size:.8rem;resize:vertical;" placeholder="Realidad Virtual F.C. | 💻 | 1 | 1 | 0 | 0 | 3 | 1&#10;Sintéticos F.C. | 🧬 | 1 | 1 | 0 | 0 | 4 | 2&#10;Metrópoli S.C. | 🏙️ | 1 | 0 | 1 | 0 | 1 | 1&#10;Nómadas United | 🌍 | 1 | 0 | 1 | 0 | 1 | 1&#10;Atlético Campero | 🌾 | 1 | 0 | 0 | 1 | 0 | 2&#10;Cemento Armónico C.F. | 🏗️ | 1 | 0 | 0 | 1 | 0 | 2&#10;Los Infrapagados | 💸 | 1 | 1 | 0 | 0 | 3 | 1&#10;Nebulosa F.C. | 🌫️ | 1 | 0 | 0 | 1 | 1 | 3"></textarea>
+        <button onclick="generarFilasEquipos()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.6rem 1.4rem;border:none;border-radius:6px;cursor:pointer;margin-top:.4rem;">📋 Generar filas Equipos</button>
+        <div class="output-section" id="out-clas-equipos" style="display:none;margin-top:.8rem;">
+          <div class="output-header">
+            <div class="output-title">✅ Pega estas filas dentro del <code>&lt;tbody id="teams-ranking-body"&gt;</code> en fantas-ia-v2.html</div>
+            <button class="copy-html-btn" onclick="copyOutput('code-clas-equipos')">📋 Copiar</button>
+          </div>
+          <div class="output-code" id="code-clas-equipos"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PANEL: MERCADO ===== -->
+    <div class="panel" id="panel-mercado">
+      <div class="panel-title">💰 Gestión del Mercado</div>
+      <div class="panel-desc">Añade jugadores, registra pujas, resuelve la subasta y genera los HTMLs para la web.</div>
+
+      <!-- PASO 1: jugadores en subasta -->
+      <div class="card">
+        <div class="card-title">📋 1. Jugadores en subasta</div>
+        <p style="color:var(--gray);font-size:.85rem;margin-bottom:1rem;">Añade los jugadores que salen al mercado esta semana.</p>
+        <div id="mercado-jugadores-form"></div>
+        <button onclick="addMercadoSlot()" style="background:transparent;border:1px solid var(--green-bright);color:var(--green-bright);font-family:'Oswald',sans-serif;font-size:.85rem;font-weight:600;padding:.5rem 1.2rem;border-radius:6px;cursor:pointer;margin-top:.8rem;">+ Añadir jugador</button>
+      </div>
+
+      <!-- PASO 2: pujas -->
+      <div class="card">
+        <div class="card-title">🤖 2. Tabla de Pujas Masiva</div>
+        <div class="instruccion">Introduce las pujas de cada IA. Marca <strong>NP</strong> si no pujan. Los nombres se sincronizan según escribes arriba.</div>
+        <div class="table-wrap">
+          <table class="puntos-table" style="font-size:0.8rem;">
+            <thead id="pujas-thead"></thead>
+            <tbody id="pujas-tbody"></tbody>
+          </table>
+        </div>
+        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem;">
+          <button onclick="saveMercado()" class="btn-save-puntos" style="margin-top:0;">💾 Guardar y Resolver Mercado</button>
+          <button onclick="generarHTMLMercado()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;padding:.7rem 1.8rem;border:none;border-radius:6px;cursor:pointer;">📋 Generar HTML resultado</button>
+        </div>
+        <div class="output-section" id="out-mercado" style="display:none;margin-top:1rem;">
+          <div class="output-header">
+            <div class="output-title">✅ HTML del resultado de la subasta — Pega en tu página de mercado</div>
+            <button class="copy-html-btn" onclick="copyOutput('code-mercado')">📋 Copiar HTML</button>
+          </div>
+          <div class="output-code" id="code-mercado"></div>
+        </div>
+      </div>
+
+      <!-- PASO 3: plantillas manuales por IA -->
+      <div class="card">
+        <div class="card-title">📝 3. Plantillas actualizadas tras el mercado</div>
+        <p style="color:var(--gray);font-size:.85rem;margin-bottom:1rem;">
+          Introduce la plantilla definitiva de cada IA (un jugador por línea: <code>Nombre | POS | OVR | Precio</code>) y el presupuesto restante.
+          Pulsa <strong>📋 Generar HTML plantillas</strong> cuando acabes.
+        </p>
+        <div id="plantillas-ia-forms"></div>
+        <button onclick="generarHTMLPlantillas()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;padding:.7rem 1.8rem;border:none;border-radius:6px;cursor:pointer;margin-top:1rem;">📋 Generar HTML plantillas</button>
+        <div class="output-section" id="out-plantillas" style="display:none;margin-top:1rem;">
+          <div class="output-header">
+            <div class="output-title">✅ Pega en <code>fantas-ia-v2.html</code> entre <code>&lt;!-- SORTEO_HTML --&gt;</code> y <code>&lt;!-- /SORTEO_HTML --&gt;</code></div>
+            <button class="copy-html-btn" onclick="copyOutput('code-plantillas')">📋 Copiar HTML</button>
+          </div>
+          <div class="output-code" id="code-plantillas"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ===== PANEL: XI IDEAL ===== -->
+    <div class="panel" id="panel-xi">
+      <div class="panel-title">⚽ XI Ideal por Jornada</div>
+      <div class="panel-desc">Introduce el once de cada IA. Genera el HTML y pégalo en fantas-ia-v2.html donde dice <code>&lt;!-- XI_HTML --&gt;</code>.</div>
+      <div class="card">
+        <div class="card-title">Datos de la jornada</div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <div><label style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--green-bright);display:block;margin-bottom:.3rem;">JORNADA</label>
+          <input type="number" id="xi-jornada" placeholder="1" min="1" max="14" style="width:80px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem;color:var(--white);font-family:Oswald,sans-serif;"/></div>
+          <div><label style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--green-bright);display:block;margin-bottom:.3rem;">FORMACIÓN</label>
+          <input type="text" id="xi-formacion" value="4-3-3" style="width:100px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem;color:var(--white);font-family:Oswald,sans-serif;"/></div>
+        </div>
+        <p style="font-size:.82rem;color:var(--gray);margin-bottom:.8rem;">Un jugador por IA por línea: <code>Nombre Jugador | POS</code></p>
+        <div id="xi-ia-forms" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;"></div>
+        <button onclick="generarHTMLXI()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;padding:.7rem 1.8rem;border:none;border-radius:6px;cursor:pointer;margin-top:1rem;">📋 Generar HTML XI Ideal</button>
+      </div>
+      <div class="output-section" id="out-xi" style="display:none">
+        <div class="output-header">
+          <div class="output-title">✅ Pega en <code>fantas-ia-v2.html</code> donde dice <code>&lt;!-- XI_HTML --&gt;</code></div>
+          <button class="copy-html-btn" onclick="copyOutput('code-xi')">📋 Copiar HTML</button>
+        </div>
+        <div class="output-code" id="code-xi"></div>
+      </div>
+    </div>
+
+    <!-- ===== PANEL: ANÁLISIS ===== -->
+    <div class="panel" id="panel-analisis">
+      <div class="panel-title">🔍 Análisis de Jornada</div>
+      <div class="panel-desc">Escribe el análisis. Genera el HTML y pégalo en fantas-ia-v2.html donde dice <code>&lt;!-- ANALISIS_HTML --&gt;</code>.</div>
+      <div class="card">
+        <div style="margin-bottom:1rem;">
+          <label style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--green-bright);display:block;margin-bottom:.3rem;">JORNADA</label>
+          <input type="number" id="an-jornada" placeholder="1" min="1" max="14" style="width:80px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem;color:var(--white);font-family:Oswald,sans-serif;"/>
+        </div>
+        <label style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--green-bright);display:block;margin-bottom:.3rem;">TEXTO DEL ANÁLISIS</label>
+        <textarea id="an-texto" rows="10" style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:6px;padding:.8rem 1rem;color:var(--white);font-family:Rajdhani,sans-serif;font-size:.95rem;resize:vertical;line-height:1.6;margin-bottom:1rem;" placeholder="Escribe aquí el análisis de la jornada..."></textarea>
+        <label style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--green-bright);display:block;margin-bottom:.3rem;">DESTACADOS (opcional)</label>
+        <input type="text" id="an-destacados" placeholder="Ej: Logic Gate (Claude) — MVP de la jornada con 6 puntos" style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:6px;padding:.7rem 1rem;color:var(--white);font-family:Rajdhani,sans-serif;font-size:.9rem;margin-bottom:1rem;"/>
+        <button onclick="generarHTMLAnalisis()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;padding:.7rem 1.8rem;border:none;border-radius:6px;cursor:pointer;">📋 Generar HTML análisis</button>
+      </div>
+      <div class="output-section" id="out-analisis" style="display:none">
+        <div class="output-header">
+          <div class="output-title">✅ Pega en <code>fantas-ia-v2.html</code> donde dice <code>&lt;!-- ANALISIS_HTML --&gt;</code></div>
+          <button class="copy-html-btn" onclick="copyOutput('code-analisis')">📋 Copiar HTML</button>
+        </div>
+        <div class="output-code" id="code-analisis"></div>
+      </div>
+    </div>
+
+  </div><!-- /admin-main -->
+</div><!-- /admin-app -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// LIGA FANTAS-IA — DATOS COMPARTIDOS
+// Datos de Liga Fantas-IA
+// ============================================================
+
+const LIGA = {
+
+  // ======= 7 IAs =======
+  IAS: [
+    { id:'chatgpt',    name:'ChatGPT',    company:'OpenAI',          emoji:'🤖', color:'#10a37f' },
+    { id:'gemini',     name:'Gemini',     company:'Google DeepMind', emoji:'💎', color:'#4285f4' },
+    { id:'claude',     name:'Claude',     company:'Anthropic',       emoji:'🔮', color:'#7c3aed' },
+    { id:'copilot',    name:'Copilot',    company:'Microsoft',       emoji:'🪟', color:'#0078d4' },
+    { id:'grok',       name:'Grok',       company:'xAI',             emoji:'⚡', color:'#e33d3d' },
+    { id:'perplexity', name:'Perplexity', company:'Perplexity AI',   emoji:'🔍', color:'#20b2aa' },
+    { id:'mistral',    name:'Mistral',    company:'Mistral AI',      emoji:'🌊', color:'#ff9500' },
+  ],
+
+  // ======= 8 EQUIPOS =======
+  TEAMS: [
+    {
+      id:'rv', name:'Realidad Virtual F.C.', emoji:'💻', color:'#00e5ff',
+      manager:'', // asignado al inicio
+      desc:'Favorito al título. Patrocinado por tecnología. Muy alto en Visión y Calidad, algo endebles físicamente.',
+      players:[
+        {n:1,  name:'Áxel "Pixel" Vargas',       pos:'POR', pot:75, cal:70, vel:45, vis:82, price:'4.2M'},
+        {n:2,  name:'Nilo Ramírez',               pos:'DEF', pot:78, cal:72, vel:68, vis:80, price:'7.8M'},
+        {n:3,  name:'Eric "Glitch" Mendoza',      pos:'DEF', pot:70, cal:85, vel:74, vis:79, price:'9.5M'},
+        {n:4,  name:'Oriol Codes',                pos:'DEF', pot:82, cal:68, vel:71, vis:69, price:'6.5M'},
+        {n:5,  name:'Ian Castell',                pos:'DEF', pot:69, cal:79, vel:82, vis:71, price:'8.2M'},
+        {n:6,  name:'Biel "Byte" Serrano',        pos:'MED', pot:74, cal:91, vel:73, vis:94, price:'15.5M'},
+        {n:7,  name:'Jan Fuentes',                pos:'MED', pot:77, cal:84, vel:69, vis:88, price:'11.8M'},
+        {n:8,  name:'Pol "Firewall" Díaz',        pos:'MED', pot:88, cal:76, vel:62, vis:85, price:'10.2M'},
+        {n:9,  name:'Arnau Cruz',                 pos:'EXT', pot:65, cal:88, vel:94, vis:77, price:'13.5M'},
+        {n:10, name:'Nil "Algoritmo" Soler',      pos:'DEL', pot:79, cal:96, vel:82, vis:91, price:'24.0M'},
+        {n:11, name:'Roc Mora',                   pos:'DEL', pot:81, cal:89, vel:76, vis:70, price:'11.2M'},
+        {n:12, name:'Didac Pastor',               pos:'POR', pot:72, cal:65, vel:58, vis:68, price:'3.5M'},
+        {n:13, name:'Unai Expósito',              pos:'DEF', pot:73, cal:70, vel:69, vis:72, price:'5.8M'},
+        {n:14, name:'Alex "Lag" Pons',            pos:'DEF', pot:79, cal:71, vel:78, vis:64, price:'6.8M'},
+        {n:15, name:'Joel Lozano',                pos:'MED', pot:63, cal:75, vel:71, vis:81, price:'6.5M'},
+        {n:16, name:'Marc "Hacker" Vila',         pos:'MED', pot:71, cal:82, vel:73, vis:89, price:'10.8M'},
+        {n:17, name:'Pau Roca',                   pos:'EXT', pot:68, cal:77, vel:88, vis:76, price:'9.7M'},
+        {n:18, name:'Guillem Servera',            pos:'EXT', pot:62, cal:80, vel:89, vis:75, price:'9.2M'},
+        {n:19, name:'Oriol "Bit" Colomer',        pos:'DEL', pot:77, cal:84, vel:70, vis:68, price:'7.9M'},
+        {n:20, name:'Ferran Ballester',           pos:'DEL', pot:65, cal:72, vel:75, vis:67, price:'4.9M'},
+        {n:21, name:'Bernat "Cache" Amat',        pos:'MED', pot:73, cal:79, vel:70, vis:80, price:'8.4M'},
+        {n:22, name:'Lluís Giner',                pos:'DEF', pot:70, cal:68, vel:66, vis:70, price:'4.3M'},
+      ]
+    },
+    {
+      id:'ac', name:'Atlético Campero', emoji:'🌾', color:'#8d6e63',
+      manager:'',
+      desc:'Tradición rural. Muy fuertes físicamente (POT) pero con poca visión. Luchan por no descender.',
+      players:[
+        {n:1,  name:'Berto "Yugo" Díaz',           pos:'POR', pot:82, cal:45, vel:41, vis:40, price:'1.2M'},
+        {n:2,  name:'Ceferino Arada',              pos:'DEF', pot:88, cal:38, vel:62, vis:39, price:'2.0M'},
+        {n:3,  name:'Jacinto Trillo',              pos:'DEF', pot:91, cal:40, vel:55, vis:35, price:'1.8M'},
+        {n:4,  name:'Anselmo "Pala" Herrera',      pos:'DEF', pot:79, cal:52, vel:48, vis:50, price:'2.1M'},
+        {n:5,  name:'Isidro Rozas',                pos:'DEF', pot:84, cal:41, vel:53, vis:42, price:'1.7M'},
+        {n:6,  name:'Braulio "Buey" Castro',       pos:'MED', pot:92, cal:48, vel:60, vis:45, price:'2.8M'},
+        {n:7,  name:'Honorato Sierra',             pos:'MED', pot:85, cal:55, vel:57, vis:51, price:'3.0M'},
+        {n:8,  name:'Eleuterio "Barbecho" Gil',    pos:'MED', pot:83, cal:47, vel:63, vis:44, price:'2.4M'},
+        {n:9,  name:'Primitivo Vega',              pos:'EXT', pot:77, cal:50, vel:78, vis:43, price:'3.0M'},
+        {n:10, name:'Segismundo "Pellejo" Rueda',  pos:'DEL', pot:94, cal:61, vel:72, vis:47, price:'4.3M'},
+        {n:11, name:'Custodio "Cuerna" Campos',    pos:'DEL', pot:90, cal:53, vel:70, vis:46, price:'3.3M'},
+        {n:12, name:'Nicomedes Aroca',             pos:'POR', pot:78, cal:35, vel:40, vis:36, price:'0.9M'},
+        {n:13, name:'Rosendo Gamarra',             pos:'DEF', pot:80, cal:44, vel:50, vis:43, price:'1.6M'},
+        {n:14, name:'Calixto "Sacho" Mora',        pos:'DEF', pot:86, cal:43, vel:49, vis:41, price:'1.7M'},
+        {n:15, name:'Fulgencio Cuenca',            pos:'MED', pot:79, cal:46, vel:58, vis:47, price:'2.1M'},
+        {n:16, name:'Serafín "Bieldo" Vara',       pos:'MED', pot:87, cal:49, vel:61, vis:48, price:'2.8M'},
+        {n:17, name:'Epifanio Soto',               pos:'EXT', pot:75, cal:47, vel:71, vis:42, price:'2.3M'},
+        {n:18, name:'Timoteo "Rastrojo" Cerdá',    pos:'EXT', pot:76, cal:45, vel:73, vis:40, price:'2.2M'},
+        {n:19, name:'Crisóstomo Landa',            pos:'DEL', pot:89, cal:50, vel:66, vis:44, price:'3.1M'},
+        {n:20, name:'Hermógenes Riaza',            pos:'DEL', pot:82, cal:51, vel:68, vis:46, price:'2.9M'},
+        {n:21, name:'Columbano "Abono" Tormo',     pos:'MED', pot:81, cal:48, vel:56, vis:47, price:'2.2M'},
+        {n:22, name:'Eutimio Pedraza',             pos:'DEF', pot:77, cal:42, vel:52, vis:39, price:'1.3M'},
+      ]
+    },
+    {
+      id:'ce', name:'Cemento Armónico C.F.', emoji:'🏗️', color:'#90a4ae',
+      manager:'',
+      desc:'Equipo obrero. Sólidos atrás, toscos en ataque. Muy irregulares a lo largo de la temporada.',
+      players:[
+        {n:1,  name:'Ladislao "Bloque" Hormigo',   pos:'POR', pot:80, cal:55, vel:32, vis:53, price:'3.2M'},
+        {n:2,  name:'Hernán "Viga" Aguirre',       pos:'DEF', pot:89, cal:52, vel:61, vis:51, price:'3.8M'},
+        {n:3,  name:'Ramiro "Cemento" Sirvent',    pos:'DEF', pot:92, cal:48, vel:58, vis:49, price:'3.6M'},
+        {n:4,  name:'Teodoro "Ladrillo" Franco',   pos:'DEF', pot:87, cal:51, vel:57, vis:50, price:'3.6M'},
+        {n:5,  name:'Zacarías "Yeso" Paredes',     pos:'DEF', pot:84, cal:53, vel:60, vis:54, price:'3.8M'},
+        {n:6,  name:'Amancio "Grúa" Losa',         pos:'MED', pot:86, cal:62, vel:64, vis:63, price:'5.8M'},
+        {n:7,  name:'Pepe "Mezcla" Bastida',       pos:'MED', pot:79, cal:68, vel:66, vis:70, price:'6.2M'},
+        {n:8,  name:'Ambrosio "Cimiento" Canto',   pos:'MED', pot:83, cal:60, vel:63, vis:62, price:'5.4M'},
+        {n:9,  name:'Cipriano "Azulejo" Pla',      pos:'EXT', pot:75, cal:69, vel:77, vis:61, price:'5.8M'},
+        {n:10, name:'Fabián "Mortero" Lago',       pos:'DEL', pot:88, cal:70, vel:71, vis:60, price:'6.8M'},
+        {n:11, name:'Benigno "Forja" Hidalgo',     pos:'DEL', pot:90, cal:65, vel:68, vis:58, price:'6.2M'},
+        {n:12, name:'Adolfo "Silice" Ros',         pos:'POR', pot:72, cal:50, vel:35, vis:47, price:'2.2M'},
+        {n:13, name:'Casimiro "Cantera" Roca',     pos:'DEF', pot:81, cal:54, vel:62, vis:52, price:'3.6M'},
+        {n:14, name:'Eliseo "Tablón" Muro',        pos:'DEF', pot:85, cal:49, vel:55, vis:48, price:'3.4M'},
+        {n:15, name:'Florencio "Remache" Clavel',  pos:'MED', pot:78, cal:63, vel:65, vis:64, price:'5.8M'},
+        {n:16, name:'Gaspar "Pilar" Coloma',       pos:'MED', pot:82, cal:64, vel:62, vis:66, price:'6.2M'},
+        {n:17, name:'Higinio "Grava" Arenas',      pos:'EXT', pot:73, cal:61, vel:73, vis:55, price:'4.8M'},
+        {n:18, name:'Ildefonso "Cal" Montero',     pos:'EXT', pot:74, cal:66, vel:76, vis:59, price:'5.4M'},
+        {n:19, name:'Jacobo "Hierro" Acero',       pos:'DEL', pot:87, cal:64, vel:70, vis:57, price:'6.4M'},
+        {n:20, name:'Laureano "Plancha" Ferrer',   pos:'DEL', pot:84, cal:67, vel:69, vis:60, price:'6.4M'},
+        {n:21, name:'Melchor "Andamio" Valls',     pos:'MED', pot:77, cal:62, vel:64, vis:65, price:'5.6M'},
+        {n:22, name:'Nicanor "Solera" Cueto',      pos:'DEF', pot:79, cal:50, vel:59, vis:51, price:'3.2M'},
+      ]
+    },
+    {
+      id:'si', name:'Sintéticos F.C.', emoji:'🧬', color:'#b39ddb',
+      manager:'',
+      desc:'Creados en laboratorio. Estadísticas muy balanceadas y altas. Máximos rivales de Realidad Virtual.',
+      players:[
+        {n:1,  name:'Zero Uno',     pos:'POR', pot:86, cal:82, vel:60, vis:85, price:'12.0M'},
+        {n:2,  name:'Prime Nexus',  pos:'DEF', pot:90, cal:85, vel:88, vis:83, price:'18.0M'},
+        {n:3,  name:'Vektor Core',  pos:'DEF', pot:91, cal:84, vel:87, vis:82, price:'18.0M'},
+        {n:4,  name:'Axon Prime',   pos:'DEF', pot:88, cal:86, vel:89, vis:84, price:'16.0M'},
+        {n:5,  name:'Synap Cell',   pos:'DEF', pot:87, cal:83, vel:90, vis:81, price:'16.0M'},
+        {n:6,  name:'Logic Gate',   pos:'MED', pot:89, cal:94, vel:86, vis:96, price:'22.0M'},
+        {n:7,  name:'Data Stream',  pos:'MED', pot:85, cal:92, vel:88, vis:94, price:'20.0M'},
+        {n:8,  name:'Cyber Link',   pos:'MED', pot:90, cal:90, vel:91, vis:92, price:'20.0M'},
+        {n:9,  name:'Pixel Neo',    pos:'EXT', pot:82, cal:91, vel:98, vis:88, price:'18.0M'},
+        {n:10, name:'Bio Xero',     pos:'DEL', pot:95, cal:96, vel:92, vis:89, price:'28.0M'},
+        {n:11, name:'Nano Tech',    pos:'DEL', pot:94, cal:95, vel:94, vis:87, price:'26.0M'},
+        {n:12, name:'Frame Rate',   pos:'POR', pot:81, cal:78, vel:55, vis:80, price:'8.0M'},
+        {n:13, name:'Solid State',  pos:'DEF', pot:86, cal:82, vel:85, vis:81, price:'14.0M'},
+        {n:14, name:'Quantum Dot',  pos:'DEF', pot:88, cal:83, vel:86, vis:82, price:'16.0M'},
+        {n:15, name:'Virtual Core', pos:'MED', pot:84, cal:89, vel:84, vis:91, price:'18.0M'},
+        {n:16, name:'Neural Net',   pos:'MED', pot:87, cal:93, vel:87, vis:95, price:'22.0M'},
+        {n:17, name:'Plasma Ray',   pos:'EXT', pot:81, cal:88, vel:95, vis:85, price:'16.0M'},
+        {n:18, name:'Echo Wave',    pos:'EXT', pot:83, cal:89, vel:94, vis:86, price:'16.0M'},
+        {n:19, name:'Cobalt Flux',  pos:'DEL', pot:91, cal:92, vel:90, vis:84, price:'22.0M'},
+        {n:20, name:'Lithium Ion',  pos:'DEL', pot:92, cal:91, vel:91, vis:85, price:'22.0M'},
+        {n:21, name:'Optic Fiber',  pos:'MED', pot:85, cal:90, vel:89, vis:93, price:'20.0M'},
+        {n:22, name:'Robo Copia',   pos:'DEF', pot:87, cal:84, vel:88, vis:83, price:'14.0M'},
+      ]
+    },
+    {
+      id:'ip', name:'Los Infrapagados', emoji:'💸', color:'#ef9a9a',
+      manager:'',
+      desc:'Mucho talento (CAL y VIS alta) pero nulo físico por las largas jornadas laborales. Dan sorpresas.',
+      players:[
+        {n:1,  name:'Evaristo "Mileurista" Plaza',    pos:'POR', pot:48, cal:75, vel:30, vis:74, price:'2.5M'},
+        {n:2,  name:'Benito "Contrato" Basura',       pos:'DEF', pot:52, cal:78, vel:45, vis:77, price:'3.2M'},
+        {n:3,  name:'Fulano "Prácticas" Mengano',     pos:'DEF', pot:47, cal:80, vel:43, vis:82, price:'3.2M'},
+        {n:4,  name:'Sutano "Ertes" López',           pos:'DEF', pot:55, cal:76, vel:48, vis:76, price:'3.2M'},
+        {n:5,  name:'Mengano "Nocturnidad" Pérez',    pos:'DEF', pot:50, cal:77, vel:46, vis:78, price:'3.2M'},
+        {n:6,  name:'Zutano "Jornada" Partida',       pos:'MED', pot:46, cal:91, vel:51, vis:92, price:'7.0M'},
+        {n:7,  name:'Perengano "Plus" Triste',        pos:'MED', pot:53, cal:89, vel:50, vis:90, price:'6.8M'},
+        {n:8,  name:'Fulgencio "Teletrabajo" Ortiz',  pos:'MED', pot:51, cal:88, vel:52, vis:91, price:'6.8M'},
+        {n:9,  name:'Anónimo "Sinde" García',         pos:'EXT', pot:44, cal:85, vel:64, vis:83, price:'5.6M'},
+        {n:10, name:'Ignacio "Precario" Morales',     pos:'DEL', pot:61, cal:94, vel:55, vis:88, price:'7.4M'},
+        {n:11, name:'Desiderio "Autónomo" Fernández', pos:'DEL', pot:58, cal:92, vel:53, vis:89, price:'7.2M'},
+        {n:12, name:'Godofredo "Becario" Díaz',       pos:'POR', pot:42, cal:68, vel:32, vis:70, price:'1.8M'},
+        {n:13, name:'Herminio "Comunes" Vázquez',     pos:'DEF', pot:49, cal:74, vel:44, vis:75, price:'2.8M'},
+        {n:14, name:'Indalecio "Plusvalía" Gómez',    pos:'DEF', pot:54, cal:79, vel:47, vis:79, price:'3.4M'},
+        {n:15, name:'Jenaro "Convenio" Martín',       pos:'MED', pot:48, cal:86, vel:49, vis:88, price:'6.2M'},
+        {n:16, name:'Kiko "HorasExtra" Alonso',       pos:'MED', pot:52, cal:87, vel:48, vis:89, price:'6.4M'},
+        {n:17, name:'Lino "SalarioMín" Rubio',        pos:'EXT', pot:45, cal:82, vel:63, vis:81, price:'5.0M'},
+        {n:18, name:'Modesto "IRPF" Molina',          pos:'EXT', pot:47, cal:83, vel:62, vis:82, price:'5.2M'},
+        {n:19, name:'Néstor "Paguita" Navarro',       pos:'DEL', pot:56, cal:90, vel:52, vis:86, price:'6.8M'},
+        {n:20, name:'Ovidio "Cláusula" Suárez',       pos:'DEL', pot:60, cal:91, vel:54, vis:87, price:'7.2M'},
+        {n:21, name:'Paulino "Sindicato" Muñoz',      pos:'MED', pot:49, cal:86, vel:50, vis:89, price:'6.2M'},
+        {n:22, name:'Quintín "Finiquito" Romero',     pos:'DEF', pot:51, cal:75, vel:46, vis:74, price:'2.8M'},
+      ]
+    },
+    {
+      id:'nb', name:'Nebulosa F.C.', emoji:'🌫️', color:'#78909c',
+      manager:'',
+      desc:'Equipo misterioso de zona de niebla. Muy veloces e impredecibles. Calidad media-baja.',
+      players:[
+        {n:1,  name:'Niebla Bruma',       pos:'POR', pot:70, cal:58, vel:48, vis:55, price:'3.2M'},
+        {n:2,  name:'Sombras Velo',       pos:'DEF', pot:68, cal:61, vel:82, vis:60, price:'4.2M'},
+        {n:3,  name:'Eclipse Vapor',      pos:'DEF', pot:71, cal:60, vel:85, vis:58, price:'4.4M'},
+        {n:4,  name:'Bruma Fantasma',     pos:'DEF', pot:66, cal:63, vel:83, vis:61, price:'4.2M'},
+        {n:5,  name:'Nublado Gris',       pos:'DEF', pot:69, cal:59, vel:80, vis:59, price:'4.0M'},
+        {n:6,  name:'Vaho Niebla',        pos:'MED', pot:64, cal:70, vel:84, vis:71, price:'5.0M'},
+        {n:7,  name:'Cierzo Helado',      pos:'MED', pot:67, cal:69, vel:86, vis:70, price:'5.0M'},
+        {n:8,  name:'Sirimiri Frío',      pos:'MED', pot:65, cal:71, vel:83, vis:72, price:'5.0M'},
+        {n:9,  name:'Vendaval Oscuro',    pos:'EXT', pot:63, cal:68, vel:94, vis:65, price:'5.0M'},
+        {n:10, name:'Tormenta Callada',   pos:'DEL', pot:77, cal:72, vel:90, vis:66, price:'6.2M'},
+        {n:11, name:'Relámpago Sordo',    pos:'DEL', pot:75, cal:70, vel:95, vis:64, price:'6.2M'},
+        {n:12, name:'Neblina Espesa',     pos:'POR', pot:65, cal:54, vel:45, vis:52, price:'2.4M'},
+        {n:13, name:'Nubarrón Agrio',     pos:'DEF', pot:67, cal:60, vel:81, vis:59, price:'3.8M'},
+        {n:14, name:'Precipicio Húmedo',  pos:'DEF', pot:70, cal:62, vel:84, vis:61, price:'4.2M'},
+        {n:15, name:'Alborada Fría',      pos:'MED', pot:64, cal:68, vel:85, vis:69, price:'5.0M'},
+        {n:16, name:'Crepúsculo Lóbrego', pos:'MED', pot:66, cal:69, vel:86, vis:71, price:'5.0M'},
+        {n:17, name:'Aurora Tenue',       pos:'EXT', pot:62, cal:66, vel:92, vis:63, price:'4.8M'},
+        {n:18, name:'Viento Mudo',        pos:'EXT', pot:64, cal:67, vel:93, vis:64, price:'4.8M'},
+        {n:19, name:'Fulgor Opaco',       pos:'DEL', pot:73, cal:69, vel:88, vis:62, price:'5.6M'},
+        {n:20, name:'Resplandor Vago',    pos:'DEL', pot:74, cal:71, vel:91, vis:65, price:'6.0M'},
+        {n:21, name:'Sombra Chinesca',    pos:'MED', pot:65, cal:68, vel:84, vis:70, price:'5.0M'},
+        {n:22, name:'Humareda Negra',     pos:'DEF', pot:68, cal:61, vel:83, vis:60, price:'4.0M'},
+      ]
+    },
+    {
+      id:'me', name:'Metrópoli S.C.', emoji:'🏙️', color:'#ffd54f',
+      manager:'',
+      desc:'Equipo de gran ciudad, elegante. Buen equilibrio, aspiran a Europa. Jugadores con clase.',
+      players:[
+        {n:1,  name:'Darío Alameda',        pos:'POR', pot:78, cal:74, vel:50, vis:73, price:'6.8M'},
+        {n:2,  name:'Saúl Castellano',      pos:'DEF', pot:80, cal:77, vel:73, vis:75, price:'9.2M'},
+        {n:3,  name:'Iker Noble',           pos:'DEF', pot:82, cal:76, vel:75, vis:74, price:'9.4M'},
+        {n:4,  name:'Hugo Paseo',           pos:'DEF', pot:79, cal:78, vel:74, vis:76, price:'9.4M'},
+        {n:5,  name:'Pablo Avenida',        pos:'DEF', pot:81, cal:75, vel:76, vis:74, price:'9.2M'},
+        {n:6,  name:'Daniel Rascacielos',   pos:'MED', pot:77, cal:85, vel:77, vis:86, price:'12.0M'},
+        {n:7,  name:'Adrián Bulevar',       pos:'MED', pot:78, cal:84, vel:78, vis:85, price:'12.0M'},
+        {n:8,  name:'Álvaro Farola',        pos:'MED', pot:79, cal:83, vel:79, vis:84, price:'12.0M'},
+        {n:9,  name:'Gonzalo Taxi',         pos:'EXT', pot:74, cal:82, vel:89, vis:79, price:'10.8M'},
+        {n:10, name:'Rodrigo Metro',        pos:'DEL', pot:85, cal:88, vel:82, vis:80, price:'15.0M'},
+        {n:11, name:'Fernando Centro',      pos:'DEL', pot:84, cal:87, vel:81, vis:81, price:'14.8M'},
+        {n:12, name:'Carlos Estación',      pos:'POR', pot:73, cal:70, vel:48, vis:68, price:'5.0M'},
+        {n:13, name:'Javier Semáforo',      pos:'DEF', pot:77, cal:74, vel:72, vis:72, price:'7.4M'},
+        {n:14, name:'Miguel Paso',          pos:'DEF', pot:80, cal:76, vel:74, vis:75, price:'9.0M'},
+        {n:15, name:'Jorge Tráfico',        pos:'MED', pot:76, cal:81, vel:75, vis:82, price:'10.8M'},
+        {n:16, name:'Alberto Acera',        pos:'MED', pot:77, cal:82, vel:76, vis:83, price:'11.2M'},
+        {n:17, name:'Víctor Farola',        pos:'EXT', pot:73, cal:79, vel:87, vis:76, price:'9.8M'},
+        {n:18, name:'Rubén Marqués',        pos:'EXT', pot:75, cal:80, vel:88, vis:78, price:'10.2M'},
+        {n:19, name:'Óscar Puente',         pos:'DEL', pot:82, cal:85, vel:79, vis:78, price:'13.2M'},
+        {n:20, name:'Andrés Glorieta',      pos:'DEL', pot:83, cal:86, vel:80, vis:79, price:'13.6M'},
+        {n:21, name:'Tomás Viaducto',       pos:'MED', pot:76, cal:81, vel:77, vis:82, price:'10.8M'},
+        {n:22, name:'Eduardo Rond Point',   pos:'DEF', pot:79, cal:75, vel:73, vis:73, price:'8.0M'},
+      ]
+    },
+    {
+      id:'nu', name:'Nómadas United', emoji:'🌍', color:'#ff7043',
+      manager:'',
+      desc:'Equipo de jugadores sin patria fija. Extranjeros de todo el mundo unidos por el fútbol. Físicos e impredecibles, con un talento especial en las bandas.',
+      players:[
+        {n:1,  name:'Kasimir "Errante" Volkov',    pos:'POR', pot:76, cal:68, vel:52, vis:64, price:'5.2M'},
+        {n:2,  name:'Tariq Al-Rashid',             pos:'DEF', pot:82, cal:70, vel:76, vis:66, price:'7.8M'},
+        {n:3,  name:'Emeka "Sabana" Okafor',       pos:'DEF', pot:85, cal:65, vel:80, vis:60, price:'7.0M'},
+        {n:4,  name:'Björn "Vikingo" Lindqvist',   pos:'DEF', pot:88, cal:62, vel:68, vis:58, price:'6.4M'},
+        {n:5,  name:'Matías "Gaucho" Pereyra',     pos:'DEF', pot:79, cal:72, vel:74, vis:68, price:'7.4M'},
+        {n:6,  name:'Kenji "Samurái" Nakamura',    pos:'MED', pot:72, cal:82, vel:80, vis:84, price:'11.2M'},
+        {n:7,  name:'Diallo "Griot" Kouyaté',      pos:'MED', pot:80, cal:76, vel:82, vis:74, price:'10.0M'},
+        {n:8,  name:'Sven "Fiordo" Andersen',      pos:'MED', pot:78, cal:78, vel:70, vis:78, price:'9.4M'},
+        {n:9,  name:'Rodrigo "Carioca" Vasconcelos',pos:'EXT',pot:68, cal:86, vel:92, vis:80, price:'12.8M'},
+        {n:10, name:'Amir "Desierto" Hassan',      pos:'DEL', pot:82, cal:84, vel:78, vis:76, price:'13.2M'},
+        {n:11, name:'Pablo "Tango" Ibáñez',        pos:'DEL', pot:78, cal:88, vel:82, vis:80, price:'14.4M'},
+        {n:12, name:'Yusuf "Sahel" Traoré',        pos:'POR', pot:70, cal:62, vel:48, vis:58, price:'3.4M'},
+        {n:13, name:'Costas "Mediterráneo" Papadopoulos',pos:'DEF',pot:80,cal:68,vel:70,vis:64,price:'6.8M'},
+        {n:14, name:'Lev "Estepa" Bogdanov',       pos:'DEF', pot:82, cal:64, vel:66, vis:60, price:'6.0M'},
+        {n:15, name:'Chidi "Lagos" Eze',           pos:'MED', pot:70, cal:80, vel:78, vis:76, price:'9.0M'},
+        {n:16, name:'Hiroshi "Fuji" Tanaka',       pos:'MED', pot:68, cal:84, vel:74, vis:82, price:'10.2M'},
+        {n:17, name:'Oumar "Baobab" Diallo',       pos:'EXT', pot:72, cal:78, vel:88, vis:70, price:'10.2M'},
+        {n:18, name:'Sebastián "Pampas" Molina',   pos:'EXT', pot:74, cal:80, vel:86, vis:72, price:'10.8M'},
+        {n:19, name:'Kwame "Kente" Mensah',        pos:'DEL', pot:80, cal:82, vel:80, vis:74, price:'12.6M'},
+        {n:20, name:'Andrei "Dacia" Constantin',   pos:'DEL', pot:76, cal:80, vel:76, vis:72, price:'11.2M'},
+        {n:21, name:'Finn "Fiordo" Magnusson',     pos:'MED', pot:74, cal:76, vel:72, vis:74, price:'8.4M'},
+        {n:22, name:'Rashid "Oasis" Al-Farsi',     pos:'DEF', pot:76, cal:66, vel:68, vis:62, price:'5.6M'},
+      ]
+    },
+  ],
+
+  // ======= CALENDARIO (28 jornadas: 14 ida + 14 vuelta) =======
+  // Generado con algoritmo round-robin para 8 equipos
+  // IDs por índice: 0=rv,1=ac,2=ce,3=si,4=ip,5=nb,6=me,7=nu
+  CALENDAR: [
+    // --- IDA ---
+    { j:1,  fecha:'Fin de semana 1 (12-13 Abr 2025)',   partidos:[['rv','nu'],['ac','me'],['ce','nb'],['si','ip']] },
+    { j:2,  fecha:'Fin de semana 3 (26-27 Abr 2025)', partidos:[['rv','me'],['nu','nb'],['ac','ip'],['ce','si']] },
+    { j:3,  fecha:'Fin de semana 5 (10-11 May 2025)',   partidos:[['rv','nb'],['me','ip'],['nu','si'],['ac','ce']] },
+    { j:4,  fecha:'Fin de semana 7 (24-25 May 2025)', partidos:[['rv','ip'],['nb','si'],['me','ce'],['nu','ac']] },
+    { j:5,  fecha:'Fin de semana 9 (7-8 Jun 2025)',partidos:[['rv','si'],['ip','ce'],['nb','ac'],['me','nu']] },
+    { j:6,  fecha:'Fin de semana 11 (21-22 Jun 2025)',partidos:[['rv','ce'],['si','ac'],['ip','nu'],['nb','me']] },
+    { j:7,  fecha:'Fin de semana 13 (5-6 Jul 2025)',partidos:[['rv','ac'],['ce','nu'],['si','me'],['ip','nb']] },
+    // --- VUELTA ---
+    { j:8,  fecha:'Fin de semana 15 (19-20 Jul 2025)',partidos:[['nu','rv'],['me','ac'],['nb','ce'],['ip','si']] },
+    { j:9,  fecha:'Fin de semana 17 (2-3 Ago 2025)',partidos:[['me','rv'],['nb','nu'],['ip','ac'],['si','ce']] },
+    { j:10, fecha:'Fin de semana 19 (16-17 Ago 2025)', partidos:[['nb','rv'],['ip','me'],['si','nu'],['ce','ac']] },
+    { j:11, fecha:'Fin de semana 21 (30-31 Ago 2025)',partidos:[['ip','rv'],['si','nb'],['ce','me'],['ac','nu']] },
+    { j:12, fecha:'Fin de semana 23 (13-14 Sep 2025)',  partidos:[['si','rv'],['ce','ip'],['ac','nb'],['nu','me']] },
+    { j:13, fecha:'Fin de semana 25 (27-28 Sep 2025)',partidos:[['ce','rv'],['ac','si'],['nu','ip'],['me','nb']] },
+    { j:14, fecha:'Fin de semana 27 (11-12 Oct 2025)',  partidos:[['ac','rv'],['nu','ce'],['me','si'],['nb','ip']] },
+  ],
+
+  // ======= HELPERS =======
+  calcOVR(p){ return Math.round((p.pot+p.cal+p.vel+p.vis)/4); },
+
+  diceRange(ovr){
+    if(ovr>=80) return [4,5,6];
+    if(ovr>=60) return [3,4,5,6];
+    return [1,2,3,4,5,6];
+  },
+
+  diceBadge(ovr){
+    if(ovr>=80) return '<span style="color:#ffd700;font-size:.75rem;">🎲 4-5-6</span>';
+    if(ovr>=60) return '<span style="color:#81c784;font-size:.75rem;">🎲 3-4-5-6</span>';
+    return '<span style="color:#90a4ae;font-size:.75rem;">🎲 1-6</span>';
+  },
+
+  rollDice(range){ return range[Math.floor(Math.random()*range.length)]; },
+
+  teamById(id){ return LIGA.TEAMS.find(t=>t.id===id); },
+
+  // ======= Persistencia solo localStorage (datos de sesión) =======
+  save(key,val){ if(!LIGA._cache)LIGA._cache={}; LIGA._cache[key]=val; try{ localStorage.setItem('fantasia_'+key, JSON.stringify(val)); }catch(e){} },
+  load(key,def){ if(LIGA._cache&&LIGA._cache[key]!==undefined)return LIGA._cache[key]; try{ const v=localStorage.getItem('fantasia_'+key); return v?JSON.parse(v):def; }catch(e){ return def; } },
+  _cache: null,
+
+};
+
+</script>
+<script>
+// ============================================================
+// CONTRASEÑA
+// ============================================================
+const ADMIN_PASS = '1234'; // ← CAMBIA ESTO
+
+function checkLogin(){
+  const pw=document.getElementById('pw-input').value;
+  if(pw===ADMIN_PASS){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('admin-app').style.display='block';
+    init();
+  } else {
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('pw-input').value='';
+    setTimeout(()=>document.getElementById('login-error').style.display='none',2000);
+  }
+}
+function logout(){document.getElementById('admin-app').style.display='none';document.getElementById('login-screen').style.display='flex';}
+// Añadir listener cuando el DOM esté listo
+(function(){
+  var el = document.getElementById('pw-input');
+  if(el) el.addEventListener('keydown', function(e){ if(e.key==='Enter') checkLogin(); });
+})();
+
+// Debug: capturar errores JS
+window.onerror = function(msg, src, line, col, err){
+  var t = document.getElementById('toast');
+  if(t){ t.textContent = '❌ Error JS: '+msg+' (L'+line+')'; t.style.background='#e53935'; t.style.color='#fff'; t.classList.add('show'); setTimeout(function(){ t.classList.remove('show'); }, 5000); }
+  return false;
+};
+
+// ============================================================
+// PANEL NAVIGATION
+// ============================================================
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.atab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function toast(msg,color){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.background=color||'var(--green-bright)';
+  t.style.color=color?'#fff':'#060e06';
+  t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ============================================================
+// OVR Y GRUPO
+// ============================================================
+function ovrGroup(ovr){return ovr>=80?'elite':ovr>=60?'alto':'bajo';}
+function ovrClass(ovr){return ovr>=80?'ovr-elite':ovr>=72?'ovr-high':ovr>=60?'ovr-mid':'ovr-low';}
+function calcOVR(p){return Math.round((p.pot+p.cal+p.vel+p.vis)/4);}
+function diceRange(ovr){
+  if(ovr>=80)return [4,5,6];
+  if(ovr>=60)return [3,4,5,6];
+  return [1,2,3,4,5,6];
+}
+function rollFrom(range){return range[Math.floor(Math.random()*range.length)];}
+
+// ============================================================
+// INIT
+// ============================================================
+let currentPosFilter='ALL';
+let diceRolled={elite:null,alto:null,bajo:null};
+// Puntos asignados aleatoriamente por jugador (se recalcula cuando se tienen los 3 dados)
+let dicePlayerPts={};
+
+function init(){
+  // Poblar selects de jornada
+  ['dado-jornada-sel','puntos-jornada-sel','cronica-jornada-sel','res-jornada-sel'].forEach(selId=>{
+    const sel=document.getElementById(selId);
+    if(!sel)return;
+    sel.innerHTML='<option value="">— Selecciona jornada —</option>';
+    LIGA.CALENDAR.forEach(j=>{
+      const opt=document.createElement('option');
+      opt.value=j.j;opt.textContent=`Jornada ${j.j} · ${j.fecha}`;
+      sel.appendChild(opt);
+    });
+  });
+  // Poblar select de IAs en puntos
+  const iasSel=document.getElementById('puntos-ia-sel');
+  if(iasSel){
+    iasSel.innerHTML='<option value="all">Todas las IAs</option>';
+    LIGA.IAS.forEach(ia=>{
+      const opt=document.createElement('option');
+      opt.value=ia.id;opt.textContent=ia.emoji+' '+ia.name;
+      iasSel.appendChild(opt);
+    });
+  }
+  renderSorteo();
+  initMercado();
+  initXIForms();
+  initPlantillasIAForms();
+}
+
+// ============================================================
+// SORTEO INICIAL
+// ============================================================
+function getAllPlayers(){
+  const all=[];
+  LIGA.TEAMS.forEach(t=>t.players.forEach(p=>all.push({...p,teamId:t.id,teamName:t.name,teamEmoji:t.emoji})));
+  return all;
+}
+
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function runSorteo(){
+  if(!confirm('¿Hacer el sorteo inicial? Esto asignará 11 jugadores aleatorios a cada IA.'))return;
+  const all=shuffle(getAllPlayers());
+  const assignments={};
+  const budgets={};
+  LIGA.IAS.forEach((ia,i)=>{
+    const slice=all.slice(i*11,(i+1)*11);
+    assignments[ia.id]=slice;
+    const spent=slice.reduce((s,p)=>s+parseFloat(p.price||0),0);
+    budgets[ia.id]=Math.max(0,100-spent);
+  });
+  const state=LIGA.load('state',{});
+  state.sorteo=assignments;
+  state.budgets=budgets;
+  state.assignments={};
+  LIGA.IAS.forEach((ia,i)=>{
+    state.assignments[ia.id]=assignments[ia.id][0]?.teamName||'—'; // equipo del primer jugador como referencia
+  });
+  LIGA.save('state',state);
+  LIGA.save('sorteo',assignments);
+  LIGA.save('budgets',budgets);
+  renderSorteo();
+  toast('✅ ¡Sorteo realizado! Jugadores asignados a cada IA.');
+}
+
+function clearSorteo(){
+  if(!confirm('¿Resetear el sorteo? Se borrarán todas las asignaciones.'))return;
+  const state=LIGA.load('state',{});
+  delete state.sorteo;delete state.budgets;delete state.assignments;
+  LIGA.save('state',state);
+  LIGA.save('sorteo',{});LIGA.save('budgets',{});
+  renderSorteo();toast('↺ Sorteo reseteado.','#e53935');
+}
+
+function renderSorteo(){
+  const sorteo=LIGA.load('sorteo',{});
+  const budgets=LIGA.load('budgets',{});
+  const grid=document.getElementById('sorteo-result');
+  if(!Object.keys(sorteo).length){
+    grid.innerHTML='<div style="color:var(--gray);font-family:Share Tech Mono,monospace;font-size:.85rem;padding:2rem;">Aún no se ha realizado el sorteo. Pulsa "SORTEAR JUGADORES AHORA".</div>';
+    return;
+  }
+  grid.innerHTML=LIGA.IAS.map(ia=>{
+    const players=sorteo[ia.id]||[];
+    const budget=budgets[ia.id]||100;
+    return `<div class="sorteo-card">
+      <div class="sorteo-ia">${ia.emoji} ${ia.name}</div>
+      <div class="sorteo-players">
+        ${players.map(p=>`<div class="sorteo-player">
+          <span class="sp-name">${p.name}</span>
+          <span class="sp-price">${p.price||'—'}</span>
+        </div>`).join('')}
+      </div>
+      <div class="sorteo-budget">💰 Presupuesto restante: ${budget.toFixed(1)}M</div>
+    </div>`;
+  }).join('');
+}
+
+function exportSorteoJSON(){
+  const payload={
+    state: LIGA.load('state',{}),
+    sorteo: LIGA.load('sorteo',{}),
+    budgets: LIGA.load('budgets',{}),
+    exportedAt: Date.now(),
+  };
+  const text=JSON.stringify(payload);
+  const ta=document.getElementById('sorteo-export-json');
+  if(ta) ta.value=text;
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text);
+      toast('✅ JSON copiado al portapapeles');
+    } else {
+      toast('✅ JSON preparado en el cuadro');
+    }
+  }catch(e){
+    toast('✅ JSON preparado en el cuadro');
+  }
+}
+
+function importSorteoJSON(){
+  const ta=document.getElementById('sorteo-import-json');
+  const text=(ta?ta.value:'').trim();
+  if(!text){toast('Pega el JSON antes','#e53935');return;}
+  let payload;
+  try{
+    payload=JSON.parse(text);
+  }catch(e){
+    toast('JSON inválido','#e53935');
+    return;
+  }
+
+  // Guardar claves base necesarias para que `fantas-ia-v2.html` muestre jugadores.
+  if(payload.sorteo) LIGA.save('sorteo',payload.sorteo);
+  if(payload.budgets) LIGA.save('budgets',payload.budgets);
+  if(payload.state) LIGA.save('state',payload.state);
+
+  // Si `state` venía incompleto, reconstruimos mínimos a partir de sorteo.
+  const state=LIGA.load('state',{});
+  if(!state.sorteo || !Object.keys(state.sorteo).length){
+    state.sorteo=LIGA.load('sorteo',state.sorteo||{});
+  }
+  if(!state.budgets || !Object.keys(state.budgets).length){
+    state.budgets=LIGA.load('budgets',state.budgets||{});
+  }
+  if(!state.assignments || !Object.keys(state.assignments).length){
+    state.assignments={};
+    const sorteo=LIGA.load('sorteo',{});
+    LIGA.IAS.forEach(ia=>{
+      state.assignments[ia.id]=sorteo[ia.id]?.[0]?.teamName || '—';
+    });
+  }
+  LIGA.save('state',state);
+
+  renderSorteo();
+  toast('✅ Sorteo importado. Recarga la web para verla');
+}
+
+// ============================================================
+// DADOS
+// ============================================================
+function animateDice(elId,finalVal,color){
+  const el=document.getElementById(elId);
+  let count=0;const all=[1,2,3,4,5,6];
+  const iv=setInterval(()=>{
+    el.textContent=all[Math.floor(Math.random()*all.length)];
+    count++;
+    if(count>12){clearInterval(iv);el.textContent=finalVal;el.style.color=color||'#fff';}
+  },60);
+}
+
+function rollSingle(tipo){
+  const ranges={elite:[4,5,6],alto:[3,4,5,6],bajo:[1,2,3,4,5,6]};
+  const colors={elite:'var(--gold)',alto:'var(--green-bright)',bajo:'var(--gray)'};
+  const val=rollFrom(ranges[tipo]);
+  diceRolled[tipo]=val;
+  // Si el usuario vuelve a tirar un dado, invalidamos la asignación por jugador.
+  dicePlayerPts={};
+  animateDice(`dado-${tipo}-result`,val,colors[tipo]);
+  document.getElementById(`dado-${tipo}`).classList.add('rolled');
+  checkShowResumen();
+}
+
+function rollAllDice(){
+  rollSingle('elite');
+  setTimeout(()=>rollSingle('alto'),200);
+  setTimeout(()=>rollSingle('bajo'),400);
+}
+
+function checkShowResumen(){
+  if(diceRolled.elite&&diceRolled.alto&&diceRolled.bajo){
+    const div=document.getElementById('dado-resumen');
+    div.style.display='block';
+    renderDiceResumen();
+  }
+}
+
+function generateDicePlayerPts(){
+  const sorteo=LIGA.load('sorteo',{});
+  const ranges={elite:[4,5,6],alto:[3,4,5,6],bajo:[1,2,3,4,5,6]};
+
+  const result={};
+  LIGA.IAS.forEach(ia=>{
+    const players=sorteo[ia.id]||[];
+
+    // Generar pts aleatorios por jugador dentro del rango de su ovrGroup.
+    const ptsArr=players.map(p=>{
+      const ovr=calcOVR(p);
+      const tipo=ovrGroup(ovr);
+      return rollFrom(ranges[tipo]);
+    });
+
+    // Garantizar que no se queden todos iguales por grupo/tirada (si hay variedad posible).
+    // (Si solo hay 1 jugador, da igual.)
+    if(ptsArr.length>1){
+      const allSame=ptsArr.every(v=>v===ptsArr[0]);
+      if(allSame){
+        // Reasignar un jugador al azar a otro valor del rango que le corresponda.
+        const idx=Math.floor(Math.random()*ptsArr.length);
+        const ovr=calcOVR(players[idx]);
+        const tipo=ovrGroup(ovr);
+        const alt=[...ranges[tipo]];
+        // Quitar el valor actual para elegir uno distinto.
+        const cur=ptsArr[idx];
+        const filtered=alt.filter(x=>x!==cur);
+        ptsArr[idx]=filtered.length?filtered[Math.floor(Math.random()*filtered.length)]:cur;
+      }
+    }
+
+    ptsArr.forEach((pts,i)=>{
+      const p=players[i];
+      const key=`${ia.id}_${p.name}`;
+      result[key]=pts;
+    });
+  });
+
+  dicePlayerPts=result;
+}
+
+function renderDiceResumen(){
+  const sorteo=LIGA.load('sorteo',{});
+  if(!dicePlayerPts || !Object.keys(dicePlayerPts).length){
+    generateDicePlayerPts();
+  }
+  let html='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;">';
+  LIGA.IAS.forEach(ia=>{
+    const players=sorteo[ia.id]||[];
+    let total=0;
+    const rows=players.map(p=>{
+      const ovr=calcOVR(p);
+      const key=`${ia.id}_${p.name}`;
+      const pts=dicePlayerPts[key]||0;
+      total+=pts;
+      return `<div style="display:flex;justify-content:space-between;font-size:.8rem;padding:.15rem 0;border-bottom:1px solid rgba(76,175,80,.08);">
+        <span>${p.name.split('"')[0].trim()}</span>
+        <span style="color:var(--gold);font-family:Share Tech Mono,monospace;">${pts}pts</span>
+      </div>`;
+    }).join('');
+    html+=`<div style="background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:1rem;">
+      <div style="font-family:Oswald,sans-serif;font-size:.9rem;font-weight:600;color:var(--gold);margin-bottom:.5rem;">${ia.emoji} ${ia.name}</div>
+      ${rows}
+      <div style="margin-top:.5rem;font-family:Oswald,sans-serif;font-size:1.1rem;font-weight:700;color:var(--green-bright);">Total: ${total} pts</div>
+    </div>`;
+  });
+  html+='</div>';
+  document.getElementById('dado-resumen-content').innerHTML=html;
+}
+
+function saveDiceResults(){
+  const jornada=document.getElementById('dado-jornada-sel').value;
+  if(!jornada){toast('Selecciona una jornada primero','#e53935');return;}
+  if(!diceRolled.elite||!diceRolled.alto||!diceRolled.bajo){toast('Tira primero los 3 dados','#e53935');return;}
+
+  if(!dicePlayerPts || !Object.keys(dicePlayerPts).length){
+    generateDicePlayerPts();
+  }
+
+  const sorteo=LIGA.load('sorteo',{});
+  const state=LIGA.load('state',{});
+  if(!state.puntos)state.puntos={};
+  if(!state.puntos[jornada])state.puntos[jornada]={};
+
+  LIGA.IAS.forEach(ia=>{
+    const players=sorteo[ia.id]||[];
+    players.forEach(p=>{
+      const key=`${ia.id}_${p.name}`;
+      const pts=dicePlayerPts[key]||0;
+      if(!state.puntos[jornada][key])state.puntos[jornada][key]={dado:0,cronica:0};
+      state.puntos[jornada][key].dado=pts;
+    });
+    // Acumular total IA
+    const total=players.reduce((s,p)=>{
+      const key=`${ia.id}_${p.name}`;
+      return s+(dicePlayerPts[key]||0);
+    },0);
+    if(!state.ias)state.ias={};
+    state.ias[ia.id]=(state.ias[ia.id]||0)+total;
+    if(!state.mejor)state.mejor={};
+    if(total>=(state.mejor[ia.id]||0))state.mejor[ia.id]=total;
+    if(!state.jornadas)state.jornadas={};
+    state.jornadas[ia.id]=(state.jornadas[ia.id]||0)+1;
+  });
+
+  LIGA.save('state',state);
+  toast('✅ Puntos de dados guardados y aplicados a la clasificación');
+}
+
+// ============================================================
+// PUNTOS MANUALES
+// ============================================================
+function setPosFilter(pos,btn){
+  currentPosFilter=pos;
+  document.querySelectorAll('.pf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPuntosTable();
+}
+
+function renderPuntosTable(){
+  const jornada=document.getElementById('puntos-jornada-sel').value;
+  const iaFilter=document.getElementById('puntos-ia-sel').value;
+  if(!jornada)return;
+  const sorteo=LIGA.load('sorteo',{});
+  const state=LIGA.load('state',{});
+  const puntos=(state.puntos&&state.puntos[jornada])||{};
+  const tbody=document.getElementById('puntos-tbody');
+  let rows=[];
+  LIGA.IAS.forEach(ia=>{
+    if(iaFilter!=='all'&&ia.id!==iaFilter)return;
+    const players=sorteo[ia.id]||[];
+    players.forEach(p=>{
+      if(currentPosFilter!=='ALL'&&p.pos!==currentPosFilter)return;
+      const ovr=calcOVR(p);
+      const key=`${ia.id}_${p.name}`;
+      const d=(puntos[key]&&puntos[key].dado)||0;
+      const c=(puntos[key]&&puntos[key].cronica)||0;
+      rows.push({ia,p,ovr,key,d,c});
+    });
+  });
+  tbody.innerHTML=rows.map(({ia,p,ovr,key,d,c})=>`
+    <tr data-key="${key}" data-pos="${p.pos}">
+      <td style="font-weight:600">${p.name}</td>
+      <td style="font-size:.82rem;color:var(--gray)">${p.teamEmoji||''} ${p.teamName||''}</td>
+      <td style="font-size:.82rem;color:${ia.color}">${ia.emoji} ${ia.name}</td>
+      <td><span class="pos-tag pos-${p.pos}">${p.pos}</span></td>
+      <td><span class="${ovrClass(ovr)} ovr-badge">${ovr}</span></td>
+      <td style="font-family:Share Tech Mono,monospace;color:var(--gold)">${d}</td>
+      <td style="font-family:Share Tech Mono,monospace;color:var(--green-bright)">${c}</td>
+      <td style="font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;color:var(--gold)">${d+c}</td>
+      <td>
+        <input type="number" class="puntos-input" data-key="${key}" data-type="total" value="${d+c}" min="0" max="99"/>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function savePuntos(){
+  const jornada=document.getElementById('puntos-jornada-sel').value;
+  if(!jornada){toast('Selecciona una jornada','#e53935');return;}
+  const state=LIGA.load('state',{});
+  if(!state.puntos)state.puntos={};
+  if(!state.puntos[jornada])state.puntos[jornada]={};
+
+  document.querySelectorAll('[data-type="total"]').forEach(input=>{
+    const key=input.dataset.key;
+    const val=parseInt(input.value)||0;
+    if(!state.puntos[jornada][key])state.puntos[jornada][key]={dado:0,cronica:0};
+    state.puntos[jornada][key].dado=val; // guardamos todo en dado por simplicidad
+  });
+
+  // Recalcular totales por IA
+  if(!state.ias)state.ias={};
+  LIGA.IAS.forEach(ia=>{
+    let total=0;
+    Object.entries(state.puntos[jornada]).forEach(([key,v])=>{
+      if(key.startsWith(ia.id+'_'))total+=(v.dado||0)+(v.cronica||0);
+    });
+    // Sumar a acumulado (con cuidado de no doblar)
+    // Se guardan puntos por jornada y se suman al vuelo
+  });
+
+  // Calcular totales acumulados desde cero
+  state.ias={};state.mejor={};state.jornadas={};
+  Object.entries(state.puntos).forEach(([jnum,jornadaPts])=>{
+    const iaJornada={};
+    Object.entries(jornadaPts).forEach(([key,v])=>{
+      const iaId=key.split('_')[0];
+      iaJornada[iaId]=(iaJornada[iaId]||0)+(v.dado||0)+(v.cronica||0);
+    });
+    Object.entries(iaJornada).forEach(([iaId,pts])=>{
+      state.ias[iaId]=(state.ias[iaId]||0)+pts;
+      state.jornadas[iaId]=(state.jornadas[iaId]||0)+1;
+      if(pts>=(state.mejor[iaId]||0))state.mejor[iaId]=pts;
+    });
+  });
+
+  LIGA.save('state',state);
+  toast('✅ Puntos guardados correctamente');
+}
+
+// ============================================================
+// CRÓNICAS
+// ============================================================
+let cronicaAssignment=[];
+
+function updateCronicaMatches(){
+  // Nada extra necesario
+}
+
+function assignCronicas(){
+  const jornada=document.getElementById('cronica-jornada-sel').value;
+  if(!jornada){toast('Selecciona una jornada','#e53935');return;}
+  const jornadaData=LIGA.CALENDAR.find(j=>j.j==jornada);
+  if(!jornadaData){toast('Jornada no encontrada','#e53935');return;}
+
+  const cronicas=[
+    {id:'a',texto:document.getElementById('cronica-a').value,pts:parseInt(document.getElementById('cronica-a-pts').value)||0},
+    {id:'b',texto:document.getElementById('cronica-b').value,pts:parseInt(document.getElementById('cronica-b-pts').value)||0},
+    {id:'c',texto:document.getElementById('cronica-c').value,pts:parseInt(document.getElementById('cronica-c-pts').value)||0},
+    {id:'d',texto:document.getElementById('cronica-d').value,pts:parseInt(document.getElementById('cronica-d-pts').value)||0},
+  ];
+
+  const shuffledCronicas=shuffle(cronicas);
+  cronicaAssignment=jornadaData.partidos.map((match,i)=>({
+    jornada,
+    partido:i+1,
+    equipos:`${match[0].toUpperCase()} vs ${match[1].toUpperCase()}`,
+    homeId:match[0],
+    awayId:match[1],
+    texto:shuffledCronicas[i].texto,
+    ptsExtra:shuffledCronicas[i].pts,
+  }));
+
+  const div=document.getElementById('cronicas-assigned');
+  div.style.display='block';
+  document.getElementById('cronicas-assign-result').innerHTML=cronicaAssignment.map(c=>{
+    const home=LIGA.teamById(c.homeId);
+    const away=LIGA.teamById(c.awayId);
+    return `<div class="car-card">
+      <div class="car-match">Partido ${c.partido}: ${home?.emoji||''} ${home?.name||c.homeId} vs ${away?.name||c.awayId} ${away?.emoji||''}</div>
+      <div class="car-text">${c.texto||'(Sin texto)'}</div>
+      <div class="car-pts">⭐ +${c.ptsExtra} pts extra al equipo ganador</div>
+    </div>`;
+  }).join('');
+}
+
+function saveCronicas(){
+  if(!cronicaAssignment.length){toast('Primero asigna las crónicas aleatoriamente','#e53935');return;}
+  const existing=LIGA.load('cronicas',[]);
+  const jornada=cronicaAssignment[0]?.jornada;
+  const filtered=existing.filter(c=>c.jornada!=jornada);
+  LIGA.save('cronicas',[...filtered,...cronicaAssignment]);
+  toast('✅ Crónicas publicadas en la web');
+}
+
+// ============================================================
+// RESULTADOS
+// ============================================================
+function renderResultados(){
+  const jornada=document.getElementById('res-jornada-sel').value;
+  if(!jornada)return;
+  const jornadaData=LIGA.CALENDAR.find(j=>j.j==jornada);
+  if(!jornadaData)return;
+  const state=LIGA.load('state',{});
+  const scores=(state.results&&state.results[jornada]&&state.results[jornada].scores)||{};
+
+  document.getElementById('resultado-grid').innerHTML=jornadaData.partidos.map(([h,a])=>{
+    const home=LIGA.teamById(h);
+    const away=LIGA.teamById(a);
+    const key=`${h}v${a}`;
+    const score=scores[key]||'';
+    const parts=score.split('-');
+    return `<div class="resultado-card">
+      <div class="resultado-match">${home?.emoji||''} ${home?.name||h} vs ${away?.name||a} ${away?.emoji||''}</div>
+      <div class="resultado-inputs">
+        <input type="number" class="resultado-input" id="r-${key}-h" value="${parts[0]||''}" min="0" max="20" placeholder="0"/>
+        <span class="resultado-vs">—</span>
+        <input type="number" class="resultado-input" id="r-${key}-a" value="${parts[1]||''}" min="0" max="20" placeholder="0"/>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function saveResultados(){
+  const jornada=document.getElementById('res-jornada-sel').value;
+  if(!jornada)return;
+  const jornadaData=LIGA.CALENDAR.find(j=>j.j==jornada);
+  if(!jornadaData)return;
+  const state=LIGA.load('state',{});
+  if(!state.results)state.results={};
+  if(!state.results[jornada])state.results[jornada]={scores:{},played:false};
+
+  // Recopilar resultados
+  const teamStats={};
+  jornadaData.partidos.forEach(([h,a])=>{
+    const key=`${h}v${a}`;
+    const hGoals=parseInt(document.getElementById(`r-${key}-h`)?.value)||0;
+    const aGoals=parseInt(document.getElementById(`r-${key}-a`)?.value)||0;
+    state.results[jornada].scores[key]=`${hGoals}-${aGoals}`;
+    // Actualizar stats de equipo
+    [h,a].forEach(id=>{if(!teamStats[id])teamStats[id]={pj:0,g:0,e:0,p:0,gf:0,gc:0};});
+    teamStats[h].pj++;teamStats[a].pj++;
+    teamStats[h].gf+=hGoals;teamStats[h].gc+=aGoals;
+    teamStats[a].gf+=aGoals;teamStats[a].gc+=hGoals;
+    if(hGoals>aGoals){teamStats[h].g++;teamStats[a].p++;}
+    else if(hGoals<aGoals){teamStats[a].g++;teamStats[h].p++;}
+    else{teamStats[h].e++;teamStats[a].e++;}
+  });
+
+  if(!state.teams)state.teams={};
+  Object.entries(teamStats).forEach(([id,s])=>{
+    if(!state.teams[id])state.teams[id]={pj:0,g:0,e:0,p:0,gf:0,gc:0};
+    Object.keys(s).forEach(k=>state.teams[id][k]=(state.teams[id][k]||0)+s[k]);
+  });
+
+  LIGA.save('state',state);
+  toast('✅ Resultados guardados');
+}
+
+function markJornadaPlayed(){
+  const jornada=document.getElementById('res-jornada-sel').value;
+  if(!jornada)return;
+  const state=LIGA.load('state',{});
+  if(!state.results)state.results={};
+  if(!state.results[jornada])state.results[jornada]={scores:{},played:false};
+  state.results[jornada].played=true;
+  LIGA.save('state',state);
+  toast('✅ Jornada marcada como jugada');
+}
+
+// ============================================================
+// MERCADO
+// ============================================================
+let mercadoJugadores=[];
+
+function initMercado(){
+  const saved=LIGA.load('mercado_jugadores',[]);
+  const base=[{nombre:'',precio:0,origen:'admin',iaOrigenId:'',pujas:{}}];
+  mercadoJugadores=(saved.length?saved:base).map(j=>{
+    return {
+      nombre: j.nombre || '',
+      precio: parseFloat(j.precio)||0,
+      origen: j.origen || 'admin',
+      iaOrigenId: j.iaOrigenId || j.iaOrigen || '',
+      pujas: j.pujas || {},
+    };
+  });
+  renderMercadoForm();
+}
+
+function addMercadoSlot(){
+  syncMercadoData();
+  mercadoJugadores.push({
+    nombre:'', 
+    precio:0, 
+    origen:'admin', 
+    iaOrigenId:'', 
+    pujas: Object.fromEntries(LIGA.IAS.map(ia => [ia.id, null]))
+  });
+  renderMercadoForm();
+}
+
+function syncMercadoData() {
+  const slots = document.querySelectorAll('#mercado-jugadores-form > div');
+  slots.forEach((slot, i) => {
+    const ins = slot.querySelectorAll('input, select');
+    if(mercadoJugadores[i]) {
+      mercadoJugadores[i].nombre = ins[0].value;
+      mercadoJugadores[i].precio = parseFloat(ins[1].value) || 0;
+      mercadoJugadores[i].origen = ins[2].value;
+      mercadoJugadores[i].iaOrigenId = ins[3].value;
+    }
+  });
+}
+
+function updateMercadoVal(idx, key, val) {
+  if(key === 'precio') val = parseFloat(val) || 0;
+  mercadoJugadores[idx][key] = val;
+  // Sincronización visual inmediata en la tabla de pujas
+  if(key === 'nombre') {
+    const el = document.getElementById(`bid-name-${idx}`);
+    if(el) el.textContent = val || `Jugador ${idx+1}`;
+  }
+  if(key === 'precio') {
+    const el = document.getElementById(`bid-base-${idx}`);
+    if(el) el.textContent = val + 'M';
+  }
+}
+
+function updateBid(pIdx, iaId, val, noPuja) {
+  const input = document.getElementById(`bid-input-${pIdx}-${iaId}`);
+  if(noPuja) {
+    mercadoJugadores[pIdx].pujas[iaId] = null;
+    if(input) { input.disabled = true; input.value = ''; }
+  } else {
+    const num = parseFloat(val) || 0;
+    mercadoJugadores[pIdx].pujas[iaId] = num;
+    if(input) { input.disabled = false; }
+  }
+}
+
+function renderMercadoForm(){
+  const form = document.getElementById('mercado-jugadores-form');
+  form.innerHTML = mercadoJugadores.map((j,i)=>`
+    <div style="display:flex;gap:.8rem;align-items:center;margin-bottom:.6rem;flex-wrap:wrap;">
+      <input type="text" value="${esc(j.nombre)}" oninput="updateMercadoVal(${i},'nombre',this.value)" placeholder="Nombre del jugador" style="flex:2;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Rajdhani,sans-serif;"/>
+      <input type="number" value="${j.precio}" oninput="updateMercadoVal(${i},'precio',this.value)" placeholder="Base (M)" step="0.1" style="width:90px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Share Tech Mono,monospace;"/>
+      <select onchange="updateMercadoVal(${i},'origen',this.value); renderMercadoForm();" style="background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Rajdhani,sans-serif;min-width:120px;">
+        <option value="admin" ${j.origen==='admin'?'selected':''}>Puesto por Admin</option>
+        <option value="ia" ${j.origen==='ia'?'selected':''}>Vendido por IA</option>
+      </select>
+      <select onchange="updateMercadoVal(${i},'iaOrigenId',this.value)" style="background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Rajdhani,sans-serif;min-width:140px;" ${j.origen==='ia'?'':'disabled'}>
+        <option value="">— IA —</option>
+        ${LIGA.IAS.map(ia=>`<option value="${ia.id}" ${j.iaOrigenId===ia.id?'selected':''}>${ia.emoji} ${ia.name}</option>`).join('')}
+      </select>
+      <button onclick="syncMercadoData(); mercadoJugadores.splice(${i},1); renderMercadoForm();" style="background:rgba(229,57,53,.2);border:1px solid rgba(229,57,53,.4);color:var(--red);font-size:.8rem;padding:.4rem .8rem;border-radius:5px;cursor:pointer;">✕</button>
+    </div>
+  `).join('');
+
+  // Tabla de pujas masiva
+  const thead = document.getElementById('pujas-thead');
+  thead.innerHTML = `<tr>
+    <th style="text-align:left;">Jugador</th>
+    <th style="text-align:center;">Base</th>
+    ${LIGA.IAS.map(ia=>`<th style="text-align:center; color:${ia.color}; font-size:.6rem;">${ia.emoji}<br>${ia.name}</th>`).join('')}
+  </tr>`;
+
+  const tbody = document.getElementById('pujas-tbody');
+  tbody.innerHTML = mercadoJugadores.map((j, ji) => {
+    const bids = j.pujas || {};
+    return `<tr>
+      <td id="bid-name-${ji}" style="font-weight:600; font-size:0.8rem; white-space:nowrap;">${esc(j.nombre || `Jugador ${ji+1}`)}</td>
+      <td id="bid-base-${ji}" style="text-align:center; font-family:monospace; color:var(--gray); font-size:0.75rem;">${j.precio}M</td>
+      ${LIGA.IAS.map(ia => {
+        const val = bids[ia.id];
+        const isNull = val === null;
+        return `
+          <td style="text-align:center; padding: 0.3rem 0.1rem;">
+            <input id="bid-input-${ji}-${ia.id}" type="number" 
+                   value="${isNull ? '' : val}" 
+                   placeholder="—" step="0.1" ${isNull ? 'disabled' : ''}
+                   oninput="updateBid(${ji},'${ia.id}',this.value, false)"
+                   style="width:45px; background:rgba(0,0,0,.4); border:1px solid var(--border); border-radius:4px; padding:.15rem; color:var(--white); font-family:monospace; font-size:.7rem; text-align:center; margin-bottom:2px;"/>
+            <br>
+            <label style="font-size:0.55rem; color:var(--gray); cursor:pointer; display:flex; align-items:center; justify-content:center; gap:1px;">
+              <input type="checkbox" ${isNull ? 'checked' : ''} onchange="updateBid(${ji},'${ia.id}', document.getElementById('bid-input-${ji}-${ia.id}').value, this.checked)"/> NP
+            </label>
+          </td>
+        `;
+      }).join('')}
+    </tr>`;
+  }).join('');
+}
+
+function saveMercado(){
+  const norm = s => String(s||'').toLowerCase().replace(/["""'']/g,'').replace(/\s+/g,' ').trim();
+
+  // ── Revertir mercado anterior si existe ──
+  const prev = LIGA.load('mercado_previo', null);
+  let sorteo  = LIGA.load('sorteo', {});
+  let budgets = LIGA.load('budgets', {});
+
+  if(prev){
+    sorteo  = JSON.parse(JSON.stringify(prev.sorteo));
+    budgets = JSON.parse(JSON.stringify(prev.budgets));
+  }
+
+  // Asegurar presupuesto inicial para todas las IAs
+  LIGA.IAS.forEach(ia => {
+    if(budgets[ia.id] === undefined || budgets[ia.id] === null) budgets[ia.id] = 100;
+  });
+
+  // ── Guardar backup ANTES de aplicar este mercado ──
+  LIGA.save('mercado_previo', {
+    sorteo:  JSON.parse(JSON.stringify(sorteo)),
+    budgets: JSON.parse(JSON.stringify(budgets))
+  });
+
+  // ── Procesar cada jugador ──
+  const results = mercadoJugadores.map(j => {
+    if(!j.nombre) return null;
+    const normalizedTarget = norm(j.nombre);
+    const precioBase = parseFloat(j.precio) || 0;
+    const origin  = j.origen   || 'admin';
+    const sellerId = j.iaOrigenId || '';
+
+    // Buscar objeto jugador completo (primero en sorteo, luego en equipos)
+    let playerObj = null;
+    for(const id in sorteo){
+      const found = sorteo[id].find(p => norm(p.name) === normalizedTarget);
+      if(found){ playerObj = {...found}; break; }
+    }
+    if(!playerObj){
+      for(const t of LIGA.TEAMS){
+        const found = t.players.find(p => norm(p.name) === normalizedTarget);
+        if(found){ playerObj = {...found, teamId:t.id, teamName:t.name, teamEmoji:t.emoji}; break; }
+      }
+    }
+    if(!playerObj) playerObj = {name:j.nombre, price:precioBase+'M', pot:70, cal:70, vel:70, vis:70, pos:'MED'};
+
+    // Determinar ganador: puja más alta estrictamente superior al precio base
+    let maxPuja = precioBase, winner = null;
+    Object.entries(j.pujas || {}).forEach(([iaId, puja]) => {
+      const v = (puja === null || puja === undefined || puja === '') ? 0 : parseFloat(puja) || 0;
+      if(v > maxPuja){ maxPuja = v; winner = iaId; }
+    });
+
+    const montoFinal = winner ? maxPuja : precioBase;
+    const adminCompra = !winner && origin === 'ia' && !!sellerId;
+
+    // VENTA por IA: quitar jugador de su plantilla + cobrar dinero (aunque compre el admin)
+    if(origin === 'ia' && sellerId){
+      if(sorteo[sellerId]){
+        sorteo[sellerId] = sorteo[sellerId].filter(p => norm(p.name) !== normalizedTarget);
+      }
+      budgets[sellerId] = parseFloat(budgets[sellerId] || 0) + montoFinal;
+    }
+
+    // COMPRA: añadir jugador a la plantilla del ganador y restarle dinero
+    if(winner){
+      budgets[winner] = Math.max(0, parseFloat(budgets[winner] || 0) - montoFinal);
+      if(!sorteo[winner]) sorteo[winner] = [];
+      if(!sorteo[winner].find(p => norm(p.name) === normalizedTarget)){
+        sorteo[winner].push({...playerObj, price: montoFinal.toFixed(1)+'M'});
+      }
+    }
+
+    return { jugador:j.nombre, precioBase, ganadorIAId:winner, montoGanador:winner?maxPuja:0,
+             montoFinal, origen:origin, iaOrigenId:sellerId, adminCompra,
+             pujas:j.pujas||{} };
+  }).filter(Boolean);
+
+  // ── Guardar en estado ──
+  const state = LIGA.load('state',{});
+  state.sorteo  = sorteo;
+  state.budgets = budgets;
+  LIGA.save('sorteo',  sorteo);
+  LIGA.save('budgets', budgets);
+  LIGA.save('state',   state);
+  LIGA.save('mercado_jugadores', mercadoJugadores);
+  LIGA.save('mercado_results',   results);
+
+  renderSorteo();
+
+  const resumen = results
+    .filter(r => r.ganadorIAId || r.adminCompra)
+    .map(r => {
+      if(r.adminCompra) return r.jugador+'→Admin ('+r.montoFinal.toFixed(1)+'M al vendedor)';
+      const ia = LIGA.IAS.find(x=>x.id===r.ganadorIAId);
+      return r.jugador+'→'+(ia?.name||r.ganadorIAId)+' ('+r.montoFinal.toFixed(1)+'M)';
+    }).join(' · ');
+
+  toast('✅ Mercado resuelto. '+(resumen||'Sin transacciones'));
+}
+
+
+// ============================================================
+// UTILIDADES DE GENERACIÓN HTML
+// ============================================================
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function copyOutput(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const txt=el.textContent;
+  navigator.clipboard.writeText(txt).then(()=>toast('✅ Copiado al portapapeles')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    toast('✅ Copiado');
+  });
+}
+
+function showOutput(sectionId, codeId, html){
+  const sec=document.getElementById(sectionId);
+  const code=document.getElementById(codeId);
+  if(sec)sec.style.display='block';
+  if(code)code.textContent=html;
+  if(sec)sec.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function parsePriceMillion(priceStr){
+  return parseFloat(String(priceStr||'0').replace('M','').replace(',','.'))||0;
+}
+
+// ── SORTEO HTML ──
+function generarHTMLSorteo(){
+  const sorteo=LIGA.load('sorteo',{});
+  const budgets=LIGA.load('budgets',{});
+  if(!Object.keys(sorteo).length){toast('Primero realiza el sorteo','#e53935');return;}
+  const html=LIGA.IAS.map(ia=>{
+    const players=sorteo[ia.id]||[];
+    const budget=(budgets[ia.id]||100).toFixed(1);
+    const rows=players.map((p,i)=>{
+      const ovr=Math.round(((p.pot||70)+(p.cal||70)+(p.vel||70)+(p.vis||70))/4);
+      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">${i+1}</td><td style="font-weight:600">${esc(p.name)}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">${esc(p.pos||'—')}</span></td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">${ovr}</td><td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right">${esc(p.price||'—')}</td></tr>`;
+    }).join('');
+    return `<div class="sorteo-card">
+  <div class="sorteo-card-head">
+    <div class="sorteo-card-title">${ia.emoji} ${ia.name}</div>
+    <div class="sorteo-card-budget">${ia.company} · 💰 Restante: ${budget}M</div>
+  </div>
+  <div class="table-wrap"><table class="sorteo-table">
+    <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th style="text-align:right">💶 Precio</th></tr></thead>
+    <tbody>${rows||'<tr><td colspan="5" style="color:#78909c;text-align:center;padding:1rem">Sin jugadores</td></tr>'}</tbody>
+  </table></div>
+</div>`;
+  }).join('');
+  showOutput('out-sorteo','code-sorteo',html);
+  toast('✅ HTML del sorteo generado');
+}
+
+// ── PUNTOS HTML ──
+function generarHTMLPuntos(){
+  const jornada=document.getElementById('dado-jornada-sel')?.value||
+                document.getElementById('puntos-jornada-sel')?.value||'?';
+  const sorteo=LIGA.load('sorteo',{});
+  const state=LIGA.load('state',{});
+  const puntos=(state.puntos&&state.puntos[jornada])||{};
+  if(!Object.keys(sorteo).length){toast('Primero realiza el sorteo','#e53935');return;}
+
+  const html=LIGA.IAS.map(ia=>{
+    const players=sorteo[ia.id]||[];
+    let total=0;
+    const rows=players.map(p=>{
+      const key=`${ia.id}_${p.name}`;
+      const d=(puntos[key]?.dado)||0;
+      const cr=(puntos[key]?.cronica)||0;
+      const t=d+cr; total+=t;
+      const ovr=Math.round(((p.pot||70)+(p.cal||70)+(p.vel||70)+(p.vis||70))/4);
+      return `<tr><td style="font-weight:600">${esc(p.name)}</td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">${ovr}</td><td style="text-align:center;color:#4caf50;font-family:Oswald,sans-serif;font-weight:700">${d}</td><td style="text-align:center;color:#ffa726;font-family:Oswald,sans-serif;font-weight:700">${cr||'—'}</td><td style="text-align:center;color:#ffd700;font-family:Oswald,sans-serif;font-size:1.05rem;font-weight:700">${t}</td></tr>`;
+    }).join('');
+    return `<div class="sorteo-card" style="border-top:3px solid ${ia.color}">
+  <div class="sorteo-card-head">
+    <div class="sorteo-card-title" style="color:${ia.color}">${ia.emoji} ${ia.name}</div>
+    <div class="sorteo-card-budget">Jornada ${esc(jornada)} · Total: <strong style="color:#ffd700;font-size:1.1rem">${total} pts</strong></div>
+  </div>
+  <div class="table-wrap"><table class="sorteo-table">
+    <thead><tr><th>Jugador</th><th style="text-align:center">OVR</th><th style="text-align:center">Dado</th><th style="text-align:center">+Crónica</th><th style="text-align:center">Total</th></tr></thead>
+    <tbody>${rows||'<tr><td colspan="5" style="color:#78909c;text-align:center;padding:1rem">Sin datos</td></tr>'}</tbody>
+  </table></div>
+</div>`;
+  }).join('');
+
+  // Mostrar en ambos posibles output boxes
+  showOutput('out-puntos-dados','code-puntos',html);
+  document.getElementById('out-puntos-dados').style.display='block';
+  toast('✅ HTML de puntos generado');
+}
+
+// ── CRÓNICAS HTML ──
+function generarHTMLCronicas(){
+  const existing=LIGA.load('cronicas',[]);
+  if(!existing.length){toast('Primero asigna y guarda las crónicas','#e53935');return;}
+  const html=existing.map(c=>`<div class="cronica-card">
+  <div class="cronica-jornada">📰 Jornada ${esc(c.jornada)} · Partido ${esc(c.partido)} · ${esc(c.equipos||'')}</div>
+  <div class="cronica-texto">${esc(c.texto||'')}</div>
+</div>`).join('');
+  showOutput('out-cronicas','code-cronicas',html);
+  toast('✅ HTML de crónicas generado');
+}
+
+// ── JORNADAS HTML ──
+function generarHTMLJornadas(){
+  const state=LIGA.load('state',{});
+  const results=state.results||{};
+  let nextJ=1;
+  LIGA.CALENDAR.forEach(j=>{if(results[j.j]&&results[j.j].played)nextJ=j.j+1;});
+
+  const html=LIGA.CALENDAR.map(j=>{
+    const played=results[j.j]&&results[j.j].played;
+    const isNext=j.j===nextJ;
+    const sc=played?'status-played':isNext?'status-next':'status-pending';
+    const st=played?'✓ JUGADA':isNext?'▶ PRÓXIMA':'• PENDIENTE';
+    const scores=(results[j.j]&&results[j.j].scores)||{};
+    const matches=j.partidos.map(([h,a])=>{
+      const home=LIGA.teamById(h);
+      const away=LIGA.teamById(a);
+      const score=scores[h+'v'+a]||'—';
+      return `<div class="match-row"><span class="match-home" style="color:${home?.color||'#fff'}">${home?.emoji||''} ${esc(home?.name||h)}</span><span class="match-vs">vs</span><span class="match-away" style="color:${away?.color||'#fff'}">${esc(away?.name||a)} ${away?.emoji||''}</span><span class="match-score">${esc(score)}</span></div>`;
+    }).join('');
+    return `<div class="jornada-card">
+  <div class="jornada-header"><div><div class="jornada-num">Jornada ${j.j}</div><div class="jornada-fecha">${j.fecha}</div></div><span class="jornada-status ${sc}">${st}</span></div>
+  <div class="jornada-matches">${matches}</div>
+</div>`;
+  }).join('');
+  showOutput('out-jornadas','code-jornadas',html);
+  toast('✅ HTML de jornadas generado');
+}
+
+// ── MERCADO HTML (resultado de la subasta con tabla de pujas) ──
+function generarHTMLMercado(){
+  const results=LIGA.load('mercado_results',[]);
+  if(!results.length){toast('Primero resuelve el mercado','#e53935');return;}
+
+  const pujasHeader = LIGA.IAS.map(ia=>`<th style="text-align:center;font-size:.78rem;color:${ia.color}">${ia.emoji}<br>${ia.name}</th>`).join('');
+
+  const rows = results.map(r=>{
+    const ganador = r.ganadorIAId ? LIGA.IAS.find(x=>x.id===r.ganadorIAId) : null;
+    const vendedor = r.iaOrigenId ? LIGA.IAS.find(x=>x.id===r.iaOrigenId) : null;
+    const pujaCells = LIGA.IAS.map(ia=>{
+      const puja = r.pujas[ia.id];
+      const esGanador = ia.id === r.ganadorIAId;
+      const noPuja = puja === null;
+      const v = (!noPuja && puja !== undefined && puja !== '') ? parseFloat(puja)||0 : 0;
+      if(noPuja){
+        return `<td style="text-align:center;color:#555;font-family:Share Tech Mono,monospace;font-size:.78rem">—</td>`;
+      } else if(esGanador){
+        return `<td style="text-align:center;color:#ffd700;font-family:Oswald,sans-serif;font-size:.95rem;font-weight:700;background:rgba(255,215,0,.08)">🏆 ${v}M</td>`;
+      } else if(v>0){
+        return `<td style="text-align:center;color:#90a4ae;font-family:Share Tech Mono,monospace;font-size:.8rem">${v}M</td>`;
+      } else {
+        return `<td style="text-align:center;color:#444;font-family:Share Tech Mono,monospace;font-size:.78rem">0</td>`;
+      }
+    }).join('');
+    const origen = vendedor ? `<span style="font-size:.72rem;color:#ffa726">↑ ${vendedor.emoji} ${esc(vendedor.name)}</span>` : '<span style="font-size:.72rem;color:#90a4ae">Pool libre</span>';
+    return `<tr>
+  <td style="font-weight:600;white-space:nowrap">${esc(r.jugador)}</td>
+  <td style="text-align:center;font-family:Share Tech Mono,monospace;font-size:.8rem;color:#90a4ae">${r.precioBase}M</td>
+  <td>${origen}</td>
+  ${pujaCells}
+  <td style="font-family:Oswald,sans-serif;font-weight:700;color:${ganador?'#ffd700':'#666'};text-align:center">${ganador?ganador.emoji+' '+esc(ganador.name):'Sin pujas'}</td>
+</tr>`;
+  }).join('');
+
+  const html = `<div style="overflow-x:auto;margin-bottom:1.5rem;">
+<table style="width:100%;border-collapse:collapse;font-size:.88rem;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+<thead>
+<tr style="background:rgba(76,175,80,.12);border-bottom:2px solid var(--green-bright);">
+  <th style="text-align:left;padding:.7rem .9rem;font-family:Oswald,sans-serif;color:var(--green-light)">Jugador</th>
+  <th style="text-align:center;font-family:Oswald,sans-serif;color:var(--green-light)">Base</th>
+  <th style="font-family:Oswald,sans-serif;color:var(--green-light)">Origen</th>
+  ${pujasHeader}
+  <th style="font-family:Oswald,sans-serif;color:var(--gold);text-align:center">🏆 Ganador</th>
+</tr>
+</thead>
+<tbody style="border-top:1px solid var(--border)">
+${rows}
+</tbody>
+</table>
+</div>`;
+
+  showOutput('out-mercado','code-mercado',html);
+  toast('✅ HTML del resultado de la subasta generado');
+}
+
+function generarHTMLSorteoInterno(){
+  // Igual que generarHTMLSorteo pero muestra en el output de "tras mercado"
+  const sorteo=LIGA.load('sorteo',{});
+  const budgets=LIGA.load('budgets',{});
+  const html=LIGA.IAS.map(ia=>{
+    const players=sorteo[ia.id]||[];
+    const budget=(budgets[ia.id]||100).toFixed(1);
+    const rows=players.map((p,i)=>{
+      const ovr=Math.round(((p.pot||70)+(p.cal||70)+(p.vel||70)+(p.vis||70))/4);
+      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">${i+1}</td><td style="font-weight:600">${esc(p.name)}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">${esc(p.pos||'—')}</span></td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">${ovr}</td><td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right">${esc(p.price||'—')}</td></tr>`;
+    }).join('');
+    return `<div class="sorteo-card">
+  <div class="sorteo-card-head">
+    <div class="sorteo-card-title">${ia.emoji} ${ia.name}</div>
+    <div class="sorteo-card-budget">${ia.company} · 💰 Restante: ${budget}M</div>
+  </div>
+  <div class="table-wrap"><table class="sorteo-table">
+    <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th style="text-align:right">💶 Precio</th></tr></thead>
+    <tbody>${rows||'<tr><td colspan="5" style="color:#78909c;text-align:center;padding:1rem">Sin jugadores</td></tr>'}</tbody>
+  </table></div>
+</div>`;
+  }).join('');
+  showOutput('out-sorteo-tras-mercado','code-sorteo-mercado',html);
+}
+
+// ── XI IDEAL HTML ──
+function initXIForms(){
+  const container=document.getElementById('xi-ia-forms');
+  if(!container||container.children.length>0)return;
+  container.innerHTML=LIGA.IAS.map(ia=>`
+    <div style="background:rgba(0,0,0,.3);border:1px solid var(--border);border-top:2px solid ${ia.color};border-radius:8px;padding:1rem;">
+      <div style="font-family:Oswald,sans-serif;font-size:.9rem;font-weight:700;color:${ia.color};margin-bottom:.5rem;">${ia.emoji} ${ia.name}</div>
+      <textarea id="xi-${ia.id}" rows="12" style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:5px;padding:.5rem .7rem;color:var(--white);font-family:Share Tech Mono,monospace;font-size:.78rem;resize:vertical;" placeholder="Jugador 1 | POR&#10;Jugador 2 | DEF&#10;Jugador 3 | DEF&#10;Jugador 4 | DEF&#10;Jugador 5 | DEF&#10;Jugador 6 | MED&#10;Jugador 7 | MED&#10;Jugador 8 | MED&#10;Jugador 9 | EXT&#10;Jugador 10 | DEL&#10;Jugador 11 | DEL"></textarea>
+    </div>`).join('');
+}
+
+function generarHTMLXI(){
+  const j=document.getElementById('xi-jornada').value||'?';
+  const form=document.getElementById('xi-formacion').value||'4-3-3';
+  const html=LIGA.IAS.map(ia=>{
+    const lineas=(document.getElementById('xi-'+ia.id)?.value||'').trim().split('\n').filter(Boolean);
+    if(!lineas.length)return '';
+    const rows=lineas.map((l,i)=>{
+      const p=l.split('|').map(s=>s.trim());
+      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">${i+1}</td><td style="font-weight:600">${esc(p[0]||'—')}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">${esc(p[1]||'MED')}</span></td></tr>`;
+    }).join('');
+    return `<div class="sorteo-card" style="border-top:3px solid ${ia.color}">
+  <div class="sorteo-card-head">
+    <div class="sorteo-card-title" style="color:${ia.color}">${ia.emoji} ${ia.name}</div>
+    <div class="sorteo-card-budget">Jornada ${esc(j)} · ${esc(form)}</div>
+  </div>
+  <div class="table-wrap"><table class="sorteo-table">
+    <thead><tr><th>#</th><th>Jugador</th><th>Pos</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>
+</div>`;
+  }).filter(Boolean).join('');
+  if(!html){toast('Rellena al menos una IA','#e53935');return;}
+  showOutput('out-xi','code-xi',html);
+  toast('✅ XI generado');
+}
+
+// ── ANÁLISIS HTML ──
+function generarHTMLAnalisis(){
+  const j=document.getElementById('an-jornada').value||'?';
+  const txt=document.getElementById('an-texto').value.trim();
+  const dest=document.getElementById('an-destacados').value.trim();
+  if(!txt){toast('Escribe el análisis','#e53935');return;}
+  const html=`<div class="analisis-card">
+  <div class="analisis-header">
+    <div class="analisis-jornada-label">📰 Análisis · Jornada ${esc(j)}</div>
+  </div>
+  <div class="analisis-body">
+    <div class="analisis-texto">${esc(txt)}</div>
+    ${dest?`<div style="margin-top:1rem;padding:.8rem 1rem;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.2);border-radius:6px;color:var(--gold);font-size:.9rem">⭐ ${esc(dest)}</div>`:''}
+  </div>
+</div>`;
+  showOutput('out-analisis','code-analisis',html);
+  toast('✅ Análisis generado');
+}
+
+
+// ── CLASIFICACIÓN: filas por separado ──
+function generarFilasIAs(){
+  const lineas = document.getElementById('clas-ias').value.trim().split('\n').filter(Boolean);
+  if(!lineas.length){ toast('Introduce datos de IAs','#e53935'); return; }
+  const filas = lineas.map((l,i) => {
+    const p = l.split('|').map(s=>s.trim());
+    const name=p[0]||'—', comp=p[1]||'—', j=p[2]||0, pts=p[3]||0, mejor=p[4]||0;
+    const ia = LIGA.IAS.find(x=>x.name.toLowerCase()===name.toLowerCase()) || {emoji:'🤖',color:'#4caf50'};
+    const pc = i===0?'pos-1':i===1?'pos-2':i===2?'pos-3':'pos-n';
+    return '<tr><td><span class="pos-badge '+pc+'">'+(i+1)+'</span></td>'
+      +'<td><strong>'+ia.emoji+' '+esc(name)+'</strong></td>'
+      +'<td style="color:var(--gray);font-size:.85rem">'+esc(comp)+'</td>'
+      +'<td>'+j+'</td>'
+      +'<td class="pts">'+pts+'</td>'
+      +'<td style="color:var(--green-light)">'+mejor+'</td></tr>';
+  }).join('');
+  showOutput('out-clas-ias','code-clas-ias', filas);
+  toast('✅ Filas IAs generadas');
+}
+
+function generarFilasEquipos(){
+  const lineas = document.getElementById('clas-equipos').value.trim().split('\n').filter(Boolean);
+  if(!lineas.length){ toast('Introduce datos de equipos','#e53935'); return; }
+  const filas = lineas.map((l,i) => {
+    const p = l.split('|').map(s=>s.trim());
+    const name=p[0]||'—', emj=p[1]||'⚽', pj=parseInt(p[2])||0,
+          g=parseInt(p[3])||0, e=parseInt(p[4])||0, per=parseInt(p[5])||0,
+          gf=parseInt(p[6])||0, gc=parseInt(p[7])||0;
+    const pts = g*3 + e;
+    const pc = i===0?'pos-1':i===1?'pos-2':i===2?'pos-3':'pos-n';
+    return '<tr><td><span class="pos-badge '+pc+'">'+(i+1)+'</span></td>'
+      +'<td><strong>'+emj+' '+esc(name)+'</strong></td>'
+      +'<td>'+pj+'</td><td>'+g+'</td><td>'+e+'</td><td>'+per+'</td>'
+      +'<td>'+gf+'</td><td>'+gc+'</td>'
+      +'<td class="pts">'+pts+'</td></tr>';
+  }).join('');
+  showOutput('out-clas-equipos','code-clas-equipos', filas);
+  toast('✅ Filas Equipos generadas');
+}
+
+
+// ── PLANTILLAS MANUALES POR IA ──
+function initPlantillasIAForms(){
+  const container = document.getElementById('plantillas-ia-forms');
+  if(!container) return;
+  if(container.children.length > 0) return;
+  container.innerHTML = LIGA.IAS.map(ia=>`
+    <div style="background:rgba(0,0,0,.3);border:1px solid var(--border);border-top:3px solid ${ia.color};border-radius:8px;padding:1rem;margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem;">
+        <div style="font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;color:${ia.color}">${ia.emoji} ${ia.name}</div>
+        <div style="display:flex;align-items:center;gap:.5rem;">
+          <label style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--gray);">💰 Presupuesto restante (M):</label>
+          <input type="number" id="plant-budget-${ia.id}" value="0" step="0.1" min="0"
+            style="width:80px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:4px;padding:.35rem .5rem;color:var(--gold);font-family:Share Tech Mono,monospace;font-size:.85rem;text-align:center;"/>
+        </div>
+      </div>
+      <p style="font-size:.78rem;color:var(--gray);margin-bottom:.4rem;">Un jugador por línea: <code>Nombre | POS | OVR | Precio</code></p>
+      <textarea id="plant-${ia.id}" rows="12"
+        style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:5px;padding:.5rem .7rem;color:var(--white);font-family:Share Tech Mono,monospace;font-size:.78rem;resize:vertical;"
+        placeholder="Logic Gate | MED | 91 | 22.0M&#10;Fernando Centro | DEL | 83 | 14.8M&#10;..."></textarea>
+    </div>`).join('');
+}
+
+function generarHTMLPlantillas(){
+  let alguno = false;
+  const html = LIGA.IAS.map(ia=>{
+    const lines = (document.getElementById('plant-'+ia.id)?.value||'').trim().split('\n').filter(Boolean);
+    const budget = parseFloat(document.getElementById('plant-budget-'+ia.id)?.value)||0;
+    if(!lines.length) return '';
+    alguno = true;
+    const rows = lines.map((l,i)=>{
+      const p = l.split('|').map(s=>s.trim());
+      const name = p[0]||'—', pos = p[1]||'MED', ovr = p[2]||'—', price = p[3]||'—';
+      return '<tr>'
+        +'<td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">'+(i+1)+'</td>'
+        +'<td style="font-weight:600">'+esc(name)+'</td>'
+        +'<td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">'+esc(pos)+'</span></td>'
+        +'<td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">'+esc(ovr)+'</td>'
+        +'<td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#ffd700;text-align:center;font-weight:700">0</td>'
+        +'<td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right">'+esc(price)+'</td>'
+        +'</tr>';
+    }).join('');
+    return '<div class="sorteo-card" style="border-top:3px solid '+ia.color+'">'
+      +'<div class="sorteo-card-head">'
+      +'<div class="sorteo-card-title" style="color:'+ia.color+'">'+ia.emoji+' '+ia.name+'</div>'
+      +'<div class="sorteo-card-budget">'+ia.company+' · 💰 Restante: '+budget.toFixed(1)+'M</div>'
+      +'</div>'
+      +'<div class="table-wrap"><table class="sorteo-table">'
+      +'<thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th>Pts</th><th style="text-align:right">💶 Precio</th></tr></thead>'
+      +'<tbody>'+rows+'</tbody>'
+      +'</table></div>'
+      +'</div>';
+  }).filter(Boolean).join('\n');
+
+  if(!alguno){toast('Rellena al menos una plantilla','#e53935');return;}
+  showOutput('out-plantillas','code-plantillas',html);
+  toast('✅ HTML de plantillas generado — pégalo en fantas-ia-v2.html');
+}
+
 </script>
 </body>
 </html>
