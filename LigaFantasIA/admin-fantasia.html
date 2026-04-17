@@ -1,1033 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>⚙️ Admin Liga Fantas-IA</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
-<style>
-:root{
-  --green:#4caf50;--gold:#ffd700;--dark:#0d1b0d;--card:rgba(10,46,10,.92);
-  --border:rgba(76,175,80,.3);--gray:#b0b0b0;--white:#f0f0f0;--red:#e53935;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Rajdhani',sans-serif;background:#080f08;color:var(--white);min-height:100vh;}
-body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-gradient(160deg,#060e06,#0d1b0d);}
-
-/* LOGIN */
-#login{position:fixed;inset:0;z-index:999;background:#060e06;display:flex;align-items:center;justify-content:center;}
-.login-box{background:var(--card);border:2px solid var(--green);border-radius:12px;padding:3rem;text-align:center;max-width:360px;width:90%;}
-.login-box h1{font-family:'Oswald',sans-serif;font-size:2rem;color:var(--gold);margin-bottom:.5rem;}
-.login-box p{color:var(--gray);font-size:.9rem;margin-bottom:2rem;}
-.pw-input{width:100%;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:6px;padding:.8rem;color:var(--white);font-size:1.1rem;text-align:center;letter-spacing:4px;margin-bottom:1rem;}
-.pw-input:focus{outline:none;border-color:var(--green);}
-.login-btn{width:100%;background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;padding:.9rem;border:none;border-radius:6px;cursor:pointer;}
-.login-btn:hover{background:#ffe040;}
-.login-err{color:var(--red);font-size:.85rem;margin-top:.5rem;display:none;}
-
-/* APP */
-#app{display:none;}
-nav.admin-nav{background:rgba(5,20,5,.97);border-bottom:2px solid var(--green);padding:0 1.5rem;height:56px;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:100;flex-wrap:wrap;}
-.nav-brand{font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:700;color:var(--gold);white-space:nowrap;}
-.nav-brand span{color:var(--green);}
-.tabs-nav{display:flex;gap:.3rem;flex-wrap:wrap;flex:1;}
-.tnav{font-family:'Oswald',sans-serif;font-size:.8rem;font-weight:600;padding:.35rem .85rem;border:1px solid var(--border);background:transparent;color:var(--gray);border-radius:4px;cursor:pointer;transition:all .2s;white-space:nowrap;}
-.tnav.active,.tnav:hover{background:var(--green);color:#060e06;border-color:var(--green);}
-.logout{font-size:.78rem;color:var(--red);background:transparent;border:1px solid rgba(229,57,53,.4);padding:.3rem .8rem;border-radius:15px;cursor:pointer;white-space:nowrap;}
-
-.main{max-width:1200px;margin:0 auto;padding:2rem 1.5rem;}
-.panel{display:none;}
-.panel.active{display:block;}
-.panel-title{font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:700;color:var(--gold);margin-bottom:.4rem;}
-.panel-desc{color:var(--gray);font-size:.9rem;line-height:1.6;margin-bottom:1.5rem;}
-
-/* CARDS */
-.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.4rem;margin-bottom:1.2rem;}
-.card h3{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;color:var(--gold);margin-bottom:.8rem;}
-
-/* FORM */
-label.lbl{display:block;font-family:'Share Tech Mono',monospace;font-size:.75rem;color:var(--green);letter-spacing:1px;margin-bottom:.3rem;}
-input[type=text],input[type=number],textarea,select{
-  width:100%;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:6px;
-  padding:.6rem .9rem;color:var(--white);font-family:'Rajdhani',sans-serif;font-size:.9rem;
-  margin-bottom:.8rem;
-}
-input:focus,textarea:focus,select:focus{outline:none;border-color:var(--green);}
-select option{background:#0a2e0a;}
-textarea{resize:vertical;min-height:80px;}
-
-/* BUTTONS */
-.btn{font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.6rem 1.4rem;border:none;border-radius:6px;cursor:pointer;transition:all .2s;}
-.btn-gold{background:var(--gold);color:#060e06;}
-.btn-gold:hover{background:#ffe040;}
-.btn-green{background:var(--green);color:#060e06;}
-.btn-green:hover{background:#66bb6a;}
-.btn-red{background:transparent;border:1px solid rgba(229,57,53,.5);color:var(--red);}
-.btn-red:hover{background:rgba(229,57,53,.1);}
-.btn-outline{background:transparent;border:1px solid var(--border);color:var(--gray);}
-.btn-outline:hover{border-color:var(--green);color:var(--white);}
-
-/* OUTPUT */
-.output-box{background:#050d05;border:2px solid var(--green);border-radius:8px;padding:1.2rem;margin-top:1rem;}
-.output-box h4{font-family:'Oswald',sans-serif;font-size:.9rem;color:var(--green);margin-bottom:.6rem;display:flex;align-items:center;justify-content:space-between;}
-.output-code{font-family:'Share Tech Mono',monospace;font-size:.78rem;color:#a5d6a7;white-space:pre-wrap;word-break:break-all;max-height:320px;overflow-y:auto;line-height:1.7;}
-.copy-btn{background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.78rem;font-weight:700;padding:.3rem .8rem;border:none;border-radius:4px;cursor:pointer;}
-.copy-btn:hover{background:#ffe040;}
-.instruccion{background:rgba(255,215,0,.07);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;padding:.8rem 1rem;font-size:.85rem;color:var(--gray);line-height:1.6;margin-bottom:1rem;}
-.instruccion strong{color:var(--gold);}
-.instruccion code{background:rgba(76,175,80,.15);color:var(--green);padding:.1rem .3rem;border-radius:3px;font-family:'Share Tech Mono',monospace;font-size:.8rem;}
-
-/* SORTEO */
-.ia-row{display:flex;align-items:flex-start;gap:.8rem;padding:.8rem;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;margin-bottom:.6rem;}
-.ia-label{font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:600;color:var(--gold);width:100px;flex-shrink:0;padding-top:.4rem;}
-.ia-players{flex:1;font-size:.82rem;color:var(--gray);line-height:1.8;}
-
-/* DADOS */
-.dado-group{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1rem;}
-.dado-card{background:rgba(0,0,0,.3);border:2px solid var(--border);border-radius:8px;padding:1.2rem;text-align:center;}
-.dado-card h4{font-family:'Oswald',sans-serif;font-size:.9rem;margin-bottom:.5rem;}
-.dado-result{font-family:'Oswald',sans-serif;font-size:3.5rem;font-weight:700;margin:.5rem 0;}
-.dado-faces{font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--gray);}
-
-/* MERCADO */
-.jugador-slot{display:flex;gap:.6rem;align-items:flex-end;flex-wrap:wrap;margin-bottom:.6rem;padding:.6rem;background:rgba(0,0,0,.2);border-radius:6px;}
-.jugador-slot input,
-.jugador-slot select{margin-bottom:0;width:auto;flex:1;min-width:120px;}
-
-/* XI IDEAL */
-.xi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;}
-.xi-ia-card{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:1rem;}
-.xi-ia-card h4{font-family:'Oswald',sans-serif;font-size:.9rem;color:var(--gold);margin-bottom:.6rem;}
-.xi-ia-card input{margin-bottom:.3rem;}
-
-/* TOAST */
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;background:var(--green);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.7rem 1.3rem;border-radius:20px;box-shadow:0 4px 16px rgba(0,0,0,.5);transform:translateY(60px);opacity:0;transition:all .3s;}
-.toast.show{transform:translateY(0);opacity:1;}
-</style>
-</head>
-<body>
-
-<!-- LOGIN -->
-<div id="login">
-  <div class="login-box">
-    <div style="font-size:2.5rem;margin-bottom:.5rem;">⚙️</div>
-    <h1>Admin Panel</h1>
-    <p>Liga Fantas-IA · Solo para el gestor</p>
-    <input class="pw-input" type="password" id="pw" placeholder="Contraseña" onkeydown="if(event.key==='Enter')login()"/>
-    <button class="login-btn" onclick="login()">ENTRAR</button>
-    <div class="login-err" id="pw-err">❌ Contraseña incorrecta</div>
-  </div>
-</div>
-
-<!-- APP -->
-<div id="app">
-<nav class="admin-nav">
-  <div class="nav-brand">⚙️ Admin <span>Fantas-IA</span></div>
-  <div class="tabs-nav">
-    <button class="tnav active" onclick="tab('sorteo',this)">🎯 Sorteo</button>
-    <button class="tnav" onclick="tab('dados',this)">🎲 Dados</button>
-    <button class="tnav" onclick="tab('puntos',this)">📊 Puntos</button>
-    <button class="tnav" onclick="tab('clasificacion',this)">🏆 Clasificación</button>
-    <button class="tnav" onclick="tab('jornadas',this)">📅 Jornadas</button>
-    <button class="tnav" onclick="tab('mercado',this)">💰 Mercado</button>
-    <button class="tnav" onclick="tab('cronicas',this)">📰 Crónicas</button>
-    <button class="tnav" onclick="tab('xi',this)">⚽ XI Ideal</button>
-    <button class="tnav" onclick="tab('analisis',this)">🔍 Análisis</button>
-    <button class="tnav" onclick="tab('extra',this)">✏️ Extra</button>
-  </div>
-  <button class="logout" onclick="logout()">Salir</button>
-</nav>
-
-<div class="main">
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- PANEL: SORTEO                                          -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<div class="panel active" id="panel-sorteo">
-  <div class="panel-title">🎯 Sorteo de Jugadores</div>
-  <div class="panel-desc">Sortea los jugadores entre las IAs o edítalos manualmente. Al terminar, copia el HTML y pégalo en <strong>fantas-ia-v2.html</strong> donde pone el comentario <code>&lt;!-- SORTEO_HTML --&gt;</code></div>
-
-  <div class="instruccion">
-    <strong>Cómo usarlo:</strong><br>
-    1. Pulsa <strong>🎲 Sortear aleatoriamente</strong> para repartir jugadores al azar<br>
-    2. O rellena manualmente los jugadores de cada IA<br>
-    3. Pulsa <strong>Generar HTML</strong> → Copia → Pega en fantas-ia-v2.html
-  </div>
-
-  <div class="card">
-    <h3>Jugadores disponibles (uno por línea, formato: NOMBRE | POS | precio)</h3>
-    <textarea id="pool-jugadores" rows="12" placeholder="Áxel Pixel Vargas | POR | 4.2M&#10;Nilo Ramírez | DEF | 7.8M&#10;Eric Glitch Mendoza | DEF | 9.5M&#10;..."></textarea>
-    <div style="display:flex;gap:.6rem;flex-wrap:wrap;">
-      <button class="btn btn-gold" onclick="sortearJugadores()">🎲 Sortear aleatoriamente</button>
-      <button class="btn btn-outline" onclick="limpiarSorteo()">↺ Limpiar</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3>Plantillas por IA (edita si es necesario)</h3>
-    <p style="font-size:.82rem;color:var(--gray);margin-bottom:.8rem;">Cada jugador en una línea: <code>NOMBRE | POS | precio</code></p>
-    <div id="sorteo-manual">
-      <!-- Se genera dinámicamente -->
-    </div>
-    <button class="btn btn-green" onclick="generarHTMLSorteo()" style="margin-top:.5rem;">📋 Generar HTML para copiar</button>
-  </div>
-
-  <div class="output-box" id="out-sorteo" style="display:none">
-    <h4>HTML generado — pega esto en fantas-ia-v2.html donde dice <code>&lt;!-- SORTEO_HTML --&gt;</code>
-      <button class="copy-btn" onclick="copiar('html-sorteo')">Copiar</button>
-    </h4>
-    <div class="output-code" id="html-sorteo"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- PANEL: DADOS                                           -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<div class="panel" id="panel-dados">
-  <div class="panel-title">🎲 Tirada de Dados</div>
-  <div class="panel-desc">Tira los dados para la jornada. El resultado se usa en el panel de Puntos.</div>
-
-  <div class="instruccion">
-    <strong>Reglas:</strong> OVR ≥80 → dado 4-5-6 · OVR 60-79 → dado 3-4-5-6 · OVR &lt;60 → dado 1-6
-  </div>
-
-  <div class="card">
-    <h3>Tirada de la jornada</h3>
-    <div style="margin-bottom:.8rem;">
-      <label class="lbl">JORNADA</label>
-      <select id="dado-jornada" style="max-width:200px;">
-        <option value="">— Jornada —</option>
-      </select>
-    </div>
-    <div class="dado-group">
-      <div class="dado-card">
-        <h4 style="color:var(--gold);">⭐ OVR 80+</h4>
-        <div class="dado-result" id="d-elite" style="color:var(--gold);">?</div>
-        <div class="dado-faces">Caras: 4 · 5 · 6</div>
-        <button class="btn btn-gold" style="width:100%;margin-top:.6rem;" onclick="tirarDado('elite')">🎲 Tirar</button>
-      </div>
-      <div class="dado-card">
-        <h4 style="color:var(--green);">🔵 OVR 60-79</h4>
-        <div class="dado-result" id="d-medio" style="color:var(--green);">?</div>
-        <div class="dado-faces">Caras: 3 · 4 · 5 · 6</div>
-        <button class="btn btn-green" style="width:100%;margin-top:.6rem;" onclick="tirarDado('medio')">🎲 Tirar</button>
-      </div>
-      <div class="dado-card">
-        <h4 style="color:var(--gray);">⚪ OVR &lt;60</h4>
-        <div class="dado-result" id="d-bajo" style="color:var(--gray);">?</div>
-        <div class="dado-faces">Caras: 1 · 2 · 3 · 4 · 5 · 6</div>
-        <button class="btn btn-outline" style="width:100%;margin-top:.6rem;" onclick="tirarDado('bajo')">🎲 Tirar</button>
-      </div>
-    </div>
-    <button class="btn btn-gold" style="width:100%;font-size:1rem;" onclick="tirarTodos()">🎲 TIRAR LOS 3 DADOS</button>
-    <div id="dados-resultado" style="margin-top:1rem;font-family:'Share Tech Mono',monospace;font-size:.85rem;color:var(--green);"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- PANEL: PUNTOS                                          -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<div class="panel" id="panel-puntos">
-  <div class="panel-title">📊 Puntos por Jornada</div>
-  <div class="panel-desc">Introduce los puntos de cada jugador. Al terminar, genera el HTML y pégalo en fantas-ia-v2.html donde dice <code>&lt;!-- PUNTOS_HTML --&gt;</code></div>
-
-  <div class="card">
-    <h3>Datos de la jornada</h3>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8rem;margin-bottom:.8rem;">
-      <div><label class="lbl">JORNADA</label><input type="number" id="pts-jornada" placeholder="1" min="1" max="28"/></div>
-      <div><label class="lbl">DADO OVR 80+</label><input type="number" id="pts-dado-elite" placeholder="?" min="1" max="6"/></div>
-      <div><label class="lbl">DADO OVR 60-79</label><input type="number" id="pts-dado-medio" placeholder="?" min="1" max="6"/></div>
-      <div><label class="lbl">DADO OVR &lt;60</label><input type="number" id="pts-dado-bajo" placeholder="?" min="1" max="6"/></div>
-    </div>
-    <p style="font-size:.82rem;color:var(--gray);margin-bottom:.5rem;">Lista de jugadores con sus IAs y puntos extra de crónica (opcional):</p>
-    <p style="font-size:.78rem;color:var(--gray);margin-bottom:.8rem;">Formato por línea: <code>NOMBRE_IA | Nombre Jugador | OVR | puntos_cronica</code></p>
-    <textarea id="pts-jugadores" rows="14" placeholder="ChatGPT | Viento Mudo | 73 | 0&#10;ChatGPT | Bernat Cache Amat | 75 | 2&#10;Gemini | Axon Prime | 87 | 0&#10;..."></textarea>
-    <button class="btn btn-green" onclick="calcularPuntos()">📊 Calcular y generar HTML</button>
-  </div>
-
-  <div class="output-box" id="out-puntos" style="display:none">
-    <h4>HTML generado — pega en fantas-ia-v2.html donde dice <code>&lt;!-- PUNTOS_HTML --&gt;</code>
-      <button class="copy-btn" onclick="copiar('html-puntos')">Copiar</button>
-    </h4>
-    <div class="output-code" id="html-puntos"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- PANEL: CLASIFICACIÓN                                   -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<div class="panel" id="panel-clasificacion">
-  <div class="panel-title">🏆 Clasificación</div>
-  <div class="panel-desc">Introduce los datos de clasificación. Pega el HTML generado en fantas-ia-v2.html donde dice <code>&lt;!-- CLASIFICACION_HTML --&gt;</code></div>
-
-  <div class="card">
-    <h3>Ranking IAs — una por línea: IA | Empresa | Jornadas | Puntos | MejorJornada</h3>
-    <textarea id="clas-ias" rows="9" placeholder="ChatGPT | OpenAI | 3 | 47 | 18&#10;Gemini | Google | 3 | 43 | 16&#10;Claude | Anthropic | 3 | 41 | 15&#10;Copilot | Microsoft | 3 | 38 | 14&#10;Grok | xAI | 3 | 35 | 13&#10;Perplexity | Perplexity AI | 3 | 32 | 12&#10;Mistral | Mistral AI | 3 | 29 | 11"></textarea>
-    <h3 style="margin-top:.8rem;">Clasificación Equipos — una por línea: Equipo | Emoji | PJ | G | E | P | GF | GC</h3>
-    <textarea id="clas-equipos" rows="10" placeholder="Realidad Virtual F.C. | 💻 | 3 | 2 | 1 | 0 | 7 | 3&#10;Sintéticos F.C. | 🧬 | 3 | 2 | 0 | 1 | 6 | 4&#10;Metrópoli S.C. | 🏙️ | 3 | 1 | 2 | 0 | 5 | 4&#10;..."></textarea>
-    <button class="btn btn-green" onclick="generarClasificacion()">📋 Generar HTML</button>
-  </div>
-
-  <div class="output-box" id="out-clas" style="display:none">
-    <h4>HTML generado — pega en fantas-ia-v2.html donde dice <code>&lt;!-- CLASIFICACION_HTML --&gt;</code>
-      <button class="copy-btn" onclick="copiar('html-clas')">Copiar</button>
-    </h4>
-    <div class="output-code" id="html-clas"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- PANEL: JORNADAS                                        -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<div class="panel" id="panel-jornadas">
-  <div class="panel-title">📅 Jornadas y Resultados</div>
-  <div class="panel-desc">Marca las jornadas como jugadas y añade resultados. El HTML generado va en fantas-ia-v2.html donde dice <code>&lt;!-- JORNADAS_HTML --&gt;</code></div>
-
-  <div class="card">
-    <h3>Resultados — formato: J1 | RV 2-1 AC | CE 0-3 SI | NB 1-1 IP | ME 2-0 NU</h3>
-    <p style="font-size:.82rem;color:var(--gray);margin-bottom:.8rem;">Una jornada por línea. Deja vacío si no se ha jugado aún.</p>
-    <textarea id="jornadas-resultados" rows="16" placeholder="1 | RV 2-1 NU | AC 0-2 ME | CE 1-1 NB | SI 3-0 IP&#10;2 | &#10;3 | &#10;..."></textarea>
-    <button class="btn btn-green" onclick="generarJornadas()">📋 Generar HTML</button>
-  </div>
-
-  <div class="output-box" id="out-jornadas" style="display:none">
-    <h4>HTML generado — pega en fantas-ia-v2.html donde dice <code>&lt;!-- JORNADAS_HTML --&gt;</code>
-      <button class="copy-btn" onclick="copiar('html-jornadas')">Copiar</button>
-    </h4>
-    <div class="output-code" id="html-jornadas"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- PANEL: MERCADO                                         -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<div class="panel" id="panel-mercado">
-  <div class="panel-title">💰 Gestión del Mercado</div>
-  <div class="panel-desc">Gestiona los fichajes. El HTML va en <strong>EquiposligaIAInventados.html</strong> donde dice <code>&lt;!-- MERCADO_HTML --&gt;</code> y también en fantas-ia-v2.html si quieres actualizar plantillas allí.</div>
-
-  <div class="card">
-    <h3>Jugadores en subasta esta semana</h3>
-    <p style="font-size:.82rem;color:var(--gray);margin-bottom:.8rem;">Formato: Nombre | Equipo | Pos | OVR | PrecioBase | PujaGanadora | IAGanadora</p>
-    <div id="mercado-slots">
-      <div class="jugador-slot">
-        <input type="text" placeholder="Nombre jugador" style="flex:3;"/>
-        <input type="text" placeholder="Equipo" style="flex:2;"/>
-        <input type="text" placeholder="POS" style="flex:.7;"/>
-        <input type="number" placeholder="OVR" style="flex:.7;"/>
-        <input type="number" placeholder="Base M" step="0.1" style="flex:.7;"/>
-        <button class="btn btn-red" onclick="this.closest('.jugador-slot').remove()" style="flex-shrink:0;">✕</button>
-      </div>
-    </div>
-    <button class="btn btn-outline" onclick="addMercadoSlot()" style="width:100%;">+ Añadir jugador al mercado</button>
-  </div>
-
-  <div class="card">
-    <h3>2. Pujas de las IAs</h3>
-    <div class="instruccion">Pulsa <strong>🔄 Actualizar tabla de pujas</strong> cada vez que añadas o quites jugadores arriba.</div>
-    <button class="btn btn-outline" onclick="actualizarTablaPujas()" style="margin-bottom:1rem; width:100%;">🔄 Actualizar tabla de pujas</button>
-    <div class="table-wrap">
-      <table class="puntos-table" id="tabla-pujas">
-        <thead id="thead-pujas"></thead>
-        <tbody id="tbody-pujas"></tbody>
-      </table>
-    </div>
-    <button class="btn btn-green" onclick="generarMercado()" style="margin-top:1rem;">📋 Generar HTML Resultados Subasta</button>
-  </div>
-
-  <div class="output-box" id="out-mercado" style="display:none">
-    <h4>HTML del resultado — pega en <code>EquiposligaIAInventados.html</code> o <code>fantas-ia-v2.html</code>
-      <button class="copy-btn" onclick="copiar('html-mercado')">Copiar</button>
-    </h4>
-    <div class="output-code" id="html-mercado"></div>
-  </div>
-
-  <div class="card">
-    <h3>3. Plantillas actualizadas tras el mercado</h3>
-    <p style="font-size:.82rem;color:var(--gray);margin-bottom:1rem;">
-      Ajusta las plantillas finales de cada IA y su presupuesto restante. Un jugador por línea: <code>Nombre | POS | OVR | Precio</code>
-    </p>
-    <div id="plantillas-mercado-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:1rem;">
-      <!-- Generado por JS -->
-    </div>
-    <button class="btn btn-green" onclick="generarPlantillasMercado()" style="margin-top:1.5rem; width:100%;">📋 Generar HTML Plantillas Actualizadas</button>
-  </div>
-
-  <div class="output-box" id="out-plantillas-mercado" style="display:none">
-    <h4>HTML Plantillas — pega en <code>fantas-ia-v2.html</code> entre <code>&lt;!-- SORTEO_HTML --&gt;</code> y <code>&lt;!-- /SORTEO_HTML --&gt;</code>
-      <button class="copy-btn" onclick="copiar('html-plantillas-mercado')">Copiar</button>
-    </h4>
-    <div class="output-code" id="html-plantillas-mercado"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- PANEL: CRÓNICAS                                        -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<div class="panel" id="panel-cronicas">
-  <div class="panel-title">📰 Crónicas de Jornada</div>
-  <div class="panel-desc">Escribe las crónicas de los 4 partidos. El HTML va en fantas-ia-v2.html donde dice <code>&lt;!-- CRONICAS_HTML --&gt;</code></div>
-
-  <div class="card">
-    <div style="margin-bottom:.8rem;"><label class="lbl">JORNADA</label><input type="number" id="cron-jornada" placeholder="1" min="1" max="28" style="max-width:100px;"/></div>
-    <div id="cronicas-form">
-      <label class="lbl">PARTIDO 1</label><input type="text" id="cr1-match" placeholder="RV vs NU"/>
-      <textarea id="cr1-texto" rows="3" placeholder="Crónica del partido 1..."></textarea>
-      <label class="lbl">PARTIDO 2</label><input type="text" id="cr2-match" placeholder="AC vs ME"/>
-      <textarea id="cr2-texto" rows="3" placeholder="Crónica del partido 2..."></textarea>
-      <label class="lbl">PARTIDO 3</label><input type="text" id="cr3-match" placeholder="CE vs NB"/>
-      <textarea id="cr3-texto" rows="3" placeholder="Crónica del partido 3..."></textarea>
-      <label class="lbl">PARTIDO 4</label><input type="text" id="cr4-match" placeholder="SI vs IP"/>
-      <textarea id="cr4-texto" rows="3" placeholder="Crónica del partido 4..."></textarea>
-    </div>
-    <button class="btn btn-green" onclick="generarCronicas()">📋 Generar HTML</button>
-  </div>
-
-  <div class="output-box" id="out-cronicas" style="display:none">
-    <h4>HTML generado — pega en fantas-ia-v2.html donde dice <code>&lt;!-- CRONICAS_HTML --&gt;</code>
-      <button class="copy-btn" onclick="copiar('html-cronicas')">Copiar</button>
-    </h4>
-    <div class="output-code" id="html-cronicas"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- PANEL: XI IDEAL                                        -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<div class="panel" id="panel-xi">
-  <div class="panel-title">⚽ XI Ideal de cada IA</div>
-  <div class="panel-desc">Introduce el 11 titular de cada IA. El HTML va en fantas-ia-v2.html donde dice <code>&lt;!-- XI_HTML --&gt;</code></div>
-
-  <div class="card">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.8rem;">
-      <div><label class="lbl">JORNADA</label><input type="number" id="xi-jornada" placeholder="1" min="1" max="28"/></div>
-      <div><label class="lbl">FORMACIÓN (para todas)</label><input type="text" id="xi-formacion" placeholder="4-3-3" value="4-3-3"/></div>
-    </div>
-    <p style="font-size:.82rem;color:var(--gray);margin-bottom:.8rem;">Un jugador por línea en cada IA. Formato: <code>Nombre Jugador | POS</code></p>
-    <div class="xi-grid" id="xi-form"></div>
-    <button class="btn btn-green" onclick="generarXI()" style="margin-top:.8rem;">📋 Generar HTML</button>
-  </div>
-
-  <div class="output-box" id="out-xi" style="display:none">
-    <h4>HTML generado — pega en fantas-ia-v2.html donde dice <code>&lt;!-- XI_HTML --&gt;</code>
-      <button class="copy-btn" onclick="copiar('html-xi')">Copiar</button>
-    </h4>
-    <div class="output-code" id="html-xi"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- PANEL: ANÁLISIS                                        -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<div class="panel" id="panel-analisis">
-  <div class="panel-title">🔍 Análisis de Jornada</div>
-  <div class="panel-desc">Escribe el análisis. El HTML va en fantas-ia-v2.html donde dice <code>&lt;!-- ANALISIS_HTML --&gt;</code></div>
-
-  <div class="card">
-    <div style="margin-bottom:.8rem;"><label class="lbl">JORNADA</label><input type="number" id="an-jornada" placeholder="1" min="1" max="28" style="max-width:100px;"/></div>
-    <label class="lbl">TEXTO DEL ANÁLISIS</label>
-    <textarea id="an-texto" rows="10" placeholder="Escribe aquí el análisis de la jornada: qué pasó, resultados destacados, novedades..."></textarea>
-    <label class="lbl">JUGADOR/ES DESTACADO/S (opcional)</label>
-    <input type="text" id="an-destacados" placeholder="Ej: Logic Gate (Claude) — MVP de la jornada con 6 puntos"/>
-    <button class="btn btn-green" onclick="generarAnalisis()">📋 Generar HTML</button>
-  </div>
-
-  <div class="output-box" id="out-analisis" style="display:none">
-    <h4>HTML generado — pega en fantas-ia-v2.html donde dice <code>&lt;!-- ANALISIS_HTML --&gt;</code>
-      <button class="copy-btn" onclick="copiar('html-analisis')">Copiar</button>
-    </h4>
-    <div class="output-code" id="html-analisis"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- PANEL: EXTRA                                           -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<div class="panel" id="panel-extra">
-  <div class="panel-title">✏️ Contenido Extra</div>
-  <div class="panel-desc">Escribe cualquier contenido libre en HTML. Pégalo donde quieras en cualquier página usando el comentario <code>&lt;!-- EXTRA_HTML --&gt;</code></div>
-
-  <div class="card">
-    <label class="lbl">TÍTULO (opcional)</label>
-    <input type="text" id="extra-titulo" placeholder="Ej: Noticias de la liga, Tabla especial, Anuncio..."/>
-    <label class="lbl">CONTENIDO (texto libre, admite HTML)</label>
-    <textarea id="extra-contenido" rows="12" placeholder="Escribe aquí lo que quieras publicar..."></textarea>
-    <button class="btn btn-green" onclick="generarExtra()">📋 Generar HTML</button>
-  </div>
-
-  <div class="output-box" id="out-extra" style="display:none">
-    <h4>HTML generado <button class="copy-btn" onclick="copiar('html-extra')">Copiar</button></h4>
-    <div class="output-code" id="html-extra"></div>
-  </div>
-</div>
-
-</div><!-- /main -->
-</div><!-- /app -->
-
-<div class="toast" id="toast"></div>
-
-<script>
-// ═══════════════════════════════════════════════════
-// DATOS FIJOS
-// ═══════════════════════════════════════════════════
-const PASS = '1234'; // ← CAMBIA ESTO
-
-const IAS = [
-  {id:'chatgpt',   name:'ChatGPT',    emoji:'🤖', color:'#10a37f', company:'OpenAI'},
-  {id:'gemini',    name:'Gemini',     emoji:'💎', color:'#4285f4', company:'Google DeepMind'},
-  {id:'claude',    name:'Claude',     emoji:'🔮', color:'#7c3aed', company:'Anthropic'},
-  {id:'copilot',   name:'Copilot',    emoji:'🪟', color:'#0078d4', company:'Microsoft'},
-  {id:'grok',      name:'Grok',       emoji:'⚡', color:'#e33d3d', company:'xAI'},
-  {id:'perplexity',name:'Perplexity', emoji:'🔍', color:'#20b2aa', company:'Perplexity AI'},
-  {id:'mistral',   name:'Mistral',    emoji:'🌊', color:'#ff9500', company:'Mistral AI'},
-];
-
-const CALENDAR = [
-  {j:1,  fecha:'5-6 Abr 2025',   partidos:[['RV','NU'],['AC','ME'],['CE','NB'],['SI','IP']]},
-  {j:2,  fecha:'19-20 Abr 2025', partidos:[['RV','ME'],['NU','NB'],['AC','IP'],['CE','SI']]},
-  {j:3,  fecha:'3-4 May 2025',   partidos:[['RV','NB'],['ME','IP'],['NU','SI'],['AC','CE']]},
-  {j:4,  fecha:'17-18 May 2025', partidos:[['RV','IP'],['NB','SI'],['ME','CE'],['NU','AC']]},
-  {j:5,  fecha:'31 May-1 Jun',   partidos:[['RV','SI'],['IP','CE'],['NB','AC'],['ME','NU']]},
-  {j:6,  fecha:'14-15 Jun 2025', partidos:[['RV','CE'],['SI','AC'],['IP','NU'],['NB','ME']]},
-  {j:7,  fecha:'28-29 Jun 2025', partidos:[['RV','AC'],['CE','NU'],['SI','ME'],['IP','NB']]},
-  {j:8,  fecha:'12-13 Jul 2025', partidos:[['NU','RV'],['ME','AC'],['NB','CE'],['IP','SI']]},
-  {j:9,  fecha:'26-27 Jul 2025', partidos:[['ME','RV'],['NB','NU'],['IP','AC'],['SI','CE']]},
-  {j:10, fecha:'9-10 Ago 2025',  partidos:[['NB','RV'],['IP','ME'],['SI','NU'],['CE','AC']]},
-  {j:11, fecha:'23-24 Ago 2025', partidos:[['IP','RV'],['SI','NB'],['CE','ME'],['AC','NU']]},
-  {j:12, fecha:'6-7 Sep 2025',   partidos:[['SI','RV'],['CE','IP'],['AC','NB'],['NU','ME']]},
-  {j:13, fecha:'20-21 Sep 2025', partidos:[['CE','RV'],['AC','SI'],['NU','IP'],['ME','NB']]},
-  {j:14, fecha:'4-5 Oct 2025',   partidos:[['AC','RV'],['NU','CE'],['ME','SI'],['NB','IP']]},
-];
-
-// ═══════════════════════════════════════════════════
-// LOGIN
-// ═══════════════════════════════════════════════════
-function login(){
-  if(document.getElementById('pw').value===PASS){
-    document.getElementById('login').style.display='none';
-    document.getElementById('app').style.display='block';
-    initApp();
-  } else {
-    document.getElementById('pw-err').style.display='block';
-    document.getElementById('pw').value='';
-    setTimeout(()=>document.getElementById('pw-err').style.display='none',2000);
-  }
-}
-function logout(){document.getElementById('app').style.display='none';document.getElementById('login').style.display='flex';}
-document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')login();});
-
-// ═══════════════════════════════════════════════════
-// TABS
-// ═══════════════════════════════════════════════════
-function tab(id,btn){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tnav').forEach(b=>b.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
-  btn.classList.add('active');
-}
-
-// ═══════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════
-function initApp(){
-  // Jornadas en selects
-  const dadoSel=document.getElementById('dado-jornada');
-  CALENDAR.forEach(j=>{
-    const o=document.createElement('option');
-    o.value=j.j; o.textContent='Jornada '+j.j+' · '+j.fecha;
-    dadoSel.appendChild(o);
-  });
-
-  // Plantillas en Mercado
-  document.getElementById('plantillas-post-grid').innerHTML = IAS.map(ia => `
-    <div class="xi-ia-card" style="border-top: 3px solid ${ia.color};">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.5rem;">
-        <h4 style="margin:0;">${ia.emoji} ${ia.name}</h4>
-        <input type="number" id="budget-${ia.id}" value="100" step="0.1" style="width:70px; margin-bottom:0; padding:.3rem;" title="Presupuesto restante"/>
-      </div>
-      <textarea id="plantilla-${ia.id}" rows="10" placeholder="Nombre | POS | OVR | PrecioM"></textarea>
-    </div>
-  `).join('');
-
-  // Sorteo manual: crear textarea por IA
-  document.getElementById('sorteo-manual').innerHTML=IAS.map(ia=>`
-    <div style="margin-bottom:.8rem;">
-      <label class="lbl">${ia.emoji} ${ia.name}</label>
-      <textarea id="sorteo-${ia.id}" rows="4" placeholder="Nombre Jugador | POS | precio&#10;Otro Jugador | DEL | 12.0M&#10;..."></textarea>
-    </div>
-  `).join('');
-  // XI ideal: textarea por IA
-  document.getElementById('xi-form').innerHTML=IAS.map(ia=>`
-    <div class="xi-ia-card">
-      <h4>${ia.emoji} ${ia.name}</h4>
-      <textarea id="xi-${ia.id}" rows="12" placeholder="Jugador 1 | POR&#10;Jugador 2 | DEF&#10;..."></textarea>
-    </div>
-  `).join('');
-}
-
-// ═══════════════════════════════════════════════════
-// TOAST & COPY
-// ═══════════════════════════════════════════════════
-function toast(msg,color){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.style.background=color||'var(--green)'; t.style.color=color?'#fff':'#060e06';
-  t.classList.add('show'); clearTimeout(t._t);
-  t._t=setTimeout(()=>t.classList.remove('show'),2500);
-}
-function copiar(id){
-  const txt=document.getElementById(id).textContent;
-  navigator.clipboard.writeText(txt).then(()=>toast('✅ Copiado al portapapeles')).catch(()=>{
-    const ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';
-    document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
-    toast('✅ Copiado');
-  });
-}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function showOut(outId, htmlId, html){
-  document.getElementById(outId).style.display='block';
-  document.getElementById(htmlId).textContent=html;
-}
-
-// ═══════════════════════════════════════════════════
-// SORTEO
-// ═══════════════════════════════════════════════════
-function sortearJugadores(){
-  const pool=document.getElementById('pool-jugadores').value.trim().split('\n').filter(Boolean);
-  if(pool.length<7){toast('Necesitas al menos 7 jugadores','#e53935');return;}
-  const shuffled=[...pool].sort(()=>Math.random()-.5);
-  const perIA=Math.floor(shuffled.length/IAS.length);
-  IAS.forEach((ia,i)=>{
-    const chunk=shuffled.slice(i*perIA,(i+1)*perIA);
-    document.getElementById('sorteo-'+ia.id).value=chunk.join('\n');
-  });
-  toast('✅ Jugadores repartidos — revisa y ajusta');
-}
-function limpiarSorteo(){IAS.forEach(ia=>document.getElementById('sorteo-'+ia.id).value='');}
-
-function generarHTMLSorteo(){
-  const filas=IAS.map(ia=>{
-    const lineas=document.getElementById('sorteo-'+ia.id).value.trim().split('\n').filter(Boolean);
-    const jugadoresHTML=lineas.map((l,i)=>{
-      const parts=l.split('|').map(s=>s.trim());
-      const nombre=parts[0]||'—', pos=parts[1]||'—', precio=parts[2]||'—';
-      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center;">${i+1}</td><td style="font-weight:600;">${esc(nombre)}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:600;padding:.12rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784;">${esc(pos)}</span></td><td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;">${esc(precio)}</td></tr>`;
-    }).join('');
-    const presupGastado=lineas.reduce((s,l)=>{
-      const p=(l.split('|')[2]||'0').replace('M','').trim();
-      return s+parseFloat(p)||s;
-    },0);
-    const restante=(100-presupGastado).toFixed(1);
-    return `<div class="sorteo-card">
-  <div class="sorteo-card-head">
-    <div>
-      <div class="sorteo-card-title">${ia.emoji} ${ia.name}</div>
-      <div class="sorteo-card-budget">Gastado: ${presupGastado.toFixed(1)}M · Restante: ${restante}M</div>
-    </div>
-  </div>
-  <div class="table-wrap">
-    <table class="sorteo-table">
-      <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>💶 Precio</th></tr></thead>
-      <tbody>${jugadoresHTML}</tbody>
-    </table>
-  </div>
-</div>`;
-  }).join('\n');
-  showOut('out-sorteo','html-sorteo',filas);
-  toast('✅ HTML de sorteo generado');
-}
-
-// ═══════════════════════════════════════════════════
-// DADOS
-// ═══════════════════════════════════════════════════
-const DADOS={elite:[4,5,6],medio:[3,4,5,6],bajo:[1,2,3,4,5,6]};
-const dadoActual={elite:null,medio:null,bajo:null};
-function tirarDado(tipo){
-  const faces=DADOS[tipo];
-  const val=faces[Math.floor(Math.random()*faces.length)];
-  dadoActual[tipo]=val;
-  const el=document.getElementById('d-'+tipo);
-  let count=0; const iv=setInterval(()=>{
-    el.textContent=faces[Math.floor(Math.random()*faces.length)];
-    if(++count>10){clearInterval(iv);el.textContent=val;}
-  },60);
-  // Actualizar campos de puntos automáticamente
-  if(tipo==='elite')document.getElementById('pts-dado-elite').value=val;
-  if(tipo==='medio')document.getElementById('pts-dado-medio').value=val;
-  if(tipo==='bajo') document.getElementById('pts-dado-bajo').value=val;
-  actualizarResumenDados();
-}
-function tirarTodos(){['elite','medio','bajo'].forEach((t,i)=>setTimeout(()=>tirarDado(t),i*200));}
-function actualizarResumenDados(){
-  if(dadoActual.elite&&dadoActual.medio&&dadoActual.bajo){
-    document.getElementById('dados-resultado').innerHTML=
-      `Resultado: OVR 80+ → <strong style="color:var(--gold)">${dadoActual.elite} pts</strong> · OVR 60-79 → <strong style="color:var(--green)">${dadoActual.medio} pts</strong> · OVR &lt;60 → <strong style="color:#78909c">${dadoActual.bajo} pts</strong>`;
-  }
-}
-
-// ═══════════════════════════════════════════════════
-// PUNTOS
-// ═══════════════════════════════════════════════════
-function calcularPuntos(){
-  const jornada=document.getElementById('pts-jornada').value||'?';
-  const dE=parseInt(document.getElementById('pts-dado-elite').value)||0;
-  const dM=parseInt(document.getElementById('pts-dado-medio').value)||0;
-  const dB=parseInt(document.getElementById('pts-dado-bajo').value)||0;
-  const lineas=document.getElementById('pts-jugadores').value.trim().split('\n').filter(Boolean);
-
-  // Agrupar por IA
-  const porIA={};
-  IAS.forEach(ia=>porIA[ia.id]={ia,jugadores:[],total:0});
-
-  lineas.forEach(l=>{
-    const p=l.split('|').map(s=>s.trim());
-    const iaName=(p[0]||'').toLowerCase().replace(/\s/g,'');
-    const nombre=p[1]||'—', ovr=parseInt(p[2])||70, bonusCronica=parseInt(p[3])||0;
-    const dado=ovr>=80?dE:ovr>=60?dM:dB;
-    const total=dado+bonusCronica;
-    const ia=IAS.find(x=>x.name.toLowerCase()===iaName||x.id===iaName)||null;
-    if(ia){
-      porIA[ia.id].jugadores.push({nombre,ovr,dado,bonusCronica,total});
-      porIA[ia.id].total+=total;
-    }
-  });
-
-  const filas=Object.values(porIA).map(({ia,jugadores,total})=>`<div class="sorteo-card">
-  <div class="sorteo-card-head">
-    <div><div class="sorteo-card-title">${ia.emoji} ${ia.name}</div><div class="sorteo-card-budget">Total jornada ${jornada}: <strong style="color:var(--gold)">${total} pts</strong></div></div>
-  </div>
-  <div class="table-wrap">
-    <table class="sorteo-table">
-      <thead><tr><th>Jugador</th><th>OVR</th><th>Dado</th><th>Crónica</th><th>Total</th></tr></thead>
-      <tbody>${jugadores.map(j=>`<tr><td style="font-weight:600;">${esc(j.nombre)}</td><td style="font-family:Share Tech Mono,monospace;font-size:.8rem;">${j.ovr}</td><td style="color:var(--green);font-family:Oswald,sans-serif;font-weight:700;">${j.dado}</td><td style="color:#ffa726;font-family:Oswald,sans-serif;font-weight:700;">${j.bonusCronica||'—'}</td><td style="color:var(--gold);font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;">${j.total}</td></tr>`).join('')}</tbody>
-    </table>
-  </div>
-</div>`).join('\n');
-
-  showOut('out-puntos','html-puntos',filas);
-  toast('✅ Puntos calculados');
-}
-
-// ═══════════════════════════════════════════════════
-// CLASIFICACIÓN
-// ═══════════════════════════════════════════════════
-function generarClasificacion(){
-  const iaLines=document.getElementById('clas-ias').value.trim().split('\n').filter(Boolean);
-  const eqLines=document.getElementById('clas-equipos').value.trim().split('\n').filter(Boolean);
-
-  const iaRows=iaLines.map((l,i)=>{
-    const p=l.split('|').map(s=>s.trim());
-    const name=p[0]||'—',company=p[1]||'—',j=p[2]||0,pts=p[3]||0,mejor=p[4]||0;
-    const ia=IAS.find(x=>x.name.toLowerCase()===name.toLowerCase())||{emoji:'🤖',color:'#4caf50'};
-    const pc=i===0?'pos-1':i===1?'pos-2':i===2?'pos-3':'pos-n';
-    return `<tr><td><span class="pos-badge ${pc}">${i+1}</span></td><td><strong>${ia.emoji} ${esc(name)}</strong></td><td style="color:var(--gray);font-size:.85rem">${esc(company)}</td><td>${j}</td><td class="pts">${pts}</td><td style="color:var(--green-light)">${mejor}</td></tr>`;
-  }).join('');
-
-  const eqRows=eqLines.map((l,i)=>{
-    const p=l.split('|').map(s=>s.trim());
-    const name=p[0]||'—',emoji=p[1]||'⚽',pj=p[2]||0,g=p[3]||0,e=p[4]||0,per=p[5]||0,gf=p[6]||0,gc=p[7]||0;
-    const pts=parseInt(g)*3+parseInt(e);
-    const pc=i===0?'pos-1':i===1?'pos-2':i===2?'pos-3':'pos-n';
-    return `<tr><td><span class="pos-badge ${pc}">${i+1}</span></td><td><strong>${emoji} ${esc(name)}</strong></td><td>${pj}</td><td>${g}</td><td>${e}</td><td>${per}</td><td>${gf}</td><td>${gc}</td><td class="pts">${pts}</td></tr>`;
-  }).join('');
-
-  const html=`<div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('ias-rank',this)">🤖 Ranking IAs</button>
-  <button class="tab-btn" onclick="switchTab('teams-rank',this)">🏟️ Clasificación Equipos</button>
-</div>
-<div class="tab-panel active" id="ias-rank">
-  <div class="table-wrap">
-    <table><thead><tr><th>#</th><th>IA</th><th>Empresa</th><th>J</th><th>Puntos</th><th>Mejor J.</th></tr></thead>
-    <tbody>${iaRows}</tbody></table>
-  </div>
-</div>
-<div class="tab-panel" id="teams-rank">
-  <div class="table-wrap">
-    <table><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>Pts</th></tr></thead>
-    <tbody>${eqRows}</tbody></table>
-  </div>
-</div>`;
-  showOut('out-clas','html-clas',html);
-  toast('✅ Clasificación generada');
-}
-
-// ═══════════════════════════════════════════════════
-// JORNADAS
-// ═══════════════════════════════════════════════════
-function generarJornadas(){
-  const lineas=document.getElementById('jornadas-resultados').value.trim().split('\n');
-  const resultados={};
-  lineas.forEach(l=>{
-    const p=l.split('|').map(s=>s.trim());
-    if(p[0]) resultados[parseInt(p[0])]=p.slice(1);
-  });
-
-  const cards=CALENDAR.map(j=>{
-    const res=resultados[j.j]||[];
-    const played=res.length>0&&res[0]!=='';
-    const isNext=!played&&(!resultados[j.j-1]||resultados[j.j-1][0]==='');
-    const statusClass=played?'status-played':isNext?'status-next':'status-pending';
-    const statusText=played?'✓ JUGADA':isNext?'▶ PRÓXIMA':'• PENDIENTE';
-
-    const matchRows=j.partidos.map((m,i)=>{
-      const score=res[i]||'— : —';
-      return `<div class="match-row"><span class="match-home">${m[0]}</span><span class="match-vs">vs</span><span class="match-away">${m[1]}</span><span class="match-score">${esc(score)}</span></div>`;
-    }).join('');
-
-    return `<div class="jornada-card">
-  <div class="jornada-header">
-    <div><div class="jornada-num">Jornada ${j.j}</div><div class="jornada-fecha">${j.fecha}</div></div>
-    <span class="jornada-status ${statusClass}">${statusText}</span>
-  </div>
-  <div class="jornada-matches">${matchRows}</div>
-</div>`;
-  }).join('\n');
-
-  showOut('out-jornadas','html-jornadas',cards);
-  toast('✅ Jornadas generadas');
-}
-
-// ═══════════════════════════════════════════════════
-// MERCADO
-// ═══════════════════════════════════════════════════
-function addMercadoSlot(){
-  const slot=document.createElement('div');
-  slot.className='jugador-slot';
-  slot.innerHTML=`<input type="text" placeholder="Nombre jugador" style="flex:3;"/><input type="text" placeholder="Equipo" style="flex:2;"/><input type="text" placeholder="POS" style="flex:.7;"/><input type="number" placeholder="OVR" style="flex:.7;"/><input type="number" placeholder="Base M" step="0.1" style="flex:.7;"/><button class="btn btn-red" onclick="this.closest('.jugador-slot').remove()" style="flex-shrink:0;">✕</button>`;
-  document.getElementById('mercado-slots').appendChild(slot);
-}
-
-function actualizarTablaPujas(){
-  const slots = document.querySelectorAll('#mercado-slots .jugador-slot');
-  const thead = document.getElementById('thead-pujas');
-  const tbody = document.getElementById('tbody-pujas');
-  
-  if(!slots.length) {
-    thead.innerHTML = ''; tbody.innerHTML = '';
-    return;
-  }
-
-  // Header
-  thead.innerHTML = `<tr>
-    <th style="text-align:left;">Jugador</th>
-    <th style="text-align:center;">Base</th>
-    ${IAS.map(ia => `<th style="text-align:center; color:${ia.color}; font-size:.7rem;">${ia.emoji}<br>${ia.name}</th>`).join('')}
-  </tr>`;
-
-  // Body
-  tbody.innerHTML = [...slots].map((s, idx) => {
-    const inputs = s.querySelectorAll('input');
-    const nombre = inputs[0].value || `Jugador ${idx+1}`;
-    const base = inputs[4].value || '0';
-    
-    return `<tr>
-      <td style="font-weight:600; font-size:.85rem;">${esc(nombre)}</td>
-      <td style="text-align:center; font-family:monospace; color:var(--gray);">${base}M</td>
-      ${IAS.map(ia => `
-        <td style="text-align:center;">
-          <input type="number" class="bid-input" data-player-idx="${idx}" data-ia-id="${ia.id}" placeholder="0" step="0.1" style="width:55px; padding:.2rem; margin:0; text-align:center; font-size:.8rem;"/>
-        </td>
-      `).join('')}
-    </tr>`;
-  }).join('');
-  
-  toast('✅ Tabla de pujas actualizada');
-}
-
-function generarMercado(){
-  const slots=document.querySelectorAll('#mercado-slots-container .jugador-slot');
-  const bids = document.querySelectorAll('.bid-input');
-  
-  if(!slots.length) { toast('Añade jugadores primero','#e53935'); return; }
-
-  const results = [...slots].map((s, idx) => {
-    const ins = s.querySelectorAll('input');
-    const nombre = ins[0].value || '—';
-    const equipo = ins[1].value || '—';
-    const pos = ins[2].value || '—';
-    const ovr = ins[3].value || '—';
-    const base = parseFloat(ins[4].value) || 0;
-
-    // Buscar ganador entre las pujas de este jugador
-    let maxPuja = base;
-    let ganadorIA = null;
-    
-    [...bids].filter(b => parseInt(b.dataset.playerIdx) === idx).forEach(b => {
-      const val = parseFloat(b.value) || 0;
-      if(val > maxPuja) {
-        maxPuja = val;
-        ganadorIA = IAS.find(ia => ia.id === b.dataset.iaId);
-      }
-    });
-
-    return { nombre, equipo, pos, ovr, base, maxPuja, ganadorIA };
-  });
-
-  const html = results.map(r => {
-    const hayGanador = !!r.ganadorIA;
-    return `<div style="background:var(--card-bg);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
-  <div style="padding:.8rem 1rem;background:rgba(76,175,80,.1);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
-    <div><div style="font-family:Oswald,sans-serif;font-size:1.05rem;font-weight:700;">${esc(r.nombre)}</div><div style="font-size:.75rem;color:#b0b0b0;">${esc(r.equipo)}</div></div>
-    <span style="font-family:Oswald,sans-serif;font-size:.75rem;font-weight:600;padding:.15rem .5rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784;">${esc(r.pos)}</span>
-  </div>
-  <div style="padding:1rem;">
-    <div style="display:flex;gap:1rem;margin-bottom:.6rem;">
-      <span style="font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;padding:.12rem .5rem;border-radius:4px;background:rgba(76,175,80,.15);color:#4caf50;">OVR ${esc(r.ovr)}</span>
-    </div>
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(255,255,255,.04);border-radius:4px;">
-      <div style="font-size:.8rem;color:#b0b0b0;">Base: <strong style="color:#f0f0f0;">${r.base}M</strong></div>
-      <div style="font-family:Oswald,sans-serif;font-size:1.1rem;font-weight:700;color:#ffd700;">${hayGanador ? r.maxPuja.toFixed(1)+'M · '+r.ganadorIA.emoji+' '+r.ganadorIA.name : 'Sin pujas — libre'}</div>
-    </div>
-  </div>
-</div>`;
-  }).join('\n');
-
-  showOut('out-mercado','html-mercado', html);
-  toast('✅ HTML de resultados generado');
-}
-
-function generarPlantillasFinales(){
-  const html = IAS.map(ia => {
-    const budget = document.getElementById(`budget-${ia.id}`).value || '0';
-    const text = document.getElementById(`plantilla-${ia.id}`).value.trim();
-    if(!text) return '';
-    
-    const lines = text.split('\n').filter(l => l.trim() !== '');
-    const rows = lines.map((l, i) => {
-      const p = l.split('|').map(s => s.trim());
-      const nombre = p[0]||'—', pos = p[1]||'MED', ovr = p[2]||'—', precio = p[3]||'—';
-      return `<tr>
-        <td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center;">${i+1}</td>
-        <td style="font-weight:600;">${esc(nombre)}</td>
-        <td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:600;padding:.12rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784;">${esc(pos)}</span></td>
-        <td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center;">${esc(ovr)}</td>
-        <td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#ffd700;text-align:center;font-weight:700">0</td>
-        <td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right;">${esc(precio)}</td>
-      </tr>`;
-    }).join('');
-
-    return `<div class="sorteo-card" style="border-top: 3px solid ${ia.color};">
-  <div class="sorteo-card-head">
-    <div>
-      <div class="sorteo-card-title" style="color:${ia.color};">${ia.emoji} ${ia.name}</div>
-      <div class="sorteo-card-budget">${ia.company} · 💰 Restante: ${budget}M</div>
-    </div>
-  </div>
-  <div class="table-wrap">
-    <table class="sorteo-table">
-      <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th>Pts</th><th style="text-align:right">💶 Precio</th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>
-  </div>
-</div>`;
-  }).filter(Boolean).join('\n');
-
-  if(!html) { toast('Rellena al menos una plantilla','#e53935'); return; }
-  showOut('out-plantillas-final', 'html-plantillas-final', html);
-  toast('✅ HTML de plantillas generado');
-}
-
-function exportarDatosPlantillas(){
-  const data = {};
-  IAS.forEach(ia => {
-    data[ia.id] = {
-      budget: document.getElementById(`budget-${ia.id}`).value,
-      text: document.getElementById(`plantilla-${ia.id}`).value
-    };
-  });
-  localStorage.setItem('admin_fantas_ia_plantillas', JSON.stringify(data));
-  toast('💾 Borrador guardado en el navegador');
-}
-
-// ═══════════════════════════════════════════════════
-// CRÓNICAS
-// ═══════════════════════════════════════════════════
-function generarCronicas(){
-  const j=document.getElementById('cron-jornada').value||'?';
-  const partidos=[1,2,3,4].map(i=>({
-    match:document.getElementById('cr'+i+'-match').value||'Partido '+i,
-    texto:document.getElementById('cr'+i+'-texto').value||'Sin crónica'
-  })).filter(p=>p.texto!=='Sin crónica'||p.match.includes('vs'));
-
-  const cards=partidos.map(p=>`<div class="cronica-card">
-  <div class="cronica-jornada">📰 Jornada ${esc(j)} · ${esc(p.match)}</div>
-  <div class="cronica-texto">${esc(p.texto)}</div>
-</div>`).join('\n');
-
-  showOut('out-cronicas','html-cronicas',cards);
-  toast('✅ Crónicas generadas');
-}
-
-// ═══════════════════════════════════════════════════
-// XI IDEAL
-// ═══════════════════════════════════════════════════
-function generarXI(){
-  const j=document.getElementById('xi-jornada').value||'?';
-  const form=document.getElementById('xi-formacion').value||'4-3-3';
-
-  const cards=IAS.map(ia=>{
-    const lineas=document.getElementById('xi-'+ia.id).value.trim().split('\n').filter(Boolean);
-    if(!lineas.length) return '';
-    const jugadores=lineas.map((l,i)=>{
-      const p=l.split('|').map(s=>s.trim());
-      const nombre=p[0]||'—',pos=p[1]||'MED';
-      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center;">${i+1}</td><td style="font-weight:600;">${esc(nombre)}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:600;padding:.12rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784;">${esc(pos)}</span></td></tr>`;
-    }).join('');
-    return `<div class="sorteo-card" style="border-top:3px solid ${ia.color};">
-  <div class="sorteo-card-head">
-    <div><div class="sorteo-card-title" style="color:${ia.color};">${ia.emoji} ${ia.name}</div><div class="sorteo-card-budget">Jornada ${j} · Formación: ${form}</div></div>
-  </div>
-  <div class="table-wrap">
-    <table class="sorteo-table">
-      <thead><tr><th>#</th><th>Jugador</th><th>Pos</th></tr></thead>
-      <tbody>${jugadores}</tbody>
-    </table>
-  </div>
-</div>`;
-  }).filter(Boolean).join('\n');
-
-  showOut('out-xi','html-xi',cards);
-  toast('✅ XI generado');
-}
-
-// ═══════════════════════════════════════════════════
-// ANÁLISIS
-// ═══════════════════════════════════════════════════
-function generarAnalisis(){
-  const j=document.getElementById('an-jornada').value||'?';
-  const texto=document.getElementById('an-texto').value||'';
-  const dest=document.getElementById('an-destacados').value||'';
-  if(!texto){toast('Escribe el análisis','#e53935');return;}
-
-  const html=`<div class="analisis-card">
-  <div class="analisis-header">
-    <div><div class="analisis-jornada-label">📰 Análisis Jornada ${esc(j)}</div></div>
-  </div>
-  <div class="analisis-body">
-    <div class="analisis-texto">${esc(texto)}</div>
-    ${dest?`<div style="margin-top:1rem;padding:.8rem 1rem;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.2);border-radius:6px;font-size:.9rem;color:var(--gold);">⭐ ${esc(dest)}</div>`:''}
-  </div>
-</div>`;
-
-  showOut('out-analisis','html-analisis',html);
-  toast('✅ Análisis generado');
-}
-
-// ═══════════════════════════════════════════════════
-// EXTRA
-// ═══════════════════════════════════════════════════
-function generarExtra(){
-  const titulo=document.getElementById('extra-titulo').value;
-  const contenido=document.getElementById('extra-contenido').value;
-  const html=`${titulo?`<h3 style="font-family:Oswald,sans-serif;font-size:1.3rem;color:var(--gold);margin-bottom:.8rem;">${esc(titulo)}</h3>`:''}
-<div style="color:var(--white);line-height:1.8;font-size:.95rem;">${contenido}</div>`;
-  showOut('out-extra','html-extra',html);
-  toast('✅ Contenido generado');
-}
-</script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="es">
-<head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🔐 Admin · Liga Fantas-IA</title>
@@ -1521,55 +494,69 @@ function generarExtra(){
 
     <!-- ===== PANEL: MERCADO ===== -->
     <div class="panel" id="panel-mercado">
-      <div class="panel-title">💰 Gestión Total del Mercado</div>
-      <div class="panel-desc">Carga jugadores, gestiona pujas masivas y actualiza plantillas.</div>
+      <div class="panel-title">💰 Gestión del Mercado</div>
+      <div class="panel-desc">Añade los jugadores uno a uno. Cada jugador aparece automáticamente con los inputs de puja de cada IA. Al resolver, la IA que más puje se lleva al jugador.</div>
 
       <div class="card">
-        <div class="card-title">📋 1. Carga de Jugadores</div>
-        <div class="instruccion">
-          Pega una lista o añade uno a uno.<br>
-          Formato: <code>Nombre | Equipo | POS | OVR | BaseM</code>
-        </div>
-        <textarea id="bulk-mercado-input" rows="4" placeholder="Ejemplo:&#10;Lamine Yamal | FC Barcelona | EXT | 92 | 28.0&#10;Mbappé | Real Madrid | DEL | 97 | 35.0"></textarea>
-        <div style="display:flex; gap:1rem; margin-top:0.5rem;">
-          <button class="btn-save-puntos" style="margin-top:0; background:var(--gold); color:black;" onclick="cargarMercadoMasivo()">📥 Cargar Lista</button>
-          <button class="btn-save-puntos" style="margin-top:0; background:transparent; border:1px solid var(--green-bright); color:var(--green-bright);" onclick="addMercadoSlot()">+ Añadir uno</button>
-        </div>
-        <div id="mercado-jugadores-form" style="margin-top:1.5rem;"></div>
-      </div>
+        <div class="card-title">📋 Jugadores + Pujas</div>
 
-      <div class="card">
-        <div class="card-title">🤖 2. Tabla de Pujas Masiva</div>
-        <div class="instruccion">Escribe las pujas de cada IA. Pulsa <strong>🔄 Sincronizar</strong> si has hecho cambios arriba.</div>
-        <button onclick="renderMercadoForm()" class="btn-save-puntos" style="width:100%; margin-bottom:1rem; background:transparent; border:1px dashed var(--green-bright); color:var(--green-light);">🔄 Sincronizar Tabla de Pujas</button>
-        <div class="table-wrap">
-          <table class="puntos-table" id="tabla-pujas-masiva" style="font-size:0.8rem;">
-            <thead id="pujas-thead">
-              <!-- Generado por JS -->
-            </thead>
-            <tbody id="pujas-tbody">
-              <!-- Generado por JS -->
-            </tbody>
-          </table>
+        <!-- Formulario de entrada rápida -->
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:flex-end;padding:.8rem;background:rgba(0,0,0,.25);border-radius:8px;border:1px dashed var(--border);margin-bottom:1.2rem;">
+          <div style="display:flex;flex-direction:column;flex:3;min-width:130px;">
+            <label style="font-family:Share Tech Mono,monospace;font-size:.72rem;color:var(--green-bright);margin-bottom:.25rem;">NOMBRE</label>
+            <input type="text" id="mn-nombre" placeholder="Nombre jugador" style="background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .7rem;color:var(--white);font-family:Rajdhani,sans-serif;"/>
+          </div>
+          <div style="display:flex;flex-direction:column;flex:2;min-width:100px;">
+            <label style="font-family:Share Tech Mono,monospace;font-size:.72rem;color:var(--green-bright);margin-bottom:.25rem;">EQUIPO</label>
+            <input type="text" id="mn-equipo" placeholder="Equipo" style="background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .7rem;color:var(--white);font-family:Rajdhani,sans-serif;"/>
+          </div>
+          <div style="display:flex;flex-direction:column;flex:.7;min-width:60px;">
+            <label style="font-family:Share Tech Mono,monospace;font-size:.72rem;color:var(--green-bright);margin-bottom:.25rem;">POS</label>
+            <input type="text" id="mn-pos" placeholder="MED" style="background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .7rem;color:var(--white);font-family:Rajdhani,sans-serif;"/>
+          </div>
+          <div style="display:flex;flex-direction:column;flex:.7;min-width:60px;">
+            <label style="font-family:Share Tech Mono,monospace;font-size:.72rem;color:var(--green-bright);margin-bottom:.25rem;">OVR</label>
+            <input type="number" id="mn-ovr" placeholder="75" style="background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .7rem;color:var(--white);font-family:Share Tech Mono,monospace;"/>
+          </div>
+          <div style="display:flex;flex-direction:column;flex:.8;min-width:75px;">
+            <label style="font-family:Share Tech Mono,monospace;font-size:.72rem;color:var(--green-bright);margin-bottom:.25rem;">BASE (M)</label>
+            <input type="number" id="mn-base" placeholder="5.0" step="0.1" style="background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .7rem;color:var(--white);font-family:Share Tech Mono,monospace;"/>
+          </div>
+          <div style="display:flex;flex-direction:column;flex:1.5;min-width:130px;">
+            <label style="font-family:Share Tech Mono,monospace;font-size:.72rem;color:var(--green-bright);margin-bottom:.25rem;">VENDEDOR (si es una IA)</label>
+            <select id="mn-vendedor" style="background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .7rem;color:var(--white);font-family:Rajdhani,sans-serif;">
+              <option value="">Pool libre</option>
+            </select>
+          </div>
+          <button onclick="mnAddJugador()" style="background:var(--green-bright);color:#060e06;font-family:Oswald,sans-serif;font-size:.9rem;font-weight:700;padding:.52rem 1.3rem;border:none;border-radius:6px;cursor:pointer;align-self:flex-end;flex-shrink:0;">+ Añadir</button>
         </div>
-        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1rem;">
-          <button onclick="saveMercado()" class="btn-save-puntos" style="margin-top:0;">💾 Resolver Subasta</button>
-          <button onclick="generarHTMLMercado()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;padding:.7rem 1.8rem;border:none;border-radius:6px;cursor:pointer;">📋 Generar HTML resultado</button>
+
+        <!-- Lista de jugadores con pujas inline -->
+        <div id="mn-lista-empty" style="color:var(--gray);font-family:Share Tech Mono,monospace;font-size:.82rem;padding:.5rem 0 1rem;">
+          Todavía no hay jugadores. Añade el primero arriba.
+        </div>
+        <div id="mn-lista"></div>
+
+        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.2rem;">
+          <button onclick="mnResolver()" style="background:var(--green-bright);color:#060e06;font-family:Oswald,sans-serif;font-size:.95rem;font-weight:700;padding:.7rem 1.8rem;border:none;border-radius:6px;cursor:pointer;">💾 Resolver subasta</button>
+          <button onclick="mnGenerarHTML()" style="background:var(--gold);color:#060e06;font-family:Oswald,sans-serif;font-size:.95rem;font-weight:700;padding:.7rem 1.8rem;border:none;border-radius:6px;cursor:pointer;">📋 Generar HTML subasta</button>
+          <button onclick="mnLimpiar()" style="background:transparent;border:1px solid rgba(229,57,53,.4);color:var(--red);font-family:Oswald,sans-serif;font-size:.85rem;font-weight:600;padding:.7rem 1.2rem;border-radius:6px;cursor:pointer;">🗑 Limpiar todo</button>
         </div>
         <div class="output-section" id="out-mercado" style="display:none;margin-top:1rem;">
           <div class="output-header">
-            <div class="output-title">✅ HTML del resultado de la subasta — Pega en tu página de mercado</div>
+            <div class="output-title">✅ Pega en <code>EquiposligaIAInventados.html</code> donde dice <code>&lt;!-- MERCADO_HTML --&gt;</code></div>
             <button class="copy-html-btn" onclick="copyOutput('code-mercado')">📋 Copiar HTML</button>
           </div>
           <div class="output-code" id="code-mercado"></div>
         </div>
       </div>
 
+      <!-- Plantillas manuales -->
       <div class="card">
-        <div class="card-title">📝 3. Plantillas Finales</div>
-        <div class="instruccion">Edita las plantillas definitivas. Formato: <code>Nombre | POS | OVR | Precio</code></div>
+        <div class="card-title">📝 Plantillas actualizadas tras el mercado</div>
+        <p style="color:var(--gray);font-size:.85rem;margin-bottom:1rem;">Un jugador por línea: <code>Nombre | POS | OVR | Precio</code></p>
         <div id="plantillas-ia-forms"></div>
-        <button onclick="generarHTMLPlantillas()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.95rem;font-weight:700;padding:.7rem 1.8rem;border:none;border-radius:6px;cursor:pointer;margin-top:1rem;">📋 Generar HTML plantillas</button>
+        <button onclick="generarHTMLPlantillas()" style="background:var(--gold);color:#060e06;font-family:Oswald,sans-serif;font-size:.95rem;font-weight:700;padding:.7rem 1.8rem;border:none;border-radius:6px;cursor:pointer;margin-top:1rem;">📋 Generar HTML plantillas</button>
         <div class="output-section" id="out-plantillas" style="display:none;margin-top:1rem;">
           <div class="output-header">
             <div class="output-title">✅ Pega en <code>fantas-ia-v2.html</code> entre <code>&lt;!-- SORTEO_HTML --&gt;</code> y <code>&lt;!-- /SORTEO_HTML --&gt;</code></div>
@@ -1579,6 +566,7 @@ function generarExtra(){
         </div>
       </div>
     </div>
+
 
 
     <!-- ===== PANEL: XI IDEAL ===== -->
@@ -2036,7 +1024,7 @@ function init(){
     });
   }
   renderSorteo();
-  initMercado();
+  mnInit();
   initXIForms();
   initPlantillasIAForms();
 }
@@ -2546,460 +1534,171 @@ function markJornadaPlayed(){
 }
 
 // ============================================================
-// MERCADO
+// MERCADO - nuevo sistema
 // ============================================================
-let mercadoJugadores=[];
+let mnJugadores = []; // [{nombre,equipo,pos,ovr,base,vendedor}]
+let mnResultados = []; // resultado tras resolver
 
-function cargarMercadoMasivo(){
-  const input = document.getElementById('bulk-mercado-input').value.trim();
-  if(!input) return;
-  syncMercadoData();
-  const lines = input.split('\n').filter(Boolean);
-  lines.forEach(l => {
-    const p = l.split('|').map(s=>s.trim());
-    mercadoJugadores.push({
-      nombre: p[0]||'', 
-      precio: parseFloat(p[4])||parseFloat(p[1])||0, 
-      origen: 'admin', 
-      iaOrigenId: '', 
-      pujas: {}
+function mnInit(){
+  // Poblar select de vendedores
+  const sel = document.getElementById('mn-vendedor');
+  if(sel){
+    sel.innerHTML = '<option value="">Pool libre</option>';
+    LIGA.IAS.forEach(ia=>{
+      const opt = document.createElement('option');
+      opt.value = ia.id;
+      opt.textContent = ia.emoji + ' ' + ia.name + ' vende';
+      sel.appendChild(opt);
     });
-  });
-  document.getElementById('bulk-mercado-input').value = '';
-  renderMercadoForm();
-  toast(`✅ ${lines.length} jugadores añadidos`);
-}
-
-function initMercado(){
-  const saved=LIGA.load('mercado_jugadores',[]);
-  mercadoJugadores=(saved||[]).map(j=>{
-    return {
-      nombre: j.nombre || '',
-      precio: parseFloat(j.precio)||0,
-      pujas: j.pujas || {},
-    };
-  });
-  renderMercadoForm();
-}
-
-function addMercadoSlot(){
-  syncMercadoData();
-  mercadoJugadores.push({
-    nombre: '', 
-    precio: 0, 
-    origen: 'admin', 
-    iaOrigenId: '', 
-    pujas: {}
-  });
-  renderMercadoForm();
-}
-
-function syncMercadoData() {
-  const slots = document.querySelectorAll('#mercado-jugadores-form > div');
-  slots.forEach((slot, i) => {
-    const ins = slot.querySelectorAll('input, select');
-    if(mercadoJugadores[i]) {
-      mercadoJugadores[i].nombre = ins[0].value;
-      mercadoJugadores[i].precio = parseFloat(ins[1].value) || 0;
-      mercadoJugadores[i].origen = ins[2].value;
-      mercadoJugadores[i].iaOrigenId = ins[3].value;
-    }
-  });
-}
-
-function updateMercadoVal(idx, key, val) {
-  if(key === 'precio') val = parseFloat(val) || 0;
-  mercadoJugadores[idx][key] = val;
-  // Sincronización visual inmediata en la tabla de pujas
-  if(key === 'nombre') {
-    const el = document.getElementById(`bid-name-${idx}`);
-    if(el) el.textContent = val || `Jugador ${idx+1}`;
   }
-  if(key === 'precio') {
-    const el = document.getElementById(`bid-base-${idx}`);
-    if(el) el.textContent = val + 'M';
-  }
+  mnRender();
 }
 
-function updateBid(pIdx, iaId, val, noPuja) {
-  const input = document.getElementById(`bid-input-${pIdx}-${iaId}`);
-  if(noPuja) {
-    mercadoJugadores[pIdx].pujas[iaId] = null;
-    if(input) { input.disabled = true; input.value = ''; }
-  } else {
-    const num = parseFloat(val) || 0;
-    mercadoJugadores[pIdx].pujas[iaId] = num;
-    if(input) { input.disabled = false; }
-  }
+function mnAddJugador(){
+  const nombre = (document.getElementById('mn-nombre').value||'').trim();
+  if(!nombre){ toast('Pon el nombre del jugador','#e53935'); return; }
+  mnJugadores.push({
+    nombre,
+    equipo:   (document.getElementById('mn-equipo').value||'').trim(),
+    pos:      (document.getElementById('mn-pos').value||'MED').trim().toUpperCase(),
+    ovr:      parseInt(document.getElementById('mn-ovr').value)||0,
+    base:     parseFloat(document.getElementById('mn-base').value)||0,
+    vendedor: document.getElementById('mn-vendedor').value||''
+  });
+  ['mn-nombre','mn-equipo','mn-pos','mn-ovr','mn-base'].forEach(id=>{
+    document.getElementById(id).value='';
+  });
+  document.getElementById('mn-nombre').focus();
+  mnRender();
+  toast('✅ '+nombre+' añadido');
 }
 
-function renderMercadoForm(){
-  const form = document.getElementById('mercado-jugadores-form');
-  form.innerHTML = mercadoJugadores.map((j,i)=>`
-    <div style="display:flex;gap:.8rem;align-items:center;margin-bottom:.6rem;flex-wrap:wrap;">
-      <input type="text" value="${esc(j.nombre)}" oninput="updateMercadoVal(${i},'nombre',this.value)" placeholder="Nombre del jugador" style="flex:2;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Rajdhani,sans-serif;"/>
-      <input type="number" value="${j.precio}" oninput="updateMercadoVal(${i},'precio',this.value)" placeholder="Base (M)" step="0.1" style="width:90px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Share Tech Mono,monospace;"/>
-      <select onchange="updateMercadoVal(${i},'origen',this.value); renderMercadoForm();" style="background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Rajdhani,sans-serif;min-width:120px;">
-        <option value="admin" ${j.origen==='admin'?'selected':''}>Puesto por Admin</option>
-        <option value="ia" ${j.origen==='ia'?'selected':''}>Vendido por IA</option>
-      </select>
-      <select onchange="updateMercadoVal(${i},'iaOrigenId',this.value)" style="background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem .8rem;color:var(--white);font-family:Rajdhani,sans-serif;min-width:140px;" ${j.origen==='ia'?'':'disabled'}>
-        <option value="">— IA —</option>
-        ${LIGA.IAS.map(ia=>`<option value="${ia.id}" ${j.iaOrigenId===ia.id?'selected':''}>${ia.emoji} ${ia.name}</option>`).join('')}
-      </select>
-      <button onclick="syncMercadoData(); mercadoJugadores.splice(${i},1); renderMercadoForm();" style="background:rgba(229,57,53,.2);border:1px solid rgba(229,57,53,.4);color:var(--red);font-size:.8rem;padding:.4rem .8rem;border-radius:5px;cursor:pointer;">✕</button>
-    </div>
-  `).join('');
+function mnBorrar(idx){
+  mnJugadores.splice(idx,1);
+  mnRender();
+}
 
-  // Tabla de pujas masiva
-  const thead = document.getElementById('pujas-thead');
-  thead.innerHTML = `<tr>
-    <th style="text-align:left;">Jugador</th>
-    <th style="text-align:center;">Base</th>
-    ${LIGA.IAS.map(ia=>`<th style="text-align:center; color:${ia.color}; font-size:.6rem;">${ia.emoji}<br>${ia.name}</th>`).join('')}
-  </tr>`;
+function mnRender(){
+  const lista  = document.getElementById('mn-lista');
+  const empty  = document.getElementById('mn-lista-empty');
+  if(!mnJugadores.length){
+    lista.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
 
-  const tbody = document.getElementById('pujas-tbody');
-  tbody.innerHTML = mercadoJugadores.map((j, ji) => {
-    const bids = j.pujas || {};
-    return `<tr>
-      <td id="bid-name-${ji}" style="font-weight:600; font-size:0.8rem; white-space:nowrap;">${esc(j.nombre || `Jugador ${ji+1}`)}</td>
-      <td id="bid-base-${ji}" style="text-align:center; font-family:monospace; color:var(--gray); font-size:0.75rem;">${j.precio}M</td>
-      ${LIGA.IAS.map(ia => {
-        const val = bids[ia.id];
-        const isNull = val === null;
-        return `
-          <td style="text-align:center; padding: 0.3rem 0.1rem;">
-            <input id="bid-input-${ji}-${ia.id}" type="number" 
-                   value="${isNull ? '' : val}" 
-                   placeholder="—" step="0.1" ${isNull ? 'disabled' : ''}
-                   oninput="updateBid(${ji},'${ia.id}',this.value, false)"
-                   style="width:45px; background:rgba(0,0,0,.4); border:1px solid var(--border); border-radius:4px; padding:.15rem; color:var(--white); font-family:monospace; font-size:.7rem; text-align:center; margin-bottom:2px;"/>
-            <br>
-            <label style="font-size:0.55rem; color:var(--gray); cursor:pointer; display:flex; align-items:center; justify-content:center; gap:1px;">
-              <input type="checkbox" ${isNull ? 'checked' : ''} onchange="updateBid(${ji},'${ia.id}', document.getElementById('bid-input-${ji}-${ia.id}').value, this.checked)"/> NP
-            </label>
-          </td>
-        `;
-      }).join('')}
-    </tr>`;
+  lista.innerHTML = mnJugadores.map((j,idx)=>{
+    const vendedorIA = j.vendedor ? LIGA.IAS.find(x=>x.id===j.vendedor) : null;
+    const vendedorTxt = vendedorIA
+      ? '<span style="font-size:.72rem;color:#ffa726">'+vendedorIA.emoji+' '+esc(vendedorIA.name)+' vende</span>'
+      : '<span style="font-size:.72rem;color:#555">Pool libre</span>';
+
+    const pujasHTML = LIGA.IAS.map(ia=>`
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.2rem;min-width:70px;">
+        <span style="font-size:.72rem;font-weight:600;color:${ia.color};font-family:Oswald,sans-serif;">${ia.emoji} ${ia.name}</span>
+        <input type="number" id="mnpuja-${idx}-${ia.id}" placeholder="0" step="0.1" min="0"
+          style="width:65px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:4px;padding:.3rem .4rem;color:var(--white);font-family:Share Tech Mono,monospace;font-size:.85rem;text-align:center;"/>
+      </div>`).join('');
+
+    return `<div style="background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:.8rem;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.8rem;gap:.5rem;flex-wrap:wrap;">
+        <div>
+          <span style="font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;color:var(--gold);">${esc(j.nombre)}</span>
+          ${j.equipo ? '<span style="font-size:.78rem;color:var(--gray);margin-left:.5rem;">'+esc(j.equipo)+'</span>' : ''}
+          <br>
+          <span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784;margin-right:.4rem;">${esc(j.pos)}</span>
+          <span style="font-family:Share Tech Mono,monospace;font-size:.72rem;color:#90a4ae;">OVR ${j.ovr||'—'}</span>
+          <span style="font-family:Share Tech Mono,monospace;font-size:.72rem;color:var(--gold);margin-left:.5rem;">Base: ${j.base}M</span>
+          &nbsp;${vendedorTxt}
+        </div>
+        <button onclick="mnBorrar(${idx})" style="background:rgba(229,57,53,.15);border:1px solid rgba(229,57,53,.3);color:var(--red);padding:.2rem .6rem;border-radius:4px;cursor:pointer;font-size:.78rem;flex-shrink:0;">✕ Quitar</button>
+      </div>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:flex-end;">
+        ${pujasHTML}
+      </div>
+    </div>`;
   }).join('');
 }
 
-function saveMercado(){
-  const norm = s => String(s||'').toLowerCase().replace(/["""'']/g,'').replace(/\s+/g,' ').trim();
-
-  // ── Revertir mercado anterior si existe ──
-  const prev = LIGA.load('mercado_previo', null);
-  let sorteo  = LIGA.load('sorteo', {});
-  let budgets = LIGA.load('budgets', {});
-
-  if(prev){
-    sorteo  = JSON.parse(JSON.stringify(prev.sorteo));
-    budgets = JSON.parse(JSON.stringify(prev.budgets));
-  }
-
-  // Asegurar presupuesto inicial para todas las IAs
-  LIGA.IAS.forEach(ia => {
-    if(budgets[ia.id] === undefined || budgets[ia.id] === null) budgets[ia.id] = 100;
+function mnGetPujas(idx){
+  const pujas = {};
+  LIGA.IAS.forEach(ia=>{
+    const el = document.getElementById('mnpuja-'+idx+'-'+ia.id);
+    pujas[ia.id] = el ? parseFloat(el.value)||0 : 0;
   });
+  return pujas;
+}
 
-  // ── Guardar backup ANTES de aplicar este mercado ──
-  LIGA.save('mercado_previo', {
-    sorteo:  JSON.parse(JSON.stringify(sorteo)),
-    budgets: JSON.parse(JSON.stringify(budgets))
-  });
-
-  // ── Procesar cada jugador ──
-  const results = mercadoJugadores.map(j => {
-    if(!j.nombre) return null;
-    const normalizedTarget = norm(j.nombre);
-    const precioBase = parseFloat(j.precio) || 0;
-    const origin  = j.origen   || 'admin';
-    const sellerId = j.iaOrigenId || '';
-
-    // Buscar objeto jugador completo (primero en sorteo, luego en equipos)
-    let playerObj = null;
-    for(const id in sorteo){
-      const found = sorteo[id].find(p => norm(p.name) === normalizedTarget);
-      if(found){ playerObj = {...found}; break; }
-    }
-    if(!playerObj){
-      for(const t of LIGA.TEAMS){
-        const found = t.players.find(p => norm(p.name) === normalizedTarget);
-        if(found){ playerObj = {...found, teamId:t.id, teamName:t.name, teamEmoji:t.emoji}; break; }
-      }
-    }
-    if(!playerObj) playerObj = {name:j.nombre, price:precioBase+'M', pot:70, cal:70, vel:70, vis:70, pos:'MED'};
-
-    // Determinar ganador: puja más alta estrictamente superior al precio base
-    let maxPuja = precioBase, winner = null;
-    Object.entries(j.pujas || {}).forEach(([iaId, puja]) => {
-      const v = (puja === null || puja === undefined || puja === '') ? 0 : parseFloat(puja) || 0;
-      if(v > maxPuja){ maxPuja = v; winner = iaId; }
+function mnResolver(){
+  if(!mnJugadores.length){ toast('Añade jugadores primero','#e53935'); return; }
+  mnResultados = mnJugadores.map((j,idx)=>{
+    const pujas = mnGetPujas(idx);
+    let maxPuja = j.base, winner = null;
+    LIGA.IAS.forEach(ia=>{
+      if(pujas[ia.id] > maxPuja){ maxPuja = pujas[ia.id]; winner = ia; }
     });
-
-    const montoFinal = winner ? maxPuja : precioBase;
-    const adminCompra = !winner && origin === 'ia' && !!sellerId;
-
-    // VENTA por IA: quitar jugador de su plantilla + cobrar dinero (aunque compre el admin)
-    if(origin === 'ia' && sellerId){
-      if(sorteo[sellerId]){
-        sorteo[sellerId] = sorteo[sellerId].filter(p => norm(p.name) !== normalizedTarget);
-      }
-      budgets[sellerId] = parseFloat(budgets[sellerId] || 0) + montoFinal;
-    }
-
-    // COMPRA: añadir jugador a la plantilla del ganador y restarle dinero
-    if(winner){
-      budgets[winner] = Math.max(0, parseFloat(budgets[winner] || 0) - montoFinal);
-      if(!sorteo[winner]) sorteo[winner] = [];
-      if(!sorteo[winner].find(p => norm(p.name) === normalizedTarget)){
-        sorteo[winner].push({...playerObj, price: montoFinal.toFixed(1)+'M'});
-      }
-    }
-
-    return { jugador:j.nombre, precioBase, ganadorIAId:winner, montoGanador:winner?maxPuja:0,
-             montoFinal, origen:origin, iaOrigenId:sellerId, adminCompra,
-             pujas:j.pujas||{} };
-  }).filter(Boolean);
-
-  // ── Guardar en estado ──
-  const state = LIGA.load('state',{});
-  state.sorteo  = sorteo;
-  state.budgets = budgets;
-  LIGA.save('sorteo',  sorteo);
-  LIGA.save('budgets', budgets);
-  LIGA.save('state',   state);
-  LIGA.save('mercado_jugadores', mercadoJugadores);
-  LIGA.save('mercado_results',   results);
-
-  renderSorteo();
-
-  const resumen = results
-    .filter(r => r.ganadorIAId || r.adminCompra)
-    .map(r => {
-      if(r.adminCompra) return r.jugador+'→Admin ('+r.montoFinal.toFixed(1)+'M al vendedor)';
-      const ia = LIGA.IAS.find(x=>x.id===r.ganadorIAId);
-      return r.jugador+'→'+(ia?.name||r.ganadorIAId)+' ('+r.montoFinal.toFixed(1)+'M)';
-    }).join(' · ');
-
-  toast('✅ Mercado resuelto. '+(resumen||'Sin transacciones'));
-}
-
-
-// ============================================================
-// UTILIDADES DE GENERACIÓN HTML
-// ============================================================
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-
-function copyOutput(id){
-  const el=document.getElementById(id);
-  if(!el)return;
-  const txt=el.textContent;
-  navigator.clipboard.writeText(txt).then(()=>toast('✅ Copiado al portapapeles')).catch(()=>{
-    const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';
-    document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
-    toast('✅ Copiado');
+    return { ...j, pujas, winner, montoFinal: winner ? maxPuja : j.base };
   });
+  toast('✅ Subasta resuelta — '+mnResultados.filter(r=>r.winner).length+' jugadores adjudicados');
 }
 
-function showOutput(sectionId, codeId, html){
-  const sec=document.getElementById(sectionId);
-  const code=document.getElementById(codeId);
-  if(sec)sec.style.display='block';
-  if(code)code.textContent=html;
-  if(sec)sec.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
+function mnGenerarHTML(){
+  // Resolver antes de generar si no se ha hecho
+  if(!mnResultados.length) mnResolver();
+  if(!mnResultados.length){ toast('Añade jugadores primero','#e53935'); return; }
 
-function parsePriceMillion(priceStr){
-  return parseFloat(String(priceStr||'0').replace('M','').replace(',','.'))||0;
-}
+  const iasHeader = LIGA.IAS.map(ia=>
+    '<th style="text-align:center;padding:.5rem .3rem;font-size:.72rem;color:'+ia.color+'">'+ia.emoji+'<br>'+ia.name+'</th>'
+  ).join('');
 
-// ── SORTEO HTML ──
-function generarHTMLSorteo(){
-  const sorteo=LIGA.load('sorteo',{});
-  const budgets=LIGA.load('budgets',{});
-  if(!Object.keys(sorteo).length){toast('Primero realiza el sorteo','#e53935');return;}
-  const html=LIGA.IAS.map(ia=>{
-    const players=sorteo[ia.id]||[];
-    const budget=(budgets[ia.id]||100).toFixed(1);
-    const rows=players.map((p,i)=>{
-      const ovr=Math.round(((p.pot||70)+(p.cal||70)+(p.vel||70)+(p.vis||70))/4);
-      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">${i+1}</td><td style="font-weight:600">${esc(p.name)}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">${esc(p.pos||'—')}</span></td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">${ovr}</td><td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right">${esc(p.price||'—')}</td></tr>`;
-    }).join('');
-    return `<div class="sorteo-card">
-  <div class="sorteo-card-head">
-    <div class="sorteo-card-title">${ia.emoji} ${ia.name}</div>
-    <div class="sorteo-card-budget">${ia.company} · 💰 Restante: ${budget}M</div>
-  </div>
-  <div class="table-wrap"><table class="sorteo-table">
-    <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th style="text-align:right">💶 Precio</th></tr></thead>
-    <tbody>${rows||'<tr><td colspan="5" style="color:#78909c;text-align:center;padding:1rem">Sin jugadores</td></tr>'}</tbody>
-  </table></div>
-</div>`;
-  }).join('');
-  showOutput('out-sorteo','code-sorteo',html);
-  toast('✅ HTML del sorteo generado');
-}
-
-// ── PUNTOS HTML ──
-function generarHTMLPuntos(){
-  const jornada=document.getElementById('dado-jornada-sel')?.value||
-                document.getElementById('puntos-jornada-sel')?.value||'?';
-  const sorteo=LIGA.load('sorteo',{});
-  const state=LIGA.load('state',{});
-  const puntos=(state.puntos&&state.puntos[jornada])||{};
-  if(!Object.keys(sorteo).length){toast('Primero realiza el sorteo','#e53935');return;}
-
-  const html=LIGA.IAS.map(ia=>{
-    const players=sorteo[ia.id]||[];
-    let total=0;
-    const rows=players.map(p=>{
-      const key=`${ia.id}_${p.name}`;
-      const d=(puntos[key]?.dado)||0;
-      const cr=(puntos[key]?.cronica)||0;
-      const t=d+cr; total+=t;
-      const ovr=Math.round(((p.pot||70)+(p.cal||70)+(p.vel||70)+(p.vis||70))/4);
-      return `<tr><td style="font-weight:600">${esc(p.name)}</td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">${ovr}</td><td style="text-align:center;color:#4caf50;font-family:Oswald,sans-serif;font-weight:700">${d}</td><td style="text-align:center;color:#ffa726;font-family:Oswald,sans-serif;font-weight:700">${cr||'—'}</td><td style="text-align:center;color:#ffd700;font-family:Oswald,sans-serif;font-size:1.05rem;font-weight:700">${t}</td></tr>`;
-    }).join('');
-    return `<div class="sorteo-card" style="border-top:3px solid ${ia.color}">
-  <div class="sorteo-card-head">
-    <div class="sorteo-card-title" style="color:${ia.color}">${ia.emoji} ${ia.name}</div>
-    <div class="sorteo-card-budget">Jornada ${esc(jornada)} · Total: <strong style="color:#ffd700;font-size:1.1rem">${total} pts</strong></div>
-  </div>
-  <div class="table-wrap"><table class="sorteo-table">
-    <thead><tr><th>Jugador</th><th style="text-align:center">OVR</th><th style="text-align:center">Dado</th><th style="text-align:center">+Crónica</th><th style="text-align:center">Total</th></tr></thead>
-    <tbody>${rows||'<tr><td colspan="5" style="color:#78909c;text-align:center;padding:1rem">Sin datos</td></tr>'}</tbody>
-  </table></div>
-</div>`;
-  }).join('');
-
-  // Mostrar en ambos posibles output boxes
-  showOutput('out-puntos-dados','code-puntos',html);
-  document.getElementById('out-puntos-dados').style.display='block';
-  toast('✅ HTML de puntos generado');
-}
-
-// ── CRÓNICAS HTML ──
-function generarHTMLCronicas(){
-  const existing=LIGA.load('cronicas',[]);
-  if(!existing.length){toast('Primero asigna y guarda las crónicas','#e53935');return;}
-  const html=existing.map(c=>`<div class="cronica-card">
-  <div class="cronica-jornada">📰 Jornada ${esc(c.jornada)} · Partido ${esc(c.partido)} · ${esc(c.equipos||'')}</div>
-  <div class="cronica-texto">${esc(c.texto||'')}</div>
-</div>`).join('');
-  showOutput('out-cronicas','code-cronicas',html);
-  toast('✅ HTML de crónicas generado');
-}
-
-// ── JORNADAS HTML ──
-function generarHTMLJornadas(){
-  const state=LIGA.load('state',{});
-  const results=state.results||{};
-  let nextJ=1;
-  LIGA.CALENDAR.forEach(j=>{if(results[j.j]&&results[j.j].played)nextJ=j.j+1;});
-
-  const html=LIGA.CALENDAR.map(j=>{
-    const played=results[j.j]&&results[j.j].played;
-    const isNext=j.j===nextJ;
-    const sc=played?'status-played':isNext?'status-next':'status-pending';
-    const st=played?'✓ JUGADA':isNext?'▶ PRÓXIMA':'• PENDIENTE';
-    const scores=(results[j.j]&&results[j.j].scores)||{};
-    const matches=j.partidos.map(([h,a])=>{
-      const home=LIGA.teamById(h);
-      const away=LIGA.teamById(a);
-      const score=scores[h+'v'+a]||'—';
-      return `<div class="match-row"><span class="match-home" style="color:${home?.color||'#fff'}">${home?.emoji||''} ${esc(home?.name||h)}</span><span class="match-vs">vs</span><span class="match-away" style="color:${away?.color||'#fff'}">${esc(away?.name||a)} ${away?.emoji||''}</span><span class="match-score">${esc(score)}</span></div>`;
-    }).join('');
-    return `<div class="jornada-card">
-  <div class="jornada-header"><div><div class="jornada-num">Jornada ${j.j}</div><div class="jornada-fecha">${j.fecha}</div></div><span class="jornada-status ${sc}">${st}</span></div>
-  <div class="jornada-matches">${matches}</div>
-</div>`;
-  }).join('');
-  showOutput('out-jornadas','code-jornadas',html);
-  toast('✅ HTML de jornadas generado');
-}
-
-// ── MERCADO HTML (resultado de la subasta con tabla de pujas) ──
-function generarHTMLMercado(){
-  const results=LIGA.load('mercado_results',[]);
-  if(!results.length){toast('Primero resuelve el mercado','#e53935');return;}
-
-  const pujasHeader = LIGA.IAS.map(ia=>`<th style="text-align:center;font-size:.78rem;color:${ia.color}">${ia.emoji}<br>${ia.name}</th>`).join('');
-
-  const rows = results.map(r=>{
-    const ganador = r.ganadorIAId ? LIGA.IAS.find(x=>x.id===r.ganadorIAId) : null;
-    const vendedor = r.iaOrigenId ? LIGA.IAS.find(x=>x.id===r.iaOrigenId) : null;
+  const rows = mnResultados.map(r=>{
     const pujaCells = LIGA.IAS.map(ia=>{
-      const puja = r.pujas[ia.id];
-      const esGanador = ia.id === r.ganadorIAId;
-      const noPuja = puja === null;
-      const v = (!noPuja && puja !== undefined && puja !== '') ? parseFloat(puja)||0 : 0;
-      if(noPuja){
-        return `<td style="text-align:center;color:#555;font-family:Share Tech Mono,monospace;font-size:.78rem">—</td>`;
-      } else if(esGanador){
-        return `<td style="text-align:center;color:#ffd700;font-family:Oswald,sans-serif;font-size:.95rem;font-weight:700;background:rgba(255,215,0,.08)">🏆 ${v}M</td>`;
-      } else if(v>0){
-        return `<td style="text-align:center;color:#90a4ae;font-family:Share Tech Mono,monospace;font-size:.8rem">${v}M</td>`;
-      } else {
-        return `<td style="text-align:center;color:#444;font-family:Share Tech Mono,monospace;font-size:.78rem">0</td>`;
-      }
+      const v = r.pujas[ia.id];
+      const esWinner = r.winner && r.winner.id === ia.id;
+      if(esWinner) return '<td style="text-align:center;color:#ffd700;font-family:Oswald,sans-serif;font-size:.92rem;font-weight:700;background:rgba(255,215,0,.08);padding:.4rem;">🏆 '+v.toFixed(1)+'M</td>';
+      if(v>0) return '<td style="text-align:center;color:#90a4ae;font-family:Share Tech Mono,monospace;font-size:.8rem;padding:.4rem;">'+v.toFixed(1)+'M</td>';
+      return '<td style="text-align:center;color:#333;padding:.4rem;">—</td>';
     }).join('');
-    const origen = vendedor ? `<span style="font-size:.72rem;color:#ffa726">↑ ${vendedor.emoji} ${esc(vendedor.name)}</span>` : '<span style="font-size:.72rem;color:#90a4ae">Pool libre</span>';
-    return `<tr>
-  <td style="font-weight:600;white-space:nowrap">${esc(r.jugador)}</td>
-  <td style="text-align:center;font-family:Share Tech Mono,monospace;font-size:.8rem;color:#90a4ae">${r.precioBase}M</td>
-  <td>${origen}</td>
-  ${pujaCells}
-  <td style="font-family:Oswald,sans-serif;font-weight:700;color:${ganador?'#ffd700':'#666'};text-align:center">${ganador?ganador.emoji+' '+esc(ganador.name):'Sin pujas'}</td>
-</tr>`;
+    const vendedorIA = r.vendedor ? LIGA.IAS.find(x=>x.id===r.vendedor) : null;
+    const origenTxt = vendedorIA ? vendedorIA.emoji+' '+esc(vendedorIA.name) : 'Pool libre';
+    const ganadorTxt = r.winner
+      ? r.winner.emoji+' '+esc(r.winner.name)+'<br><span style="font-size:.78rem;">'+r.montoFinal.toFixed(1)+'M</span>'
+      : '<span style="color:#555">Sin pujas</span>';
+    return '<tr style="border-bottom:1px solid rgba(76,175,80,.08);">'
+      +'<td style="padding:.5rem .8rem;font-weight:600;">'+esc(r.nombre)+'<br><span style="font-size:.72rem;color:var(--gray)">'+esc(r.equipo||'')+'</span></td>'
+      +'<td style="text-align:center;"><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784;">'+esc(r.pos)+'</span> <span style="font-family:Share Tech Mono,monospace;font-size:.72rem;color:#90a4ae;">'+r.ovr+'</span></td>'
+      +'<td style="text-align:center;font-family:Share Tech Mono,monospace;font-size:.8rem;color:var(--gold);">'+r.base+'M</td>'
+      +'<td style="font-size:.78rem;color:var(--gray);padding:.5rem .8rem;">'+origenTxt+'</td>'
+      +pujaCells
+      +'<td style="text-align:center;font-family:Oswald,sans-serif;font-weight:700;color:'+(r.winner?'#ffd700':'#555')+';">'+ganadorTxt+'</td>'
+      +'</tr>';
   }).join('');
 
-  const html = `<div style="overflow-x:auto;margin-bottom:1.5rem;">
-<table style="width:100%;border-collapse:collapse;font-size:.88rem;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-<thead>
-<tr style="background:rgba(76,175,80,.12);border-bottom:2px solid var(--green-bright);">
-  <th style="text-align:left;padding:.7rem .9rem;font-family:Oswald,sans-serif;color:var(--green-light)">Jugador</th>
-  <th style="text-align:center;font-family:Oswald,sans-serif;color:var(--green-light)">Base</th>
-  <th style="font-family:Oswald,sans-serif;color:var(--green-light)">Origen</th>
-  ${pujasHeader}
-  <th style="font-family:Oswald,sans-serif;color:var(--gold);text-align:center">🏆 Ganador</th>
-</tr>
-</thead>
-<tbody style="border-top:1px solid var(--border)">
-${rows}
-</tbody>
-</table>
-</div>`;
+  const html = '<div style="overflow-x:auto;">'
+    +'<table style="width:100%;border-collapse:collapse;font-size:.88rem;">'
+    +'<thead><tr style="background:rgba(76,175,80,.12);border-bottom:2px solid var(--green-bright);">'
+    +'<th style="text-align:left;padding:.6rem .8rem;font-family:Oswald,sans-serif;color:var(--green-light);">Jugador</th>'
+    +'<th style="text-align:center;font-family:Oswald,sans-serif;color:var(--green-light);">Pos·OVR</th>'
+    +'<th style="text-align:center;font-family:Oswald,sans-serif;color:var(--green-light);">Base</th>'
+    +'<th style="font-family:Oswald,sans-serif;color:var(--green-light);">Origen</th>'
+    +iasHeader
+    +'<th style="font-family:Oswald,sans-serif;color:var(--gold);text-align:center;">🏆 Ganador</th>'
+    +'</tr></thead>'
+    +'<tbody>'+rows+'</tbody>'
+    +'</table></div>';
 
   showOutput('out-mercado','code-mercado',html);
-  toast('✅ HTML del resultado de la subasta generado');
+  toast('✅ HTML de la subasta generado');
 }
 
-function generarHTMLSorteoInterno(){
-  // Igual que generarHTMLSorteo pero muestra en el output de "tras mercado"
-  const sorteo=LIGA.load('sorteo',{});
-  const budgets=LIGA.load('budgets',{});
-  const html=LIGA.IAS.map(ia=>{
-    const players=sorteo[ia.id]||[];
-    const budget=(budgets[ia.id]||100).toFixed(1);
-    const rows=players.map((p,i)=>{
-      const ovr=Math.round(((p.pot||70)+(p.cal||70)+(p.vel||70)+(p.vis||70))/4);
-      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">${i+1}</td><td style="font-weight:600">${esc(p.name)}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">${esc(p.pos||'—')}</span></td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">${ovr}</td><td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right">${esc(p.price||'—')}</td></tr>`;
-    }).join('');
-    return `<div class="sorteo-card">
-  <div class="sorteo-card-head">
-    <div class="sorteo-card-title">${ia.emoji} ${ia.name}</div>
-    <div class="sorteo-card-budget">${ia.company} · 💰 Restante: ${budget}M</div>
-  </div>
-  <div class="table-wrap"><table class="sorteo-table">
-    <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th style="text-align:right">💶 Precio</th></tr></thead>
-    <tbody>${rows||'<tr><td colspan="5" style="color:#78909c;text-align:center;padding:1rem">Sin jugadores</td></tr>'}</tbody>
-  </table></div>
-</div>`;
-  }).join('');
-  showOutput('out-sorteo-tras-mercado','code-sorteo-mercado',html);
+function mnLimpiar(){
+  if(mnJugadores.length && !confirm('¿Limpiar todos los jugadores y pujas?')) return;
+  mnJugadores = [];
+  mnResultados = [];
+  mnRender();
+  document.getElementById('out-mercado').style.display='none';
+  toast('🗑 Mercado limpiado','#e53935');
 }
 
 // ── XI IDEAL HTML ──
