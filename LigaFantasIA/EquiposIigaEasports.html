@@ -1199,14 +1199,15 @@ function updateCountdown(){
   el.textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
 }
 
+// ============================================================//  INIT - Deferido para evitar bloqueos en el arranque
 // ============================================================
-//  INIT
-// ============================================================
-buildSelect();
-buildLeagueStats();
-renderSubasta();
-updateCountdown();
-setInterval(updateCountdown,1000);
+document.addEventListener('DOMContentLoaded', () => {
+  buildSelect();
+  buildLeagueStats();
+  renderSubasta();
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+});
 </script>
 </body>
 </html>

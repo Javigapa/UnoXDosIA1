@@ -4,6 +4,11 @@
    <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
 <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-90WQKBTXN3');
+</script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🤖 Plantillas & Fichajes | Liga Fantas-IA</title>
@@ -658,6 +663,7 @@ const LIGA = {
     { id:'grok',       name:'Grok',       company:'xAI',             emoji:'⚡', color:'#e33d3d' },
     { id:'perplexity', name:'Perplexity', company:'Perplexity AI',   emoji:'🔍', color:'#20b2aa' },
     { id:'mistral',    name:'Mistral',    company:'Mistral AI',      emoji:'🌊', color:'#ff9500' },
+    { id:'llama',      name:'Llama',      company:'Meta AI',         emoji:'🦙', color:'#007bff' },
   ],
 
   // ======= 8 EQUIPOS =======
@@ -1522,18 +1528,17 @@ function loadMercadoResultados(){
 function renderSubasta() {
   const container = document.getElementById('subasta-cards');
   const totalEl = document.getElementById('total-subasta');
-  const mercado = loadMercado();
 
-  // Fallback para cuando no exista almacenamiento (ej. primera carga / archivo viejo)
-  const items = mercado && mercado.length
-    ? mercado
-    : SUBASTA.map(x => ({
-        nombre: x.name,
-        precio: x.precioBase,
-        origen: 'admin',
-        iaOrigenId: '',
-        pujas: Object.fromEntries((x.pujas||[]).map(p => [p.ia, p.monto])),
-      }));
+  // Usamos EXCLUSIVAMENTE los datos locales definidos en la constante SUBASTA de este archivo
+  const items = SUBASTA.map(x => ({
+    nombre: x.name,
+    precio: x.precioBase,
+    origen: 'admin',
+    iaOrigenId: '',
+    // Convertimos las pujas al formato de objeto y normalizamos IDs a minúsculas
+    pujas: Object.fromEntries((x.pujas||[]).map(p => [p.ia.toLowerCase(), p.monto])),
+    pot: x.pot, cal: x.cal, vel: x.vel, vis: x.vis, pos: x.pos
+  }));
 
   if(totalEl) totalEl.textContent = String(items.length);
   if(!container) return;
@@ -1767,7 +1772,7 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 // Cargar datos del servidor y luego renderizar
 LIGA.loadFromServer(function() {
   renderTeams();
-  // renderSubasta(); // Comentado para permitir el pegado manual de HTML en <!-- MERCADO_HTML -->
+  renderSubasta(); 
   renderMercadoResultados();
 });
 updateCountdown();
