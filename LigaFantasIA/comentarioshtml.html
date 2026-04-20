@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>📋 Guía de comentarios — fantas-ia-v2.html</title>
+<style>
+  body{font-family:'Segoe UI',sans-serif;background:#0d1b0d;color:#f0f0f0;max-width:900px;margin:0 auto;padding:2rem;}
+  h1{color:#ffd700;font-size:1.8rem;margin-bottom:.3rem;}
+  h2{color:#4caf50;font-size:1.2rem;margin:2rem 0 .6rem;border-bottom:2px solid rgba(76,175,80,.3);padding-bottom:.4rem;}
+  .card{background:rgba(10,46,10,.8);border:1px solid rgba(76,175,80,.3);border-radius:8px;padding:1.2rem;margin-bottom:1rem;}
+  .card-title{font-weight:700;color:#ffd700;margin-bottom:.6rem;font-size:1rem;}
+  code{background:rgba(76,175,80,.15);color:#81c784;padding:.2rem .4rem;border-radius:3px;font-size:.85rem;}
+  .comentario{background:#050d05;border:1px solid rgba(76,175,80,.4);border-radius:5px;padding:.8rem 1rem;margin:.4rem 0;font-family:'Courier New',monospace;font-size:.82rem;color:#a5d6a7;white-space:pre;}
+  .nota{background:rgba(255,215,0,.06);border-left:3px solid #ffd700;padding:.6rem .9rem;border-radius:0 5px 5px 0;font-size:.88rem;color:#b0b0b0;margin:.4rem 0;}
+  .nota strong{color:#ffd700;}
+  .badge{display:inline-block;padding:.1rem .5rem;border-radius:3px;font-size:.75rem;font-weight:700;margin-left:.5rem;}
+  .badge-once{background:rgba(76,175,80,.2);color:#4caf50;}
+  .badge-jornada{background:rgba(255,165,0,.2);color:#ffa726;}
+</style>
+</head>
+<body>
+
+<h1>📋 Dónde pegar el HTML en fantas-ia-v2.html</h1>
+<p style="color:#b0b0b0;margin-bottom:2rem;">Referencia rápida de todos los comentarios que necesitas tener en tu archivo <code>fantas-ia-v2.html</code> para saber exactamente dónde pegar cada HTML generado por el admin.</p>
+
+<h2>🔄 Secciones que se pegan UNA SOLA VEZ (o se reemplazan enteras)</h2>
+
+<div class="card">
+  <div class="card-title">🎯 Plantillas / Sorteo <span class="badge badge-once">1 vez</span></div>
+  <p style="font-size:.88rem;color:#b0b0b0;margin-bottom:.6rem;">Admin → pestaña 💰 Mercado → "Plantillas actualizadas"</p>
+  <div class="comentario">&lt;div class="sorteo-grid"&gt;
+  &lt;!-- SORTEO_HTML --&gt;
+
+  [pega aquí el HTML de plantillas]
+
+  &lt;!-- /SORTEO_HTML --&gt;
+&lt;/div&gt;</div>
+  <div class="nota"><strong>Nota:</strong> Reemplaza TODO el contenido entre los dos comentarios con el nuevo HTML. Incluye las 7 cards de plantilla actualizadas.</div>
+</div>
+
+<div class="card">
+  <div class="card-title">🏆 Clasificación IAs — filas <span class="badge badge-once">reemplazar</span></div>
+  <p style="font-size:.88rem;color:#b0b0b0;margin-bottom:.6rem;">Admin → pestaña 🏆 Clasificación → "Generar filas IAs"</p>
+  <div class="comentario">&lt;tbody id="ia-ranking-body"&gt;
+  &lt;!-- CLASIFICACION_IAS_HTML --&gt;
+
+  [pega aquí las filas &lt;tr&gt; generadas]
+
+  &lt;/tbody&gt;</div>
+  <div class="nota"><strong>Nota:</strong> Solo pega las filas <code>&lt;tr&gt;</code>, no la tabla completa.</div>
+</div>
+
+<div class="card">
+  <div class="card-title">🏟️ Clasificación Equipos — filas <span class="badge badge-once">reemplazar</span></div>
+  <p style="font-size:.88rem;color:#b0b0b0;margin-bottom:.6rem;">Admin → pestaña 🏆 Clasificación → "Generar filas Equipos"</p>
+  <div class="comentario">&lt;tbody id="teams-ranking-body"&gt;
+  &lt;!-- CLASIFICACION_EQUIPOS_HTML --&gt;
+
+  [pega aquí las filas &lt;tr&gt; generadas]
+
+  &lt;/tbody&gt;</div>
+</div>
+
+<div class="card">
+  <div class="card-title">📅 Jornadas <span class="badge badge-once">reemplazar</span></div>
+  <p style="font-size:.88rem;color:#b0b0b0;margin-bottom:.6rem;">Admin → pestaña ⚽ Resultados → "Generar HTML jornadas"</p>
+  <div class="comentario">&lt;div class="jornadas-grid" id="jornadas-grid"&gt;
+  &lt;!-- JORNADAS_HTML --&gt;
+
+  [pega aquí el HTML completo de jornadas]
+
+  &lt;!-- /JORNADAS_HTML --&gt;
+&lt;/div&gt;</div>
+</div>
+
+
+<h2>🗂️ Secciones por JORNADA (se añaden acumulando, una debajo de la otra)</h2>
+<div class="nota" style="margin-bottom:1.5rem;"><strong>Cómo funciona:</strong> Cada vez que termina una jornada, el admin genera el HTML de esa jornada. Tú lo añades DENTRO del contenedor de la sección, en el bloque de comentarios de esa jornada específica. Las jornadas anteriores quedan visibles debajo del desplegable.</div>
+
+<div class="card">
+  <div class="card-title">📰 Crónicas — por jornada <span class="badge badge-jornada">por jornada</span></div>
+  <p style="font-size:.88rem;color:#b0b0b0;margin-bottom:.6rem;">Admin → pestaña 📰 Crónicas → selecciona jornada → asigna → "Generar HTML crónicas"</p>
+  <div class="comentario">&lt;div class="cronicas-grid" id="cronicas-grid"&gt;
+
+  &lt;!-- CRONICAS_J1_HTML --&gt;
+  [pega aquí el HTML de crónicas de Jornada 1]
+  &lt;!-- /CRONICAS_J1_HTML --&gt;
+
+  &lt;!-- CRONICAS_J2_HTML --&gt;
+  [pega aquí el HTML de crónicas de Jornada 2]
+  &lt;!-- /CRONICAS_J2_HTML --&gt;
+
+  &lt;!-- ... y así hasta la J14 --&gt;
+
+&lt;/div&gt;</div>
+  <div class="nota"><strong>Selector del usuario:</strong> El desplegable de jornada en la web leerá los comentarios <code><!-- CRONICAS_JN_HTML --></code> para mostrar las crónicas de la jornada seleccionada.</div>
+</div>
+
+<div class="card">
+  <div class="card-title">⚽ XI Ideal — por jornada <span class="badge badge-jornada">por jornada</span></div>
+  <p style="font-size:.88rem;color:#b0b0b0;margin-bottom:.6rem;">Admin → pestaña ⚽ XI Ideal → selecciona jornada → rellena → "Generar HTML XI Ideal"</p>
+  <div class="comentario">&lt;div class="sorteo-grid" id="xi-grid"&gt;
+
+  &lt;!-- XI_J1_HTML --&gt;
+  [pega aquí el HTML del XI de Jornada 1]
+  &lt;!-- /XI_J1_HTML --&gt;
+
+  &lt;!-- XI_J2_HTML --&gt;
+  [pega aquí el HTML del XI de Jornada 2]
+  &lt;!-- /XI_J2_HTML --&gt;
+
+  &lt;!-- ... y así hasta la J14 --&gt;
+
+&lt;/div&gt;</div>
+</div>
+
+<div class="card">
+  <div class="card-title">🔍 Análisis — por jornada <span class="badge badge-jornada">por jornada</span></div>
+  <p style="font-size:.88rem;color:#b0b0b0;margin-bottom:.6rem;">Admin → pestaña 🔍 Análisis → selecciona jornada → escribe → "Generar HTML análisis"</p>
+  <div class="comentario">&lt;div id="analisis-content"&gt;
+
+  &lt;!-- ANALISIS_J1_HTML --&gt;
+  [pega aquí el HTML del análisis de Jornada 1]
+  &lt;!-- /ANALISIS_J1_HTML --&gt;
+
+  &lt;!-- ANALISIS_J2_HTML --&gt;
+  [pega aquí el HTML del análisis de Jornada 2]
+  &lt;!-- /ANALISIS_J2_HTML --&gt;
+
+  &lt;!-- ... y así hasta la J14 --&gt;
+
+&lt;/div&gt;</div>
+</div>
+
+<div class="card">
+  <div class="card-title">📊 Puntos por jornada <span class="badge badge-jornada">por jornada</span></div>
+  <p style="font-size:.88rem;color:#b0b0b0;margin-bottom:.6rem;">Admin → pestaña 📊 Puntos → selecciona jornada → "Generar HTML"</p>
+  <div class="comentario">&lt;div class="sorteo-grid" id="puntos-jornada-grid"&gt;
+
+  &lt;!-- PUNTOS_J1_HTML --&gt;
+  [pega aquí el HTML de puntos de Jornada 1]
+  &lt;!-- /PUNTOS_J1_HTML --&gt;
+
+  &lt;!-- PUNTOS_J2_HTML --&gt;
+  [pega aquí el HTML de puntos de Jornada 2]
+  &lt;!-- /PUNTOS_J2_HTML --&gt;
+
+  &lt;!-- ... y así hasta la J14 --&gt;
+
+&lt;/div&gt;</div>
+</div>
+
+
+<h2>⚙️ JS que necesitas añadir a fantas-ia-v2.html</h2>
+<div class="card">
+  <div class="card-title">Selector de jornada para Crónicas, XI, Análisis y Puntos</div>
+  <p style="font-size:.88rem;color:#b0b0b0;margin-bottom:.8rem;">Añade este bloque de JS al final de tu <code>&lt;script&gt;</code> en fantas-ia-v2.html. Lee los comentarios HTML del archivo y muestra/oculta las secciones según la jornada seleccionada.</p>
+  <div class="comentario" style="font-size:.75rem;">// ── SELECTOR DE JORNADA (Crónicas, XI, Análisis, Puntos) ──
+// Mapeo: id del select → prefijo del comentario → id del grid contenedor
+const JORNADA_SECCIONES = [
+  { sel: 'sel-jornada-cronicas',  prefix: 'CRONICAS',  grid: 'cronicas-grid'      },
+  { sel: 'sel-jornada-xi',        prefix: 'XI',         grid: 'xi-grid'            },
+  { sel: 'sel-jornada-analisis',  prefix: 'ANALISIS',   grid: 'analisis-content'   },
+  { sel: 'sel-jornada-puntos',    prefix: 'PUNTOS',     grid: 'puntos-jornada-grid'},
+];
+
+function mostrarJornada(prefix, grid, jornada) {
+  const container = document.getElementById(grid);
+  if (!container) return;
+  const children = Array.from(container.children);
+  children.forEach(el => {
+    // Mostrar todos si no hay jornada seleccionada
+    if (!jornada) { el.style.display = ''; return; }
+    // Buscar a qué bloque pertenece este elemento
+    // Los bloques están delimitados por comentarios <!-- PREFIX_JN_HTML -->
+    // Necesitamos recorrer los nodos del DOM incluyendo comentarios
+  });
+  // Estrategia: usar atributo data-jornada en el HTML pegado
+  // Alternativa más robusta: ocultar todo y mostrar solo el bloque correcto
+  const allBlocks = container.querySelectorAll('[data-jornada]');
+  if (allBlocks.length) {
+    // Si el HTML pegado tiene data-jornada="N"
+    allBlocks.forEach(b => {
+      b.style.display = (!jornada || b.dataset.jornada == jornada) ? '' : 'none';
+    });
+  }
+}
+
+JORNADA_SECCIONES.forEach(sec => {
+  const sel = document.getElementById(sec.sel);
+  if (sel) sel.addEventListener('change', () => mostrarJornada(sec.prefix, sec.grid, sel.value));
+});</div>
+  <div class="nota" style="margin-top:.8rem;"><strong>Alternativa más sencilla:</strong> Añade <code>data-jornada="1"</code> a cada bloque de jornada cuando lo pegas. El JS de arriba ya lo leerá automáticamente. Por ejemplo, el admin ya genera los bloques con ese atributo en la versión actualizada.</div>
+</div>
+
+<h2>✅ Flujo de trabajo por jornada</h2>
+<div class="card" style="line-height:1.9;">
+  <strong style="color:#ffd700;">Cada jornada, en orden:</strong><br>
+  1. Admin → <strong>⚽ Resultados</strong> → introduce goles → Guardar → Generar HTML jornadas → pegar en <code>JORNADAS_HTML</code><br>
+  2. Admin → <strong>🏆 Clasificación</strong> → actualiza datos → Generar filas → pegar en los tbody<br>
+  3. Admin → <strong>🎲 Dados</strong> → tira los dados<br>
+  4. Admin → <strong>📊 Puntos</strong> → selecciona jornada → rellena puntos → Generar HTML → pegar en <code>PUNTOS_J<em>N</em>_HTML</code><br>
+  5. Admin → <strong>📰 Crónicas</strong> → selecciona jornada → escribe → asigna → Generar HTML → pegar en <code>CRONICAS_J<em>N</em>_HTML</code><br>
+  6. Admin → <strong>⚽ XI Ideal</strong> → selecciona jornada → rellena → Generar HTML → pegar en <code>XI_J<em>N</em>_HTML</code><br>
+  7. Admin → <strong>🔍 Análisis</strong> → selecciona jornada → escribe → Generar HTML → pegar en <code>ANALISIS_J<em>N</em>_HTML</code><br>
+  8. <em>Si hubo mercado:</em> Admin → <strong>💰 Mercado</strong> → Generar HTML subasta + Plantillas → pegar en ambos sitios
+</div>
+
+</body>
+</html>

@@ -359,13 +359,14 @@
     <!-- ===== PANEL: CRÓNICAS ===== -->
     <div class="panel" id="panel-cronicas">
       <div class="panel-title">📰 Crónicas de Jornada</div>
-      <div class="panel-desc">Escribe 4 crónicas y asígnalas aleatoriamente a los 4 partidos de la jornada. Indica los puntos extra que otorga cada crónica al equipo ganador.</div>
+      <div class="panel-desc">Selecciona la jornada, escribe las crónicas y guarda el borrador. El HTML generado va en el bloque de esa jornada en <code>fantas-ia-v2.html</code>.</div>
 
       <div class="jornada-selector">
         <label>Jornada:</label>
-        <select class="jornada-select" id="cronica-jornada-sel" onchange="updateCronicaMatches()">
+        <select class="jornada-select" id="cronica-jornada-sel" onchange="cronCargarJornada()">
           <option value="">— Selecciona jornada —</option>
         </select>
+        <button onclick="cronGuardarJornada()" style="background:var(--green-bright);color:#060e06;font-family:Oswald,sans-serif;font-size:.85rem;font-weight:700;padding:.45rem 1.1rem;border:none;border-radius:6px;cursor:pointer;">💾 Guardar borrador</button>
       </div>
 
       <div class="card">
@@ -419,7 +420,7 @@
 
       <div class="output-section" id="out-cronicas" style="display:none;margin-top:1rem;">
         <div class="output-header">
-          <div class="output-title">✅ Pega en <code>fantas-ia-v2.html</code> donde dice <code>&lt;!-- CRONICAS_HTML --&gt;</code></div>
+          <div class="output-title" id="out-cronicas-title">✅ Pega en <code>fantas-ia-v2.html</code> en el bloque de la jornada seleccionada</div>
           <button class="copy-html-btn" onclick="copyOutput('code-cronicas')">📋 Copiar HTML</button>
         </div>
         <div class="output-code" id="code-cronicas"></div>
@@ -572,14 +573,21 @@
     <!-- ===== PANEL: XI IDEAL ===== -->
     <div class="panel" id="panel-xi">
       <div class="panel-title">⚽ XI Ideal por Jornada</div>
-      <div class="panel-desc">Introduce el once de cada IA. Genera el HTML y pégalo en fantas-ia-v2.html donde dice <code>&lt;!-- XI_HTML --&gt;</code>.</div>
+      <div class="panel-desc">Selecciona la jornada, introduce el once de cada IA y guarda. El HTML generado va en <code>fantas-ia-v2.html</code> dentro del bloque de esa jornada.</div>
       <div class="card">
         <div class="card-title">Datos de la jornada</div>
-        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
-          <div><label style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--green-bright);display:block;margin-bottom:.3rem;">JORNADA</label>
-          <input type="number" id="xi-jornada" placeholder="1" min="1" max="14" style="width:80px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem;color:var(--white);font-family:Oswald,sans-serif;"/></div>
-          <div><label style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--green-bright);display:block;margin-bottom:.3rem;">FORMACIÓN</label>
-          <input type="text" id="xi-formacion" value="4-3-3" style="width:100px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem;color:var(--white);font-family:Oswald,sans-serif;"/></div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;align-items:flex-end;">
+          <div>
+            <label style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--green-bright);display:block;margin-bottom:.3rem;">JORNADA</label>
+            <select id="xi-jornada-sel" class="jornada-select" onchange="xiCargarJornada()" style="min-width:180px;">
+              <option value="">— Selecciona jornada —</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--green-bright);display:block;margin-bottom:.3rem;">FORMACIÓN</label>
+            <input type="text" id="xi-formacion" value="4-3-3" style="width:100px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem;color:var(--white);font-family:Oswald,sans-serif;"/>
+          </div>
+          <button onclick="xiGuardarJornada()" style="background:var(--green-bright);color:#060e06;font-family:Oswald,sans-serif;font-size:.85rem;font-weight:700;padding:.5rem 1.2rem;border:none;border-radius:6px;cursor:pointer;">💾 Guardar borrador</button>
         </div>
         <p style="font-size:.82rem;color:var(--gray);margin-bottom:.8rem;">Un jugador por IA por línea: <code>Nombre Jugador | POS</code></p>
         <div id="xi-ia-forms" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;"></div>
@@ -587,7 +595,7 @@
       </div>
       <div class="output-section" id="out-xi" style="display:none">
         <div class="output-header">
-          <div class="output-title">✅ Pega en <code>fantas-ia-v2.html</code> donde dice <code>&lt;!-- XI_HTML --&gt;</code></div>
+          <div class="output-title" id="out-xi-title">✅ Pega en <code>fantas-ia-v2.html</code> en el bloque de la jornada seleccionada</div>
           <button class="copy-html-btn" onclick="copyOutput('code-xi')">📋 Copiar HTML</button>
         </div>
         <div class="output-code" id="code-xi"></div>
@@ -597,11 +605,16 @@
     <!-- ===== PANEL: ANÁLISIS ===== -->
     <div class="panel" id="panel-analisis">
       <div class="panel-title">🔍 Análisis de Jornada</div>
-      <div class="panel-desc">Escribe el análisis. Genera el HTML y pégalo en fantas-ia-v2.html donde dice <code>&lt;!-- ANALISIS_HTML --&gt;</code>.</div>
+      <div class="panel-desc">Selecciona la jornada, escribe el análisis y guarda el borrador. El HTML generado va en el bloque de esa jornada en <code>fantas-ia-v2.html</code>.</div>
       <div class="card">
-        <div style="margin-bottom:1rem;">
-          <label style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--green-bright);display:block;margin-bottom:.3rem;">JORNADA</label>
-          <input type="number" id="an-jornada" placeholder="1" min="1" max="14" style="width:80px;background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:5px;padding:.5rem;color:var(--white);font-family:Oswald,sans-serif;"/>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:1rem;">
+          <div>
+            <label style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--green-bright);display:block;margin-bottom:.3rem;">JORNADA</label>
+            <select id="an-jornada-sel" class="jornada-select" onchange="anCargarJornada()" style="min-width:180px;">
+              <option value="">— Selecciona jornada —</option>
+            </select>
+          </div>
+          <button onclick="anGuardarJornada()" style="background:var(--green-bright);color:#060e06;font-family:Oswald,sans-serif;font-size:.85rem;font-weight:700;padding:.5rem 1.2rem;border:none;border-radius:6px;cursor:pointer;">💾 Guardar borrador</button>
         </div>
         <label style="font-family:Share Tech Mono,monospace;font-size:.75rem;color:var(--green-bright);display:block;margin-bottom:.3rem;">TEXTO DEL ANÁLISIS</label>
         <textarea id="an-texto" rows="10" style="width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:6px;padding:.8rem 1rem;color:var(--white);font-family:Rajdhani,sans-serif;font-size:.95rem;resize:vertical;line-height:1.6;margin-bottom:1rem;" placeholder="Escribe aquí el análisis de la jornada..."></textarea>
@@ -611,7 +624,7 @@
       </div>
       <div class="output-section" id="out-analisis" style="display:none">
         <div class="output-header">
-          <div class="output-title">✅ Pega en <code>fantas-ia-v2.html</code> donde dice <code>&lt;!-- ANALISIS_HTML --&gt;</code></div>
+          <div class="output-title" id="out-analisis-title">✅ Pega en <code>fantas-ia-v2.html</code> en el bloque de la jornada seleccionada</div>
           <button class="copy-html-btn" onclick="copyOutput('code-analisis')">📋 Copiar HTML</button>
         </div>
         <div class="output-code" id="code-analisis"></div>
@@ -933,13 +946,6 @@ const LIGA = {
 // ============================================================
 const ADMIN_PASS = '1234'; // ← CAMBIA ESTO
 
-/**
- * Escapa caracteres HTML para evitar errores de renderizado y XSS.
- */
-function esc(s) {
-  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
 function checkLogin(){
   const pw=document.getElementById('pw-input').value;
   if(pw===ADMIN_PASS){
@@ -1034,6 +1040,16 @@ function init(){
   mnInit();
   initXIForms();
   initPlantillasIAForms();
+  // Poblar selects jornada de XI, Análisis (crónicas ya se puebla en initJornadaSelects)
+  ['xi-jornada-sel','an-jornada-sel'].forEach(selId=>{
+    const sel=document.getElementById(selId);
+    if(!sel)return;
+    LIGA.CALENDAR.forEach(j=>{
+      const o=document.createElement('option');
+      o.value=j.j; o.textContent='Jornada '+j.j+' · '+j.fecha;
+      sel.appendChild(o);
+    });
+  });
 }
 
 // ============================================================
@@ -1708,117 +1724,6 @@ function mnLimpiar(){
   toast('🗑 Mercado limpiado','#e53935');
 }
 
-/**
- * Muestra la sección de salida de código y rellena el contenedor con el HTML generado.
- */
-function showOutput(sectionId, codeId, content) {
-  const sec = document.getElementById(sectionId);
-  const code = document.getElementById(codeId);
-  if (sec) sec.style.display = 'block';
-  if (code) code.textContent = content; 
-  if (sec) sec.scrollIntoView({ behavior: 'smooth' });
-}
-
-/**
- * Copia el contenido de un elemento al portapapeles.
- */
-function copyOutput(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const text = el.textContent;
-  
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => {
-      toast('📋 Copiado al portapapeles');
-    }).catch(() => {
-      fallbackCopy(text);
-    });
-  } else {
-    fallbackCopy(text);
-  }
-}
-
-function fallbackCopy(text) {
-  const textArea = document.createElement("textarea");
-  textArea.value = text;
-  document.body.appendChild(textArea);
-  textArea.select();
-  try {
-    document.execCommand('copy');
-    toast('📋 Copiado al portapapeles');
-  } catch (err) {
-    toast('❌ Error al copiar', '#e53935');
-  }
-  document.body.removeChild(textArea);
-}
-
-function generarHTMLSorteo() {
-  const sorteo = LIGA.load('sorteo', {});
-  const budgets = LIGA.load('budgets', {});
-  const html = LIGA.IAS.map(ia => {
-    const players = sorteo[ia.id] || [];
-    const budget = budgets[ia.id] || 100;
-    const rows = players.map((p, i) => {
-      const ovr = calcOVR(p);
-      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">${i+1}</td><td style="font-weight:600">${esc(p.name)}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">${esc(p.pos)}</span></td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">${ovr}</td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#ffd700;text-align:center;font-weight:700">0</td><td style="text-align:center;color:#90a4ae">${p.pot}</td><td style="text-align:center;color:#90a4ae">${p.cal}</td><td style="text-align:center;color:#90a4ae">${p.vel}</td><td style="text-align:center;color:#90a4ae">${p.vis}</td><td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right">${esc(p.price)}</td></tr>`;
-    }).join('');
-    return `<div class="sorteo-card" style="border-top:3px solid ${ia.color}">\n  <div class="sorteo-card-head">\n    <div class="sorteo-card-title" style="color:${ia.color}">${ia.emoji} ${ia.name}</div>\n    <div class="sorteo-card-budget">${ia.company} · 💰 Restante: ${budget.toFixed(1)}M</div>\n  </div>\n  <div class="table-wrap"><table class="sorteo-table">\n    <thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th>Pts</th><th>POT</th><th>CAL</th><th>VEL</th><th>VIS</th><th style="text-align:right">💶 Precio</th></tr></thead>\n    <tbody>${rows}</tbody>\n  </table></div>\n</div>`;
-  }).join('\n');
-  showOutput('out-sorteo', 'code-sorteo', html);
-  toast('✅ HTML del sorteo generado');
-}
-
-function generarHTMLPuntos() {
-  const j = document.getElementById('puntos-jornada-sel').value || document.getElementById('dado-jornada-sel').value;
-  if(!j){ toast('Selecciona una jornada primero','#e53935'); return; }
-  const state = LIGA.load('state',{});
-  const sorteo = LIGA.load('sorteo', {});
-  const puntos = (state.puntos && state.puntos[j]) || {};
-  let html = '';
-  LIGA.IAS.forEach(ia => {
-    const players = sorteo[ia.id] || [];
-    let total = 0;
-    const rows = players.map(p => {
-      const key = ia.id+'_'+p.name;
-      const d = (puntos[key]&&puntos[key].dado)||0;
-      const c = (puntos[key]&&puntos[key].cronica)||0;
-      total += (d+c);
-      return `<tr><td style="font-weight:600">${esc(p.name)}</td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center"><span style="font-size:.72rem;font-weight:600;padding:.1rem .35rem;border-radius:3px;background:rgba(76,175,80,.1);color:#81c784">${p.pos}</span> ${calcOVR(p)}</td><td style="text-align:center;color:#4caf50;font-family:Oswald,sans-serif;font-weight:700;font-size:1rem">${d}</td><td style="text-align:center;color:#ffa726;font-family:Oswald,sans-serif;font-weight:700;font-size:1rem">${c}</td><td style="text-align:center;color:#ffd700;font-family:Oswald,sans-serif;font-size:1.1rem;font-weight:700">${d+c}</td></tr>`;
-    }).join('');
-    html += `<div class="sorteo-card" style="border-top:3px solid ${ia.color}"><div class="sorteo-card-head"><div class="sorteo-card-title" style="color:${ia.color}">${ia.emoji} ${ia.name}</div><div class="sorteo-card-budget">Jornada ${j} · 💰 Total IA: <strong style="color:#ffd700;font-size:1.1rem">${total} pts</strong></div></div><div class="table-wrap"><table class="sorteo-table"><thead><tr><th>Jugador</th><th style="text-align:center">Pos · OVR</th><th style="text-align:center">Dado</th><th style="text-align:center">+Crónica</th><th style="text-align:center">Total</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
-  });
-  showOutput('out-puntos-dados', 'code-puntos', html);
-  toast('✅ HTML de puntos generado');
-}
-
-function generarHTMLCronicas() {
-  const cronicas = LIGA.load('cronicas', []);
-  const j = document.getElementById('cronica-jornada-sel').value;
-  if(!j){ toast('Selecciona jornada','#e53935'); return; }
-  const filter = cronicas.filter(c => c.jornada == j);
-  const html = filter.map(c => `<div class="cronica-card"><div class="cronica-jornada">📰 Jornada ${c.jornada} · Partido ${c.partido} · ${esc(c.equipos)} · PUNTOS = ${c.ptsExtra}</div><div class="cronica-texto">${esc(c.texto)}</div></div>`).join('\n');
-  showOutput('out-cronicas', 'code-cronicas', html);
-  toast('✅ HTML de crónicas generado');
-}
-
-function generarHTMLJornadas() {
-  const state = LIGA.load('state',{});
-  const results = state.results || {};
-  const html = LIGA.CALENDAR.map(j => {
-    const res = results[j.j] || {scores:{}, played:false};
-    const status = res.played ? 'status-played' : 'status-pending';
-    const statusTxt = res.played ? '✓ JUGADA' : '• PENDIENTE';
-    const matches = j.partidos.map(([h,a]) => {
-      const home = LIGA.teamById(h); const away = LIGA.teamById(a);
-      const score = res.scores[h+'v'+a] || '—';
-      return `<div class="match-row"><span class="match-home" style="color:${home.color}">${home.emoji} ${home.name}</span><span class="match-vs">vs</span><span class="match-away" style="color:${away.color}">${away.name} ${away.emoji}</span><span class="match-score">${score}</span></div>`;
-    }).join('');
-    return `<div class="jornada-card"><div class="jornada-header"><div><div class="jornada-num">Jornada ${j.j}</div><div class="jornada-fecha">${j.fecha}</div></div><span class="jornada-status ${status}">${statusTxt}</span></div><div class="jornada-matches">${matches}</div></div>`;
-  }).join('\n');
-  showOutput('out-jornadas', 'code-jornadas', html);
-  toast('✅ HTML de jornadas generado');
-}
-
 // ── XI IDEAL HTML ──
 function initXIForms(){
   const container=document.getElementById('xi-ia-forms');
@@ -1830,51 +1735,163 @@ function initXIForms(){
     </div>`).join('');
 }
 
+function xiGuardarJornada(){
+  const j=document.getElementById('xi-jornada-sel').value;
+  if(!j){toast('Selecciona una jornada','#e53935');return;}
+  const data={formacion:document.getElementById('xi-formacion').value||'4-3-3'};
+  LIGA.IAS.forEach(ia=>{data[ia.id]=(document.getElementById('xi-'+ia.id)?.value||'');});
+  localStorage.setItem('admin_xi_j'+j, JSON.stringify(data));
+  toast('✅ XI Jornada '+j+' guardado');
+}
+
+function xiCargarJornada(){
+  const j=document.getElementById('xi-jornada-sel').value;
+  if(!j)return;
+  const raw=localStorage.getItem('admin_xi_j'+j);
+  if(!raw){toast('Jornada '+j+' sin datos guardados','#b0b0b0');return;}
+  const data=JSON.parse(raw);
+  if(data.formacion)document.getElementById('xi-formacion').value=data.formacion;
+  LIGA.IAS.forEach(ia=>{
+    const ta=document.getElementById('xi-'+ia.id);
+    if(ta&&data[ia.id]!==undefined)ta.value=data[ia.id];
+  });
+  toast('✅ Datos de Jornada '+j+' cargados');
+}
+
 function generarHTMLXI(){
-  const j=document.getElementById('xi-jornada').value||'?';
+  const j=document.getElementById('xi-jornada-sel').value||'?';
+  if(j==='?'){toast('Selecciona una jornada','#e53935');return;}
   const form=document.getElementById('xi-formacion').value||'4-3-3';
   const html=LIGA.IAS.map(ia=>{
     const lineas=(document.getElementById('xi-'+ia.id)?.value||'').trim().split('\n').filter(Boolean);
     if(!lineas.length)return '';
     const rows=lineas.map((l,i)=>{
       const p=l.split('|').map(s=>s.trim());
-      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">${i+1}</td><td style="font-weight:600">${esc(p[0]||'—')}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">${esc(p[1]||'MED')}</span></td></tr>`;
+      return '<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">'+i+'</td><td style="font-weight:600">'+esc(p[0]||'—')+'</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">'+esc(p[1]||'MED')+'</span></td></tr>';
     }).join('');
-    return `<div class="sorteo-card" style="border-top:3px solid ${ia.color}">
-  <div class="sorteo-card-head">
-    <div class="sorteo-card-title" style="color:${ia.color}">${ia.emoji} ${ia.name}</div>
-    <div class="sorteo-card-budget">Jornada ${esc(j)} · ${esc(form)}</div>
-  </div>
-  <div class="table-wrap"><table class="sorteo-table">
-    <thead><tr><th>#</th><th>Jugador</th><th>Pos</th></tr></thead>
-    <tbody>${rows}</tbody>
-  </table></div>
-</div>`;
+    return '<div class="sorteo-card" style="border-top:3px solid '+ia.color+'">'
+      +'<div class="sorteo-card-head">'
+      +'<div class="sorteo-card-title" style="color:'+ia.color+'">'+ia.emoji+' '+ia.name+'</div>'
+      +'<div class="sorteo-card-budget">Jornada '+esc(j)+' · '+esc(form)+'</div>'
+      +'</div>'
+      +'<div class="table-wrap"><table class="sorteo-table">'
+      +'<thead><tr><th>#</th><th>Jugador</th><th>Pos</th></tr></thead>'
+      +'<tbody>'+rows+'</tbody>'
+      +'</table></div></div>';
   }).filter(Boolean).join('');
   if(!html){toast('Rellena al menos una IA','#e53935');return;}
+  const title=document.getElementById('out-xi-title');
+  if(title)title.innerHTML='✅ Pega en <code>fantas-ia-v2.html</code> entre <code>&lt;!-- XI_J'+j+'_HTML --&gt;</code> y <code>&lt;!-- /XI_J'+j+'_HTML --&gt;</code>';
   showOutput('out-xi','code-xi',html);
-  toast('✅ XI generado');
+  toast('✅ XI Jornada '+j+' generado');
 }
 
 // ── ANÁLISIS HTML ──
+function anGuardarJornada(){
+  const j=document.getElementById('an-jornada-sel').value;
+  if(!j){toast('Selecciona una jornada','#e53935');return;}
+  localStorage.setItem('admin_analisis_j'+j, JSON.stringify({
+    texto:document.getElementById('an-texto').value||'',
+    destacados:document.getElementById('an-destacados').value||''
+  }));
+  toast('✅ Análisis Jornada '+j+' guardado');
+}
+
+function anCargarJornada(){
+  const j=document.getElementById('an-jornada-sel').value;
+  if(!j)return;
+  const raw=localStorage.getItem('admin_analisis_j'+j);
+  if(!raw){
+    document.getElementById('an-texto').value='';
+    document.getElementById('an-destacados').value='';
+    toast('Jornada '+j+' sin datos guardados','#b0b0b0');
+    return;
+  }
+  const data=JSON.parse(raw);
+  document.getElementById('an-texto').value=data.texto||'';
+  document.getElementById('an-destacados').value=data.destacados||'';
+  toast('✅ Datos de Jornada '+j+' cargados');
+}
+
 function generarHTMLAnalisis(){
-  const j=document.getElementById('an-jornada').value||'?';
+  const j=document.getElementById('an-jornada-sel').value||'?';
+  if(j==='?'){toast('Selecciona una jornada','#e53935');return;}
   const txt=document.getElementById('an-texto').value.trim();
   const dest=document.getElementById('an-destacados').value.trim();
   if(!txt){toast('Escribe el análisis','#e53935');return;}
-  const html=`<div class="analisis-card">
-  <div class="analisis-header">
-    <div class="analisis-jornada-label">📰 Análisis · Jornada ${esc(j)}</div>
-  </div>
-  <div class="analisis-body">
-    <div class="analisis-texto">${esc(txt)}</div>
-    ${dest?`<div style="margin-top:1rem;padding:.8rem 1rem;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.2);border-radius:6px;color:var(--gold);font-size:.9rem">⭐ ${esc(dest)}</div>`:''}
-  </div>
-</div>`;
+  const html='<div class="analisis-card">'
+    +'<div class="analisis-header">'
+    +'<div class="analisis-jornada-label">📰 Análisis · Jornada '+esc(j)+'</div>'
+    +'</div>'
+    +'<div class="analisis-body">'
+    +'<div class="analisis-texto">'+esc(txt)+'</div>'
+    +(dest?'<div style="margin-top:1rem;padding:.8rem 1rem;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.2);border-radius:6px;color:var(--gold);font-size:.9rem">⭐ '+esc(dest)+'</div>':'')
+    +'</div></div>';
+  const title=document.getElementById('out-analisis-title');
+  if(title)title.innerHTML='✅ Pega en <code>fantas-ia-v2.html</code> entre <code>&lt;!-- ANALISIS_J'+j+'_HTML --&gt;</code> y <code>&lt;!-- /ANALISIS_J'+j+'_HTML --&gt;</code>';
   showOutput('out-analisis','code-analisis',html);
-  toast('✅ Análisis generado');
+  toast('✅ Análisis Jornada '+j+' generado');
 }
 
+
+// ── CRÓNICAS: guardar/cargar por jornada ──
+function cronGuardarJornada(){
+  const j=document.getElementById('cronica-jornada-sel').value;
+  if(!j){toast('Selecciona una jornada','#e53935');return;}
+  const data={
+    a: document.getElementById('cronica-a')?.value||'',
+    aPts: document.getElementById('cronica-a-pts')?.value||'2',
+    b: document.getElementById('cronica-b')?.value||'',
+    bPts: document.getElementById('cronica-b-pts')?.value||'1',
+    cc: document.getElementById('cronica-c')?.value||'',
+    cPts: document.getElementById('cronica-c-pts')?.value||'3',
+    d: document.getElementById('cronica-d')?.value||'',
+    dPts: document.getElementById('cronica-d-pts')?.value||'2',
+  };
+  localStorage.setItem('admin_cron_j'+j, JSON.stringify(data));
+  toast('✅ Crónicas Jornada '+j+' guardadas');
+}
+
+function cronCargarJornada(){
+  const j=document.getElementById('cronica-jornada-sel').value;
+  if(!j){return;}
+  const raw=localStorage.getItem('admin_cron_j'+j);
+  if(!raw){
+    ['cronica-a','cronica-b','cronica-c','cronica-d'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    toast('Jornada '+j+' sin datos guardados','#b0b0b0');
+    return;
+  }
+  const d=JSON.parse(raw);
+  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.value=val||'';};
+  set('cronica-a',d.a); set('cronica-a-pts',d.aPts||'2');
+  set('cronica-b',d.b); set('cronica-b-pts',d.bPts||'1');
+  set('cronica-c',d.cc);set('cronica-c-pts',d.cPts||'3');
+  set('cronica-d',d.d); set('cronica-d-pts',d.dPts||'2');
+  toast('✅ Datos de Jornada '+j+' cargados');
+  // Resetear asignación anterior
+  cronicaAssignment=[];
+  document.getElementById('cronicas-assigned').style.display='none';
+}
+
+function generarHTMLCronicas(){
+  const j=document.getElementById('cronica-jornada-sel').value||'?';
+  if(j==='?'){toast('Selecciona una jornada','#e53935');return;}
+  if(!cronicaAssignment.length){toast('Primero asigna las crónicas aleatoriamente','#e53935');return;}
+  const cards=cronicaAssignment.map(ca=>{
+    const home=LIGA.teamById(ca.homeId);
+    const away=LIGA.teamById(ca.awayId);
+    return '<div class="cronica-card">'
+      +'<div class="cronica-jornada">📰 Jornada '+esc(j)+' · '+(home?.emoji||'')+' '+esc(home?.name||ca.homeId)+' vs '+esc(away?.name||ca.awayId)+' '+(away?.emoji||'')+'</div>'
+      +'<div class="cronica-texto">'+esc(ca.texto)+'</div>'
+      +(ca.ptsExtra?'<div style="font-size:.8rem;color:var(--gold);margin-top:.4rem;">⭐ +'+ca.ptsExtra+' pts al ganador</div>':'')
+      +'</div>';
+  }).join('');
+  if(!cards){toast('Sin crónicas asignadas','#e53935');return;}
+  const title=document.getElementById('out-cronicas-title');
+  if(title)title.innerHTML='✅ Pega en <code>fantas-ia-v2.html</code> entre <code>&lt;!-- CRONICAS_J'+j+'_HTML --&gt;</code> y <code>&lt;!-- /CRONICAS_J'+j+'_HTML --&gt;</code>';
+  showOutput('out-cronicas','code-cronicas',cards);
+  toast('✅ HTML crónicas Jornada '+j+' generado');
+}
 
 // ── CLASIFICACIÓN: filas por separado ──
 function generarFilasIAs(){
