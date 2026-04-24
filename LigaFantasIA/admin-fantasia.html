@@ -1767,7 +1767,7 @@ function generarHTMLXI(){
     if(!lineas.length)return '';
     const rows=lineas.map((l,i)=>{
       const p=l.split('|').map(s=>s.trim());
-      return '<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">'+i+'</td><td style="font-weight:600">'+esc(p[0]||'—')+'</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">'+esc(p[1]||'MED')+'</span></td></tr>';
+      return '<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">'+(i+1)+'</td><td style="font-weight:600">'+esc(p[0]||'—')+'</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">'+esc(p[1]||'MED')+'</span></td></tr>';
     }).join('');
     return '<div class="sorteo-card" style="border-top:3px solid '+ia.color+'">'
       +'<div class="sorteo-card-head">'
@@ -1990,6 +1990,104 @@ function generarHTMLPlantillas(){
   if(!alguno){toast('Rellena al menos una plantilla','#e53935');return;}
   showOutput('out-plantillas','code-plantillas',html);
   toast('✅ HTML de plantillas generado — pégalo en fantas-ia-v2.html');
+}
+
+/* ── FUNCIONES DE UTILIDAD Y GENERACIÓN FALTANTES ── */
+
+function showOutput(cardId, codeId, html) {
+  const card = document.getElementById(cardId);
+  const code = document.getElementById(codeId);
+  if (!card || !code) return;
+  card.style.display = 'block';
+  code.textContent = html;
+  card.scrollIntoView({ behavior: 'smooth' });
+}
+
+function esc(s) {
+  if (s === undefined || s === null) return '';
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function copyOutput(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const text = el.textContent;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => { toast('✅ Copiado al portapapeles'); });
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    toast('✅ Copiado al portapapeles');
+  }
+}
+
+function generarHTMLSorteo() {
+  const sorteo = LIGA.load('sorteo', {});
+  const budgets = LIGA.load('budgets', {});
+  if (!Object.keys(sorteo).length) { toast('No hay sorteo realizado', '#e53935'); return; }
+
+  const html = LIGA.IAS.map(ia => {
+    const players = sorteo[ia.id] || [];
+    const budget = budgets[ia.id] || 100;
+    const rows = players.map((p, i) => {
+      const ovr = LIGA.calcOVR(p);
+      return `<tr><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#78909c;text-align:center">${i+1}</td><td style="font-weight:600">${esc(p.name)}</td><td><span style="font-family:Oswald,sans-serif;font-size:.72rem;font-weight:700;padding:.1rem .4rem;border-radius:3px;background:rgba(76,175,80,.12);color:#81c784">${esc(p.pos)}</span></td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center">${ovr}</td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#ffd700;text-align:center;font-weight:700">0</td><td style="font-family:Share Tech Mono,monospace;font-size:.8rem;color:#ffd700;text-align:right">${esc(p.price)}</td></tr>`;
+    }).join('');
+    return `<div class="sorteo-card" style="border-top:3px solid ${ia.color}"><div class="sorteo-card-head"><div class="sorteo-card-title" style="color:${ia.color}">${ia.emoji} ${ia.name}</div><div class="sorteo-card-budget">${ia.company} · 💰 Restante: ${budget.toFixed(1)}M</div></div><div class="table-wrap"><table class="sorteo-table"><thead><tr><th>#</th><th>Jugador</th><th>Pos</th><th>OVR</th><th>Pts</th><th style="text-align:right">💶 Precio</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+  }).join('\n');
+
+  showOutput('out-sorteo', 'code-sorteo', html);
+  toast('✅ HTML del sorteo generado');
+}
+
+function generarHTMLPuntos() {
+  const j = document.getElementById('puntos-jornada-sel').value || document.getElementById('dado-jornada-sel').value;
+  if (!j) { toast('Selecciona una jornada', '#e53935'); return; }
+  const sorteo = LIGA.load('sorteo', {});
+  const state = LIGA.load('state', {});
+  const puntos = (state.puntos && state.puntos[j]) || {};
+
+  let html = `<div class="sorteo-grid" data-jornada="${j}">\n`;
+  LIGA.IAS.forEach(ia => {
+    const players = sorteo[ia.id] || [];
+    let totalIA = 0;
+    const rows = players.map(p => {
+      const key = `${ia.id}_${p.name}`;
+      const d = (puntos[key] && puntos[key].dado) || 0;
+      const c = (puntos[key] && puntos[key].cronica) || 0;
+      totalIA += (d + c);
+      return `<tr><td style="font-weight:600">${esc(p.name)}</td><td style="font-family:Share Tech Mono,monospace;font-size:.78rem;color:#90a4ae;text-align:center"><span style="font-size:.72rem;font-weight:600;padding:.1rem .35rem;border-radius:3px;background:rgba(76,175,80,.1);color:#81c784">${esc(p.pos)}</span> ${LIGA.calcOVR(p)}</td><td style="text-align:center;color:#4caf50;font-family:Oswald,sans-serif;font-weight:700;font-size:1rem">${d}</td><td style="text-align:center;color:#ffa726;font-family:Oswald,sans-serif;font-weight:700;font-size:1rem">${c}</td><td style="text-align:center;color:#ffd700;font-family:Oswald,sans-serif;font-size:1.1rem;font-weight:700">${d + c}</td></tr>`;
+    }).join('');
+    html += `<div class="sorteo-card" style="border-top:3px solid ${ia.color}"><div class="sorteo-card-head"><div class="sorteo-card-title" style="color:${ia.color}">${ia.emoji} ${ia.name}</div><div class="sorteo-card-budget">Jornada ${j} · 💰 Total IA: <strong style="color:#ffd700;font-size:1.1rem">${totalIA} pts</strong></div></div><div class="table-wrap"><table class="sorteo-table"><thead><tr><th>Jugador</th><th style="text-align:center">OVR</th><th style="text-align:center">Dado</th><th style="text-align:center">+Crónica</th><th style="text-align:center">Total</th></tr></thead><tbody>${rows}</tbody></table></div></div>\n`;
+  });
+  html += `</div>`;
+
+  showOutput('out-puntos-dados', 'code-puntos', html);
+  toast('✅ HTML de puntos generado');
+}
+
+function generarHTMLJornadas() {
+  const state = LIGA.load('state', {});
+  const results = state.results || {};
+  let nextJ = 1;
+  LIGA.CALENDAR.forEach(j => { if (results[j.j] && results[j.j].played) nextJ = j.j + 1; });
+
+  const html = LIGA.CALENDAR.map(j => {
+    const isPlayed = results[j.j] && results[j.j].played;
+    const isNext = j.j === nextJ;
+    const statusClass = isPlayed ? 'status-played' : isNext ? 'status-next' : 'status-pending';
+    const statusText = isPlayed ? '✓ JUGADA' : isNext ? '▶ PRÓXIMA' : '• PENDIENTE';
+    const matchesHtml = j.partidos.map(([h, a]) => {
+      const home = LIGA.teamById(h); const away = LIGA.teamById(a);
+      const score = results[j.j] && results[j.j].scores && results[j.j].scores[`${h}v${a}`];
+      return `<div class="match-row"><span class="match-home" style="color:${home?.color || '#fff'}">${home?.emoji || ''} ${home?.name || h}</span><span class="match-vs">vs</span><span class="match-away" style="color:${away?.color || '#fff'}">${away?.name || a} ${away?.emoji || ''}</span><span class="match-score">${score || '—'}</span></div>`;
+    }).join('');
+    return `<div class="jornada-card"><div class="jornada-header"><div><div class="jornada-num">Jornada ${j.j}</div><div class="jornada-fecha">${j.fecha}</div></div><span class="jornada-status ${statusClass}">${statusText}</span></div><div class="jornada-matches">${matchesHtml}</div></div>`;
+  }).join('\n');
+
+  showOutput('out-jornadas', 'code-jornadas', html);
+  toast('✅ HTML de jornadas generado');
 }
 
 </script>
