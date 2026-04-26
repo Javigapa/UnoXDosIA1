@@ -306,13 +306,6 @@
           <button onclick="saveDiceResults()" class="btn-save-puntos" style="margin-top:0;">💾 Aplicar puntos en sesión</button>
           <button onclick="generarHTMLPuntos()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.7rem 1.5rem;border:none;border-radius:6px;cursor:pointer;">📋 Generar HTML de puntos</button>
         </div>
-        <div class="output-section" id="out-puntos-dados" style="display:none;margin-top:1rem;">
-          <div class="output-header">
-            <div class="output-title">✅ Pega en <code>fantas-ia-v2.html</code> donde dice <code>&lt;!-- PUNTOS_HTML --&gt;</code></div>
-            <button class="copy-html-btn" onclick="copyOutput('code-puntos')">📋 Copiar HTML</button>
-          </div>
-          <div class="output-code" id="code-puntos"></div>
-        </div>
       </div>
     </div>
 
@@ -345,7 +338,7 @@
       <div class="table-wrap">
         <table class="puntos-table">
           <thead><tr>
-            <th>Jugador</th><th>Equipo</th><th>IA</th><th>Pos</th><th>OVR</th><th>Dado</th><th>Crónica</th><th>Total</th><th>Editar</th>
+            <th style="width:40px;"></th><th>Jugador</th><th>Origen</th><th>IA</th><th>Pos</th><th>OVR</th><th>Dado</th><th>Crónica</th><th>Total</th><th>Mano Dado</th><th>Mano Crónica</th>
           </tr></thead>
           <tbody id="puntos-tbody"></tbody>
         </table>
@@ -355,6 +348,45 @@
         <button onclick="generarHTMLPuntos()" style="background:var(--gold);color:#060e06;font-family:'Oswald',sans-serif;font-size:.9rem;font-weight:700;padding:.7rem 1.5rem;border:none;border-radius:6px;cursor:pointer;">📋 Generar HTML</button>
       </div>
     </div>
+
+    <!-- AGREGAR JUGADOR MANUAL -->
+    <div class="card" id="card-add-manual" style="margin-top:2rem; border-color: var(--blue); background: rgba(0, 50, 100, 0.2);">
+      <div class="card-title">➕ Añadir jugador manualmente a una IA</div>
+      <p class="panel-desc" style="margin-bottom: 1rem;">Usa esto para corregir errores o añadir fichajes que no se procesaron bien.</p>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; align-items: flex-end;">
+        <div>
+          <label class="cronica-label">🤖 IA Destino</label>
+          <select id="add-manual-ia" class="jornada-select" style="width:100%">
+            <option value="">— Seleccionar IA —</option>
+          </select>
+        </div>
+        <div>
+          <label class="cronica-label">👤 Nombre</label>
+          <input type="text" id="add-manual-name" class="puntos-input" style="width:100%; text-align:left;" placeholder="Ej: Mbappé"/>
+        </div>
+        <div>
+          <label class="cronica-label">🛡️ Pos</label>
+          <select id="add-manual-pos" class="jornada-select" style="width:100%">
+            <option value="POR">POR</option><option value="DEF">DEF</option>
+            <option value="MED">MED</option><option value="EXT">EXT</option><option value="DEL">DEL</option>
+          </select>
+        </div>
+        <div>
+          <label class="cronica-label">📊 OVR</label>
+          <input type="number" id="add-manual-ovr" class="puntos-input" style="width:100%" value="75"/>
+        </div>
+        <div>
+          <label class="cronica-label">💶 Precio (M)</label>
+          <input type="text" id="add-manual-price" class="puntos-input" style="width:100%" placeholder="10.5M"/>
+        </div>
+        <div>
+          <button class="btn-save-puntos" onclick="manualAddPlayerToIA()" style="margin-top:0; width:100%; background: var(--blue); color: white;">
+            Añadir Jugador
+          </button>
+        </div>
+      </div>
+    </div>
+
 
     <!-- ===== PANEL: CRÓNICAS ===== -->
     <div class="panel" id="panel-cronicas">
@@ -629,6 +661,15 @@
         </div>
         <div class="output-code" id="code-analisis"></div>
       </div>
+    </div>
+
+    <!-- AREA COMUN DE SALIDA PARA PUNTOS (Movid fuera para que sea visible desde cualquier pestaña) -->
+    <div class="output-section" id="out-puntos-dados" style="display:none;margin-top:2rem;">
+      <div class="output-header">
+        <div class="output-title">✅ Pega en <code>fantas-ia-v2.html</code> donde dice <code>&lt;!-- PUNTOS_HTML --&gt;</code></div>
+        <button class="copy-html-btn" onclick="copyOutput('code-puntos')">📋 Copiar HTML</button>
+      </div>
+      <div class="output-code" id="code-puntos"></div>
     </div>
 
   </div><!-- /admin-main -->
@@ -1015,6 +1056,15 @@ let diceRolled={elite:null,alto:null,bajo:null};
 let dicePlayerPts={};
 
 function init(){
+  setupControls();
+  renderSorteo();
+  mnInit();
+  initXIForms();
+  initPlantillasIAForms();
+  updateTicker();
+}
+
+function setupControls(){
   // Poblar selects de jornada
   ['dado-jornada-sel','puntos-jornada-sel','cronica-jornada-sel','res-jornada-sel'].forEach(selId=>{
     const sel=document.getElementById(selId);
@@ -1036,10 +1086,7 @@ function init(){
       iasSel.appendChild(opt);
     });
   }
-  renderSorteo();
-  mnInit();
-  initXIForms();
-  initPlantillasIAForms();
+
   // Poblar selects jornada de XI, Análisis (crónicas ya se puebla en initJornadaSelects)
   ['xi-jornada-sel','an-jornada-sel'].forEach(selId=>{
     const sel=document.getElementById(selId);
@@ -1050,6 +1097,17 @@ function init(){
       sel.appendChild(o);
     });
   });
+
+  // Poblar select de IA para añadido manual
+  const addManualIA = document.getElementById('add-manual-ia');
+  if(addManualIA){
+    addManualIA.innerHTML = '<option value="">— Seleccionar IA —</option>';
+    LIGA.IAS.forEach(ia => {
+      const opt = document.createElement('option');
+      opt.value = ia.id; opt.textContent = ia.emoji + ' ' + ia.name;
+      addManualIA.appendChild(opt);
+    });
+  }
 }
 
 // ============================================================
@@ -1120,7 +1178,7 @@ function renderSorteo(){
           <span class="sp-price">${p.price||'—'}</span>
         </div>`).join('')}
       </div>
-      <div class="sorteo-budget">💰 Presupuesto restante: ${budget.toFixed(1)}M</div>
+      <div class="sorteo-budget">💰 Presupuesto restante: ${parseFloat(budget).toFixed(1)}M</div>
     </div>`;
   }).join('');
 }
@@ -1356,27 +1414,33 @@ function renderPuntosTable(){
   LIGA.IAS.forEach(ia=>{
     if(iaFilter!=='all'&&ia.id!==iaFilter)return;
     const players=sorteo[ia.id]||[];
-    players.forEach(p=>{
+    players.forEach((p, idx)=>{
       if(currentPosFilter!=='ALL'&&p.pos!==currentPosFilter)return;
       const ovr=calcOVR(p);
       const key=`${ia.id}_${p.name}`;
       const d=(puntos[key]&&puntos[key].dado)||0;
       const c=(puntos[key]&&puntos[key].cronica)||0;
-      rows.push({ia,p,ovr,key,d,c});
+      rows.push({ia,p,ovr,key,d,c,idx});
     });
   });
-  tbody.innerHTML=rows.map(({ia,p,ovr,key,d,c})=>`
+  tbody.innerHTML=rows.map(({ia,p,ovr,key,d,c,idx})=>`
     <tr data-key="${key}" data-pos="${p.pos}">
+      <td style="text-align:center;">
+        <button onclick="deletePlayerRow(this)" data-ia="${ia.id}" data-index="${idx}" data-name="${esc(p.name)}" style="background:transparent;border:none;color:var(--red);cursor:pointer;font-weight:700;font-size:1.1rem;padding:0;" title="Eliminar de plantilla">✕</button>
+      </td>
       <td style="font-weight:600">${p.name}</td>
       <td style="font-size:.82rem;color:var(--gray)">${p.teamEmoji||''} ${p.teamName||''}</td>
       <td style="font-size:.82rem;color:${ia.color}">${ia.emoji} ${ia.name}</td>
       <td><span class="pos-tag pos-${p.pos}">${p.pos}</span></td>
       <td><span class="${ovrClass(ovr)} ovr-badge">${ovr}</span></td>
-      <td style="font-family:Share Tech Mono,monospace;color:var(--gold)">${d}</td>
-      <td style="font-family:Share Tech Mono,monospace;color:var(--green-bright)">${c}</td>
-      <td style="font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;color:var(--gold)">${d+c}</td>
+      <td style="font-family:Share Tech Mono,monospace;color:var(--gold)" id="dado-display-${key}">${d}</td>
+      <td style="font-family:Share Tech Mono,monospace;color:var(--green-bright)" id="cronica-display-${key}">${c}</td>
+      <td style="font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;color:var(--gold)" id="total-display-${key}">${d+c}</td>
       <td>
-        <input type="number" class="puntos-input" data-key="${key}" data-type="total" value="${d+c}" min="0" max="99"/>
+        <input type="number" class="puntos-input" data-key="${key}" data-type="dado" value="${d}" min="0" max="99" oninput="updatePlayerTotal('${key}')"/>
+      </td>
+      <td>
+        <input type="number" class="puntos-input" data-key="${key}" data-type="cronica" value="${c}" min="0" max="99" oninput="updatePlayerTotal('${key}')"/>
       </td>
     </tr>
   `).join('');
@@ -1387,13 +1451,16 @@ function savePuntos(){
   if(!jornada){toast('Selecciona una jornada','#e53935');return;}
   const state=LIGA.load('state',{});
   if(!state.puntos)state.puntos={};
-  if(!state.puntos[jornada])state.puntos[jornada]={};
+  if(!state.puntos[jornada]) state.puntos[jornada]={};
 
-  document.querySelectorAll('[data-type="total"]').forEach(input=>{
-    const key=input.dataset.key;
-    const val=parseInt(input.value)||0;
-    if(!state.puntos[jornada][key])state.puntos[jornada][key]={dado:0,cronica:0};
-    state.puntos[jornada][key].dado=val; // guardamos todo en dado por simplicidad
+  document.querySelectorAll('#puntos-tbody tr').forEach(row => {
+    const key = row.dataset.key;
+    const dadoVal = parseInt(row.querySelector('[data-type="dado"]').value) || 0;
+    const cronicaVal = parseInt(row.querySelector('[data-type="cronica"]').value) || 0;
+    
+    if(!state.puntos[jornada][key]) state.puntos[jornada][key]={dado:0,cronica:0};
+    state.puntos[jornada][key].dado = dadoVal;
+    state.puntos[jornada][key].cronica = cronicaVal;
   });
 
   // Recalcular totales por IA
@@ -1778,11 +1845,12 @@ function generarHTMLXI(){
       +'<thead><tr><th>#</th><th>Jugador</th><th>Pos</th></tr></thead>'
       +'<tbody>'+rows+'</tbody>'
       +'</table></div></div>';
-  }).filter(Boolean).join('');
+  }).filter(Boolean).join('\n');
   if(!html){toast('Rellena al menos una IA','#e53935');return;}
+  const finalHTML = `<div data-jornada="${j}">\n<h2 style="font-family:Oswald,sans-serif;font-size:1.4rem;color:var(--gold);margin-bottom:1.2rem;width:100%;">JORNADA: ${j}</h2>\n<div class="sorteo-grid">\n${html}\n</div>\n</div>`;
   const title=document.getElementById('out-xi-title');
   if(title)title.innerHTML='✅ Pega en <code>fantas-ia-v2.html</code> entre <code>&lt;!-- XI_J'+j+'_HTML --&gt;</code> y <code>&lt;!-- /XI_J'+j+'_HTML --&gt;</code>';
-  showOutput('out-xi','code-xi',html);
+  showOutput('out-xi','code-xi',finalHTML);
   toast('✅ XI Jornada '+j+' generado');
 }
 
@@ -1819,7 +1887,7 @@ function generarHTMLAnalisis(){
   const txt=document.getElementById('an-texto').value.trim();
   const dest=document.getElementById('an-destacados').value.trim();
   if(!txt){toast('Escribe el análisis','#e53935');return;}
-  const html='<div class="analisis-card">'
+  const html='<div class="analisis-card" data-jornada="'+j+'">'
     +'<div class="analisis-header">'
     +'<div class="analisis-jornada-label">📰 Análisis · Jornada '+esc(j)+'</div>'
     +'</div>'
@@ -1880,7 +1948,7 @@ function generarHTMLCronicas(){
   const cards=cronicaAssignment.map(ca=>{
     const home=LIGA.teamById(ca.homeId);
     const away=LIGA.teamById(ca.awayId);
-    return '<div class="cronica-card">'
+    return '<div class="cronica-card" data-jornada="'+j+'">'
       +'<div class="cronica-jornada">📰 Jornada '+esc(j)+' · '+(home?.emoji||'')+' '+esc(home?.name||ca.homeId)+' vs '+esc(away?.name||ca.awayId)+' '+(away?.emoji||'')+'</div>'
       +'<div class="cronica-texto">'+esc(ca.texto)+'</div>'
       +(ca.ptsExtra?'<div style="font-size:.8rem;color:var(--gold);margin-top:.4rem;">⭐ +'+ca.ptsExtra+' pts al ganador</div>':'')
@@ -2088,6 +2156,78 @@ function generarHTMLJornadas() {
 
   showOutput('out-jornadas', 'code-jornadas', html);
   toast('✅ HTML de jornadas generado');
+}
+
+function updatePlayerTotal(key) {
+  const dadoInput = document.querySelector(`input[data-key="${key}"][data-type="dado"]`);
+  const cronicaInput = document.querySelector(`input[data-key="${key}"][data-type="cronica"]`);
+  const totalDisplay = document.getElementById(`total-display-${key}`);
+
+  const d = parseInt(dadoInput?.value) || 0;
+  const c = parseInt(cronicaInput?.value) || 0;
+  if (totalDisplay) totalDisplay.textContent = d + c;
+}
+
+function deletePlayerRow(btn) {
+  const iaId = btn.dataset.ia;
+  const index = parseInt(btn.dataset.index);
+  const playerName = btn.dataset.name;
+  if (!confirm(`¿Eliminar definitivamente a ${playerName} de la plantilla de ${iaId}?`)) return;
+  const sorteo = LIGA.load('sorteo', {});
+  const state = LIGA.load('state', {});
+  
+  if (sorteo[iaId]) {
+    sorteo[iaId].splice(index, 1);
+    LIGA.save('sorteo', sorteo);
+  }
+  if (state.sorteo && state.sorteo[iaId]) {
+    state.sorteo[iaId].splice(index, 1);
+  }
+
+  // Limpiar puntos solo si ya no queda NADIE con ese nombre en esa IA
+  const stillExists = sorteo[iaId] && sorteo[iaId].some(p => p.name === playerName);
+  if (!stillExists && state.puntos) {
+    Object.keys(state.puntos).forEach(j => { if(state.puntos[j]) delete state.puntos[j][`${iaId}_${playerName}`]; });
+  }
+  LIGA.save('state', state);
+  toast(`🗑️ ${playerName} eliminado`);
+  renderPuntosTable();
+  renderSorteo();
+}
+
+function manualAddPlayerToIA() {
+  const iaId = document.getElementById('add-manual-ia').value;
+  const name = document.getElementById('add-manual-name').value.trim();
+  
+  if (!iaId) { toast('❌ Debes seleccionar una IA de destino', '#e53935'); return; }
+  if (!name) { toast('❌ El nombre es obligatorio', '#e53935'); return; }
+
+  const pos = document.getElementById('add-manual-pos').value;
+  const ovr = parseInt(document.getElementById('add-manual-ovr').value) || 75;
+  const priceStr = document.getElementById('add-manual-price').value.trim() || '0M';
+
+  const newPlayer = { 
+    name, pos, pot: ovr, cal: ovr, vel: ovr, vis: ovr, 
+    price: priceStr, teamName: 'Manual', teamEmoji: '📝' 
+  };
+  
+  const sorteo = LIGA.load('sorteo', {});
+  const state = LIGA.load('state', {});
+
+  if (!sorteo[iaId]) sorteo[iaId] = [];
+  sorteo[iaId].push(newPlayer);
+  LIGA.save('sorteo', sorteo);
+
+  if (!state.sorteo) state.sorteo = {};
+  if (!state.sorteo[iaId]) state.sorteo[iaId] = [];
+  state.sorteo[iaId].push(newPlayer);
+  LIGA.save('state', state);
+
+  toast(`✅ ${name} añadido a ${iaId} correctamente`);
+  document.getElementById('add-manual-name').value = '';
+  document.getElementById('add-manual-price').value = '';
+  renderPuntosTable();
+  renderSorteo();
 }
 
 </script>
