@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-90WQKBTXN3');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Predicciones de IA para el Mundial de Fútbol 2026 - USA, México, Canadá"/>
+    <title>Mundial 2026 - Predicciones IA | Uno X Dos IA</title>
+    <link rel="icon" href="/Imagenes/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --mundial-blue: #0066cc;
+            --mundial-red: #e63946;
+            --mundial-gold: #ffd700;
+            --pitch-green: #1a4d2e;
+            --dark-bg: #0a1628;
+            --card-bg: #152238;
+            --text-light: #e0e7ff;
+            --text-muted: #94a3b8;
+            --accent-cyan: #22d3ee;
+        }
+ 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+ 
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2642 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+ 
+        /* Header estilo Uno X Dos IA */
+        header {
+            position: relative;
+            z-index: 10;
+            background: linear-gradient(180deg, rgba(13,27,42,0.98), rgba(13,27,42,0.85));
+            border-bottom: 1px solid rgba(0,200,150,0.2);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+ 
+        header a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+ 
+        .logo-box {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #00c896, #00a87d);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            box-shadow: 0 0 18px rgba(0,200,150,0.3);
+        }
+ 
+        .site-title {
+            display: block;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            color: #ffffff;
+            line-height: 1;
+        }
+ 
+        .site-subtitle {
+            font-size: 0.6em;
+            color: #00c896;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+ 
+        /* Navigation */
+        nav {
+            background: rgba(19,34,56,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 8px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+        }
+ 
+        .nav-hamburger {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #ffffff;
+            font-size: 1em;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+ 
+        .nav-hamburger:hover {
+            background: rgba(255,255,255,0.12);
+        }
+ 
+        .nav-menu {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 8px;
+            background: rgba(13,27,42,0.98);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 8px;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 220px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        }
+ 
+        .nav-menu.open {
+            display: flex;
+        }
+ 
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 16px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: 0.92em;
+            font-weight: 600;
+            color: #8fa3b8;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+ 
+        .nav-link:hover {
+            color: #ffffff;
+            background: rgba(255,255,255,0.07);
+        }
+ 
+        .nav-link.active {
+            color: #00c896;
+            background: rgba(0,200,150,0.1);
+            border-color: rgba(0,200,150,0.25);
+        }
+ 
+        /* Hero Section */
+        .hero {
+            padding: 60px 20px 40px;
+            text-align: center;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255,215,0,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(0,102,204,0.1) 0%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+        }
+ 
+        .hero::before {
+            content: '⚽';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.03;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: float 6s ease-in-out infinite;
+        }
+ 
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -55%) rotate(180deg); }
+        }
+ 
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--mundial-gold), #ffed4e);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(255,215,0,0.3);
+        }
+ 
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4em;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--mundial-gold), var(--accent-cyan), var(--mundial-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+            animation: gradient-shift 3s linear infinite;
+        }
+ 
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+ 
+        .hero p {
+            font-size: 1.2em;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+ 
+        .flags-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 3em;
+            margin-top: 20px;
+        }
+ 
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+ 
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5em;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--mundial-gold);
+            text-shadow: 0 2px 10px rgba(255,215,0,0.3);
+        }
+ 
+        /* Phases Grid */
+        .phases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+ 
+        .phase-card {
+            background: linear-gradient(135deg, var(--card-bg) 0%, rgba(21,34,56,0.8) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 0;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+ 
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--mundial-blue), var(--mundial-gold), var(--mundial-red));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+ 
+        .phase-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-color: var(--mundial-gold);
+        }
+ 
+        .phase-card:hover::before {
+            transform: scaleX(1);
+        }
+ 
+        .phase-header {
+            background: linear-gradient(135deg, rgba(0,102,204,0.2), rgba(255,215,0,0.1));
+            padding: 25px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+ 
+        .phase-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            display: block;
+        }
+ 
+        .phase-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8em;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+ 
+        .phase-subtitle {
+            font-size: 0.9em;
+            color: var(--text-muted);
+        }
+ 
+        .phase-body {
+            padding: 25px;
+        }
+ 
+        .matchdays-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+ 
+        .matchday-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+ 
+        .matchday-item:hover {
+            background: rgba(255,255,255,0.06);
+            border-left-color: var(--mundial-gold);
+        }
+ 
+        .matchday-name {
+            font-weight: 600;
+        }
+ 
+        .matchday-date {
+            font-size: 0.85em;
+            color: var(--text-muted);
+        }
+ 
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+ 
+        .status-completed {
+            background: rgba(34,197,94,0.2);
+            color: #4ade80;
+            border: 1px solid rgba(34,197,94,0.3);
+        }
+ 
+        .status-upcoming {
+            background: rgba(59,130,246,0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59,130,246,0.3);
+        }
+ 
+        .status-live {
+            background: rgba(239,68,68,0.2);
+            color: #f87171;
+            border: 1px solid rgba(239,68,68,0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+ 
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+ 
+        /* Footer */
+        footer {
+            background: rgba(13,27,42,0.9);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            padding: 18px;
+            font-size: 0.78em;
+            color: #8fa3b8;
+            margin-top: 60px;
+        }
+ 
+        footer a {
+            color: #8fa3b8;
+            text-decoration: none;
+        }
+ 
+        footer a:hover {
+            color: #00c896;
+        }
+ 
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+ 
+            .flags-row {
+                font-size: 2em;
+                gap: 20px;
+            }
+ 
+            .section-title {
+                font-size: 2em;
+            }
+ 
+            .phases-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+ 
+<header>
+    <a href="index.html">
+        <div class="logo-box">⚽</div>
+        <div>
+            <span class="site-title">UNO X DOS IA</span>
+            <small class="site-subtitle">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+        </div>
+    </a>
+</header>
+ 
+<nav aria-label="Navegación principal">
+    <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+        <span>☰</span>
+        <span>Secciones</span>
+    </button>
+    <div class="nav-menu" id="navMenu">
+        <a href="index.html" class="nav-link"><span>🏠</span> Inicio</a>
+        <a href="NBA.html" class="nav-link"><span>🏀</span> NBA</a>
+        <a href="LigaEsports.html" class="nav-link"><span>⚽</span> Liga EA Sports</a>
+        <a href="Hypermotion.html" class="nav-link"><span>📈</span> Liga Hypermotion</a>
+        <a href="Loterias.html" class="nav-link"><span>🎲</span> Loterías</a>
+        <a href="Mundial2026.html" class="nav-link active"><span>🏆</span> Mundial 2026</a>
+    </div>
+</nav>
+ 
+<div class="hero">
+    <div class="hero-badge">🏆 COPA MUNDIAL FIFA</div>
+    <h1>MUNDIAL 2026</h1>
+    <p>Predicciones inteligentes para el torneo más grande del fútbol</p>
+    <div class="flags-row">
+        <span title="Estados Unidos">🇺🇸</span>
+        <span title="México">🇲🇽</span>
+        <span title="Canadá">🇨🇦</span>
+    </div>
+</div>
+ 
+<div class="container">
+    <h2 class="section-title">Fase de Grupos</h2>
+    <div class="phases-grid">
+        
+        <a href="/Mundial/FaseGrupos-Jornada1.html" class="phase-card">
+            <div class="phase-header">
+                <span class="phase-icon">⚡</span>
+                <h3 class="phase-title">Jornada 1</h3>
+                <p class="phase-subtitle">Grupos A - H</p>
+            </div>
+            <div class="phase-body">
+                <div class="matchdays-list">
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Partidos del Grupo A-B</div>
+                            <div class="matchday-date">11 Junio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Partidos del Grupo C-D</div>
+                            <div class="matchday-date">12 Junio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Partidos del Grupo E-F</div>
+                            <div class="matchday-date">13 Junio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Partidos del Grupo G-H</div>
+                            <div class="matchday-date">14 Junio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+ 
+        <a href="/Mundial/FaseGrupos-Jornada2.html" class="phase-card">
+            <div class="phase-header">
+                <span class="phase-icon">⚡</span>
+                <h3 class="phase-title">Jornada 2</h3>
+                <p class="phase-subtitle">Grupos A - H</p>
+            </div>
+            <div class="phase-body">
+                <div class="matchdays-list">
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Partidos del Grupo A-B</div>
+                            <div class="matchday-date">16 Junio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Partidos del Grupo C-D</div>
+                            <div class="matchday-date">17 Junio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Partidos del Grupo E-F</div>
+                            <div class="matchday-date">18 Junio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Partidos del Grupo G-H</div>
+                            <div class="matchday-date">19 Junio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+ 
+        <a href="/Mundial/FaseGrupos-Jornada3.html" class="phase-card">
+            <div class="phase-header">
+                <span class="phase-icon">⚡</span>
+                <h3 class="phase-title">Jornada 3</h3>
+                <p class="phase-subtitle">Última fecha grupos</p>
+            </div>
+            <div class="phase-body">
+                <div class="matchdays-list">
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Partidos del Grupo A-B</div>
+                            <div class="matchday-date">22 Junio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Partidos del Grupo C-D</div>
+                            <div class="matchday-date">23 Junio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Partidos del Grupo E-F</div>
+                            <div class="matchday-date">24 Junio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Partidos del Grupo G-H</div>
+                            <div class="matchday-date">25 Junio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+ 
+    </div>
+ 
+    <h2 class="section-title">Fase Eliminatoria</h2>
+    <div class="phases-grid">
+        
+        <a href="/Mundial/Octavos.html" class="phase-card">
+            <div class="phase-header">
+                <span class="phase-icon">🔥</span>
+                <h3 class="phase-title">Octavos de Final</h3>
+                <p class="phase-subtitle">16 equipos</p>
+            </div>
+            <div class="phase-body">
+                <div class="matchdays-list">
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Octavos - Día 1-2</div>
+                            <div class="matchday-date">28-29 Junio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Octavos - Día 3-4</div>
+                            <div class="matchday-date">30 Jun - 1 Jul 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+ 
+        <a href="/Mundial/Cuartos.html" class="phase-card">
+            <div class="phase-header">
+                <span class="phase-icon">💥</span>
+                <h3 class="phase-title">Cuartos de Final</h3>
+                <p class="phase-subtitle">8 equipos</p>
+            </div>
+            <div class="phase-body">
+                <div class="matchdays-list">
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Cuartos - Día 1-2</div>
+                            <div class="matchday-date">4-5 Julio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+ 
+        <a href="/Mundial/Semifinales.html" class="phase-card">
+            <div class="phase-header">
+                <span class="phase-icon">⭐</span>
+                <h3 class="phase-title">Semifinales</h3>
+                <p class="phase-subtitle">4 equipos</p>
+            </div>
+            <div class="phase-body">
+                <div class="matchdays-list">
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Semifinales</div>
+                            <div class="matchday-date">8-9 Julio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+ 
+        <a href="/Mundial/Final.html" class="phase-card">
+            <div class="phase-header">
+                <span class="phase-icon">🏆</span>
+                <h3 class="phase-title">Final</h3>
+                <p class="phase-subtitle">El partido definitivo</p>
+            </div>
+            <div class="phase-body">
+                <div class="matchdays-list">
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">3er y 4to Puesto</div>
+                            <div class="matchday-date">12 Julio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                    <div class="matchday-item">
+                        <div>
+                            <div class="matchday-name">Gran Final</div>
+                            <div class="matchday-date">13 Julio 2026</div>
+                        </div>
+                        <span class="status-badge status-upcoming">Próximo</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+ 
+    </div>
+</div>
+ 
+<footer>
+    <p>© 2025 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
+    <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com">Contacto</a></p>
+</footer>
+ 
+<script>
+function toggleNav() {
+    document.getElementById('navMenu').classList.toggle('open');
+}
+ 
+document.addEventListener('click', function(e) {
+    const nav = document.querySelector('nav');
+    if (!nav.contains(e.target)) {
+        document.getElementById('navMenu').classList.remove('open');
+    }
+});
+ 
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        document.getElementById('navMenu').classList.remove('open');
+    });
+});
+</script>
+ 
+</body>
+</html>
