@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-90WQKBTXN3');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Predicciones deportivas generadas por IA, ¿Que IA es mejor?"/>
+  <title>Playoff Ascenso LALIGA Hypermotion 2025/2026 | Uno X Dos IA</title>
+  <link rel="stylesheet" href="../index.css">
+  <link rel="icon" href="/Imagenes/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Estilos generales de cuerpo y contenedor de artículo */
+    body {
+      background-color: #26580f;
+      font-family: Arial, sans-serif;
+    }
+    .article-container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #927641;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .article-container h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #e74c3c;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      font-size: 2.2em;
+    }
+    .article-meta {
+      color: #7f8c8d;
+      font-style: italic;
+      margin-bottom: 25px;
+      display: block;
+    }
+    .PartidosDelDia {
+      color: black;
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+    /* Contenedor de las Tres Columnas de Análisis IA */
+    .tres-columnas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin: 30px 0;
+      padding-top: 10px;
+      border-top: 2px solid #ecf0f1;
+    }
+
+    /* Estilo para los Títulos de las Columnas */
+    .col-title {
+      background-color: #34495e;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      border-radius: 5px 5px 0 0;
+      margin-bottom: 0;
+      height: fit-content;
+    }
+
+    /* Estilo para el Texto de las Columnas */
+    .col-text {
+      background-color: #ecf0f1;
+      padding: 15px;
+      border-radius: 0 0 5px 5px;
+      border: 1px solid #bdc3c7;
+      margin-top: 0;
+    }
+    .col-text p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* --- Estilos para la Tabla de Resultados (Fútbol) --- */
+    .results-section {
+      margin-top: 40px;
+      border-top: 2px solid #e74c3c;
+      padding-top: 20px;
+    }
+
+    .match-title {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-size: 1.5em;
+      border-bottom: 1px dashed #bdc3c7;
+      padding-bottom: 5px;
+    }
+
+    /* Contenedor de todas las tablas de resultados */
+    .all-results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* 2 tablas por línea */
+      gap: 20px;
+      /* Espacio entre las tablas */
+      margin-bottom: 30px;
+    }
+
+    .results-table-container {
+      width: 100%;
+      margin: 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border: 1px solid #bdc3c7;
+      border-radius: 5px;
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 1.1em;
+    }
+
+    .results-table th, .results-table td {
+      padding: 10px 5px;
+      border: 1px solid #ddd;
+    }
+
+    .results-table thead th {
+      background-color: #2980b9;
+      color: white;
+      text-transform: uppercase;
+    }
+
+    .results-table tbody tr td:first-child {
+      background-color: #d9e9f1;
+      font-weight: bold;
+      text-align: left;
+      padding-left: 15px;
+      color: #2c3e50;
+      white-space: nowrap;
+    }
+
+    /* Columna de Resultado Final */
+    .final-score {
+      background-color: #27ae60;
+      color: white;
+      font-size: 1.4em;
+      font-weight: 900;
+      width: 15%;
+    }
+
+    /* Ocultar las columnas adicionales en todas las resoluciones */
+    .results-table thead th:not(:first-child):not(.final-score),
+    .results-table tbody tr td:nth-child(2),
+    .results-table tbody tr td:nth-child(3),
+    .results-table tbody tr td:nth-child(4),
+    .results-table tbody tr td:nth-child(5),
+    .results-table tbody tr td:nth-child(6) {
+      display: none;
+    }
+    nav {
+  background: rgba(19,34,56,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 8px 20px;
+  position: relative;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+}
+.nav-hamburger {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #ffffff; font-size: 1em; font-weight: 600;
+  padding: 10px 18px; border-radius: 8px; cursor: pointer;
+  font-family: 'Outfit', sans-serif; transition: background 0.2s;
+}
+.nav-hamburger:hover { background: rgba(255,255,255,0.12); }
+.nav-menu {
+  display: none; flex-direction: column; gap: 4px;
+  background: rgba(13,27,42,0.98);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 8px;
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  min-width: 220px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); z-index: 200;
+}
+.nav-menu.open { display: flex; }
+.nav-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 16px; border-radius: 7px; text-decoration: none;
+  font-size: 0.92em; font-weight: 600; color: #8fa3b8;
+  transition: all 0.2s; border: 1px solid transparent;
+}
+.nav-link:hover { color: #ffffff; background: rgba(255,255,255,0.07); }
+.nav-link.active { color: #00c896; background: rgba(0,200,150,0.1); border-color: rgba(0,200,150,0.25); }
+
+    /* --- Media Query para Móviles: Sobreescribe solo lo necesario para el diseño de 2 columnas --- */
+    @media (max-width: 768px) {
+      .article-container {
+        padding: 15px;
+        margin: 10px auto;
+      }
+      .article-container h1 {
+        font-size: 1.8em;
+      }
+
+      /* Diseño de una columna para el análisis IA */
+      .tres-columnas {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      .col-title {
+        font-size: 1.1em;
+        padding: 10px;
+      }
+
+      /* Diseño de dos columnas para las tablas de resultados */
+      .all-results-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .results-table-container {
+        margin-bottom: 10px;
+      }
+
+      h4 {
+        font-size: 1.2em;
+        text-align: center;
+        margin-bottom: 5px;
+      }
+
+      /* Ajustes de tamaño de fuente para las tablas */
+      .results-table {
+        font-size: 0.9em;
+      }
+      .results-table th, .results-table td {
+        padding: 8px 3px;
+      }
+      .final-score {
+        font-size: 1.2em;
+      }
+      .results-table tbody tr td:first-child {
+        padding-left: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+<header style="position:relative;z-index:10;background:linear-gradient(180deg,rgba(13,27,42,0.98),rgba(13,27,42,0.85));border-bottom:1px solid rgba(0,200,150,0.2);padding:16px 24px;display:flex;align-items:center;backdrop-filter:blur(10px);">
+  <a href="/index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+    <div style="width:42px;height:42px;background:linear-gradient(135deg,#00c896,#00a87d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3em;box-shadow:0 0 18px rgba(0,200,150,0.3);">⚽</div>
+    <div>
+      <span style="display:block;font-family:'Bebas Neue',sans-serif;font-size:1.5em;letter-spacing:2px;color:#ffffff;line-height:1;">UNO X DOS IA</span>
+      <small style="font-size:0.6em;color:#00c896;letter-spacing:1px;font-weight:500;">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+    </div>
+  </a>
+</header>
+
+<nav aria-label="Navegación principal">
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+    <span>☰</span>
+    <span>Secciones</span>
+  </button>
+  <div class="nav-menu" id="navMenu">
+    <a href="../index.html" class="nav-link "><span>🏠</span> Inicio</a>
+    <a href="../NBA.html" class="nav-link"><span>🏀</span> NBA</a>
+    <a href="../LigaEsports.html" class="nav-link"><span>⚽</span> Liga EA Sports</a>
+    <a href="../Hypermotion.html" class="nav-link active"><span>📈</span> Liga Hypermotion</a>
+    <a href="../Loterias.html" class="nav-link"><span>🎲</span> Loterías</a>
+  </div>
+</nav>
+
+  <div class="article-container">
+    <div class="PartidosDelDia">
+         <h1> Partidos Playoff Ascenso:</h1>
+  <p>
+             📅 Jornada Playoff Ascenso (6 al 20 de Junio)</p>
+
+Semifinales<br><br>
+
+Ida<br><br>
+
+Castellón-Almería Sábado 6 (21:00)<br>
+
+Las Palmas-Málaga Domingo 7 (21:00)<br><br>
+
+Vuelta<br><br>
+
+Almería-Castellón Martes 9 (21:00)<br>
+
+Málaga-Las Palmas Miércoles 10 (21:00)<br><br>
+
+Final<br><br>
+
+Ida: Domingo 14 (21:00)<br><br>
+
+Vuelta: Sábado 20 (21:00)<br><br>
+
+La ida de la final se jugará en el campo del equipo peor clasificado en la fase regular y la vuelta, en el del mejor.<br><br>
+
+<p><b>★ Sabado 6 de Junio</b></p>
+
+ 21:00 LaLiga Hypermotion TV  - Castellón vs Almería<br><br>
+
+<p><b>★ Domingo 7 de Junio</b></p>
+
+ 21:00 LaLiga Hypermotion TV  - Las Palmas vs Málaga<br><br>
+
+<p><b>★ Martes 9 de Junio</b></p>
+
+ 21:00 LaLiga Hypermotion TV  - Almería vs Castellón<br><br>
+
+<p><b>★ Miércoles 10 de Junio</b></p>
+
+ 21:00 LaLiga Hypermotion TV  - Málaga vs Las Palmas<br><br>
+
+<p><b>★ Domingo 14 de Junio</b></p>
+    21:00 LaLiga Hypermotion TV  - Final IDA<br><br> 
+
+<p><b>★ Sábado 20 de Junio</b></p>
+    21:00 LaLiga Hypermotion TV  - Final Vuelta<br><br> 
+
+
+      </p>
+    </div>
+    <div class="tres-columnas">
+      <h3 class="col-title">1. ChatGPT</h3>
+      <h3 class="col-title">2. Gemini</h3>
+      <h3 class="col-title">3. Copilot</h3>
+    </div>
+
+    <div class="tres-columnas">
+      <div class="col-text">
+        <section>
+          <strong><h2>1:</h2></strong>
+        </section>
+
+<div>
+
+<p><b>★ Semifinal Playoff de Ascenso</b></p><br><br>
+
+<b>21:00 CET - Castellón vs Almería (Ida)</b><br><br>
+Castellón 43% / Empate 30% / Almería 27%<br><br>
+Motivo: Castellón llega tras una temporada sobresaliente y ha demostrado ser uno de los equipos más sólidos como local. Almería tiene mucha calidad individual, pero ha sido menos regular.<br><br><br>
+
+<b>21:00 CET - Almería vs Castellón (Vuelta)</b><br><br>
+Almería 41% / Empate 30% / Castellón 29%<br><br>
+Motivo: El factor campo favorece a Almería, pero Castellón ha demostrado saber competir fuera de casa y gestionar eliminatorias complicadas.<br><br><br>
+
+<b>Clasificación estimada:</b><br><br>
+Castellón 52% / Almería 48%<br><br>
+Motivo: Eliminatoria tremendamente igualada, pero el gran rendimiento mostrado por Castellón durante toda la temporada le da una ligera ventaja.<br><br><br>
+
+
+<b>21:00 CET - Las Palmas vs Málaga (Ida)</b><br><br>
+Las Palmas 47% / Empate 30% / Málaga 23%<br><br>
+Motivo: Las Palmas posee una plantilla más equilibrada y experiencia reciente en partidos de máxima exigencia.<br><br><br>
+
+<b>21:00 CET - Málaga vs Las Palmas (Vuelta)</b><br><br>
+Málaga 39% / Empate 31% / Las Palmas 30%<br><br>
+Motivo: La Rosaleda empujará mucho, pero Las Palmas tiene capacidad para controlar los tiempos de la eliminatoria.<br><br><br>
+
+<b>Clasificación estimada:</b><br><br>
+Las Palmas 58% / Málaga 42%<br><br>
+Motivo: La experiencia competitiva y la regularidad mostrada durante la temporada colocan a Las Palmas como favorita.<br><br><br>
+
+
+<p><b>★ Final del Playoff de Ascenso</b></p><br><br>
+
+<b>Final estimada: Castellón vs Las Palmas</b><br><br>
+
+<b>Partido de Ida</b><br><br>
+Castellón 41% / Empate 31% / Las Palmas 28%<br><br>
+Motivo: Castalia sería un factor diferencial en una final tan igualada.<br><br><br>
+
+<b>Partido de Vuelta</b><br><br>
+Las Palmas 39% / Empate 31% / Castellón 30%<br><br>
+Motivo: La experiencia de Las Palmas en partidos de ascenso le permitiría llegar con opciones hasta el último minuto.<br><br><br>
+
+<b>Probabilidad de ascenso final:</b><br><br>
+Castellón 55% / Las Palmas 45%<br><br>
+Motivo: El Castellón ha sido durante toda la temporada el equipo más consistente entre los cuatro aspirantes, combinando regularidad, ataque y solidez defensiva. Llega al playoff en el mejor momento y con una confianza enorme.<br><br><br>
+
+<b>🏆 Predicción final de ascenso a Primera División:</b><br><br>
+🥇 Castellón<br><br>
+🥈 Las Palmas<br><br>
+🥉 Almería<br><br>
+4️⃣ Málaga<br><br>
+El Castellón sería mi favorito para completar el ascenso y acompañar a los equipos que ya hayan logrado el ascenso directo.<br><br><br>
+
+</div>
+
+      </div>
+<div class="col-text">
+          <section>
+          <strong><h2>2:</h2></strong>
+          </section>
+
+    <h2 style="color: #004a99; text-align: center; border-bottom: 3px solid #ffd700; padding-bottom: 10px;">🏆 Camino a Primera: El Playoff Final</h2>
+
+    <!-- Semifinales IDA -->
+    <h3 style="color: #004a99; border-left: 5px solid #ffd700; padding-left: 10px;">★ Semifinales - Ida</h3>
+    
+    <b>6 de Junio, 21:00 - Castellón vs Almería</b><br><br>
+    <b>Empate (40%) | Castellón (35%) | Almería (25% Victoria)</b><br><br>
+    Castalia será un hervidero. El Castellón sabe que necesita llevar ventaja a Almería. Partido de una intensidad física descomunal donde el conjunto local intentará ahogar la salida de balón de un Almería que buscará, con su calidad técnica, dormir el ritmo y llevarse un resultado positivo.<br><br><br>
+
+    <b>7 de Junio, 21:00 - Las Palmas vs Málaga</b><br><br>
+    <b>Las Palmas (50% Victoria) | Empate (30%) | Málaga (20% Victoria)</b><br><br>
+    Duelo de alturas. Las Palmas se siente fuerte en el Gran Canaria, donde su fútbol de posesión suele desquiciar a bloques más rocosos. El Málaga se encomendará a su solidez defensiva y a la veteranía de su plantilla para buscar un gol que deje abierta la eliminatoria para la vuelta.<br><br><br>
+
+
+    <!-- Semifinales VUELTA -->
+    <h3 style="color: #004a99; border-left: 5px solid #ffd700; padding-left: 10px;">★ Semifinales - Vuelta</h3>
+    
+    <b>9 de Junio, 21:00 - Almería vs Castellón</b><br><br>
+    <b>Almería (55% Victoria) | Empate (25%) | Castellón (20% Victoria)</b><br><br>
+    El Power Horse Stadium dictará sentencia. Si el Almería logra imponer su ritmo desde el inicio, la eliminatoria se decantará de su lado gracias a la profundidad de su banquillo. Un partido de nervios donde la experiencia del Almería en estas lides suele marcar la diferencia.<br><br><br>
+
+    <b>10 de Junio, 21:00 - Málaga vs Las Palmas</b><br><br>
+    <b>Empate (45%) | Málaga (30%) | Las Palmas (25% Victoria)</b><br><br>
+    La Rosaleda será un espectáculo. Con la eliminatoria apretada, el Málaga empujará con el apoyo de su gente. Será un duelo táctico donde el miedo a perder podría llevar el partido a una prórroga dramática. Pronóstico: El Málaga forzará el límite hasta el final.<br><br><br>
+
+
+    <!-- GRAN FINAL -->
+    <h3 style="color: #990000; border-left: 5px solid #ff0000; padding-left: 10px;">★ GRAN FINAL: EL ASCENSO</h3>
+    
+    <b>14 de Junio (Ida) / 20 de Junio (Vuelta)</b><br><br>
+    <b>Predicción: Almería - Málaga</b><br><br>
+    Tras un análisis de la resiliencia y la pegada demostrada en este tramo final, mi apuesta para el ascenso es el <b>Almería</b>. El conjunto indálico ha demostrado ser el equipo más equilibrado entre talento ofensivo y solidez mental en los momentos críticos. Si bien el Málaga es un muro defensivo, la capacidad goleadora del Almería en momentos de máxima presión, apoyado por una estructura de club acostumbrada a la exigencia, los coloca como los favoritos para lograr el ansiado salto a la máxima categoría.
+
+</div>
+      <div class="col-text">
+        <section>
+          <strong><h2>3:</h2></strong>
+</section>
+
+<h3>Predicción Playoff de Ascenso a Primera División</h3>
+
+<p><b>★ Sábado 6 de Junio</b></p><br><br>
+
+21:00 — <b>Castellón vs Almería</b><br><br>
+<b>Probabilidades:</b> Local 56% — Empate 28% — Visitante 16%<br><br>
+<b>Análisis:</b> Castellón llega como uno de los equipos más sólidos de la categoría, muy fuerte en Castalia y con un xG ofensivo superior. Almería compite, pero fuera baja mucho su rendimiento. Ventaja clara para el Castellón.<br><br><br>
+
+
+
+<p><b>★ Domingo 7 de Junio</b></p><br><br>
+
+21:00 — <b>Las Palmas vs Málaga</b><br><br>
+<b>Probabilidades:</b> Local 48% — Empate 32% — Visitante 20%<br><br>
+<b>Análisis:</b> Las Palmas es muy fuerte en casa y domina los partidos con balón. Málaga mejora, pero sufre fuera y concede más ocasiones. Favorito Las Palmas.<br><br><br>
+
+
+
+<p><b>★ Martes 9 de Junio</b></p><br><br>
+
+21:00 — <b>Almería vs Castellón</b><br><br>
+<b>Probabilidades:</b> Local 38% — Empate 32% — Visitante 30%<br><br>
+<b>Análisis:</b> Almería sube su nivel en casa, pero Castellón es más regular y sólido. La eliminatoria llega con ventaja castellonense y el estilo del Castellón encaja bien ante un Almería que concede mucho.<br><br><br>
+
+
+
+<p><b>★ Miércoles 10 de Junio</b></p><br><br>
+
+21:00 — <b>Málaga vs Las Palmas</b><br><br>
+<b>Probabilidades:</b> Local 41% — Empate 33% — Visitante 26%<br><br>
+<b>Análisis:</b> Málaga en La Rosaleda es más competitivo, pero Las Palmas tiene más equilibrio y mejor xG acumulado. Eliminatoria muy igualada, pero Las Palmas llega con ligera ventaja global.<br><br><br>
+
+
+
+<p><b>★ Domingo 14 de Junio — Final (IDA)</b></p><br><br>
+
+21:00 — <b>Castellón vs Las Palmas</b><br><br>
+<b>Probabilidades:</b> Local 52% — Empate 31% — Visitante 17%<br><br>
+<b>Análisis:</b> Castellón es el mejor local del playoff y uno de los equipos más regulares de toda la temporada. Las Palmas compite bien, pero fuera baja su rendimiento. La ida favorece claramente al Castellón.<br><br><br>
+
+
+
+<p><b>★ Sábado 20 de Junio — Final (VUELTA)</b></p><br><br>
+
+21:00 — <b>Las Palmas vs Castellón</b><br><br>
+<b>Probabilidades:</b> Local 45% — Empate 33% — Visitante 22%<br><br><br>
+<b>Análisis:</b> Las Palmas en casa es fuerte, pero Castellón es más sólido, más regular y llega con mejor dinámica global. Su estilo directo y su solidez defensiva encajan muy bien en eliminatorias largas.<br><br><br>
+
+
+
+<h2>🔮 <b>Predicción Final del Ascenso</b></h2><br>
+
+<b>Equipo que ascenderá a Primera División:</b><br><br>
+<b style="font-size: 22px; color: #2b6;">⭐ CASTELLÓN ⭐</b><br><br>
+
+<b>Motivos:</b><br><br>
+— Es el equipo más regular de los cuatro.<br><br>
+— Tiene la mejor defensa del playoff.<br><br>
+— Su rendimiento en Castalia es diferencial.<br><br>
+— Llega con mejor xG acumulado y más equilibrio en ambos lados del campo.<br><br>
+— En eliminatorias largas, su solidez pesa más que el juego de posesión de Las Palmas.<br><br>
+
+<b>Conclusión:</b> Castellón es el favorito para subir a Primera y cerrar una temporada histórica.<br><br>
+
+
+</div>
+</div>
+    <section class="results-section">
+      <h2 class="match-title">Resultados Detallados del Playoff Ascenso:</h2>
+<p style="margin-bottom: 30px;">
+
+¡Llegó la hora de la verdad! El momento en que la temporada se reduce a la mínima expresión: el Playoff de Ascenso a Primera División. Tras una maratón de 42 jornadas, solo cuatro equipos mantienen vivo el sueño de la gloria. Estamos ante el desenlace más emocionante del año.<br><br>
+
+ChatGPT apuesta en este playoff por una final Castellón vs. Las Palmas, con el Castellón como favorito para el ascenso.<br><br>
+
+Gemini se decanta por una final Almería vs. Málaga y señala al Almería como el candidato a subir a Primera.<br><br>
+
+Copilot también ve una final entre Castellón y Las Palmas, y se inclina por el Castellón para lograr el ascenso.<br><br>
+
+ChatGPT y Copilot coinciden en que el Castellón es el gran favorito para subir, mientras que Gemini apuesta por el Almería. La batalla entre estos dos equipos promete ser épica: un Castellón que ha sido el más regular y sólido durante toda la temporada, frente a un Almería con calidad y capacidad de reacción en los momentos clave. Las Palmas y Málaga también tienen argumentos para soñar, pero parten con una ligera desventaja respecto a los dos grandes aspirantes. En definitiva, el playoff de ascenso se presenta como un espectáculo de máxima tensión donde cada detalle contará. ¡Que gane el mejor!<br>
+
+</p>
+
+</section>
+
+  <div class="all-results-grid">
+
+    <div class="results-table-container">
+        <table class="results-table">
+            <h2>SEMIFINALES IDA</h2>
+            <thead>
+                <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Castellón</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+                <tr><td>Almería</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="results-table-container">
+        <table class="results-table">
+        <h2>SEMIFINALES IDA</h2>
+
+            <thead>
+                <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Las Palmas</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+                <tr><td>Málaga</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="results-table-container">
+        <table class="results-table">
+        <h2>SEMIFINALES VUELTA</h2>
+
+            <thead>
+                <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Almería</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+                <tr><td>Castellón</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="results-table-container">
+        <table class="results-table">
+            <h2>SEMIFINALES VUELTA</h2>
+
+            <thead>
+                <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Málaga</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+                <tr><td>Las Palmas</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="results-table-container">
+        <table class="results-table">
+            <h2>FINAL IDA</h2>
+            <thead>
+                <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Equipo 1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+                <tr><td>Equipo 2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="results-table-container">
+        <table class="results-table">
+            <h2>FINAL VUELTA</h2>
+            <thead>
+                <tr><th>Equipo</th><th class="final-score">TOTAL</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Equipo 1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+                <tr><td>Equipo 2</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="final-score">0</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+    </section>
+    <h3>Conclusión del Modelo IA</h3>
+<p>
+
+Después de jugar.<br><br>
+</p>
+
+
+<div class="volver">
+<p>
+<a href="../index.html">← Volver a la página principal de Segunda Hipermotion</a>
+</p>
+</div>
+  </div>
+  <footer style="background:rgba(13,27,42,0.9);border-top:1px solid rgba(255,255,255,0.05);text-align:center;padding:18px;font-size:0.78em;color:#8fa3b8;margin-top:60px;">
+  <p>© 2025 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
+  <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com" style="color:#8fa3b8;">Contacto</a></p>
+</footer>
+
+  <script>
+    function toggleDropdown() {
+      document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Cierra el menú si el usuario hace clic fuera de él
+    window.onclick = function(event) {
+      if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+    function toggleNav() {
+  document.getElementById('navMenu').classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const nav = document.querySelector('nav');
+  if (!nav.contains(e.target)) {
+    document.getElementById('navMenu').classList.remove('open');
+  }
+});
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('navMenu').classList.remove('open');
+  });
+});
+  </script>
+</body>
+</html>
