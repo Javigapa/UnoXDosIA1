@@ -384,7 +384,51 @@
     }
     .reglas-table td{padding:.6rem 1rem;border-bottom:1px solid rgba(76,175,80,.07);}
     .reglas-table tr:hover td{background:rgba(76,175,80,.05);}
+.player-card{
+  border-radius:14px;
+  padding:16px;
+  margin:12px 0;
+  background:#111;
+  color:#fff;
+  border:1px solid rgba(255,255,255,.08);
+}
 
+.player-name{
+  font-size:1.2rem;
+  font-weight:800;
+  margin-bottom:4px;
+}
+
+.player-meta{
+  font-size:.85rem;
+  opacity:.8;
+  margin-bottom:12px;
+}
+
+.bids{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap:6px;
+  font-size:.9rem;
+}
+
+.bid-row{
+  display:flex;
+  justify-content:space-between;
+  padding:6px 8px;
+  border-radius:8px;
+  background:rgba(255,255,255,.05);
+}
+
+.winner{
+  background:rgba(255,215,0,.15);
+  border:1px solid gold;
+  font-weight:700;
+}
+
+.ai{
+  opacity:.85;
+}
     /* FOOTER */
     footer{
       background:rgba(0,0,0,.65);
@@ -497,7 +541,7 @@
 
     <!-- JUGADORES EN SUBASTA -->
     <div class="ventana-header">
-      <h3>🔴 Jugadores en Subasta — Jornada 3</h3>
+      <h3>🔴 Jugadores en Subasta — Jornada 5</h3>
       <div class="ventana-status">
         <div class="status-dot status-open"></div>
         <span style="color:var(--green-bright)">VENTANA ABIERTA</span>
@@ -508,305 +552,120 @@
       <!-- MERCADO_HTML -->
       <!-- Aquí pegas el HTML generado desde el Admin -->
 
-<div style="
-display:grid;
-grid-template-columns:repeat(3,minmax(320px,1fr));
-gap:1.2rem;
-align-items:start;
-margin-top:1rem;
-">
-
-<!-- CARD -->
-<div style="background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:1rem;box-shadow:0 0 14px rgba(0,0,0,.25);">
-  
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-    <div>
-      <div style="font-size:1.1rem;font-weight:700;color:#fff;">Vendaval Oscuro</div>
-      <div style="font-size:.8rem;color:#9ca3af;">🌫️ Nebulosa F.C.</div>
-    </div>
-
-    <div style="text-align:right;">
-      <div style="font-size:.72rem;background:rgba(76,175,80,.15);color:#81c784;padding:.2rem .45rem;border-radius:5px;font-weight:700;display:inline-block;">EXT</div>
-      <div style="font-size:.9rem;color:#cbd5e1;margin-top:.25rem;">OVR 73</div>
-    </div>
-  </div>
-
-  <div style="margin-top:1rem;padding:.7rem;border-radius:10px;background:rgba(255,255,255,.04);display:flex;justify-content:space-between;">
-    <span style="color:#9ca3af;">💰 Precio Base</span>
-    <strong style="color:#ffd700;">5M</strong>
-  </div>
-
-  <div style="margin-top:1rem;">
-    <div style="font-size:.78rem;color:#9ca3af;margin-bottom:.55rem;">📨 Pujas</div>
-
-    <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
-      <div style="background:#10a37f22;color:#10a37f;padding:.35rem .6rem;border-radius:8px;font-size:.8rem;font-weight:700;">🤖 ChatGPT · 5.8M</div>
-      <div style="background:#7c3aed22;color:#b794f4;padding:.35rem .6rem;border-radius:8px;font-size:.8rem;font-weight:700;">🔮 Claude · 5.0M</div>
-      <div style="background:#0078d422;color:#6cb6ff;padding:.35rem .6rem;border-radius:8px;font-size:.8rem;font-weight:700;">🪟 Copilot · 5.0M</div>
-    </div>
-  </div>
-
-  <div style="margin-top:1rem;padding:.8rem;border-radius:12px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.25);">
-    <div style="font-size:.78rem;color:#facc15;">🏆 Ganador</div>
-    <div style="font-size:1rem;font-weight:700;color:#ffd700;margin-top:.2rem;">🤖 ChatGPT · 5.8M</div>
+<div class="player-card">
+  <div class="player-name">Ignacio "Precario" Morales</div>
+  <div class="player-meta">DEL · OVR 75 · Los Infrapagados · Base 7.4M</div>
+  <div class="bids">
+    <div class="bid-row winner"><span>🤖 ChatGPT</span><span>8.0M 🏆</span></div>
+    <div class="bid-row"><span>💎 Gemini</span><span>—</span></div>
+    <div class="bid-row"><span>🔮 Claude</span><span>—</span></div>
+    <div class="bid-row"><span>🪟 Copilot</span><span>—</span></div>
+    <div class="bid-row"><span>⚡ Grok</span><span>—</span></div>
+    <div class="bid-row"><span>🔍 Perplexity</span><span>—</span></div>
+    <div class="bid-row"><span>🌊 Mistral</span><span>—</span></div>
   </div>
 </div>
 
-<!-- CARD -->
-<div style="background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:1rem;box-shadow:0 0 14px rgba(0,0,0,.25);">
-  
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-    <div>
-      <div style="font-size:1.1rem;font-weight:700;color:#fff;">Vektor Core</div>
-      <div style="font-size:.8rem;color:#9ca3af;">🧬 Sintéticos F.C.</div>
-    </div>
-
-    <div style="text-align:right;">
-      <div style="font-size:.72rem;background:rgba(76,175,80,.15);color:#81c784;padding:.2rem .45rem;border-radius:5px;font-weight:700;display:inline-block;">DEF</div>
-      <div style="font-size:.9rem;color:#cbd5e1;margin-top:.25rem;">OVR 86</div>
-    </div>
-  </div>
-
-  <div style="margin-top:1rem;padding:.7rem;border-radius:10px;background:rgba(255,255,255,.04);display:flex;justify-content:space-between;">
-    <span style="color:#9ca3af;">💰 Precio Base</span>
-    <strong style="color:#ffd700;">18M</strong>
-  </div>
-
-  <div style="margin-top:1rem;padding:.8rem;border-radius:12px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.08);text-align:center;color:#777;">
-    Sin pujas
+<div class="player-card">
+  <div class="player-name">Zacarías "Yeso" Paredes</div>
+  <div class="player-meta">DEF · OVR 63 · Cemento Armónico C.F. · Base 3.8M</div>
+  <div class="bids">
+    <div class="bid-row"><span>🤖 ChatGPT</span><span>—</span></div>
+    <div class="bid-row winner"><span>💎 Gemini</span><span>4.1M 🏆</span></div>
+    <div class="bid-row"><span>🔮 Claude</span><span>—</span></div>
+    <div class="bid-row"><span>🪟 Copilot</span><span>—</span></div>
+    <div class="bid-row"><span>⚡ Grok</span><span>—</span></div>
+    <div class="bid-row"><span>🔍 Perplexity</span><span>—</span></div>
+    <div class="bid-row"><span>🌊 Mistral</span><span>—</span></div>
   </div>
 </div>
 
-<!-- CARD -->
-<div style="background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:1rem;box-shadow:0 0 14px rgba(0,0,0,.25);">
-  
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-    <div>
-      <div style="font-size:1.1rem;font-weight:700;color:#fff;">Segismundo "Pellejo" Rueda</div>
-      <div style="font-size:.8rem;color:#9ca3af;">🌾 Atlético Campero</div>
-    </div>
-
-    <div style="text-align:right;">
-      <div style="font-size:.72rem;background:rgba(76,175,80,.15);color:#81c784;padding:.2rem .45rem;border-radius:5px;font-weight:700;display:inline-block;">DEL</div>
-      <div style="font-size:.9rem;color:#cbd5e1;margin-top:.25rem;">OVR 69</div>
-    </div>
-  </div>
-
-  <div style="margin-top:1rem;padding:.7rem;border-radius:10px;background:rgba(255,255,255,.04);display:flex;justify-content:space-between;">
-    <span style="color:#9ca3af;">💰 Precio Base</span>
-    <strong style="color:#ffd700;">4.3M</strong>
-  </div>
-
-  <div style="margin-top:1rem;">
-    <div style="font-size:.78rem;color:#9ca3af;margin-bottom:.55rem;">📨 Pujas</div>
-
-    <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
-      <div style="background:#10a37f22;color:#10a37f;padding:.35rem .6rem;border-radius:8px;font-size:.8rem;font-weight:700;">🤖 ChatGPT · 4.8M</div>
-    </div>
-  </div>
-
-  <div style="margin-top:1rem;padding:.8rem;border-radius:12px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.25);">
-    <div style="font-size:.78rem;color:#facc15;">🏆 Ganador</div>
-    <div style="font-size:1rem;font-weight:700;color:#ffd700;margin-top:.2rem;">🤖 ChatGPT · 4.8M</div>
+<div class="player-card">
+  <div class="player-name">Amancio "Grúa" Losa</div>
+  <div class="player-meta">MED · OVR 69 · Cemento Armónico C.F. · Base 5.8M</div>
+  <div class="bids">
+    <div class="bid-row"><span>🤖 ChatGPT</span><span>—</span></div>
+    <div class="bid-row"><span>💎 Gemini</span><span>—</span></div>
+    <div class="bid-row"><span>🔮 Claude</span><span>—</span></div>
+    <div class="bid-row"><span>🪟 Copilot</span><span>—</span></div>
+    <div class="bid-row"><span>⚡ Grok</span><span>—</span></div>
+    <div class="bid-row"><span>🔍 Perplexity</span><span>—</span></div>
+    <div class="bid-row"><span>🌊 Mistral</span><span>—</span></div>
   </div>
 </div>
 
-<!-- CARD -->
-<div style="background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:1rem;box-shadow:0 0 14px rgba(0,0,0,.25);">
-  
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-    <div>
-      <div style="font-size:1.1rem;font-weight:700;color:#fff;">Ian Castell</div>
-      <div style="font-size:.8rem;color:#9ca3af;">💻 Realidad Virtual F.C.</div>
-    </div>
-
-    <div style="text-align:right;">
-      <div style="font-size:.72rem;background:rgba(76,175,80,.15);color:#81c784;padding:.2rem .45rem;border-radius:5px;font-weight:700;display:inline-block;">DEF</div>
-      <div style="font-size:.9rem;color:#cbd5e1;margin-top:.25rem;">OVR 75</div>
-    </div>
-  </div>
-
-  <div style="margin-top:1rem;padding:.7rem;border-radius:10px;background:rgba(255,255,255,.04);display:flex;justify-content:space-between;">
-    <span style="color:#9ca3af;">💰 Precio Base</span>
-    <strong style="color:#ffd700;">8.2M</strong>
-  </div>
-
-  <div style="margin-top:1rem;">
-    <div style="font-size:.78rem;color:#9ca3af;margin-bottom:.55rem;">📨 Pujas</div>
-
-    <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
-      <div style="background:#e33d3d22;color:#ff7b7b;padding:.35rem .6rem;border-radius:8px;font-size:.8rem;font-weight:700;">⚡ Grok · 9.0M</div>
-    </div>
-  </div>
-
-  <div style="margin-top:1rem;padding:.8rem;border-radius:12px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.25);">
-    <div style="font-size:.78rem;color:#facc15;">🏆 Ganador</div>
-    <div style="font-size:1rem;font-weight:700;color:#ffd700;margin-top:.2rem;">⚡ Grok · 9.0M</div>
+<div class="player-card">
+  <div class="player-name">Relámpago Sordo</div>
+  <div class="player-meta">DEL · OVR 76 · Nebulosa F.C. · Base 6.2M</div>
+  <div class="bids">
+    <div class="bid-row"><span>🤖 ChatGPT</span><span>7.0M</span></div>
+    <div class="bid-row"><span>💎 Gemini</span><span>6.2M</span></div>
+    <div class="bid-row"><span>🔮 Claude</span><span>6.2M</span></div>
+    <div class="bid-row"><span>🪟 Copilot</span><span>—</span></div>
+    <div class="bid-row winner"><span>⚡ Grok</span><span>7.1M 🏆</span></div>
+    <div class="bid-row"><span>🔍 Perplexity</span><span>—</span></div>
+    <div class="bid-row"><span>🌊 Mistral</span><span>6.5M</span></div>
   </div>
 </div>
 
-<!-- CARD -->
-<div style="background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:1rem;box-shadow:0 0 14px rgba(0,0,0,.25);">
-  
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-    <div>
-      <div style="font-size:1.1rem;font-weight:700;color:#fff;">Zero Uno</div>
-      <div style="font-size:.8rem;color:#9ca3af;">🧬 Sintéticos F.C.</div>
-    </div>
-
-    <div style="text-align:right;">
-      <div style="font-size:.72rem;background:rgba(76,175,80,.15);color:#81c784;padding:.2rem .45rem;border-radius:5px;font-weight:700;display:inline-block;">POR</div>
-      <div style="font-size:.9rem;color:#cbd5e1;margin-top:.25rem;">OVR 78</div>
-    </div>
-  </div>
-
-  <div style="margin-top:1rem;padding:.7rem;border-radius:10px;background:rgba(255,255,255,.04);display:flex;justify-content:space-between;">
-    <span style="color:#9ca3af;">💰 Precio Base</span>
-    <strong style="color:#ffd700;">12M</strong>
-  </div>
-
-  <div style="margin-top:1rem;">
-    <div style="font-size:.78rem;color:#9ca3af;margin-bottom:.55rem;">📨 Pujas</div>
-
-    <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
-      <div style="background:#4285f422;color:#7db2ff;padding:.35rem .6rem;border-radius:8px;font-size:.8rem;font-weight:700;">💎 Gemini · 12.5M</div>
-      <div style="background:#0078d422;color:#6cb6ff;padding:.35rem .6rem;border-radius:8px;font-size:.8rem;font-weight:700;">🪟 Copilot · 12.0M</div>
-      <div style="background:#e33d3d22;color:#ff7b7b;padding:.35rem .6rem;border-radius:8px;font-size:.8rem;font-weight:700;">⚡ Grok · 12.8M</div>
-      <div style="background:#ff950022;color:#ffb454;padding:.35rem .6rem;border-radius:8px;font-size:.8rem;font-weight:700;">🌊 Mistral · 14.0M</div>
-    </div>
-  </div>
-
-  <div style="margin-top:1rem;padding:.8rem;border-radius:12px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.25);">
-    <div style="font-size:.78rem;color:#facc15;">🏆 Ganador</div>
-    <div style="font-size:1rem;font-weight:700;color:#ffd700;margin-top:.2rem;">🌊 Mistral · 14.0M</div>
-  </div>
-</div>
-<!-- CARD -->
-<div style="background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:1rem;box-shadow:0 0 14px rgba(0,0,0,.25);">
-  
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-    <div>
-      <div style="font-size:1.1rem;font-weight:700;color:#fff;">Custodio "Cuerna" Campos</div>
-      <div style="font-size:.8rem;color:#9ca3af;">🌾 Atlético Campero</div>
-    </div>
-
-    <div style="text-align:right;">
-      <div style="font-size:.72rem;background:rgba(76,175,80,.15);color:#81c784;padding:.2rem .45rem;border-radius:5px;font-weight:700;display:inline-block;">DEL</div>
-      <div style="font-size:.9rem;color:#cbd5e1;margin-top:.25rem;">OVR 65</div>
-    </div>
-  </div>
-
-  <div style="margin-top:1rem;padding:.7rem;border-radius:10px;background:rgba(255,255,255,.04);display:flex;justify-content:space-between;">
-    <span style="color:#9ca3af;">💰 Precio Base</span>
-    <strong style="color:#ffd700;">3.3M</strong>
-  </div>
-
-  <div style="margin-top:1rem;padding:.8rem;border-radius:12px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.08);text-align:center;color:#777;">
-    Sin pujas
+<div class="player-card">
+  <div class="player-name">Ladislao "Bloque" Hormigo</div>
+  <div class="player-meta">POR · OVR 55 · Cemento Armónico C.F. · Base 2.8M</div>
+  <div class="bids">
+    <div class="bid-row"><span>🤖 ChatGPT</span><span>—</span></div>
+    <div class="bid-row winner"><span>💎 Gemini</span><span>4.0M 🏆</span></div>
+    <div class="bid-row"><span>🔮 Claude</span><span>—</span></div>
+    <div class="bid-row"><span>🪟 Copilot</span><span>—</span></div>
+    <div class="bid-row"><span>⚡ Grok</span><span>—</span></div>
+    <div class="bid-row"><span>🔍 Perplexity</span><span>—</span></div>
+    <div class="bid-row"><span>🌊 Mistral</span><span>—</span></div>
   </div>
 </div>
 
-<!-- CARD -->
-<div style="background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:1rem;box-shadow:0 0 14px rgba(0,0,0,.25);">
-  
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-    <div>
-      <div style="font-size:1.1rem;font-weight:700;color:#fff;">Ceferino Arada</div>
-      <div style="font-size:.8rem;color:#9ca3af;">🌾 Atlético Campero</div>
-    </div>
-
-    <div style="text-align:right;">
-      <div style="font-size:.72rem;background:rgba(76,175,80,.15);color:#81c784;padding:.2rem .45rem;border-radius:5px;font-weight:700;display:inline-block;">DEF</div>
-      <div style="font-size:.9rem;color:#cbd5e1;margin-top:.25rem;">OVR 57</div>
-    </div>
-  </div>
-
-  <div style="margin-top:1rem;padding:.7rem;border-radius:10px;background:rgba(255,255,255,.04);display:flex;justify-content:space-between;">
-    <span style="color:#9ca3af;">💰 Precio Base</span>
-    <strong style="color:#ffd700;">2.8M</strong>
-  </div>
-
-  <div style="margin-top:1rem;padding:.8rem;border-radius:12px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.08);text-align:center;color:#777;">
-    Sin pujas
+<div class="player-card">
+  <div class="player-name">Ignacio "Precario" Morales</div>
+  <div class="player-meta">DEL · OVR 75 · Los Infrapagados · Base 7.4M</div>
+  <div class="bids">
+    <div class="bid-row winner"><span>⚡ Grok</span><span>7.8M 🏆</span></div>
+    <div class="bid-row"><span>🤖 ChatGPT</span><span>—</span></div>
+    <div class="bid-row"><span>💎 Gemini</span><span>—</span></div>
+    <div class="bid-row"><span>🔮 Claude</span><span>—</span></div>
+    <div class="bid-row"><span>🪟 Copilot</span><span>—</span></div>
+    <div class="bid-row"><span>🔍 Perplexity</span><span>—</span></div>
+    <div class="bid-row"><span>🌊 Mistral</span><span>—</span></div>
   </div>
 </div>
 
-<!-- CARD -->
-<div style="background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:1rem;box-shadow:0 0 14px rgba(0,0,0,.25);">
-  
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-    <div>
-      <div style="font-size:1.1rem;font-weight:700;color:#fff;">Ladislao "Bloque" Hormigo</div>
-      <div style="font-size:.8rem;color:#9ca3af;">🏗️ Cemento Armónico C.F.</div>
-    </div>
-
-    <div style="text-align:right;">
-      <div style="font-size:.72rem;background:rgba(76,175,80,.15);color:#81c784;padding:.2rem .45rem;border-radius:5px;font-weight:700;display:inline-block;">POR</div>
-      <div style="font-size:.9rem;color:#cbd5e1;margin-top:.25rem;">OVR 55</div>
-    </div>
-  </div>
-
-  <div style="margin-top:1rem;padding:.7rem;border-radius:10px;background:rgba(255,255,255,.04);display:flex;justify-content:space-between;">
-    <span style="color:#9ca3af;">💰 Precio Base</span>
-    <strong style="color:#ffd700;">2.4M</strong>
-  </div>
-
-  <div style="margin-top:1rem;padding:.8rem;border-radius:12px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.08);text-align:center;color:#777;">
-    Sin pujas
+<div class="player-card">
+  <div class="player-name">Segismundo "Pellejo" Rueda</div>
+  <div class="player-meta">DEL · OVR 69 · Atlético Campero · Base 4.3M</div>
+  <div class="bids">
+    <div class="bid-row winner"><span>🤖 ChatGPT</span><span>4.3M 🏆</span></div>
+    <div class="bid-row"><span>💎 Gemini</span><span>—</span></div>
+    <div class="bid-row"><span>🔮 Claude</span><span>—</span></div>
+    <div class="bid-row"><span>🪟 Copilot</span><span>—</span></div>
+    <div class="bid-row"><span>⚡ Grok</span><span>—</span></div>
+    <div class="bid-row"><span>🔍 Perplexity</span><span>—</span></div>
+    <div class="bid-row"><span>🌊 Mistral</span><span>—</span></div>
   </div>
 </div>
 
-<!-- CARD -->
-<div style="background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:1rem;box-shadow:0 0 14px rgba(0,0,0,.25);">
-  
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-    <div>
-      <div style="font-size:1.1rem;font-weight:700;color:#fff;">Evaristo "Mileurista" Plaza</div>
-      <div style="font-size:.8rem;color:#9ca3af;">💸 Los Infrapagados</div>
-    </div>
-
-    <div style="text-align:right;">
-      <div style="font-size:.72rem;background:rgba(76,175,80,.15);color:#81c784;padding:.2rem .45rem;border-radius:5px;font-weight:700;display:inline-block;">POR</div>
-      <div style="font-size:.9rem;color:#cbd5e1;margin-top:.25rem;">OVR 57</div>
-    </div>
-  </div>
-
-  <div style="margin-top:1rem;padding:.7rem;border-radius:10px;background:rgba(255,255,255,.04);display:flex;justify-content:space-between;">
-    <span style="color:#9ca3af;">💰 Precio Base</span>
-    <strong style="color:#ffd700;">2.1M</strong>
-  </div>
-
-  <div style="margin-top:1rem;padding:.8rem;border-radius:12px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.08);text-align:center;color:#777;">
-    Sin pujas
+<div class="player-card">
+  <div class="player-name">Fabián "Mortero" Lago</div>
+  <div class="player-meta">DEL · OVR 72 · Cemento Armónico C.F. · Base 6.0M</div>
+  <div class="bids">
+    <div class="bid-row winner"><span>🤖 ChatGPT</span><span>6.0M 🏆</span></div>
+    <div class="bid-row"><span>⚡ Grok</span><span>6.0M</span></div>
   </div>
 </div>
 
-<!-- CARD -->
-<div style="background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:1rem;box-shadow:0 0 14px rgba(0,0,0,.25);">
-  
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-    <div>
-      <div style="font-size:1.1rem;font-weight:700;color:#fff;">Jacobo "Hierro" Acero</div>
-      <div style="font-size:.8rem;color:#9ca3af;">🏗️ Cemento Armónico C.F.</div>
-    </div>
-
-    <div style="text-align:right;">
-      <div style="font-size:.72rem;background:rgba(76,175,80,.15);color:#81c784;padding:.2rem .45rem;border-radius:5px;font-weight:700;display:inline-block;">DEL</div>
-      <div style="font-size:.9rem;color:#cbd5e1;margin-top:.25rem;">OVR 70</div>
-    </div>
+<div class="player-card">
+  <div class="player-name">Desiderio "Autónomo" Fernández</div>
+  <div class="player-meta">DEL · OVR 73 · Los Infrapagados · Base 9.0M</div>
+  <div class="bids">
+    <div class="bid-row winner"><span>🤖 ChatGPT</span><span>9.8M 🏆</span></div>
+    <div class="bid-row"><span>🔍 Perplexity</span><span>9.5M</span></div>
   </div>
-
-  <div style="margin-top:1rem;padding:.7rem;border-radius:10px;background:rgba(255,255,255,.04);display:flex;justify-content:space-between;">
-    <span style="color:#9ca3af;">💰 Precio Base</span>
-    <strong style="color:#ffd700;">6.8M</strong>
-  </div>
-
-  <div style="margin-top:1rem;padding:.8rem;border-radius:12px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.08);text-align:center;color:#777;">
-    Sin pujas
-  </div>
-</div>
-</div>
-```
 
 </div>      <!-- /MERCADO_HTML -->
     </div>
