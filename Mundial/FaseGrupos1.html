@@ -21,18 +21,12 @@
     
     <style>
         :root {
-            /* Colores más vibrantes del Mundial */
             --mundial-blue: #0066ff;
             --mundial-cyan: #00d4ff;
             --mundial-green: #00ff88;
             --mundial-yellow: #ffd700;
             --mundial-orange: #ff8c00;
             --mundial-red: #ff3366;
-            --pitch-dark: #0a3d2c;
-            --pitch-green: #1a6b4a;
-            --sky-blue: #87ceeb;
-            
-            /* Backgrounds más coloridos */
             --bg-gradient: linear-gradient(135deg, #0a2540 0%, #1a4d6b 50%, #0a2540 100%);
             --card-gradient: linear-gradient(135deg, rgba(0,102,255,0.1), rgba(0,212,255,0.1));
         }
@@ -51,8 +45,7 @@
             line-height: 1.6;
             min-height: 100vh;
         }
- 
-        /* Header Uno X Dos IA */
+
         header {
             position: relative;
             z-index: 10;
@@ -63,14 +56,14 @@
             align-items: center;
             backdrop-filter: blur(10px);
         }
- 
+
         header a {
             display: flex;
             align-items: center;
             gap: 12px;
             text-decoration: none;
         }
- 
+
         .logo-box {
             width: 42px;
             height: 42px;
@@ -82,7 +75,7 @@
             font-size: 1.3em;
             box-shadow: 0 0 18px rgba(0,200,150,0.3);
         }
- 
+
         .site-title {
             display: block;
             font-family: 'Bebas Neue', sans-serif;
@@ -91,15 +84,14 @@
             color: #ffffff;
             line-height: 1;
         }
- 
+
         .site-subtitle {
             font-size: 0.6em;
             color: #00c896;
             letter-spacing: 1px;
             font-weight: 500;
         }
- 
-        /* Navigation */
+
         nav {
             background: rgba(19,34,56,0.95);
             backdrop-filter: blur(12px);
@@ -111,7 +103,7 @@
             display: flex;
             justify-content: center;
         }
- 
+
         .nav-hamburger {
             display: flex;
             align-items: center;
@@ -126,11 +118,11 @@
             cursor: pointer;
             transition: background 0.2s;
         }
- 
+
         .nav-hamburger:hover {
             background: rgba(255,255,255,0.12);
         }
- 
+
         .nav-menu {
             display: none;
             flex-direction: column;
@@ -147,11 +139,11 @@
             min-width: 220px;
             box-shadow: 0 12px 40px rgba(0,0,0,0.4);
         }
- 
+
         .nav-menu.open {
             display: flex;
         }
- 
+
         .nav-link {
             display: flex;
             align-items: center;
@@ -165,31 +157,29 @@
             transition: all 0.2s;
             border: 1px solid transparent;
         }
- 
+
         .nav-link:hover {
             color: #ffffff;
             background: rgba(255,255,255,0.07);
         }
- 
+
         .nav-link.active {
             color: #00c896;
             background: rgba(0,200,150,0.1);
             border-color: rgba(0,200,150,0.25);
         }
- 
-        /* Page Header - Más colorido */
+
         .page-header {
             padding: 50px 20px;
             text-align: center;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(255,215,0,0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(0,212,255,0.15) 0%, transparent 50%),
-                linear-gradient(180deg, transparent, rgba(0,102,255,0.1));
+            background: radial-gradient(circle at 20% 50%, rgba(255,215,0,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(0,212,255,0.15) 0%, transparent 50%),
+                        linear-gradient(180deg, transparent, rgba(0,102,255,0.1));
             border-bottom: 3px solid var(--mundial-cyan);
             position: relative;
             overflow: hidden;
         }
- 
+
         .page-header::before {
             content: '⚽';
             position: absolute;
@@ -199,7 +189,7 @@
             left: 50%;
             transform: translate(-50%, -50%) rotate(-15deg);
         }
- 
+
         .page-badge {
             display: inline-block;
             background: linear-gradient(135deg, var(--mundial-yellow), var(--mundial-orange));
@@ -212,7 +202,7 @@
             margin-bottom: 20px;
             box-shadow: 0 4px 20px rgba(255,215,0,0.4);
         }
- 
+
         .page-header h1 {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 3.5em;
@@ -225,25 +215,24 @@
             background-size: 200% auto;
             animation: gradient-shift 4s linear infinite;
         }
- 
+
         @keyframes gradient-shift {
             0% { background-position: 0% 50%; }
             100% { background-position: 200% 50%; }
         }
- 
+
         .page-header p {
             font-size: 1.2em;
             color: var(--mundial-cyan);
             font-weight: 500;
         }
- 
-        /* Container */
+
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 40px 20px;
         }
- 
+
         .section-title {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 2.2em;
@@ -255,8 +244,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
- 
-        /* Intro Section - Más colorida */
+
         .intro-section {
             background: var(--card-gradient);
             border: 2px solid rgba(0,212,255,0.3);
@@ -266,7 +254,7 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 8px 32px rgba(0,212,255,0.2);
         }
- 
+
         .intro-section h2 {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1.8em;
@@ -274,70 +262,153 @@
             margin-bottom: 15px;
             color: var(--mundial-cyan);
         }
- 
-        /* Schedule Section - Colorida */
-        .schedule-section {
+
+        /* ENCUESTA COMUNITARIA */
+        .poll-section {
+            background: linear-gradient(135deg, rgba(255,215,0,0.12), rgba(255,140,0,0.08));
+            border: 3px solid var(--mundial-yellow);
+            border-radius: 20px;
+            padding: 40px;
             margin-bottom: 50px;
-        }
- 
-        .schedule-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
- 
-        .schedule-day {
-            background: linear-gradient(135deg, rgba(0,102,255,0.15), rgba(0,212,255,0.10));
-            border: 2px solid var(--mundial-blue);
-            border-radius: 16px;
+            position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
         }
- 
-        .schedule-day:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,212,255,0.3);
-            border-color: var(--mundial-cyan);
+
+        .poll-section::before {
+            content: '🗳️';
+            position: absolute;
+            font-size: 150px;
+            opacity: 0.04;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            pointer-events: none;
         }
- 
-        .day-header {
-            background: linear-gradient(135deg, var(--mundial-blue), var(--mundial-cyan));
-            padding: 15px 20px;
-            font-weight: 700;
+
+        .poll-subtitle {
+            text-align: center;
+            color: var(--mundial-cyan);
             font-size: 1.1em;
-            border-bottom: 2px solid var(--mundial-cyan);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 35px;
+            font-weight: 500;
         }
- 
-        .match-item {
+
+        .poll-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .poll-btn {
+            background: rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            color: inherit;
+            text-align: left;
+        }
+
+        .poll-btn:not(:disabled):hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,255,255,0.4);
+            background: rgba(0,0,0,0.5);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .poll-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .poll-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .poll-icon {
+            font-size: 2.2em;
+        }
+
+        .poll-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4em;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .poll-bar-container {
+            background: rgba(0,0,0,0.4);
+            border-radius: 12px;
+            height: 30px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .poll-bar {
+            height: 100%;
+            border-radius: 12px;
+            transition: width 0.4s ease;
+        }
+
+        .chatgpt-bar { background: linear-gradient(90deg, #10b981, #059669); }
+        .gemini-bar { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+        .copilot-bar { background: linear-gradient(90deg, #f59e0b, #d97706); }
+
+        .poll-stats {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            transition: background 0.2s ease;
+            font-weight: 600;
         }
- 
-        .match-item:hover {
-            background: rgba(255,255,255,0.05);
-        }
- 
-        .match-item:last-child {
-            border-bottom: none;
-        }
- 
-        .match-teams {
-            font-size: 0.95em;
-            font-weight: 500;
-        }
- 
-        .match-hour {
+
+        .poll-percent {
+            font-size: 1.3em;
             color: var(--mundial-yellow);
-            font-weight: 700;
-            font-size: 0.95em;
+            font-family: 'Bebas Neue', sans-serif;
         }
- 
-        /* AI Sections - Cada IA con su color */
+
+        .poll-info {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255,255,255,0.1);
+            color: #94a3b8;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        .poll-info strong {
+            color: var(--mundial-cyan);
+            font-size: 1.2em;
+        }
+
+        .voted-message {
+            margin-top: 20px;
+            padding: 18px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 2px solid #10b981;
+            border-radius: 12px;
+            text-align: center;
+            color: #10b981;
+            font-weight: 600;
+            font-size: 1.05em;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* AI Sections - Predicciones */
         .ai-section {
             margin: 50px 0;
             padding: 40px;
@@ -346,7 +417,7 @@
             position: relative;
             overflow: hidden;
         }
- 
+
         .ai-section::before {
             content: '';
             position: absolute;
@@ -358,37 +429,34 @@
             pointer-events: none;
             background-size: 100px 100px;
         }
- 
-        /* ChatGPT - Verde */
+
         .chatgpt-section {
             background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.05));
             border-color: #10b981;
         }
- 
+
         .chatgpt-section::before {
             background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(16,185,129,0.1) 35px, rgba(16,185,129,0.1) 70px);
         }
- 
-        /* Gemini - Azul */
+
         .gemini-section {
             background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(37,99,235,0.05));
             border-color: #3b82f6;
         }
- 
+
         .gemini-section::before {
             background-image: repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(59,130,246,0.1) 35px, rgba(59,130,246,0.1) 70px);
         }
- 
-        /* Copilot - Naranja */
+
         .copilot-section {
             background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(217,119,6,0.05));
             border-color: #f59e0b;
         }
- 
+
         .copilot-section::before {
             background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(245,158,11,0.1) 35px, rgba(245,158,11,0.1) 70px);
         }
- 
+
         .ai-header {
             display: flex;
             align-items: center;
@@ -396,49 +464,36 @@
             margin-bottom: 35px;
             padding-bottom: 20px;
             border-bottom: 3px solid;
+            position: relative;
+            z-index: 1;
         }
- 
-        .chatgpt-section .ai-header {
-            border-bottom-color: #10b981;
-        }
- 
-        .gemini-section .ai-header {
-            border-bottom-color: #3b82f6;
-        }
- 
-        .copilot-section .ai-header {
-            border-bottom-color: #f59e0b;
-        }
- 
+
+        .chatgpt-section .ai-header { border-bottom-color: #10b981; }
+        .gemini-section .ai-header { border-bottom-color: #3b82f6; }
+        .copilot-section .ai-header { border-bottom-color: #f59e0b; }
+
         .ai-icon-large {
             font-size: 3em;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
         }
- 
+
         .ai-title {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 2.5em;
             letter-spacing: 2px;
         }
- 
-        .chatgpt-section .ai-title {
-            color: #10b981;
-        }
- 
-        .gemini-section .ai-title {
-            color: #3b82f6;
-        }
- 
-        .copilot-section .ai-title {
-            color: #f59e0b;
-        }
- 
-        /* Match Predictions dentro de cada IA */
+
+        .chatgpt-section .ai-title { color: #10b981; }
+        .gemini-section .ai-title { color: #3b82f6; }
+        .copilot-section .ai-title { color: #f59e0b; }
+
         .match-predictions {
             display: grid;
             gap: 25px;
+            position: relative;
+            z-index: 1;
         }
- 
+
         .match-pred-card {
             background: rgba(255,255,255,0.03);
             border: 2px solid rgba(255,255,255,0.1);
@@ -446,25 +501,17 @@
             padding: 25px;
             transition: all 0.3s ease;
         }
- 
+
         .match-pred-card:hover {
             transform: translateX(10px);
             background: rgba(255,255,255,0.06);
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
- 
-        .chatgpt-section .match-pred-card:hover {
-            border-color: #10b981;
-        }
- 
-        .gemini-section .match-pred-card:hover {
-            border-color: #3b82f6;
-        }
- 
-        .copilot-section .match-pred-card:hover {
-            border-color: #f59e0b;
-        }
- 
+
+        .chatgpt-section .match-pred-card:hover { border-color: #10b981; }
+        .gemini-section .match-pred-card:hover { border-color: #3b82f6; }
+        .copilot-section .match-pred-card:hover { border-color: #f59e0b; }
+
         .match-pred-header {
             display: flex;
             justify-content: space-between;
@@ -475,26 +522,26 @@
             padding-bottom: 15px;
             border-bottom: 2px solid rgba(255,255,255,0.1);
         }
- 
+
         .match-pred-teams {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1.6em;
             letter-spacing: 1px;
         }
- 
+
         .match-pred-meta {
             display: flex;
             gap: 12px;
             font-size: 0.9em;
         }
- 
+
         .meta-badge {
             background: rgba(255,255,255,0.1);
             padding: 6px 14px;
             border-radius: 20px;
             font-weight: 600;
         }
- 
+
         .prediction-result {
             background: rgba(255,215,0,0.15);
             border: 2px solid var(--mundial-yellow);
@@ -503,26 +550,26 @@
             margin-bottom: 20px;
             text-align: center;
         }
- 
+
         .pred-label {
             font-size: 0.85em;
             color: #94a3b8;
             margin-bottom: 8px;
         }
- 
+
         .pred-winner {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1.8em;
             letter-spacing: 1px;
             color: var(--mundial-yellow);
         }
- 
+
         .probabilities {
             display: grid;
             gap: 12px;
             margin-bottom: 18px;
         }
- 
+
         .prob-item {
             display: flex;
             justify-content: space-between;
@@ -532,29 +579,19 @@
             border-radius: 10px;
             border-left: 3px solid transparent;
         }
- 
-        .chatgpt-section .prob-item {
-            border-left-color: #10b981;
-        }
- 
-        .gemini-section .prob-item {
-            border-left-color: #3b82f6;
-        }
- 
-        .copilot-section .prob-item {
-            border-left-color: #f59e0b;
-        }
- 
-        .prob-label {
-            font-weight: 500;
-        }
- 
+
+        .chatgpt-section .prob-item { border-left-color: #10b981; }
+        .gemini-section .prob-item { border-left-color: #3b82f6; }
+        .copilot-section .prob-item { border-left-color: #f59e0b; }
+
+        .prob-label { font-weight: 500; }
+
         .prob-value {
             font-weight: 700;
             font-size: 1.1em;
             color: var(--mundial-cyan);
         }
- 
+
         .analysis-text {
             font-size: 0.95em;
             line-height: 1.7;
@@ -565,20 +602,12 @@
             border-radius: 10px;
             border-left: 4px solid;
         }
- 
-        .chatgpt-section .analysis-text {
-            border-left-color: #10b981;
-        }
- 
-        .gemini-section .analysis-text {
-            border-left-color: #3b82f6;
-        }
- 
-        .copilot-section .analysis-text {
-            border-left-color: #f59e0b;
-        }
- 
-        /* Results Section - Colorida */
+
+        .chatgpt-section .analysis-text { border-left-color: #10b981; }
+        .gemini-section .analysis-text { border-left-color: #3b82f6; }
+        .copilot-section .analysis-text { border-left-color: #f59e0b; }
+
+        /* Results Section */
         .results-section {
             margin-top: 60px;
             padding: 50px 40px;
@@ -586,14 +615,14 @@
             border: 3px solid var(--mundial-yellow);
             border-radius: 20px;
         }
- 
+
         .results-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin: 30px 0;
         }
- 
+
         .result-card {
             background: rgba(0,0,0,0.3);
             border: 2px solid rgba(255,255,255,0.15);
@@ -602,19 +631,19 @@
             text-align: center;
             transition: all 0.3s ease;
         }
- 
+
         .result-card:hover {
             transform: scale(1.05);
             border-color: var(--mundial-green);
             box-shadow: 0 8px 25px rgba(0,255,136,0.3);
         }
- 
+
         .result-teams {
             font-size: 1.05em;
             font-weight: 600;
             margin-bottom: 15px;
         }
- 
+
         .result-score {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 3em;
@@ -622,8 +651,8 @@
             letter-spacing: 4px;
             text-shadow: 0 0 20px rgba(0,255,136,0.5);
         }
- 
-        /* Analysis Section - Colorida */
+
+        /* Analysis Section */
         .analysis-section {
             margin-top: 50px;
             padding: 50px 40px;
@@ -631,14 +660,14 @@
             border: 3px solid var(--mundial-cyan);
             border-radius: 20px;
         }
- 
+
         .ai-scores-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
             margin: 30px 0;
         }
- 
+
         .ai-score-card {
             background: rgba(0,0,0,0.3);
             border: 3px solid;
@@ -647,36 +676,21 @@
             text-align: center;
             transition: all 0.3s ease;
         }
- 
+
         .ai-score-card:hover {
             transform: translateY(-10px) scale(1.05);
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
- 
-        .chatgpt-card {
-            border-color: #10b981;
-        }
- 
-        .chatgpt-card:hover {
-            box-shadow: 0 20px 40px rgba(16,185,129,0.4);
-        }
- 
-        .gemini-card {
-            border-color: #3b82f6;
-        }
- 
-        .gemini-card:hover {
-            box-shadow: 0 20px 40px rgba(59,130,246,0.4);
-        }
- 
-        .copilot-card {
-            border-color: #f59e0b;
-        }
- 
-        .copilot-card:hover {
-            box-shadow: 0 20px 40px rgba(245,158,11,0.4);
-        }
- 
+
+        .chatgpt-card { border-color: #10b981; }
+        .chatgpt-card:hover { box-shadow: 0 20px 40px rgba(16,185,129,0.4); }
+
+        .gemini-card { border-color: #3b82f6; }
+        .gemini-card:hover { box-shadow: 0 20px 40px rgba(59,130,246,0.4); }
+
+        .copilot-card { border-color: #f59e0b; }
+        .copilot-card:hover { box-shadow: 0 20px 40px rgba(245,158,11,0.4); }
+
         .ai-score-header {
             display: flex;
             align-items: center;
@@ -684,64 +698,112 @@
             gap: 12px;
             margin-bottom: 25px;
         }
- 
-        .ai-score-icon {
-            font-size: 2.2em;
-        }
- 
+
+        .ai-score-icon { font-size: 2.2em; }
+
         .ai-score-name {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 1.8em;
             letter-spacing: 1px;
         }
- 
-        .chatgpt-card .ai-score-name {
-            color: #10b981;
-        }
- 
-        .gemini-card .ai-score-name {
-            color: #3b82f6;
-        }
- 
-        .copilot-card .ai-score-name {
-            color: #f59e0b;
-        }
- 
+
+        .chatgpt-card .ai-score-name { color: #10b981; }
+        .gemini-card .ai-score-name { color: #3b82f6; }
+        .copilot-card .ai-score-name { color: #f59e0b; }
+
         .ai-score-number {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 6em;
             line-height: 1;
             margin: 20px 0;
         }
- 
+
         .chatgpt-card .ai-score-number {
             color: #10b981;
             text-shadow: 0 0 30px rgba(16,185,129,0.6);
         }
- 
+
         .gemini-card .ai-score-number {
             color: #3b82f6;
             text-shadow: 0 0 30px rgba(59,130,246,0.6);
         }
- 
+
         .copilot-card .ai-score-number {
             color: #f59e0b;
             text-shadow: 0 0 30px rgba(245,158,11,0.6);
         }
- 
+
         .ai-score-label {
             font-size: 0.95em;
             color: #94a3b8;
             margin-bottom: 12px;
         }
- 
+
         .ai-score-percentage {
             font-size: 1.5em;
             font-weight: 700;
             color: var(--mundial-yellow);
         }
- 
-        /* Footer */
+            margin-bottom: 50px;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .schedule-day {
+            background: linear-gradient(135deg, rgba(0,102,255,0.15), rgba(0,212,255,0.10));
+            border: 2px solid var(--mundial-blue);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .schedule-day:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,212,255,0.3);
+            border-color: var(--mundial-cyan);
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, var(--mundial-blue), var(--mundial-cyan));
+            padding: 15px 20px;
+            font-weight: 700;
+            font-size: 1.1em;
+            border-bottom: 2px solid var(--mundial-cyan);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .match-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: background 0.2s ease;
+        }
+
+        .match-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .match-item:last-child {
+            border-bottom: none;
+        }
+
+        .match-teams {
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .match-hour {
+            color: var(--mundial-yellow);
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+
         footer {
             background: rgba(13,27,42,0.9);
             border-top: 1px solid rgba(0,200,150,0.2);
@@ -751,46 +813,29 @@
             color: #8fa3b8;
             margin-top: 60px;
         }
- 
+
         footer a {
             color: #8fa3b8;
             text-decoration: none;
         }
- 
+
         footer a:hover {
             color: #00c896;
         }
- 
-        /* Responsive */
+
         @media (max-width: 768px) {
             .page-header h1 {
                 font-size: 2.2em;
             }
- 
+
             .schedule-grid {
                 grid-template-columns: 1fr;
-            }
- 
-            .ai-section {
-                padding: 25px 20px;
-            }
- 
-            .ai-title {
-                font-size: 2em;
-            }
- 
-            .match-pred-teams {
-                font-size: 1.3em;
-            }
- 
-            .ai-score-number {
-                font-size: 4.5em;
             }
         }
     </style>
 </head>
 <body>
- 
+
 <!-- HEADER -->
 <header>
     <a href="../index.html">
@@ -801,7 +846,7 @@
         </div>
     </a>
 </header>
- 
+
 <!-- NAVIGATION -->
 <nav aria-label="Navegación principal">
     <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
@@ -817,14 +862,14 @@
         <a href="../Mundial2026.html" class="nav-link active"><span>🏆</span> Mundial 2026</a>
     </div>
 </nav>
- 
+
 <!-- PAGE HEADER -->
 <div class="page-header">
     <div class="page-badge">🏆 FASE DE GRUPOS</div>
     <h1>JORNADA 1</h1>
     <p>11-14 Junio 2026 · Grupos A-H</p>
 </div>
- 
+
 <div class="container">
     
     <!-- ============================================ -->
@@ -840,7 +885,69 @@
             Las tres IAs han analizado cada encuentro considerando el ranking FIFA, forma reciente, historial de enfrentamientos y el factor campo. ¿Cuál de las tres acertará más predicciones?
         </p>
     </div>
- 
+        <!-- ============================================ -->
+    <!-- ENCUESTA COMUNITARIA                        -->
+    <!-- Votación: ¿Cuál IA acertará más?            -->
+    <!-- ============================================ -->
+    <div class="poll-section">
+        <h2 class="section-title">🗳️ ¿Cuál IA crees que acertará más?</h2>
+        <p class="poll-subtitle">Vota tu predicción y descubre qué opina la comunidad</p>
+        
+        <div class="poll-options" id="pollOptions">
+            
+            <!-- ChatGPT -->
+            <button class="poll-btn" id="btn-chatgpt" onclick="vote('chatgpt')">
+                <div class="poll-header">
+                    <span class="poll-icon">🤖</span>
+                    <span class="poll-name">ChatGPT</span>
+                </div>
+                <div class="poll-bar-container">
+                    <div class="poll-bar chatgpt-bar" id="bar-chatgpt" style="width: 0%"></div>
+                </div>
+                <div class="poll-stats">
+                    <span id="votes-chatgpt">0 votos</span>
+                    <span class="poll-percent" id="percent-chatgpt">0%</span>
+                </div>
+            </button>
+
+            <!-- Gemini -->
+            <button class="poll-btn" id="btn-gemini" onclick="vote('gemini')">
+                <div class="poll-header">
+                    <span class="poll-icon">✨</span>
+                    <span class="poll-name">Gemini</span>
+                </div>
+                <div class="poll-bar-container">
+                    <div class="poll-bar gemini-bar" id="bar-gemini" style="width: 0%"></div>
+                </div>
+                <div class="poll-stats">
+                    <span id="votes-gemini">0 votos</span>
+                    <span class="poll-percent" id="percent-gemini">0%</span>
+                </div>
+            </button>
+
+            <!-- Copilot -->
+            <button class="poll-btn" id="btn-copilot" onclick="vote('copilot')">
+                <div class="poll-header">
+                    <span class="poll-icon">💡</span>
+                    <span class="poll-name">Copilot</span>
+                </div>
+                <div class="poll-bar-container">
+                    <div class="poll-bar copilot-bar" id="bar-copilot" style="width: 0%"></div>
+                </div>
+                <div class="poll-stats">
+                    <span id="votes-copilot">0 votos</span>
+                    <span class="poll-percent" id="percent-copilot">0%</span>
+                </div>
+            </button>
+
+        </div>
+
+        <div class="poll-info">
+            Total de votos: <strong id="total-votes">0</strong>
+            <div id="messageContainer"></div>
+        </div>
+    </div>
+
     <!-- ============================================ -->
     <!-- PARTIDOS DE LA JORNADA                      -->
     <!-- EDITA: Lista de partidos con fechas y horas -->
@@ -898,7 +1005,7 @@
             </div>
         </div>
     </div>
- 
+
     <!-- ============================================ -->
     <!-- PREDICCIONES DE CHATGPT                     -->
     <!-- TODOS los partidos predichos por ChatGPT    -->
@@ -926,33 +1033,28 @@
                 <div class="prediction-result">
                     <div class="pred-label">Predicción</div>
                     <div class="pred-winner">Victoria de México</div>
-                    <!-- EDITA: "Victoria de [Equipo]" o "Empate" -->
                 </div>
                 
                 <div class="probabilities">
                     <div class="prob-item">
                         <span class="prob-label">🇺🇸 Estados Unidos</span>
                         <span class="prob-value">35%</span>
-                        <!-- EDITA: Porcentaje -->
                     </div>
                     <div class="prob-item">
                         <span class="prob-label">🤝 Empate</span>
                         <span class="prob-value">20%</span>
-                        <!-- EDITA: Porcentaje -->
                     </div>
                     <div class="prob-item">
                         <span class="prob-label">🇲🇽 México</span>
                         <span class="prob-value">45%</span>
-                        <!-- EDITA: Porcentaje -->
                     </div>
                 </div>
                 
                 <div class="analysis-text">
                     México llega con mejor forma y experiencia en grandes torneos. El factor local de Estados Unidos se compensa con la calidad técnica del Tri. Partido muy disputado donde la paciencia mexicana puede marcar la diferencia.
-                    <!-- EDITA: Análisis de ChatGPT -->
                 </div>
             </div>
- 
+
             <!-- ===== PARTIDO 2 - ChatGPT ===== -->
             <div class="match-pred-card">
                 <div class="match-pred-header">
@@ -989,7 +1091,7 @@
                     Clásico europeo de alto nivel. Francia cuenta con más profundidad en su plantilla y velocidad en ataque. Alemania se encuentra en proceso de renovación pero nunca decepciona en mundiales.
                 </div>
             </div>
- 
+
             <!-- ===== PARTIDO 3 - ChatGPT ===== -->
             <div class="match-pred-card">
                 <div class="match-pred-header">
@@ -1026,12 +1128,10 @@
                     Argentina viene de ganar el último Mundial y tiene confianza en su juego. Italia es un rival histórico pero Argentina tiene más pegada ofensiva.
                 </div>
             </div>
- 
-            <!-- AÑADE MÁS PARTIDOS AQUÍ SIGUIENDO EL MISMO FORMATO -->
             
         </div>
     </div>
- 
+
     <!-- ============================================ -->
     <!-- PREDICCIONES DE GEMINI                      -->
     <!-- TODOS los partidos predichos por Gemini     -->
@@ -1080,12 +1180,84 @@
                     El clásico de CONCACAF en el escenario más grande. El factor local de Estados Unidos equilibra la experiencia mexicana. Un empate inicial ayudaría a ambos en su camino hacia octavos.
                 </div>
             </div>
- 
-            <!-- AÑADE MÁS PARTIDOS DE GEMINI AQUÍ -->
- 
+
+            <!-- ===== PARTIDO 2 - Gemini ===== -->
+            <div class="match-pred-card">
+                <div class="match-pred-header">
+                    <div class="match-pred-teams">
+                        🇫🇷 Francia vs Alemania 🇩🇪
+                    </div>
+                    <div class="match-pred-meta">
+                        <span class="meta-badge">📅 Vie 12 Jun · 18:00</span>
+                        <span class="meta-badge">Grupo C</span>
+                    </div>
+                </div>
+                
+                <div class="prediction-result">
+                    <div class="pred-label">Predicción</div>
+                    <div class="pred-winner">Empate</div>
+                </div>
+                
+                <div class="probabilities">
+                    <div class="prob-item">
+                        <span class="prob-label">🇫🇷 Francia</span>
+                        <span class="prob-value">40%</span>
+                    </div>
+                    <div class="prob-item">
+                        <span class="prob-label">🤝 Empate</span>
+                        <span class="prob-value">35%</span>
+                    </div>
+                    <div class="prob-item">
+                        <span class="prob-label">🇩🇪 Alemania</span>
+                        <span class="prob-value">25%</span>
+                    </div>
+                </div>
+                
+                <div class="analysis-text">
+                    Dos potencias defensivas en el primer encuentro. Gemini predice cautela táctico y un resultado de paridad que permita a ambas avanzar en la fase de grupos.
+                </div>
+            </div>
+
+            <!-- ===== PARTIDO 3 - Gemini ===== -->
+            <div class="match-pred-card">
+                <div class="match-pred-header">
+                    <div class="match-pred-teams">
+                        🇦🇷 Argentina vs Italia 🇮🇹
+                    </div>
+                    <div class="match-pred-meta">
+                        <span class="meta-badge">📅 Vie 12 Jun · 21:00</span>
+                        <span class="meta-badge">Grupo D</span>
+                    </div>
+                </div>
+                
+                <div class="prediction-result">
+                    <div class="pred-label">Predicción</div>
+                    <div class="pred-winner">Victoria de Argentina</div>
+                </div>
+                
+                <div class="probabilities">
+                    <div class="prob-item">
+                        <span class="prob-label">🇦🇷 Argentina</span>
+                        <span class="prob-value">50%</span>
+                    </div>
+                    <div class="prob-item">
+                        <span class="prob-label">🤝 Empate</span>
+                        <span class="prob-value">28%</span>
+                    </div>
+                    <div class="prob-item">
+                        <span class="prob-label">🇮🇹 Italia</span>
+                        <span class="prob-value">22%</span>
+                    </div>
+                </div>
+                
+                <div class="analysis-text">
+                    Argentina mantiene su supremacía ofensiva. Italia necesita mejorar su defensa que ha tenido algunos altibajos en la clasificatoria. Gemini apuesta por Argentina con margen ajustado.
+                </div>
+            </div>
+            
         </div>
     </div>
- 
+
     <!-- ============================================ -->
     <!-- PREDICCIONES DE COPILOT                     -->
     <!-- TODOS los partidos predichos por Copilot    -->
@@ -1134,12 +1306,84 @@
                     El factor local será determinante en el partido inaugural. Estados Unidos jugará con la presión de abrir bien el torneo en casa y su afición empujará desde el primer minuto.
                 </div>
             </div>
- 
-            <!-- AÑADE MÁS PARTIDOS DE COPILOT AQUÍ -->
- 
+
+            <!-- ===== PARTIDO 2 - Copilot ===== -->
+            <div class="match-pred-card">
+                <div class="match-pred-header">
+                    <div class="match-pred-teams">
+                        🇫🇷 Francia vs Alemania 🇩🇪
+                    </div>
+                    <div class="match-pred-meta">
+                        <span class="meta-badge">📅 Vie 12 Jun · 18:00</span>
+                        <span class="meta-badge">Grupo C</span>
+                    </div>
+                </div>
+                
+                <div class="prediction-result">
+                    <div class="pred-label">Predicción</div>
+                    <div class="pred-winner">Victoria de Francia</div>
+                </div>
+                
+                <div class="probabilities">
+                    <div class="prob-item">
+                        <span class="prob-label">🇫🇷 Francia</span>
+                        <span class="prob-value">50%</span>
+                    </div>
+                    <div class="prob-item">
+                        <span class="prob-label">🤝 Empate</span>
+                        <span class="prob-value">26%</span>
+                    </div>
+                    <div class="prob-item">
+                        <span class="prob-label">🇩🇪 Alemania</span>
+                        <span class="prob-value">24%</span>
+                    </div>
+                </div>
+                
+                <div class="analysis-text">
+                    Francia tiene la ventaja de experiencia y profundidad. Copilot valora la estabilidad defensiva francesa frente a una Alemania en transición generacional.
+                </div>
+            </div>
+
+            <!-- ===== PARTIDO 3 - Copilot ===== -->
+            <div class="match-pred-card">
+                <div class="match-pred-header">
+                    <div class="match-pred-teams">
+                        🇦🇷 Argentina vs Italia 🇮🇹
+                    </div>
+                    <div class="match-pred-meta">
+                        <span class="meta-badge">📅 Vie 12 Jun · 21:00</span>
+                        <span class="meta-badge">Grupo D</span>
+                    </div>
+                </div>
+                
+                <div class="prediction-result">
+                    <div class="pred-label">Predicción</div>
+                    <div class="pred-winner">Victoria de Argentina</div>
+                </div>
+                
+                <div class="probabilities">
+                    <div class="prob-item">
+                        <span class="prob-label">🇦🇷 Argentina</span>
+                        <span class="prob-value">54%</span>
+                    </div>
+                    <div class="prob-item">
+                        <span class="prob-label">🤝 Empate</span>
+                        <span class="prob-value">24%</span>
+                    </div>
+                    <div class="prob-item">
+                        <span class="prob-label">🇮🇹 Italia</span>
+                        <span class="prob-value">22%</span>
+                    </div>
+                </div>
+                
+                <div class="analysis-text">
+                    Argentina es favorita clara. Copilot analiza que los campeones del mundo tienen la confianza y el talento para imponerse de manera clara ante Italia.
+                </div>
+            </div>
+            
         </div>
     </div>
- 
+
     <!-- ============================================ -->
     <!-- RESULTADOS FINALES                          -->
     <!-- EDITA: Marcadores de cada partido           -->
@@ -1152,12 +1396,11 @@
                 Una vez finalizada la jornada, aquí se mostrarán los resultados reales de cada partido. Los marcadores se actualizan después de que terminen todos los encuentros.
             </p>
         </div>
- 
+
         <div class="results-grid">
             <div class="result-card">
                 <div class="result-teams">🇺🇸 Estados Unidos vs México 🇲🇽</div>
                 <div class="result-score">- - -</div>
-                <!-- EDITA: Marcador real (ej: "2 - 1") -->
             </div>
             
             <div class="result-card">
@@ -1169,11 +1412,9 @@
                 <div class="result-teams">🇦🇷 Argentina vs Italia 🇮🇹</div>
                 <div class="result-score">- - -</div>
             </div>
- 
-            <!-- AÑADE MÁS RESULTADOS AQUÍ -->
         </div>
     </div>
- 
+
     <!-- ============================================ -->
     <!-- ANÁLISIS DE ACIERTOS                        -->
     <!-- EDITA: Quién ganó y estadísticas            -->
@@ -1186,29 +1427,10 @@
                 Resumen de la Jornada
             </h3>
             <p style="margin-bottom: 15px;">
-                <!-- EDITA: Descripción general de los resultados -->
                 La primera jornada del Mundial 2026 nos dejó varios resultados sorprendentes...
             </p>
-            
-            <p style="margin-bottom: 10px;">
-                <strong style="color: #10b981;">ChatGPT</strong> apostó por: 
-                <!-- EDITA: Lista de predicciones -->
-                México, Francia, Argentina...
-            </p>
-            
-            <p style="margin-bottom: 10px;">
-                <strong style="color: #3b82f6;">Gemini</strong> predijo: 
-                <!-- EDITA: Lista de predicciones -->
-                Empate (USA-México), Francia, Argentina...
-            </p>
-            
-            <p style="margin-bottom: 20px;">
-                <strong style="color: #f59e0b;">Copilot</strong> se inclinó por: 
-                <!-- EDITA: Lista de predicciones -->
-                Estados Unidos, Francia, Argentina...
-            </p>
         </div>
- 
+
         <div class="ai-scores-grid">
             
             <!-- CHATGPT SCORE -->
@@ -1218,12 +1440,10 @@
                     <span class="ai-score-name">ChatGPT</span>
                 </div>
                 <div class="ai-score-number">5</div>
-                <!-- EDITA: Número de aciertos -->
                 <div class="ai-score-label">Partidos acertados</div>
                 <div class="ai-score-percentage">71%</div>
-                <!-- EDITA: Porcentaje -->
             </div>
- 
+
             <!-- GEMINI SCORE -->
             <div class="ai-score-card gemini-card">
                 <div class="ai-score-header">
@@ -1234,7 +1454,7 @@
                 <div class="ai-score-label">Partidos acertados</div>
                 <div class="ai-score-percentage">57%</div>
             </div>
- 
+
             <!-- COPILOT SCORE -->
             <div class="ai-score-card copilot-card">
                 <div class="ai-score-header">
@@ -1247,45 +1467,129 @@
             </div>
             
         </div>
- 
+
         <div class="intro-section" style="margin-top: 30px;">
             <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.8em; letter-spacing: 1px; margin-bottom: 15px; color: var(--mundial-yellow);">
                 🏆 Conclusión Final
             </h3>
             <p>
-                <!-- EDITA: Conclusión sobre quién ganó -->
-                <strong>Copilot</strong> se lleva la victoria en esta primera jornada...
+                <strong>Copilot</strong> se lleva la victoria en esta primera jornada con un 86% de precisión en sus predicciones.
             </p>
         </div>
- 
+
     </div>
- 
+
 </div>
- 
+
 <footer>
     <p>© 2026 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
     <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com">Contacto</a></p>
 </footer>
- 
 <script>
+// ============================================
+// GESTIÓN DE NAVEGACIÓN
+// ============================================
 function toggleNav() {
     document.getElementById('navMenu').classList.toggle('open');
 }
- 
+
 document.addEventListener('click', function(e) {
     const nav = document.querySelector('nav');
     if (!nav.contains(e.target)) {
         document.getElementById('navMenu').classList.remove('open');
     }
 });
- 
+
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
         document.getElementById('navMenu').classList.remove('open');
     });
 });
+
+// ============================================
+// GESTIÓN DE ENCUESTA - VOTACIÓN ROBUSTA
+// ============================================
+const POLL_KEY = 'mundial2026_j1_poll';
+const VOTE_KEY = 'mundial2026_j1_voted';
+
+function loadVotes() {
+    const data = localStorage.getItem(POLL_KEY);
+    return data ? JSON.parse(data) : { chatgpt: 0, gemini: 0, copilot: 0 };
+}
+
+function saveVotes(data) {
+    localStorage.setItem(POLL_KEY, JSON.stringify(data));
+}
+
+function updateDisplay() {
+    const data = loadVotes();
+    const total = data.chatgpt + data.gemini + data.copilot;
+    
+    ['chatgpt', 'gemini', 'copilot'].forEach(ai => {
+        const percent = total === 0 ? 0 : Math.round((data[ai] / total) * 100);
+        document.getElementById(`bar-${ai}`).style.width = percent + '%';
+        document.getElementById(`votes-${ai}`).textContent = data[ai] + ' votos';
+        document.getElementById(`percent-${ai}`).textContent = percent + '%';
+    });
+    
+    document.getElementById('total-votes').textContent = total;
+}
+
+function hasVoted() {
+    return localStorage.getItem(VOTE_KEY) !== null;
+}
+
+function disableButtons() {
+    document.getElementById('btn-chatgpt').disabled = true;
+    document.getElementById('btn-gemini').disabled = true;
+    document.getElementById('btn-copilot').disabled = true;
+}
+
+function vote(ai) {
+    // BLOQUEO CRÍTICO: Si ya votó, no hacer nada
+    if (hasVoted()) {
+        console.warn('Ya has votado en esta jornada');
+        return false;
+    }
+    
+    // Guardar voto
+    const data = loadVotes();
+    data[ai]++;
+    saveVotes(data);
+    
+    // Marcar como votado
+    localStorage.setItem(VOTE_KEY, ai);
+    
+    // Actualizar display
+    updateDisplay();
+    
+    // Deshabilitar botones INMEDIATAMENTE
+    disableButtons();
+    
+    // Mostrar mensaje
+    const msg = document.createElement('div');
+    msg.className = 'voted-message';
+    const aiNames = { chatgpt: 'ChatGPT', gemini: 'Gemini', copilot: 'Copilot' };
+    msg.innerHTML = `✅ Ya votaste por <strong>${aiNames[ai]}</strong><br><small>Podrás votar nuevamente en la próxima jornada</small>`;
+    document.getElementById('messageContainer').appendChild(msg);
+    
+    return false;
+}
+
+// Inicializar
+window.addEventListener('load', () => {
+    updateDisplay();
+    if (hasVoted()) {
+        disableButtons();
+        const voted = localStorage.getItem(VOTE_KEY);
+        const msg = document.createElement('div');
+        msg.className = 'voted-message';
+        const aiNames = { chatgpt: 'ChatGPT', gemini: 'Gemini', copilot: 'Copilot' };
+        msg.innerHTML = `✅ Ya votaste por <strong>${aiNames[voted]}</strong><br><small>Podrás votar nuevamente en la próxima jornada</small>`;
+        document.getElementById('messageContainer').appendChild(msg);
+    }
+});
 </script>
- 
+
 </body>
 </html>
- 
