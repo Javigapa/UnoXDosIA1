@@ -260,6 +260,91 @@
             color: var(--mundial-gold);
             text-shadow: 0 2px 10px rgba(255,215,0,0.3);
         }
+
+        /* AI Scores Grid */
+        .ai-scores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .ai-score-card {
+            background: rgba(0,0,0,0.3);
+            border: 3px solid;
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .ai-score-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .chatgpt-card { border-color: #10b981; }
+        .chatgpt-card:hover { box-shadow: 0 20px 40px rgba(16,185,129,0.4); }
+
+        .gemini-card { border-color: #3b82f6; }
+        .gemini-card:hover { box-shadow: 0 20px 40px rgba(59,130,246,0.4); }
+
+        .copilot-card { border-color: #f59e0b; }
+        .copilot-card:hover { box-shadow: 0 20px 40px rgba(245,158,11,0.4); }
+
+        .ai-score-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .ai-score-icon { font-size: 2.2em; }
+
+        .ai-score-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8em;
+            letter-spacing: 1px;
+        }
+
+        .chatgpt-card .ai-score-name { color: #10b981; }
+        .gemini-card .ai-score-name { color: #3b82f6; }
+        .copilot-card .ai-score-name { color: #f59e0b; }
+
+        .ai-score-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 6em;
+            line-height: 1;
+            margin: 20px 0;
+        }
+
+        .chatgpt-card .ai-score-number {
+            color: #10b981;
+            text-shadow: 0 0 30px rgba(16,185,129,0.6);
+        }
+
+        .gemini-card .ai-score-number {
+            color: #3b82f6;
+            text-shadow: 0 0 30px rgba(59,130,246,0.6);
+        }
+
+        .copilot-card .ai-score-number {
+            color: #f59e0b;
+            text-shadow: 0 0 30px rgba(245,158,11,0.6);
+        }
+
+        .ai-score-label {
+            font-size: 0.95em;
+            color: #94a3b8;
+            margin-bottom: 12px;
+        }
+
+        .ai-score-percentage {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--mundial-gold);
+        }
  
         /* Phases Grid */
         .phases-grid {
@@ -456,11 +541,12 @@
         <span>Secciones</span>
     </button>
     <div class="nav-menu" id="navMenu">
-        <a href="index.html" class="nav-link"><span>🏠</span> Inicio</a>
-        <a href="NBA.html" class="nav-link"><span>🏀</span> NBA</a>
-        <a href="LigaEsports.html" class="nav-link"><span>⚽</span> Liga EA Sports</a>
-        <a href="Hypermotion.html" class="nav-link"><span>📈</span> Liga Hypermotion</a>
-        <a href="Loterias.html" class="nav-link"><span>🎲</span> Loterías</a>
+        <a href="../index.html" class="nav-link"><span>🏠</span> Inicio</a>
+        <a href="../NBA.html" class="nav-link"><span>🏀</span> NBA</a>
+        <a href="../LigaEsports.html" class="nav-link"><span>⚽</span> Liga EA Sports</a>
+        <a href="../Hypermotion.html" class="nav-link"><span>📈</span> Liga Hypermotion</a>
+        <a href="../Loterias.html" class="nav-link"><span>🎲</span> Loterías</a>
+        <a href="../LigaFantasIA/fantas-ia-v2.html"    class="nav-link "><span class="nav-emoji">🏆</span> Liga FantasIA</a>
         <a href="Mundial2026.html" class="nav-link active"><span>🏆</span> Mundial 2026</a>
     </div>
 </nav>
@@ -477,32 +563,84 @@
 </div>
  
 <div class="container">
+
+    <!-- ============================================ -->
+    <!-- RESUMEN DE ESTADÍSTICAS DE LAS IAS          -->
+    <!-- Mostrar aciertos y porcentajes en vivo      -->
+    <!-- EDITA: Los números en el script de abajo    -->
+    <!-- ============================================ -->
+    <h2 class="section-title">📊 Resumen General</h2>
+    
+    <div class="ai-scores-grid">
+        
+        <!-- CHATGPT SCORE -->
+        <div class="ai-score-card chatgpt-card">
+            <div class="ai-score-header">
+                <span class="ai-score-icon">🤖</span>
+                <span class="ai-score-name">ChatGPT</span>
+            </div>
+            <div class="ai-score-number" id="chatgpt-aciertos">0</div>
+            <div class="ai-score-label">Partidos acertados</div>
+            <div class="ai-score-percentage" id="chatgpt-percent">0%</div>
+        </div>
+
+        <!-- GEMINI SCORE -->
+        <div class="ai-score-card gemini-card">
+            <div class="ai-score-header">
+                <span class="ai-score-icon">✨</span>
+                <span class="ai-score-name">Gemini</span>
+            </div>
+            <div class="ai-score-number" id="gemini-aciertos">0</div>
+            <div class="ai-score-label">Partidos acertados</div>
+            <div class="ai-score-percentage" id="gemini-percent">0%</div>
+        </div>
+
+        <!-- COPILOT SCORE -->
+        <div class="ai-score-card copilot-card">
+            <div class="ai-score-header">
+                <span class="ai-score-icon">💡</span>
+                <span class="ai-score-name">Copilot</span>
+            </div>
+            <div class="ai-score-number" id="copilot-aciertos">0</div>
+            <div class="ai-score-label">Partidos acertados</div>
+            <div class="ai-score-percentage" id="copilot-percent">0%</div>
+        </div>
+        
+    </div>
+
     <h2 class="section-title">Fase de Grupos</h2>
     <div class="phases-grid">
         
-        <a href="/Mundial/FaseGrupos-Jornada1.html" class="phase-card">
             <div class="phase-header">
                 <span class="phase-icon">⚡</span>
                 <h3 class="phase-title">Jornada 1</h3>
                 <p class="phase-subtitle">Grupos A - H</p>
-            </div>
             <div class="phase-body">
                 <div class="matchdays-list">
+                    <a href="/Mundial/FaseGrupos1.html" class="phase-card">
                     <div class="matchday-item">
                         <div>
+
                             <div class="matchday-name">Grupo A <br>México vS Sudáfrica<br>21:00</div>
                             <div class="matchday-date">11 Junio 2026</div>
                         </div>
                         <span class="status-badge status-upcoming">Próximo</span>
                     </div>
+                </a>
+                <a href="/Mundial/FaseGrupos2.html" class="phase-card">
+  
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo A<br> Corea del Sur vS R. Checa<br>4:00<br><br>
                             Grupo B<br> Canadá vS Bosnia<br>21:00</div>
                             <div class="matchday-date">12 Junio 2026</div>
                         </div>
+
                         <span class="status-badge status-upcoming">Próximo</span>
                     </div>
+                      </a>
+                <a href="/Mundial/FaseGrupos3.html" class="phase-card">
+
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo D<br> EEUU vS Paraguay<br>3:00<br><br>
@@ -511,6 +649,9 @@
                         </div>
                         <span class="status-badge status-upcoming">Próximo</span>
                     </div>
+                    </a>
+                    <a href="/Mundial/FaseGrupos4.html" class="phase-card">
+
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo C<br> Brasil vS Marruecos<br>00:00<br><br>
@@ -522,6 +663,8 @@
                         </div>
                         <span class="status-badge status-upcoming">Próximo</span>
                     </div>
+                    </a>
+                        <a href="/Mundial/FaseGrupos5.html" class="phase-card">
                      <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo E<br> C. Marfil vS Ecuador<br>01:00<br><br>
@@ -534,6 +677,8 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div>
+                        </a>
+                            <a href="/Mundial/FaseGrupos6.html" class="phase-card">
                      <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo H<br> Arabia Saudí vS Uruguay<br>00:00<br><br>
@@ -545,6 +690,8 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div>
+                        </a>
+                            <a href="/Mundial/FaseGrupos7.html" class="phase-card">
                      <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo I<br> Irak vS Noruega<br>00:00<br><br>
@@ -559,6 +706,8 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div>
+                        </a>
+                            <a href="/Mundial/FaseGrupos8.html" class="phase-card"> 
                      <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo L<br> Ghana vS Panamá<br>01:00<br><br>
@@ -570,19 +719,19 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div>
-
+                            </a>
                 </div>
             </div>
-        </a>
+              </div>
+
  
-        <a href="/Mundial/FaseGrupos-Jornada2.html" class="phase-card">
             <div class="phase-header">
                 <span class="phase-icon">⚡</span>
                 <h3 class="phase-title">Jornada 2</h3>
                 <p class="phase-subtitle">Grupos A - H</p>
-            </div>
             <div class="phase-body">
                 <div class="matchdays-list">
+                    <a href="/Mundial/FaseGrupos9.html" class="phase-card">
                      <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo A<br> R. Checa vS Sudáfrica<br>18:00<br><br>
@@ -594,6 +743,8 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div>
+            </a>
+                    <a href="/Mundial/FaseGrupos10.html" class="phase-card">
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo B<br> Canadá vS Qatar<br>00:00<br><br>
@@ -606,6 +757,8 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div>
+            </a>
+                    <a href="/Mundial/FaseGrupos11.html" class="phase-card">
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo C<br> Escocia vS Marruecos<br>00:00<br><br>
@@ -620,6 +773,8 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div>
+                    </a>
+                    <a href="/Mundial/FaseGrupos12.html" class="phase-card">
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo E<br> Ecuador vS Curazao<br>02:00<br><br>
@@ -633,6 +788,8 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div>
+                    </a>
+                    <a href="/Mundial/FaseGrupos13.html" class="phase-card">
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo H<br> Uruguay vS Cabo Verde<br>00:00<br><br>
@@ -646,6 +803,8 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div>
+                    </a>
+                    <a href="/Mundial/FaseGrupos14.html" class="phase-card">
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo I<br> Noruega vS Senegal<br>02:00<br><br>
@@ -659,6 +818,8 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div>
+                    </a>
+                    <a href="/Mundial/FaseGrupos15.html" class="phase-card">
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo L<br> Panamá vS Croacia<br>01:00<br><br>
@@ -668,20 +829,22 @@
                             <div class="matchday-date">24 Junio 2026</div>
                         </div>
                         <span class="status-badge status-upcoming">Próximo</span>
-                    
+                        
+                                </div>
+</a>
                 </div>
                 </div>
             </div>
-        </a>
+        
  
-        <a href="/Mundial/FaseGrupos-Jornada3.html" class="phase-card">
             <div class="phase-header">
                 <span class="phase-icon">⚡</span>
                 <h3 class="phase-title">Jornada 3</h3>
                 <p class="phase-subtitle">Última fecha grupos</p>
-            </div>
+
             <div class="phase-body">
                 <div class="matchdays-list">
+                        <a href="/Mundial/FaseGrupos16.html" class="phase-card">
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo B<br> Bosnia vS Qatar<br>21:00<br><br>
@@ -693,7 +856,8 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div>                    
-                
+                        </a>
+                        <a href="/Mundial/FaseGrupos17.html" class="phase-card">
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo C<br> Escocia vS Brasil<br>00:00<br><br>
@@ -709,7 +873,8 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div>                    
-                
+                        </a>    
+                        <a href="/Mundial/FaseGrupos18.html" class="phase-card">
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo F<br> Japón vS Suecia<br>01:00<br><br>
@@ -725,6 +890,8 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div> 
+                        </a>
+                        <a href="/Mundial/FaseGrupos19.html" class="phase-card">    
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo H<br> Uruguay vS España<br>02:00<br><br>
@@ -740,6 +907,8 @@
                         <span class="status-badge status-upcoming">Próximo</span>
                     
                 </div> 
+                        </a>
+                        <a href="/Mundial/FaseGrupos20.html" class="phase-card">    
                     <div class="matchday-item">
                         <div>
                             <div class="matchday-name">Grupo K<br> Colombia vS Portugal<br>01:30<br><br>
@@ -751,14 +920,16 @@
                             <div class="matchday-date">28 Junio 2026</div>
                         </div>
                         <span class="status-badge status-upcoming">Próximo</span>
-                    
-                </div>
-                </div>
+                        </div>
+                    </a> 
                 
-            </div>
-        </a>
+                </div>
+                   </div>
  
-    </div>
+</div>
+</div>
+       
+ 
  
     <h2 class="section-title">Fase Eliminatoria</h2>
     <div class="phases-grid">
@@ -810,11 +981,12 @@
                             <div class="matchday-date">5-6 Julio 2026</div>
                         </div>
                         <span class="status-badge status-upcoming">Próximo</span>
+
                 </div>
             </div>
             </div>
-        </a>
- 
+                                 </a>
+
         <a href="/Mundial/Cuartos.html" class="phase-card">
             <div class="phase-header">
                 <span class="phase-icon">💥</span>
@@ -886,6 +1058,8 @@
           </div>
         </a>
     </div>
+</div>
+
  
 <footer>
     <p>© 2026 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
@@ -909,6 +1083,39 @@ document.querySelectorAll('.nav-link').forEach(link => {
         document.getElementById('navMenu').classList.remove('open');
     });
 });
+
+// ============================================
+// ESTADÍSTICAS DE LAS IAS
+// EDITA AQUÍ los aciertos de cada IA
+// ============================================
+const TOTAL_PARTIDOS = 64;
+
+// EDITA ESTOS NÚMEROS
+const aiAciertos = {
+    chatgpt: 0,    // ← EDITA AQUÍ el número de aciertos de ChatGPT
+    gemini: 0,     // ← EDITA AQUÍ el número de aciertos de Gemini
+    copilot: 0     // ← EDITA AQUÍ el número de aciertos de Copilot
+};
+
+function updateStats() {
+    // Actualizar números de aciertos
+    document.getElementById('chatgpt-aciertos').textContent = aiAciertos.chatgpt;
+    document.getElementById('gemini-aciertos').textContent = aiAciertos.gemini;
+    document.getElementById('copilot-aciertos').textContent = aiAciertos.copilot;
+
+    // Calcular porcentajes
+    const chatgptPercent = Math.round((aiAciertos.chatgpt / TOTAL_PARTIDOS) * 100);
+    const geminiPercent = Math.round((aiAciertos.gemini / TOTAL_PARTIDOS) * 100);
+    const copilotPercent = Math.round((aiAciertos.copilot / TOTAL_PARTIDOS) * 100);
+
+    // Actualizar porcentajes
+    document.getElementById('chatgpt-percent').textContent = chatgptPercent + '%';
+    document.getElementById('gemini-percent').textContent = geminiPercent + '%';
+    document.getElementById('copilot-percent').textContent = copilotPercent + '%';
+}
+
+// Ejecutar al cargar la página
+window.addEventListener('load', updateStats);
 </script>
  
 </body>
