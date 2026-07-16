@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-90WQKBTXN3');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Predicciones IA para la Fase de Grupos - Jornada 1 del Mundial 2026"/>
+    <title>Final | Mundial 2026 | Uno X Dos IA</title>
+    <link rel="icon" href="/Imagenes/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --mundial-blue: #0066ff;
+            --mundial-cyan: #00d4ff;
+            --mundial-green: #00ff88;
+            --mundial-yellow: #ffd700;
+            --mundial-orange: #ff8c00;
+            --mundial-red: #ff3366;
+            --bg-gradient: linear-gradient(135deg, #0a2540 0%, #1a4d6b 50%, #0a2540 100%);
+            --card-gradient: linear-gradient(135deg, rgba(0,102,255,0.1), rgba(0,212,255,0.1));
+        }
+ 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+ 
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        header {
+            position: relative;
+            z-index: 10;
+            background: linear-gradient(180deg, rgba(13,27,42,0.98), rgba(13,27,42,0.85));
+            border-bottom: 1px solid rgba(0,200,150,0.2);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        header a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-box {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, #00c896, #00a87d);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            box-shadow: 0 0 18px rgba(0,200,150,0.3);
+        }
+
+        .site-title {
+            display: block;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .site-subtitle {
+            font-size: 0.6em;
+            color: #00c896;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        nav {
+            background: rgba(19,34,56,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 8px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-hamburger {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #ffffff;
+            font-size: 1em;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .nav-hamburger:hover {
+            background: rgba(255,255,255,0.12);
+        }
+
+        .nav-menu {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 8px;
+            background: rgba(13,27,42,0.98);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 8px;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 220px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+        }
+
+        .nav-menu.open {
+            display: flex;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 16px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: 0.92em;
+            font-weight: 600;
+            color: #8fa3b8;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .nav-link:hover {
+            color: #ffffff;
+            background: rgba(255,255,255,0.07);
+        }
+
+        .nav-link.active {
+            color: #00c896;
+            background: rgba(0,200,150,0.1);
+            border-color: rgba(0,200,150,0.25);
+        }
+
+        .page-header {
+            padding: 50px 20px;
+            text-align: center;
+            background: radial-gradient(circle at 20% 50%, rgba(255,215,0,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(0,212,255,0.15) 0%, transparent 50%),
+                        linear-gradient(180deg, transparent, rgba(0,102,255,0.1));
+            border-bottom: 3px solid var(--mundial-cyan);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '⚽';
+            position: absolute;
+            font-size: 250px;
+            opacity: 0.03;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+        }
+
+        .page-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--mundial-yellow), var(--mundial-orange));
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(255,215,0,0.4);
+        }
+
+        .page-header h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5em;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--mundial-yellow), var(--mundial-cyan), var(--mundial-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+            animation: gradient-shift 4s linear infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .page-header p {
+            font-size: 1.2em;
+            color: var(--mundial-cyan);
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2em;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--mundial-yellow), var(--mundial-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .intro-section {
+            background: var(--card-gradient);
+            border: 2px solid rgba(0,212,255,0.3);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,212,255,0.2);
+        }
+
+        .intro-section h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8em;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            color: var(--mundial-cyan);
+        }
+
+        /* ENCUESTA COMUNITARIA */
+        .poll-section {
+            background: linear-gradient(135deg, rgba(255,215,0,0.12), rgba(255,140,0,0.08));
+            border: 3px solid var(--mundial-yellow);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poll-section::before {
+            content: '🗳️';
+            position: absolute;
+            font-size: 150px;
+            opacity: 0.04;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .poll-subtitle {
+            text-align: center;
+            color: var(--mundial-cyan);
+            font-size: 1.1em;
+            margin-bottom: 35px;
+            font-weight: 500;
+        }
+
+        .poll-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .poll-btn {
+            background: rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 16px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            color: inherit;
+            text-align: left;
+        }
+
+        .poll-btn:not(:disabled):hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,255,255,0.4);
+            background: rgba(0,0,0,0.5);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .poll-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .poll-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .poll-icon {
+            font-size: 2.2em;
+        }
+
+        .poll-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4em;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .poll-bar-container {
+            background: rgba(0,0,0,0.4);
+            border-radius: 12px;
+            height: 30px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .poll-bar {
+            height: 100%;
+            border-radius: 12px;
+            transition: width 0.4s ease;
+        }
+
+        .chatgpt-bar { background: linear-gradient(90deg, #10b981, #059669); }
+        .gemini-bar { background: linear-gradient(90deg, #3b82f6, #2563eb); }
+        .copilot-bar { background: linear-gradient(90deg, #f59e0b, #d97706); }
+
+        .poll-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .poll-percent {
+            font-size: 1.3em;
+            color: var(--mundial-yellow);
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .poll-info {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255,255,255,0.1);
+            color: #94a3b8;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        .poll-info strong {
+            color: var(--mundial-cyan);
+            font-size: 1.2em;
+        }
+
+        .voted-message {
+            margin-top: 20px;
+            padding: 18px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 2px solid #10b981;
+            border-radius: 12px;
+            text-align: center;
+            color: #10b981;
+            font-weight: 600;
+            font-size: 1.05em;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* AI Sections - Predicciones */
+        .ai-section {
+            margin: 50px 0;
+            padding: 40px;
+            border-radius: 20px;
+            border: 3px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            opacity: 0.05;
+            pointer-events: none;
+            background-size: 100px 100px;
+        }
+
+        .chatgpt-section {
+            background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.05));
+            border-color: #10b981;
+        }
+
+        .chatgpt-section::before {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(16,185,129,0.1) 35px, rgba(16,185,129,0.1) 70px);
+        }
+
+        .gemini-section {
+            background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(37,99,235,0.05));
+            border-color: #3b82f6;
+        }
+
+        .gemini-section::before {
+            background-image: repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(59,130,246,0.1) 35px, rgba(59,130,246,0.1) 70px);
+        }
+
+        .copilot-section {
+            background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(217,119,6,0.05));
+            border-color: #f59e0b;
+        }
+
+        .copilot-section::before {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(245,158,11,0.1) 35px, rgba(245,158,11,0.1) 70px);
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid;
+            position: relative;
+            z-index: 1;
+        }
+
+        .chatgpt-section .ai-header { border-bottom-color: #10b981; }
+        .gemini-section .ai-header { border-bottom-color: #3b82f6; }
+        .copilot-section .ai-header { border-bottom-color: #f59e0b; }
+
+        .ai-icon-large {
+            font-size: 3em;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+
+        .ai-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5em;
+            letter-spacing: 2px;
+        }
+
+        .chatgpt-section .ai-title { color: #10b981; }
+        .gemini-section .ai-title { color: #3b82f6; }
+        .copilot-section .ai-title { color: #f59e0b; }
+
+        .match-predictions {
+            display: grid;
+            gap: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .match-pred-card {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .match-pred-card:hover {
+            transform: translateX(10px);
+            background: rgba(255,255,255,0.06);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .chatgpt-section .match-pred-card:hover { border-color: #10b981; }
+        .gemini-section .match-pred-card:hover { border-color: #3b82f6; }
+        .copilot-section .match-pred-card:hover { border-color: #f59e0b; }
+
+        .match-pred-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .match-pred-teams {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6em;
+            letter-spacing: 1px;
+        }
+
+        .match-pred-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 0.9em;
+        }
+
+        .meta-badge {
+            background: rgba(255,255,255,0.1);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .prediction-result {
+            background: rgba(255,215,0,0.15);
+            border: 2px solid var(--mundial-yellow);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .pred-label {
+            font-size: 0.85em;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+
+        .pred-winner {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8em;
+            letter-spacing: 1px;
+            color: var(--mundial-yellow);
+        }
+
+        .probabilities {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .prob-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            border-left: 3px solid transparent;
+        }
+
+        .chatgpt-section .prob-item { border-left-color: #10b981; }
+        .gemini-section .prob-item { border-left-color: #3b82f6; }
+        .copilot-section .prob-item { border-left-color: #f59e0b; }
+
+        .prob-label { font-weight: 500; }
+
+        .prob-value {
+            font-weight: 700;
+            font-size: 1.1em;
+            color: var(--mundial-cyan);
+        }
+
+        .analysis-text {
+            font-size: 0.95em;
+            line-height: 1.7;
+            color: #cbd5e1;
+            font-style: italic;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+
+        .chatgpt-section .analysis-text { border-left-color: #10b981; }
+        .gemini-section .analysis-text { border-left-color: #3b82f6; }
+        .copilot-section .analysis-text { border-left-color: #f59e0b; }
+
+        /* Results Section */
+        .results-section {
+            margin-top: 60px;
+            padding: 50px 40px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,140,0,0.1));
+            border: 3px solid var(--mundial-yellow);
+            border-radius: 20px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .result-card {
+            background: rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: scale(1.05);
+            border-color: var(--mundial-green);
+            box-shadow: 0 8px 25px rgba(0,255,136,0.3);
+        }
+
+        .result-teams {
+            font-size: 1.05em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .result-score {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3em;
+            color: var(--mundial-green);
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(0,255,136,0.5);
+        }
+
+        /* Analysis Section */
+        .analysis-section {
+            margin-top: 50px;
+            padding: 50px 40px;
+            background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(0,102,255,0.1));
+            border: 3px solid var(--mundial-cyan);
+            border-radius: 20px;
+        }
+
+        .ai-scores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .ai-score-card {
+            background: rgba(0,0,0,0.3);
+            border: 3px solid;
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .ai-score-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .chatgpt-card { border-color: #10b981; }
+        .chatgpt-card:hover { box-shadow: 0 20px 40px rgba(16,185,129,0.4); }
+
+        .gemini-card { border-color: #3b82f6; }
+        .gemini-card:hover { box-shadow: 0 20px 40px rgba(59,130,246,0.4); }
+
+        .copilot-card { border-color: #f59e0b; }
+        .copilot-card:hover { box-shadow: 0 20px 40px rgba(245,158,11,0.4); }
+
+        .ai-score-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .ai-score-icon { font-size: 2.2em; }
+
+        .ai-score-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8em;
+            letter-spacing: 1px;
+        }
+
+        .chatgpt-card .ai-score-name { color: #10b981; }
+        .gemini-card .ai-score-name { color: #3b82f6; }
+        .copilot-card .ai-score-name { color: #f59e0b; }
+
+        .ai-score-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 6em;
+            line-height: 1;
+            margin: 20px 0;
+        }
+
+        .chatgpt-card .ai-score-number {
+            color: #10b981;
+            text-shadow: 0 0 30px rgba(16,185,129,0.6);
+        }
+
+        .gemini-card .ai-score-number {
+            color: #3b82f6;
+            text-shadow: 0 0 30px rgba(59,130,246,0.6);
+        }
+
+        .copilot-card .ai-score-number {
+            color: #f59e0b;
+            text-shadow: 0 0 30px rgba(245,158,11,0.6);
+        }
+
+        .ai-score-label {
+            font-size: 0.95em;
+            color: #94a3b8;
+            margin-bottom: 12px;
+        }
+
+        .ai-score-percentage {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--mundial-yellow);
+        }
+            margin-bottom: 50px;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .schedule-day {
+            background: linear-gradient(135deg, rgba(0,102,255,0.15), rgba(0,212,255,0.10));
+            border: 2px solid var(--mundial-blue);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .schedule-day:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,212,255,0.3);
+            border-color: var(--mundial-cyan);
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, var(--mundial-blue), var(--mundial-cyan));
+            padding: 15px 20px;
+            font-weight: 700;
+            font-size: 1.1em;
+            border-bottom: 2px solid var(--mundial-cyan);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .match-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: background 0.2s ease;
+        }
+
+        .match-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .match-item:last-child {
+            border-bottom: none;
+        }
+
+        .match-teams {
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .match-hour {
+            color: var(--mundial-yellow);
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+
+        footer {
+            background: rgba(13,27,42,0.9);
+            border-top: 1px solid rgba(0,200,150,0.2);
+            text-align: center;
+            padding: 18px;
+            font-size: 0.78em;
+            color: #8fa3b8;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: #8fa3b8;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #00c896;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.2em;
+            }
+
+            .schedule-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <a href="../index.html">
+        <div class="logo-box">⚽</div>
+        <div>
+            <span class="site-title">UNO X DOS IA</span>
+            <small class="site-subtitle">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+        </div>
+    </a>
+</header>
+
+<!-- NAVIGATION -->
+<nav aria-label="Navegación principal">
+    <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+        <span>☰</span>
+        <span>Secciones</span>
+    </button>
+    <div class="nav-menu" id="navMenu">
+        <a href="../index.html" class="nav-link"><span>🏠</span> Inicio</a>
+        <a href="../NBA.html" class="nav-link"><span>🏀</span> NBA</a>
+        <a href="../LigaEsports.html" class="nav-link"><span>⚽</span> Liga EA Sports</a>
+        <a href="../Hypermotion.html" class="nav-link"><span>📈</span> Liga Hypermotion</a>
+        <a href="../Loterias.html" class="nav-link"><span>🎲</span> Loterías</a>
+        <a href="../LigaFantasIA/fantas-ia-v2.html"    class="nav-link "><span class="nav-emoji">🏆</span> Liga FantasIA</a>
+        <a href="Mundial2026.html" class="nav-link active"><span>🏆</span> Mundial 2026</a>
+    </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <div class="page-badge">🏆 Final</div>
+    <h1>Final</h1>
+    <p>19 Julio 2026</p>
+</div>
+
+<div class="container">
+    
+    <!-- ============================================ -->
+    <!-- DESCRIPCIÓN DE LA JORNADA                   -->
+    <!-- EDITA: Texto descriptivo de la jornada      -->
+    <!-- ============================================ -->
+    <div class="intro-section">
+        <h2>📋 Descripción de la Jornada</h2>
+        <p>
+
+La gran final del mundial ya está aquí, el mundial mas largo de la historia, con 48 selecciones y 104 partidos, ha llegado a su fin. 
+        </p>
+        <p style="margin-top: 12px;">
+            Tras un torneo lleno de sorpresas, goles y emociones, los equipos finalistas se enfrentarán en un duelo épico que definirá al campeón del mundo.
+</p>
+        <p style="margin-top: 12px;">
+            Las tres IAs han analizado cada encuentro considerando el ranking FIFA, forma reciente, historial de enfrentamientos y el factor campo. ¿Cuál de las tres acertará más predicciones?
+        </p>
+    </div>
+        <!-- ============================================ -->
+    <!-- ENCUESTA COMUNITARIA                        -->
+    <!-- Votación: ¿Cuál IA acertará más?            -->
+    <!-- ============================================ -->
+    <div class="poll-section">
+        <h2 class="section-title">🗳️ ¿Cuál IA crees que acertará más?</h2>
+        <p class="poll-subtitle">Vota tu predicción y descubre qué opina la comunidad</p>
+        
+        <div class="poll-options" id="pollOptions">
+            
+            <!-- ChatGPT -->
+            <button class="poll-btn" id="btn-chatgpt" onclick="vote('chatgpt')">
+                <div class="poll-header">
+                    <span class="poll-icon">🤖</span>
+                    <span class="poll-name">ChatGPT</span>
+                </div>
+                <div class="poll-bar-container">
+                    <div class="poll-bar chatgpt-bar" id="bar-chatgpt" style="width: 0%"></div>
+                </div>
+                <div class="poll-stats">
+                    <span id="votes-chatgpt">0 votos</span>
+                    <span class="poll-percent" id="percent-chatgpt">0%</span>
+                </div>
+            </button>
+
+            <!-- Gemini -->
+            <button class="poll-btn" id="btn-gemini" onclick="vote('gemini')">
+                <div class="poll-header">
+                    <span class="poll-icon">✨</span>
+                    <span class="poll-name">Gemini</span>
+                </div>
+                <div class="poll-bar-container">
+                    <div class="poll-bar gemini-bar" id="bar-gemini" style="width: 0%"></div>
+                </div>
+                <div class="poll-stats">
+                    <span id="votes-gemini">0 votos</span>
+                    <span class="poll-percent" id="percent-gemini">0%</span>
+                </div>
+            </button>
+
+            <!-- Copilot -->
+            <button class="poll-btn" id="btn-copilot" onclick="vote('copilot')">
+                <div class="poll-header">
+                    <span class="poll-icon">💡</span>
+                    <span class="poll-name">Copilot</span>
+                </div>
+                <div class="poll-bar-container">
+                    <div class="poll-bar copilot-bar" id="bar-copilot" style="width: 0%"></div>
+                </div>
+                <div class="poll-stats">
+                    <span id="votes-copilot">0 votos</span>
+                    <span class="poll-percent" id="percent-copilot">0%</span>
+                </div>
+            </button>
+
+        </div>
+
+        <div class="poll-info">
+            Total de votos: <strong id="total-votes">0</strong>
+            <div id="messageContainer"></div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PARTIDOS DE LA JORNADA                      -->
+    <!-- EDITA: Lista de partidos con fechas y horas -->
+    <!-- ============================================ -->
+    <div class="schedule-section">
+        <h2 class="section-title">📅 Partidos de la Jornada</h2>
+        <div class="schedule-grid">
+            
+            <!-- DÍA 1 -->
+            <div class="schedule-day">
+                <div class="day-header">🔵 Domingo 19 de Julio</div>
+                <div class="match-item">
+                    <span class="match-teams">España vS Argentina</span>
+                    <span class="match-hour">21:00</span>
+                </div> 
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PREDICCIONES DE CHATGPT                     -->
+    <!-- TODOS los partidos predichos por ChatGPT    -->
+    <!-- ============================================ -->
+<div class="ai-section chatgpt-section">
+    <div class="ai-header">
+        <span class="ai-icon-large">🤖</span>
+        <h2 class="ai-title">Predicciones ChatGPT - Final Mundial 2026</h2>
+    </div>
+
+    <div class="match-predictions">
+
+        <!-- ===== FINAL ===== -->
+        <div class="match-pred-card">
+            <div class="match-pred-header">
+                <div class="match-pred-teams">
+                    🇪🇸 España vs 🇦🇷 Argentina
+                </div>
+                <div class="match-pred-meta">
+                    <span class="meta-badge">🏆 Final · 21:00</span>
+                    <span class="meta-badge">⭐ Campeón del Mundo</span>
+                </div>
+            </div>
+
+            <div class="prediction-result">
+                <div class="pred-label">Predicción</div>
+                <div class="pred-winner">🏆 España Campeona del Mundo</div>
+            </div>
+
+            <div class="probabilities">
+                <div class="prob-item">
+                    <span class="prob-label">🇪🇸 España</span>
+                    <span class="prob-value">39%</span>
+                </div>
+                <div class="prob-item">
+                    <span class="prob-label">🤝 Empate</span>
+                    <span class="prob-value">34%</span>
+                </div>
+                <div class="prob-item">
+                    <span class="prob-label">🇦🇷 Argentina</span>
+                    <span class="prob-value">27%</span>
+                </div>
+            </div>
+
+            <div class="analysis-text">
+                La final enfrenta a las dos selecciones que mejor fútbol han practicado durante el torneo. Argentina ha demostrado una enorme solidez defensiva, una gran madurez competitiva y una capacidad extraordinaria para gestionar los momentos de máxima presión. España, por su parte, ha sido probablemente el equipo más dominante en cuanto a posesión, presión alta, circulación de balón y control de los partidos. Las proyecciones de modelos estadísticos y el comportamiento habitual de las cuotas en enfrentamientos de este nivel sitúan el choque prácticamente al 50%, con un ligero favoritismo para España por el rendimiento mostrado durante todo el campeonato y por la evolución de su juego colectivo. Todo apunta a una final muy táctica, con pocas ocasiones y que podría resolverse por detalles o incluso después de los 90 minutos.
+            </div>
+        </div>
+
+    </div>
+</div>
+    <!-- ============================================ -->
+    <!-- PREDICCIONES DE GEMINI                      -->
+    <!-- TODOS los partidos predichos por Gemini     -->
+    <!-- ============================================ -->
+
+<div class="ai-section chatgpt-section">
+    <div class="ai-header">
+        <span class="ai-icon-large">✨</span>
+        <h2 class="ai-title">Predicciones Gemini</h2>
+    </div>
+    
+    <div class="match-predictions">
+        
+        <!-- ===== LA GRAN FINAL - España vs Argentina ===== -->
+        <div class="match-pred-card final-card">
+            <div class="match-pred-header">
+                <div class="match-pred-teams">
+                    🏆 🇪🇸 España vs Argentina 🇦🇷 🏆
+                </div>
+                <div class="match-pred-meta">
+                    <span class="meta-badge-gold">👑 Gran Final</span>
+                    <span class="meta-badge">⏰ 21:00</span>
+                </div>
+            </div>
+            
+            <div class="prediction-result">
+                <div class="pred-label">Predicción de Campeón</div>
+                <div class="pred-winner champions-winner">🏆 ¡España Campeona!</div>
+            </div>
+            
+            <div class="probabilities">
+                <div class="prob-item">
+                    <span class="prob-label">🇪🇸 España</span>
+                    <span class="prob-value">35%</span>
+                </div>
+                <div class="prob-item">
+                    <span class="prob-label">🤝 Empate (Prórroga/Penaltis)</span>
+                    <span class="prob-value">33%</span>
+                </div>
+                <div class="prob-item">
+                    <span class="prob-label">🇦🇷 Argentina</span>
+                    <span class="prob-value">32%</span>
+                </div>
+            </div>
+            
+            <div class="analysis-text">
+                El partido más esperado del planeta pone frente a frente a las dos mejores selecciones del campeonato. Un choque estilístico de proporciones colosales donde bet365 y bwin reflejan unas cuotas prácticamente idénticas, evidenciando que el duelo se decidirá por detalles milimétricos. España buscará imponer su inconfundible juego de posesión, controlando el ritmo con Rodri y agitando los extremos con la frescura e imprevisibilidad de sus atacantes. Al frente, la Albiceleste opondrá su implacable colmillo competitivo y el liderazgo místico de un Lionel Messi decidido a revalidar el trono. Diarios como Marca y AS prevén una final de alta tensión, repleta de duelos individuales en cada parcela del campo y un tremendo desgaste psicológico. Se proyecta un empate en los 90 minutos reglamentarios, pero la consistencia defensiva, la fluidez colectiva de La Roja y su frescura física en los tramos de prórroga o la tanda de penaltis terminarán inclinando la balanza para bordar la segunda estrella en el pecho español.
+            </div>
+        </div>
+
+    </div>
+</div>
+    <!-- ============================================ -->
+    <!-- PREDICCIONES DE COPILOT                     -->
+    <!-- TODOS los partidos predichos por Copilot    -->
+    <!-- ============================================ -->
+
+<div class="ai-section copilot-section">
+
+    <div class="ai-header">
+        <span class="ai-icon-large">🏆</span>
+        <h2 class="ai-title">Predicciones Copilot · Gran Final del Mundial</h2>
+    </div>
+
+    <div class="match-predictions">
+
+
+
+        <!-- ===== GRAN FINAL - España vs Argentina ===== -->
+        <div class="match-pred-card final-match">
+
+            <div class="match-pred-header">
+                <div class="match-pred-teams">
+                    🇪🇸 España vs Argentina 🇦🇷
+                </div>
+                <div class="match-pred-meta">
+                    <span class="meta-badge gold">🏆 Final del Mundial</span>
+                    <span class="meta-badge">📅 Partido Único</span>
+                </div>
+            </div>
+
+            <div class="prediction-result final-result">
+                <div class="pred-label">Quién será campeón</div>
+                <div class="pred-winner">España</div>
+            </div>
+
+            <div class="probabilities final-probabilities">
+                <div class="prob-item">
+                    <span class="prob-label">🇪🇸 España</span>
+                    <span class="prob-value">53%</span>
+                </div>
+                <div class="prob-item">
+                    <span class="prob-label">🇦🇷 Argentina</span>
+                    <span class="prob-value">47%</span>
+                </div>
+            </div>
+
+            <div class="analysis-text">
+                España llega a la final como la selección más estable del torneo:  
+                invicta, sin encajar un solo gol y con un control del ritmo que ningún rival ha podido romper.  
+                Su estructura defensiva es la más sólida del campeonato y su juego de posesión reduce al mínimo los riesgos.
+                <br><br>
+                Argentina también llega invicta y sin encajar goles, con una jerarquía enorme y una capacidad 
+                para dominar los tiempos que la convierte en un rival temible.  
+                <br><br>
+                El duelo es extremadamente igualado, pero la **mayor estabilidad táctica de España**, su control 
+                de la posesión y su capacidad para neutralizar ataques rivales les da una ligera ventaja en una final 
+                que promete ser cerrada, intensa y de detalles.
+                <br><br>
+                Según mis modelos, **España levanta el título** por muy poco margen.
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+    <!-- ============================================ -->
+    <!-- RESULTADOS FINALES                          -->
+    <!-- EDITA: Marcadores de cada partido           -->
+    <!-- ============================================ -->
+    <div class="results-section">
+        <h2 class="section-title">⚽ Resultados Finales</h2>
+        
+        <div class="intro-section">
+            <p>
+                Una vez finalizada la jornada, aquí se mostrarán los resultados reales de cada partido. Los marcadores se actualizan después de que terminen todos los encuentros.
+            </p>
+        </div>
+
+        <div class="results-grid">
+            <div class="result-card">
+                <div class="result-teams"> España vs Argentina</div>
+                <div class="result-score">0 - 0</div>
+            </div>              
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- ANÁLISIS DE ACIERTOS                        -->
+    <!-- EDITA: Quién ganó y estadísticas            -->
+    <!-- ============================================ -->
+    <div class="analysis-section">
+        <h2 class="section-title">📊 Análisis de Predicciones</h2>
+        
+        <div class="intro-section">
+            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.8em; letter-spacing: 1px; margin-bottom: 15px; color: var(--mundial-cyan);">
+                Resumen de la Jornada
+            </h3>
+<p style="margin-bottom: 15px;">
+    
+España gana este Mundial para las 3 IAs, que con esta predicción unánime tendremos un triple empate. Ahora solo faltará saber cuántos partidos ha acertado cada una en total.<br><br>
+
+España es la selección mas estable de este mundial pero Argentina ha demostrado ser un rival muy fuerte y competitivo, por lo que la final será un duelo muy parejo y emocionante.<br>
+</p>
+        </div>
+
+        <div class="ai-scores-grid">
+            
+            <!-- CHATGPT SCORE -->
+            <div class="ai-score-card chatgpt-card">
+                <div class="ai-score-header">
+                    <span class="ai-score-icon">🤖</span>
+                    <span class="ai-score-name">ChatGPT</span>
+                </div>
+                <div class="ai-score-number">0</div>
+                <div class="ai-score-label">Partidos acertados</div>
+            </div>
+
+            <!-- GEMINI SCORE -->
+            <div class="ai-score-card gemini-card">
+                <div class="ai-score-header">
+                    <span class="ai-score-icon">✨</span>
+                    <span class="ai-score-name">Gemini</span>
+                </div>
+                <div class="ai-score-number">0</div>
+                <div class="ai-score-label">Partidos acertados</div>
+            </div>
+
+            <!-- COPILOT SCORE -->
+            <div class="ai-score-card copilot-card">
+                <div class="ai-score-header">
+                    <span class="ai-score-icon">💡</span>
+                    <span class="ai-score-name">Copilot</span>
+                </div>
+                <div class="ai-score-number">0</div>
+                <div class="ai-score-label">Partidos acertados</div>
+            </div>
+            
+        </div>
+
+        <div class="intro-section" style="margin-top: 30px;">
+            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.8em; letter-spacing: 1px; margin-bottom: 15px; color: var(--mundial-yellow);">
+                🏆 Conclusión Final
+            </h3>
+<p>
+
+Después de jugar.
+</p>
+
+
+</div>
+
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2026 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
+    <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com">Contacto</a></p>
+</footer>
+<script>
+// ============================================
+// GESTIÓN DE NAVEGACIÓN
+// ============================================
+function toggleNav() {
+    document.getElementById('navMenu').classList.toggle('open');
+}
+
+document.addEventListener('click', function(e) {
+    const nav = document.querySelector('nav');
+    if (!nav.contains(e.target)) {
+        document.getElementById('navMenu').classList.remove('open');
+    }
+});
+
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        document.getElementById('navMenu').classList.remove('open');
+    });
+});
+
+// ============================================
+// GESTIÓN DE ENCUESTA - VOTACIÓN ROBUSTA
+// ============================================
+const POLL_KEY = 'mundial2026_j1_poll';
+const VOTE_KEY = 'mundial2026_j1_voted';
+
+function loadVotes() {
+    const data = localStorage.getItem(POLL_KEY);
+    return data ? JSON.parse(data) : { chatgpt: 0, gemini: 0, copilot: 0 };
+}
+
+function saveVotes(data) {
+    localStorage.setItem(POLL_KEY, JSON.stringify(data));
+}
+
+function updateDisplay() {
+    const data = loadVotes();
+    const total = data.chatgpt + data.gemini + data.copilot;
+    
+    ['chatgpt', 'gemini', 'copilot'].forEach(ai => {
+        const percent = total === 0 ? 0 : Math.round((data[ai] / total) * 100);
+        document.getElementById(`bar-${ai}`).style.width = percent + '%';
+        document.getElementById(`votes-${ai}`).textContent = data[ai] + ' votos';
+        document.getElementById(`percent-${ai}`).textContent = percent + '%';
+    });
+    
+    document.getElementById('total-votes').textContent = total;
+}
+
+function hasVoted() {
+    return localStorage.getItem(VOTE_KEY) !== null;
+}
+
+function disableButtons() {
+    document.getElementById('btn-chatgpt').disabled = true;
+    document.getElementById('btn-gemini').disabled = true;
+    document.getElementById('btn-copilot').disabled = true;
+}
+
+function vote(ai) {
+    // BLOQUEO CRÍTICO: Si ya votó, no hacer nada
+    if (hasVoted()) {
+        console.warn('Ya has votado en esta jornada');
+        return false;
+    }
+    
+    // Guardar voto
+    const data = loadVotes();
+    data[ai]++;
+    saveVotes(data);
+    
+    // Marcar como votado
+    localStorage.setItem(VOTE_KEY, ai);
+    
+    // Actualizar display
+    updateDisplay();
+    
+    // Deshabilitar botones INMEDIATAMENTE
+    disableButtons();
+    
+    // Mostrar mensaje
+    const msg = document.createElement('div');
+    msg.className = 'voted-message';
+    const aiNames = { chatgpt: 'ChatGPT', gemini: 'Gemini', copilot: 'Copilot' };
+    msg.innerHTML = `✅ Ya votaste por <strong>${aiNames[ai]}</strong><br><small>Podrás votar nuevamente en la próxima jornada</small>`;
+    document.getElementById('messageContainer').appendChild(msg);
+    
+    return false;
+}
+
+// Inicializar
+window.addEventListener('load', () => {
+    updateDisplay();
+    if (hasVoted()) {
+        disableButtons();
+        const voted = localStorage.getItem(VOTE_KEY);
+        const msg = document.createElement('div');
+        msg.className = 'voted-message';
+        const aiNames = { chatgpt: 'ChatGPT', gemini: 'Gemini', copilot: 'Copilot' };
+        msg.innerHTML = `✅ Ya votaste por <strong>${aiNames[voted]}</strong><br><small>Podrás votar nuevamente en la próxima jornada</small>`;
+        document.getElementById('messageContainer').appendChild(msg);
+    }
+});
+</script>
+
+</body>
+</html>
