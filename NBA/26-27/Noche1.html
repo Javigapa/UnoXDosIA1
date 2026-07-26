@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-90WQKBTXN3');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Predicciones deportivas generadas por IA, ¿Que IA es mejor?"/>
+
+  <!-- ═══════════════════════════════════════════════
+       EDITAR: Número de jornada en el título
+  ═══════════════════════════════════════════════ -->
+  <title>Predicciones Noche ?¿ · Uno X Dos IA</title>
+
+  <link rel="icon" href="/Imagenes/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─────────────────────────────────────────────
+       VARIABLES GLOBALES (igual que index.html)
+    ───────────────────────────────────────────── */
+    :root {
+      --navy:        #0c1820;
+      --navy2:       #111f30;
+      --accent:      #00c896;
+      --accent-dark: #00a87d;
+      --gold:        #f0c040;
+      --text:        #e8ecf0;
+      --muted:       #8fa3b8;
+      --card-bg:     rgba(13,22,35,0.78);
+      --card-border: rgba(255,255,255,0.10);
+      --radius:      12px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Outfit', sans-serif;
+
+      /* Colores por IA */
+      --chatgpt: #10a37f;
+      --gemini:  #4285f4;
+      --copilot: #7c3aed;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--navy);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* Fondo cancha de baloncesto */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      /* Tablones de parqué horizontales */
+      background-image:
+        repeating-linear-gradient(
+          180deg,
+          transparent 0px,
+          transparent 28px,
+          rgba(0,0,0,0.18) 28px,
+          rgba(0,0,0,0.18) 30px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0px,
+          transparent 120px,
+          rgba(0,0,0,0.06) 120px,
+          rgba(0,0,0,0.06) 122px
+        ),
+        linear-gradient(
+          160deg,
+          #e8893a 0%,
+          #f0954a 25%,
+          #e88535 50%,
+          #df7e2e 75%,
+          #d97828 100%
+        );
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.75;
+    }
+
+    /* ─────────────────────────────────────────────
+       HEADER (idéntico al resto del sitio)
+    ───────────────────────────────────────────── */
+    header {
+      position: relative;
+      z-index: 10;
+      background: linear-gradient(180deg,rgba(13,27,42,0.98),rgba(13,27,42,0.85));
+      border-bottom: 1px solid rgba(0,200,150,0.2);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      backdrop-filter: blur(10px);
+    }
+
+    /* ─────────────────────────────────────────────
+       NAV (idéntico al resto del sitio)
+    ───────────────────────────────────────────── */
+    nav {
+      background: rgba(19,34,56,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 8px 20px;
+      position: relative;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+    }
+
+    .nav-hamburger {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 1em;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: background 0.2s;
+    }
+    .nav-hamburger:hover { background: rgba(255,255,255,0.12); }
+    .ham-icon { font-size: 1.3em; }
+    .ham-label { letter-spacing: 0.5px; }
+
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 8px;
+      background: rgba(13,27,42,0.98);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 8px;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 220px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      z-index: 200;
+    }
+    .nav-menu.open { display: flex; }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-size: 0.92em;
+      font-weight: 600;
+      color: var(--muted);
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+    .nav-link:hover { color: #fff; background: rgba(255,255,255,0.07); }
+    .nav-link.active {
+      color: var(--accent);
+      background: rgba(0,200,150,0.1);
+      border-color: rgba(0,200,150,0.25);
+    }
+    .nav-emoji { font-size: 1.1em; }
+
+    /* ─────────────────────────────────────────────
+       HERO DE JORNADA
+    ───────────────────────────────────────────── */
+    .jornada-hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+
+    .jornada-hero .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,200,150,0.1);
+      border: 1px solid rgba(0,200,150,0.25);
+      border-radius: 50px;
+      padding: 5px 16px;
+      font-size: 0.75em;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .jornada-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8em, 7vw, 5em);
+      letter-spacing: 3px;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .jornada-hero h1 .num {
+      color: var(--accent);
+    }
+
+    /* ─────────────────────────────────────────────
+       PARTIDOS DEL DÍA
+    ───────────────────────────────────────────── */
+    .partidos-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto 40px;
+      padding: 0 24px;
+    }
+
+    .partidos-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .partidos-card-header {
+      background: rgba(0,200,150,0.08);
+      border-bottom: 1px solid rgba(0,200,150,0.15);
+      padding: 14px 20px;
+      font-family: var(--font-display);
+      font-size: 1.3em;
+      letter-spacing: 2px;
+      color: var(--accent);
+    }
+
+    .partido-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      gap: 12px;
+    }
+    .partido-row:last-child { border-bottom: none; }
+
+    .partido-equipos {
+      font-weight: 600;
+      font-size: 0.95em;
+      color: #fff;
+    }
+
+    .partido-hora {
+      font-size: 0.8em;
+      font-weight: 700;
+      color: var(--muted);
+      background: rgba(255,255,255,0.06);
+      border-radius: 6px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+
+    /* ─────────────────────────────────────────────
+       SECCIÓN PREDICCIONES
+    ───────────────────────────────────────────── */
+    .section-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px 40px;
+    }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 1.6em;
+      letter-spacing: 2px;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 0.88em;
+      margin-bottom: 22px;
+    }
+
+    /* Las 3 columnas de predicciones */
+    .pred-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) { .pred-grid { grid-template-columns: 1fr; } }
+
+    .pred-col {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pred-col-header {
+      padding: 14px 18px;
+      font-family: var(--font-display);
+      font-size: 1.3em;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pred-col.chatgpt .pred-col-header { background: rgba(16,163,127,0.12); color: #10a37f; border-bottom: 1px solid rgba(16,163,127,0.2); }
+    .pred-col.gemini  .pred-col-header { background: rgba(66,133,244,0.12); color: #4285f4; border-bottom: 1px solid rgba(66,133,244,0.2); }
+    .pred-col.copilot .pred-col-header { background: rgba(124,58,237,0.12); color: #7c3aed; border-bottom: 1px solid rgba(124,58,237,0.2); }
+
+    .pred-col-body {
+      padding: 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Cada partido dentro de la predicción */
+    .pred-match {
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .pred-match:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .pred-match-title {
+      font-size: 0.82em;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+    }
+
+    .pred-winner {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 0.95em;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .pred-winner::before {
+      content: '→';
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    .pred-prob {
+      font-size: 0.8em;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+
+    .pred-text {
+      font-size: 0.83em;
+      color: #b0c0d0;
+      line-height: 1.55;
+    }
+
+    /* ─────────────────────────────────────────────
+       CONCLUSIÓN PRE-PARTIDO
+    ───────────────────────────────────────────── */
+    .conclusion-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      font-size: 0.92em;
+      line-height: 1.7;
+      color: #c8d8e8;
+    }
+
+    .conclusion-card p + p { margin-top: 10px; }
+
+    /* ─────────────────────────────────────────────
+       RESULTADOS
+    ───────────────────────────────────────────── */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 700px) { .results-grid { grid-template-columns: 1fr; } }
+
+    .result-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .result-card-venue {
+      font-size: 0.72em;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 10px 16px 0;
+    }
+
+    table.score-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88em;
+    }
+
+    .score-table thead tr {
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .score-table th {
+      padding: 9px 10px;
+      font-size: 0.75em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      text-align: center;
+    }
+    .score-table th:first-child { text-align: left; padding-left: 16px; }
+
+    .score-table td {
+      padding: 11px 10px;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      color: var(--text);
+      font-weight: 500;
+    }
+    .score-table td:first-child {
+      text-align: left;
+      padding-left: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* Columna total */
+    .score-table .col-total {
+      font-family: var(--font-display);
+      font-size: 1.25em;
+      letter-spacing: 1px;
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    /* Fila ganadora */
+    .score-table tr.winner td { background: rgba(0,200,150,0.06); }
+    .score-table tr.winner td:first-child { color: var(--accent); }
+
+    .result-card-note {
+      font-size: 0.75em;
+      color: var(--muted);
+      padding: 8px 16px 12px;
+      font-style: italic;
+    }
+
+    /* ─────────────────────────────────────────────
+       MARCADOR DE ACIERTOS
+    ───────────────────────────────────────────── */
+    .score-banner {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .score-chip {
+      flex: 1;
+      min-width: 140px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .score-chip-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .score-chip-dot.chatgpt { background: #10a37f; }
+    .score-chip-dot.gemini  { background: #4285f4; }
+    .score-chip-dot.copilot { background: #7c3aed; }
+
+    .score-chip-name {
+      font-size: 0.8em;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .score-chip-num {
+      font-family: var(--font-display);
+      font-size: 2em;
+      letter-spacing: 1px;
+      color: #fff;
+      margin-left: auto;
+    }
+
+    .score-chip-num span {
+      font-size: 0.5em;
+      color: var(--muted);
+      letter-spacing: 0;
+    }
+
+    /* ─────────────────────────────────────────────
+       DIVISOR DE SECCIÓN
+    ───────────────────────────────────────────── */
+    .divider {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      margin: 0 auto 32px;
+      padding: 0 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* ─────────────────────────────────────────────
+       VOLVER LINK
+    ───────────────────────────────────────────── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88em;
+      transition: gap 0.2s;
+    }
+    .back-link:hover { gap: 12px; }
+
+    /* ─────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: rgba(13,27,42,0.9);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+      padding: 20px;
+      font-size: 0.78em;
+      color: var(--muted);
+      margin-top: 40px;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE GENERAL
+    ───────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .jornada-hero { padding: 32px 16px 24px; }
+      .section-wrap, .partidos-wrap { padding-left: 16px; padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════
+       HEADER (no tocar)
+  ════════════════════════════════════════ -->
+  <header>
+    <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+      <div style="width:42px;height:42px;background:linear-gradient(135deg,#00c896,#00a87d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3em;box-shadow:0 0 18px rgba(0,200,150,0.3);">⚽</div>
+      <div>
+        <span style="display:block;font-family:'Bebas Neue',sans-serif;font-size:1.5em;letter-spacing:2px;color:#fff;line-height:1;">UNO X DOS IA</span>
+        <small style="font-size:0.6em;color:#00c896;letter-spacing:1px;font-weight:500;">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+      </div>
+    </a>
+  </header>
+
+  <!-- ════════════════════════════════════════
+       NAV (no tocar)
+  ════════════════════════════════════════ -->
+  <nav aria-label="Navegación principal">
+    <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+      <span class="ham-icon">☰</span>
+      <span class="ham-label">Secciones</span>
+    </button>
+    <div class="nav-menu" id="navMenu">
+      <a href="../../index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
+      <a href="../../NBA.html"         class="nav-link active"><span class="nav-emoji">🏀</span> NBA</a>
+      <a href="../../LigaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
+      <a href="../../Hypermotion.html" class="nav-link"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+      <a href="../../Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+      <a href="../../LigaFantasIA/fantas-ia-v2.html"    class="nav-link"><span class="nav-emoji">🏆</span> Liga FantasIA</a> 
+    
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════
+  ██████████████████████████████████████████████████████████
+       EMPIEZA LA ZONA EDITABLE — CAMBIAR CADA DÍA
+  ██████████████████████████████████████████████████████████
+  ════════════════════════════════════════════════════════ -->
+
+  <!-- ────────────────────────────────────────
+       HERO: número de noche y fecha
+       EDITAR: NOCHE_NUM y FECHA
+  ──────────────────────────────────────── -->
+  <section class="jornada-hero">
+    <div class="eyebrow">🏀 Temporada 2026/2027</div>
+    <h1>NOCHE <span class="num">?¿</span></h1>
+    <p style="color:var(--muted);font-size:0.95em;margin-top:8px;">?¿</p>
+  </section>
+
+  <!-- ────────────────────────────────────────
+       PARTIDOS DEL DÍA
+       EDITAR: añadir/quitar .partido-row
+       Formato: Equipo A vs. Equipo B | hora
+  ──────────────────────────────────────── -->
+  <div class="partidos-wrap">
+    <div class="partidos-card">
+      <div class="partidos-card-header">📅 Partidos de hoy</div>
+
+      <div class="partido-row">
+        <span class="partido-equipos">New York Knicks vs. Atlanta Hawks</span>
+        <span class="partido-hora">1:00 AM</span>
+      </div>
+      <div class="partido-row">
+        <span class="partido-equipos">Detroit Pistons vs. Orlando Magic</span>
+        <span class="partido-hora">1:00 AM</span>
+      </div>
+      <div class="partido-row">
+        <span class="partido-equipos">Cleveland Cavaliers vs. Memphis Grizzlies</span>
+        <span class="partido-hora">2:00 AM</span>
+      </div>
+      <div class="partido-row">
+        <span class="partido-equipos">Philadelphia 76ers vs. San Antonio Spurs</span>
+        <span class="partido-hora">2:00 AM</span>
+      </div>
+      <div class="partido-row">
+        <span class="partido-equipos">Portland Trail Blazers vs. Denver Nuggets</span>
+        <span class="partido-hora">3:00 AM</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────
+       PREDICCIONES DE LAS 3 IAs
+       EDITAR: para cada IA, copiar/pegar el
+       bloque .pred-match y rellenarlo.
+       .pred-match-title → "Equipo A vs Equipo B"
+       .pred-winner      → equipo ganador
+       .pred-prob        → probabilidades
+       .pred-text        → análisis breve
+  ──────────────────────────────────────── -->
+  <section class="section-wrap">
+    <p class="section-label">🤖 PREDICCIONES</p>
+    <p class="section-sub">Lo que dice cada IA antes de que ruede el balón</p>
+
+    <div class="pred-grid">
+
+      <!-- ── CHATGPT ── -->
+      <div class="pred-col chatgpt">
+        <div class="pred-col-header">
+          <span style="width:10px;height:10px;border-radius:50%;background:#10a37f;display:inline-block;"></span>
+          CHAT GPT
+        </div>
+        <div class="pred-col-body">
+
+          <div class="pred-match">
+            <div class="pred-match-title">Knicks vs. Hawks</div>
+            <div class="pred-winner">Knicks gana</div>
+            <div class="pred-prob">Knicks 57% · Hawks 43%</div>
+            <div class="pred-text">New York tiene mayor solidez colectiva con Brunson, Towns y Bridges liderando. Atlanta cuenta con talento ofensivo, pero es menos consistente en defensa.</div>
+          </div>
+
+          <div class="pred-match">
+            <div class="pred-match-title">Pistons vs. Magic</div>
+            <div class="pred-winner">Magic gana</div>
+            <div class="pred-prob">Magic 59% · Pistons 41%</div>
+            <div class="pred-text">Orlando tiene un bloque más equilibrado con Banchero y Wagner. Detroit sufre ante equipos más estructurados.</div>
+          </div>
+
+          <div class="pred-match">
+            <div class="pred-match-title">Cavaliers vs. Grizzlies</div>
+            <div class="pred-winner">Cavaliers ganan</div>
+            <div class="pred-prob">Cavaliers 56% · Grizzlies 44%</div>
+            <div class="pred-text">Cleveland tiene más talento global con Mitchell, Harden y Mobley. Memphis depende mucho del ritmo de Morant.</div>
+          </div>
+
+          <div class="pred-match">
+            <div class="pred-match-title">76ers vs. Spurs</div>
+            <div class="pred-winner">76ers ganan</div>
+            <div class="pred-prob">76ers 63% · Spurs 37%</div>
+            <div class="pred-text">Filadelfia impone su físico con Embiid y mayor experiencia exterior. Spurs tiene talento joven pero es menos constante.</div>
+          </div>
+
+          <div class="pred-match">
+            <div class="pred-match-title">Blazers vs. Nuggets</div>
+            <div class="pred-winner">Nuggets ganan</div>
+            <div class="pred-prob">Nuggets 62% · Blazers 38%</div>
+            <div class="pred-text">Denver tiene ventaja clara con Jokic dominando el juego interior. Portland puede competir con Lillard, pero es inferior en consistencia.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── GEMINI ── -->
+      <div class="pred-col gemini">
+        <div class="pred-col-header">
+          <span style="width:10px;height:10px;border-radius:50%;background:#4285f4;display:inline-block;"></span>
+          GEMINI
+        </div>
+        <div class="pred-col-body">
+
+          <div class="pred-match">
+            <div class="pred-match-title">Knicks vs. Hawks</div>
+            <div class="pred-winner">Knicks ganan (58%)</div>
+            <div class="pred-prob">Knicks 58% · Hawks 42%</div>
+            <div class="pred-text">Los Knicks (50-28) confían en la dirección de Jalen Brunson (26 PPG). Atlanta opondrá resistencia con Jalen Johnson, pero la solidez defensiva neoyorquina se impone en partidos cerrados.</div>
+          </div>
+
+          <div class="pred-match">
+            <div class="pred-match-title">Pistons vs. Magic</div>
+            <div class="pred-winner">Pistons ganan (64%)</div>
+            <div class="pred-prob">Pistons 64% · Magic 36%</div>
+            <div class="pred-text">Detroit llega con récord de 57-21. Jalen Duren protegerá la pintura frente a Banchero. El ritmo y consistencia de los Pistons los sitúan como favoritos.</div>
+          </div>
+
+          <div class="pred-match">
+            <div class="pred-match-title">Cavaliers vs. Grizzlies</div>
+            <div class="pred-winner">Cavaliers ganan (82%)</div>
+            <div class="pred-prob">Cavaliers 82% · Grizzlies 18%</div>
+            <div class="pred-text">Cleveland (49-29) no debería tener problemas ante unos Grizzlies (25-53) en horas bajas. La diferencia de profundidad de plantilla es demasiado amplia.</div>
+          </div>
+
+          <div class="pred-match">
+            <div class="pred-match-title">76ers vs. Spurs</div>
+            <div class="pred-winner">Spurs ganan (70%)</div>
+            <div class="pred-prob">Spurs 70% · 76ers 30%</div>
+            <div class="pred-text">Los Spurs (59-19) son el equipo a batir. Wembanyama en ambos lados de la cancha será el mayor desafío para Maxey y los Sixers.</div>
+          </div>
+
+          <div class="pred-match">
+            <div class="pred-match-title">Blazers vs. Nuggets</div>
+            <div class="pred-winner">Nuggets ganan (78%)</div>
+            <div class="pred-prob">Nuggets 78% · Blazers 22%</div>
+            <div class="pred-text">Denver (50-28) busca escalar en el Oeste. Con Jokic al mando tienen una ejecución casi perfecta. Portland tendrá dificultades para contener el juego colectivo de los Nuggets.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── COPILOT ── -->
+      <div class="pred-col copilot">
+        <div class="pred-col-header">
+          <span style="width:10px;height:10px;border-radius:50%;background:#7c3aed;display:inline-block;"></span>
+          COPILOT
+        </div>
+        <div class="pred-col-body">
+
+          <div class="pred-match">
+            <div class="pred-match-title">Knicks vs. Hawks</div>
+            <div class="pred-winner">Knicks ganan</div>
+            <div class="pred-prob">Knicks 62% · Hawks 38%</div>
+            <div class="pred-text">New York es uno de los equipos más equilibrados del Este: defensa sólida, ataque estable y cierre fiable. El control del ritmo y la disciplina colectiva favorecen a los Knicks.</div>
+          </div>
+
+          <div class="pred-match">
+            <div class="pred-match-title">Pistons vs. Magic</div>
+            <div class="pred-winner">Magic ganan</div>
+            <div class="pred-prob">Magic 68% · Pistons 32%</div>
+            <div class="pred-text">Orlando es uno de los equipos más físicos y disciplinados de la liga, con defensa élite y ataque equilibrado. La diferencia de estructura es grande.</div>
+          </div>
+
+          <div class="pred-match">
+            <div class="pred-match-title">Cavaliers vs. Grizzlies</div>
+            <div class="pred-winner">Cavaliers ganan</div>
+            <div class="pred-prob">Cavaliers 60% · Grizzlies 40%</div>
+            <div class="pred-text">Cleveland tiene más talento individual, mejor defensa interior y ataque más estable. En un partido de media pista los Cavs tienen ventaja clara.</div>
+          </div>
+
+          <div class="pred-match">
+            <div class="pred-match-title">76ers vs. Spurs</div>
+            <div class="pred-winner">76ers ganan</div>
+            <div class="pred-prob">76ers 55% · Spurs 45%</div>
+            <div class="pred-text">Partido muy táctico. Embiid domina la pintura y el ataque de los Sixers es estable. La experiencia y dominio interior de Filadelfia les da una ligera ventaja.</div>
+          </div>
+
+          <div class="pred-match">
+            <div class="pred-match-title">Blazers vs. Nuggets</div>
+            <div class="pred-winner">Nuggets ganan</div>
+            <div class="pred-prob">Nuggets 67% · Blazers 33%</div>
+            <div class="pred-text">Portland depende del acierto de Lillard y sufre en defensa interior. Denver es de los más sólidos con Jokic controlando el ritmo. La diferencia de estabilidad es notable.</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- /pred-grid -->
+  </section>
+
+  <!-- ────────────────────────────────────────
+       CONCLUSIÓN ANTES DE JUGAR
+       EDITAR: texto libre
+  ──────────────────────────────────────── -->
+  <section class="section-wrap" style="padding-top:0;">
+    <p class="section-label">📝 CONCLUSIÓN INICIAL</p>
+    <p class="section-sub">Lo que esperamos antes de que empiece la noche</p>
+    <div class="conclusion-card">
+Antes de jugar.
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ────────────────────────────────────────
+       RESULTADOS
+       EDITAR: rellenar scores, marcar .winner
+       en la fila del equipo ganador,
+       y cambiar la nota del pabellón.
+       Si hay prórroga, añadir columna TE.
+  ──────────────────────────────────────── -->
+  <section class="section-wrap">
+    <p class="section-label">🏆 RESULTADOS</p>
+    <p class="section-sub">Lo que pasó de verdad</p>
+
+    <div class="results-grid">
+
+      <!-- Partido 1 -->
+      <div class="result-card">
+        <div class="result-card-venue">State Farm Arena</div>
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr class="winner"><td>Knicks</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+            <tr>               <td>Hawks</td> <td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <!-- Partido 2 -->
+      <div class="result-card">
+        <div class="result-card-venue">Kia Center</div>
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr>               <td>Pistons</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+            <tr class="winner"><td>Magic</td>  <td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <!-- Partido 3 -->
+      <div class="result-card">
+        <div class="result-card-venue">FedExForum</div>
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr class="winner"><td>Cavaliers</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+            <tr>               <td>Grizzlies</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <!-- Partido 4 -->
+      <div class="result-card">
+        <div class="result-card-venue">Frost Bank Center</div>
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr>               <td>76ers</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+            <tr class="winner"><td>Spurs</td> <td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <!-- Partido 5 · con prórroga → añadir columna TE -->
+      <div class="result-card">
+        <div class="result-card-venue"></div>
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th>TE</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr>               <td>Blazers</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td> <td class="col-total">0</td></tr>
+            <tr class="winner"><td>Nuggets</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+    </div><!-- /results-grid -->
+  </section>
+
+  <!-- ────────────────────────────────────────
+       MARCADOR DE ACIERTOS
+       EDITAR: el número dentro de .score-chip-num
+       Formato: aciertos / total partidos
+  ──────────────────────────────────────── -->
+  <section class="section-wrap" style="padding-top:0;">
+    <p class="section-label" style="margin-bottom:14px;">📊 ACIERTOS DE ESTA NOCHE</p>
+    <div class="score-banner">
+      <div class="score-chip">
+        <div class="score-chip-dot chatgpt"></div>
+        <div>
+          <div class="score-chip-name">Chat GPT</div>
+        </div>
+        <div class="score-chip-num">0<span>/0</span></div>
+      </div>
+      <div class="score-chip">
+        <div class="score-chip-dot gemini"></div>
+        <div>
+          <div class="score-chip-name">Gemini</div>
+        </div>
+        <div class="score-chip-num">0<span>/0</span></div>
+      </div>
+      <div class="score-chip">
+        <div class="score-chip-dot copilot"></div>
+        <div>
+          <div class="score-chip-name">Copilot</div>
+        </div>
+        <div class="score-chip-num">0<span>/0</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ────────────────────────────────────────
+       CONCLUSIÓN FINAL
+       EDITAR: texto libre
+  ──────────────────────────────────────── -->
+  <section class="section-wrap" style="padding-top:0;">
+    <p class="section-label">📝 CONCLUSIÓN FINAL</p>
+    <p class="section-sub">Qué nos dejó la noche</p>
+    <div class="conclusion-card">
+Después de jugar.
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════
+  ██████████████████████████████████████████████████████████
+       FIN DE LA ZONA EDITABLE
+  ██████████████████████████████████████████████████████████
+  ════════════════════════════════════════════════════════ -->
+
+  <!-- Volver -->
+  <section class="section-wrap" style="padding-top:0;padding-bottom:24px;">
+    <a href="../NBA.html" class="back-link">← Volver a NBA</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
+    <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com">Contacto</a></p>
+  </footer>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', function(e) {
+      const nav = document.querySelector('nav');
+      if (!nav.contains(e.target)) {
+        document.getElementById('navMenu').classList.remove('open');
+      }
+    });
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navMenu').classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
