@@ -1,1553 +1,1580 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-90WQKBTXN3');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Predicciones NBA generadas por IA. Archivo de jornadas analizadas."/>
+  <title>Uno X Dos IA - NBA</title>
+  <link rel="icon" href="/Imagenes/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --nba-blue: #1d428a;
+      --nba-red:  #c8102e;
+      --accent:   #00c896;
+      --navy:     #0d1b2a;
+      --muted:    #8fa3b8;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Outfit', sans-serif;
+    }
 
-  gtag('config', 'G-90WQKBTXN3');
-</script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Predicciones deportivas generadas por IA, ¿Que IA es mejor?"/>
-    <title>Uno X Dos IA - NBA</title>
-    <link rel="icon" href="/Imagenes/favicon.png">
-    <link rel="stylesheet" href="loterias.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* ESTILOS ESPECÍFICOS TEMÁTICA NBA */
-        :root {
-            --nba-blue: #1d428a;
-            --nba-red: #c8102e;
-            --court-wood: #e9bc6e;
-        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            /* Fondo que simula el parqué de una cancha */
-            background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
-            background-color: #d2a679;
-        
-        }
+    body {
+      font-family: var(--font-body);
+      background-color: #d2791a;
+      background-image:
+        repeating-linear-gradient(
+          180deg,
+          transparent 0px, transparent 28px,
+          rgba(0,0,0,0.13) 28px, rgba(0,0,0,0.13) 30px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0px, transparent 120px,
+          rgba(0,0,0,0.05) 120px, rgba(0,0,0,0.05) 122px
+        ),
+        linear-gradient(160deg, #e8893a 0%, #f0a050 25%, #e88838 50%, #df8030 75%, #d47828 100%);
+      min-height: 100vh;
+      color: #e8ecf0;
+    }
 
-        header {
-            background-color: var(--nba-blue);
-            border-bottom: 5px solid var(--nba-red);
-        }
+    /* ── NAV ── */
+    nav {
+      background: rgba(19,34,56,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 8px 20px;
+      position: relative;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+    }
+    .nav-hamburger {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff; font-size: 1em; font-weight: 600;
+      padding: 10px 18px; border-radius: 8px; cursor: pointer;
+      font-family: var(--font-body); transition: background 0.2s;
+    }
+    .nav-hamburger:hover { background: rgba(255,255,255,0.12); }
+    .ham-icon { font-size: 1.3em; }
+    .ham-label { letter-spacing: 0.5px; }
+    .nav-menu {
+      display: none; flex-direction: column; gap: 4px; margin-top: 8px;
+      background: rgba(13,27,42,0.98); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; padding: 8px; position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      min-width: 220px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); z-index: 200;
+    }
+    .nav-menu.open { display: flex; }
+    .nav-link {
+      display: flex; align-items: center; gap: 10px; padding: 11px 16px;
+      border-radius: 7px; text-decoration: none; font-size: 0.92em; font-weight: 600;
+      color: #8fa3b8; transition: all 0.2s; border: 1px solid transparent;
+    }
+    .nav-link:hover { color: #fff; background: rgba(255,255,255,0.07); }
+    .nav-link.active { color: #00c896; background: rgba(0,200,150,0.1); border-color: rgba(0,200,150,0.25); }
+    .nav-emoji { font-size: 1.1em; }
 
-        .nba-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    /* ── CONTAINER ── */
+    .nba-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 28px 20px;
+    }
 
-        /* Título con estilo de marcador */
-        .scoreboard-title {
-            background: #111;
-            color: #ffcc00;
-            font-family: 'Courier New', Courier, monospace;
-            padding: 15px;
-            text-align: center;
-            border: 4px solid #444;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
-        }
-        .Plantilla {
-                
-            color: #ffcc00;
-            font-family: 'Courier New', Courier, monospace;
-            padding: 15px;
-            text-align: center;
-            border: 4px solid #444;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
-        }
-        /* Grid de Jornadas */
-        .jornadas-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-        }
+    /* ── SCOREBOARD TITLE ── */
+    .scoreboard-title {
+      background: linear-gradient(135deg, rgba(13,27,42,0.92), rgba(29,66,138,0.85));
+      border: 2px solid rgba(0,200,150,0.3);
+      border-radius: 12px;
+      padding: 20px 24px;
+      text-align: center;
+      margin-bottom: 28px;
+      backdrop-filter: blur(10px);
+    }
+    .scoreboard-title h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4em, 3vw, 2em);
+      letter-spacing: 3px;
+      color: #fff;
+    }
 
-        /* Tarjeta de Jornada (Estilo Cromo/Balon) */
-        .jornada-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-            border: 3px solid var(--nba-blue);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-        }
+    /* ── PLANTILLA BUTTON ── */
+    .plantilla-btn {
+      display: block;
+      background: linear-gradient(135deg, rgba(0,200,150,0.15), rgba(0,168,125,0.1));
+      border: 1px solid rgba(0,200,150,0.4);
+      border-radius: 10px;
+      padding: 18px 24px;
+      text-align: center;
+      margin-bottom: 32px;
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+    .plantilla-btn:hover {
+      background: rgba(0,200,150,0.22);
+      transform: translateY(-2px);
+    }
+    .plantilla-btn span {
+      font-family: var(--font-display);
+      font-size: 1.6em;
+      letter-spacing: 2px;
+      color: var(--accent);
+    }
 
-        .jornada-card:hover {
-            transform: scale(1.05) rotate(1deg);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            border-color: var(--nba-red);
-        }
+    /* ── TEMPORADAS LAYOUT ── */
+    .temporadas-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 800px) {
+      .temporadas-layout { grid-template-columns: 1fr; }
+    }
 
-        .jornada-card img {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 15px;
-        }
+    /* ── TEMPORADA COLUMN ── */
+    .temporada-col {
+      background: rgba(13,22,35,0.82);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+    }
 
-        .jornada-card h3 {
-            color: var(--nba-blue);
-            margin: 10px 0;
-            font-size: 1.4em;
-        }
+    .temporada-col-header {
+      padding: 16px 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      text-decoration: none;
+      display: block;
+      transition: background 0.2s;
+    }
+    .temporada-col-header:hover { background: rgba(255,255,255,0.04); }
 
-        .jornada-card .status {
-            background: var(--nba-red);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: bold;
-        }
+    .temporada-col-header h2 {
+      font-family: var(--font-display);
+      font-size: 1.6em;
+      letter-spacing: 2px;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .temporada-col-header small {
+      font-size: 0.78em;
+      color: var(--muted);
+    }
+    .temporada-col.current .temporada-col-header { background: rgba(0,200,150,0.08); border-bottom-color: rgba(0,200,150,0.2); }
+    .temporada-col.current .temporada-col-header h2 { color: var(--accent); }
+    .temporada-col.next .temporada-col-header { background: rgba(29,66,138,0.15); border-bottom-color: rgba(29,66,138,0.3); }
+    .temporada-col.next .temporada-col-header h2 { color: #6fa3f0; }
 
-        /* Decoración de balones flotantes por el fondo */
-        .ball-bg {
-            position: fixed;
-            opacity: 0.1;
-            z-index: -1;
-            pointer-events: none;
-        }
-                    nav {
-  background: rgba(19,34,56,0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding: 8px 20px;
-  position: relative;
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-}
+    .temporada-col-body {
+      padding: 16px;
+      max-height: 600px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.15) transparent;
+    }
 
-.nav-hamburger {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: #ffffff;
-  font-size: 1em;
-  font-weight: 600;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: Arial, sans-serif;
-  transition: background 0.2s;
-}
+    /* ── JORNADA CARDS (inside columns) ── */
+    .jornadas-mini {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+    }
 
-.nav-hamburger:hover {
-  background: rgba(255,255,255,0.12);
-}
+    .jornada-card-mini {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 10px;
+      padding: 12px 10px;
+      text-align: center;
+      text-decoration: none;
+      color: #e8ecf0;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .jornada-card-mini:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(0,200,150,0.3);
+      transform: translateY(-2px);
+    }
+    .jornada-card-mini img { width: 36px; height: 36px; }
+    .jornada-card-mini h3 { font-size: 0.82em; font-weight: 700; color: #fff; line-height: 1.2; }
+    .jornada-card-mini small { font-size: 0.68em; color: var(--muted); }
+    .jornada-card-mini .status-mini {
+      font-size: 0.65em; font-weight: 700; letter-spacing: 0.5px;
+      background: rgba(200,16,46,0.2); color: #e05070;
+      border-radius: 4px; padding: 2px 6px;
+    }
 
-.ham-icon { font-size: 1.3em; }
-
-.nav-menu {
-  display: none;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 8px;
-  background: rgba(13,27,42,0.98);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  padding: 8px;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 220px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-  z-index: 200;
-}
-
-.nav-menu.open {
-  display: flex;
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 16px;
-  border-radius: 7px;
-  text-decoration: none;
-  font-size: 0.92em;
-  font-weight: 600;
-  color: #8fa3b8;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-}
-
-.nav-link:hover {
-  color: #ffffff;
-  background: rgba(255,255,255,0.07);
-}
-
-.nav-link.active {
-  color: #00c896;
-  background: rgba(0,200,150,0.1);
-  border-color: rgba(0,200,150,0.25);
-}
-
-.nav-emoji { font-size: 1.1em; }
-    </style>
+    /* ── FOOTER ── */
+    footer {
+      background: rgba(13,27,42,0.9);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center; padding: 20px;
+      font-size: 0.78em; color: var(--muted);
+      margin-top: 40px;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+</style>
 </head>
 <body>
 
-    <img src="https://cdn-icons-png.flaticon.com/512/889/889505.png" class="ball-bg" style="top: 10%; left: 5%; width: 100px;">
-    <img src="https://cdn-icons-png.flaticon.com/512/889/889505.png" class="ball-bg" style="top: 60%; left: 85%; width: 150px;">
-    <img src="https://cdn-icons-png.flaticon.com/512/889/889505.png" class="ball-bg" style="top: 80%; left: 15%; width: 120px;">
-
- <header style="position:relative;z-index:10;background:linear-gradient(180deg,rgba(13,27,42,0.98),rgba(13,27,42,0.85));border-bottom:1px solid rgba(0,200,150,0.2);padding:16px 24px;display:flex;align-items:center;backdrop-filter:blur(10px);">
-  <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
-    <div style="width:42px;height:42px;background:linear-gradient(135deg,#00c896,#00a87d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3em;box-shadow:0 0 18px rgba(0,200,150,0.3);">⚽</div>
-    <div>
-      <span style="display:block;font-family:'Bebas Neue',sans-serif;font-size:1.5em;letter-spacing:2px;color:#ffffff;line-height:1;">UNO X DOS IA</span>
-      <small style="font-size:0.6em;color:#00c896;letter-spacing:1px;font-weight:500;">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
-    </div>
-  </a>
-</header>
-
- <nav aria-label="Navegación principal">
-  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
-    <span class="ham-icon">☰</span>
-    <span class="ham-label">Secciones</span>
-  </button>
-  <div class="nav-menu" id="navMenu">
-    <a href="index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
-    <a href="NBA.html"         class="nav-link active"><span class="nav-emoji">🏀</span> NBA</a>
-    <a href="LigaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
-    <a href="Hypermotion.html" class="nav-link "><span class="nav-emoji">📈</span> Liga Hypermotion</a>
-    <a href="Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
-    <a href="/LigaFantasIA/fantas-ia-v2.html"    class="nav-link "><span class="nav-emoji">🏆</span> Liga FantasIA</a>
-    <a href="/Mundial/Mundial2026.html" class="nav-link "><span>🏆</span> Mundial 2026</a> 
-
-</div>
-</nav>
-
-    <div class="nba-container">
-        <div class="scoreboard-title">
-            <h2>Archivo de Jornadas Analizadas - Regular Season and Playoffs</h2>
-        </div>
-        <section>
-        
-        <div class="Plantilla">
-           <h2><a href="PlantillasJugadoresNBA.html">Plantillas NBA</a></h2>
-        </div>
-        
-      </section>
-         <div class="jornadas-grid">
-
-                <a href="/NBA/PlayoffDia44.html" class="jornada-card">
-                    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-                    <div class="status">ARCHIVO</div>
-                    <h3>Playoffs Dia 44</h3>
-                    <small>14 de Junio 2026</small>
-                </a>
-                <a href="/NBA/PlayoffDia43.html" class="jornada-card">
-                    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-                    <div class="status">ARCHIVO</div>
-                    <h3>Playoffs Dia 43</h3>
-                    <small>11 de Junio 2026</small>
-                </a>
-                <a href="/NBA/PlayoffDia42.html" class="jornada-card">
-                    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-                    <div class="status">ARCHIVO</div>
-                    <h3>Playoffs Dia 42</h3>
-                    <small>9 de Junio 2026</small>
-                </a>
-                <a href="/NBA/PlayoffDia41.html" class="jornada-card">
-                    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-                    <div class="status">ARCHIVO</div>
-                    <h3>Playoffs Dia 41</h3>
-                    <small>6 de Junio 2026</small>
-                </a>
-                <a href="/NBA/PlayoffDia40.html" class="jornada-card">
-                    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-                    <div class="status">ARCHIVO</div>
-                    <h3>Playoffs Dia 40</h3>
-                    <small>4 de Junio 2026</small>
-                </a>
-                <a href="/NBA/PlayoffDia39.html" class="jornada-card">
-                    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-                    <div class="status">ARCHIVO</div>
-                    <h3>Playoffs Dia 39</h3>
-                    <small>31 de Mayo 2026</small>
-                </a>
-                
-                <a href="/NBA/PlayoffDia38.html" class="jornada-card">
-                    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-                    <div class="status">ARCHIVO</div>
-                    <h3>Playoffs Dia 38</h3>
-                    <small>29 de Mayo 2026</small>
-                </a>
-                <a href="/NBA/PlayoffDia37.html" class="jornada-card">
-                    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-                    <div class="status">ARCHIVO</div>
-                    <h3>Playoffs Dia 37</h3>
-                    <small>27 de Mayo 2026</small>
-                </a>
-                <a href="/NBA/PlayoffDia36.html" class="jornada-card">
-                    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-                    <div class="status">ARCHIVO</div>
-                    <h3>Playoffs Dia 36</h3>
-                    <small>26 de Mayo 2026</small>
-                </a>
-                <a href="/NBA/PlayoffDia35.html" class="jornada-card">
-                    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-                    <div class="status">ARCHIVO</div>
-                    <h3>Playoffs Dia 35</h3>
-                    <small>25 de Mayo 2026</small>
-                </a>
-                <a href="/NBA/PlayoffDia34.html" class="jornada-card">
-                    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-                    <div class="status">ARCHIVO</div>
-                    <h3>Playoffs Dia 34</h3>
-                    <small>24 de Mayo 2026</small>
-                </a>
-                <a href="/NBA/PlayoffDia33.html" class="jornada-card">
-                    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-                    <div class="status">ARCHIVO</div>
-                    <h3>Playoffs Dia 33</h3>
-                    <small>23 de Mayo 2026</small>
-                </a>
-                <a href="/NBA/PlayoffDia32.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 32</h3>
-               <small>22 de Mayo 2026</small>
-           </a> 
-                <a href="/NBA/PlayoffDia31.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 31</h3>
-               <small>21 de Mayo 2026</small>
-           </a> 
-                <a href="/NBA/PlayoffDia30.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 30</h3>
-               <small>20 de Mayo 2026</small>
-           </a> 
-                <a href="/NBA/PlayoffDia29.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 29</h3>
-               <small>19 de Mayo 2026</small>
-           </a> 
-                <a href="/NBA/PlayoffDia28.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 28</h3>
-               <small>18 de Mayo 2026</small>
-           </a> 
-                <a href="/NBA/PlayoffDia27.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 27</h3>
-               <small>16 de Mayo 2026</small>
-           </a> 
-                <a href="/NBA/PlayoffDia26.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 26</h3>
-               <small>14 de Mayo 2026</small>
-           </a> 
-                <a href="/NBA/PlayoffDia25.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 25</h3>
-               <small>13 de Mayo 2026</small>
-           </a> 
-                <a href="/NBA/PlayoffDia24.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 24</h3>
-               <small>12 de Mayo 2026</small>
-           </a> 
-                <a href="/NBA/PlayoffDia23.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 23</h3>
-               <small>11 de Mayo 2026</small>
-           </a> 
-                <a href="/NBA/PlayoffDia22.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 22</h3>
-               <small>10 de Mayo 2026</small>
-           </a> 
-                <a href="/NBA/PlayoffDia21.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 21</h3>
-               <small>9 de Mayo 2026</small>
-           </a> 
-            <a href="/NBA/PlayoffDia20.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 20</h3>
-               <small>8 de Mayo 2026</small>
-           </a> 
-            <a href="/NBA/PlayoffDia19.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 19</h3>
-               <small>7 de Mayo 2026</small>
-           </a>      
-            <a href="/NBA/PlayoffDia18.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 18</h3>
-               <small>6 de Mayo 2026</small>
-           </a> 
-            <a href="/NBA/PlayoffDia17.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 17</h3>
-               <small>5 de Mayo 2026</small>
-           </a>       
-            <a href="/NBA/PlayoffDia16.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 16</h3>
-               <small>4 de Mayo 2026</small>
-           </a> 
-    <a href="/NBA/PlayoffDia15.html" class="jornada-card">
-        <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Playoffs Dia 15</h3>
-        <small>3 de Mayo 2026</small>
+  <header style="position:relative;z-index:10;background:linear-gradient(180deg,rgba(13,27,42,0.98),rgba(13,27,42,0.85));border-bottom:1px solid rgba(0,200,150,0.2);padding:16px 24px;display:flex;align-items:center;backdrop-filter:blur(10px);">
+    <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+      <div style="width:42px;height:42px;background:linear-gradient(135deg,#00c896,#00a87d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3em;box-shadow:0 0 18px rgba(0,200,150,0.3);">⚽</div>
+      <div>
+        <span style="display:block;font-family:'Bebas Neue',sans-serif;font-size:1.5em;letter-spacing:2px;color:#fff;line-height:1;">UNO X DOS IA</span>
+        <small style="font-size:0.6em;color:#00c896;letter-spacing:1px;font-weight:500;">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+      </div>
     </a>
-     <a href="/NBA/PlayoffDia14.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 14</h3>
-               <small>2 de Mayo 2026</small>
-           </a> 
-     <a href="/NBA/PlayoffDia13.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 13</h3>
-               <small>1 de Mayo 2026</small>
-           </a> 
-     <a href="/NBA/PlayoffDia12.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 12</h3>
-               <small>30 de Abril 2026</small>
-           </a> 
-     <a href="/NBA/PlayoffDia11.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 11</h3>
-               <small>29 de Abril 2026</small>
-           </a> 
- <a href="/NBA/PlayoffDia10.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 10</h3>
-               <small>28 de Abril 2026</small>
-           </a> 
- <a href="/NBA/PlayoffDia9.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 9</h3>
-               <small>27 de Abril 2026</small>
-           </a> 
- <a href="/NBA/PlayoffDia8.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 8</h3>
-               <small>26 de Abril 2026</small>
-           </a>                                   <a href="/NBA/PlayoffDia7.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 7</h3>
-               <small>25 de Abril 2026</small>
-           </a>
-                               <a href="/NBA/PlayoffDia6.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 6</h3>
-               <small>24 de Abril 2026</small>
-           </a>
-                               <a href="/NBA/PlayoffDia5.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 5</h3>
-               <small>23 de Abril 2026</small>
-           </a>
-                           <a href="/NBA/PlayoffDia4.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 4</h3>
-               <small>22 de Abril 2026</small>
-           </a>
-                       <a href="/NBA/PlayoffDia3.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 3</h3>
-               <small>21 de Abril 2026</small>
-           </a>
-                       <a href="/NBA/PlayoffDia2.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 2</h3>
-               <small>20 de Abril 2026</small>
-           </a>
-                       <a href="/NBA/PlayoffDia1.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoffs Dia 1</h3>
-               <small>19 de Abril 2026</small>
-           </a>
-                   <a href="/NBA/Temporadaregular.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Temporada regular</h3>
-               <small>15 de Abril 2026</small>
-           </a>
-                                         <a href="/NBA/Play-inDia3.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Play-in dia 3</h3>
-               <small>18 de Abril 2026</small>
-           </a>
-                              <a href="/NBA/Play-inDia2.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVOfanta-</div>
-               <h3>Play-in dia 2</h3>
-               <small>16 de Abril 2026</small>
-           </a>
-                   <a href="/NBA/Play-inDia1.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Play-in dia 1</h3>
-               <small>15 de Abril 2026</small>
-           </a>
-               <a href="/NBA/Playoff-Playin.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Playoff/Play-in</h3>
-               <small>13 de Abril 2026</small>
-           </a>
-           <a href="/NBA/Noche165.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Noche 165</h3>
-               <small>11 de Abril 2026</small>
-           </a>
-           <a href="/NBA/Noche164.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Noche 164</h3>
-               <small>10 de Abril 2026</small>
-           </a>
-           <a href="/NBA/Noche163.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Noche 163</h3>
-               <small>9 de Abril 2026</small>
-           </a>
-           <a href="/NBA/Noche162.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Noche 162</h3>
-               <small>8 de Abril 2026</small>
-           </a>
-           <a href="/NBA/Noche161.html" class="jornada-card">
-               <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-               <div class="status">ARCHIVO</div>
-               <h3>Noche 161</h3>
-               <small>7 de Abril 2026</small>
-           </a>
-           <a href="/NBA/Noche160.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
+  </header>
+
+  <nav aria-label="Navegación principal">
+    <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+      <span class="ham-icon">☰</span>
+      <span class="ham-label">Secciones</span>
+    </button>
+    <div class="nav-menu" id="navMenu">
+      <a href="index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
+      <a href="NBA.html"         class="nav-link active"><span class="nav-emoji">🏀</span> NBA</a>
+      <a href="LigaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
+      <a href="Hypermotion.html" class="nav-link"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+      <a href="Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+      <a href="/LigaFantasIA/fantas-ia-v2.html" class="nav-link"><span class="nav-emoji">🏆</span> Liga FantasIA</a>
+      <a href="/Mundial/Mundial2026.html" class="nav-link"><span class="nav-emoji">🏆</span> Mundial 2026</a>
+    </div>
+  </nav>
+
+  <div class="nba-container">
+
+    <div class="scoreboard-title">
+      <h2>🏀 Archivo de Jornadas — Regular Season &amp; Playoffs</h2>
+    </div>
+
+    <!-- Plantillas NBA -->
+         <a href="PlantillasJugadoresNBA.html" class="plantilla-btn">
+      <span>📋 Plantillas NBA 2026/2027</span>
+    </a>
+
+    <!-- Dos columnas de temporadas -->
+    <div class="temporadas-layout">
+
+        <!-- Temporada 2026/2027 -->
+      <div class="temporada-col next">
+          <h2>🏀 Temporada 2026/2027</h2>
+        </a>
+        <div class="temporada-col-body">
+          <div class="jornadas-mini">
+            <a href="/NBA/26-27/Noche1.html" class="jornada-card-mini">
+              <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+              <div class="status-mini">ARCHIVO</div>
+              <h3>Noche 1</h3>
+              <small>Próximamente</small>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    <!-- Temporada 2025/2026 -->
+      <div class="temporada-col current">
+          <h2>🏆 Temporada 2025/2026</h2>
+        </a>
+        <div class="temporada-col-body">
+          <div class="jornadas-mini">
+
+            <a href="/NBA/PlayoffDia44.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 44</h3>
+                <small>14 de Junio 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia43.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 43</h3>
+                <small>11 de Junio 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia42.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 42</h3>
+                <small>9 de Junio 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia41.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 41</h3>
+                <small>6 de Junio 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia40.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 40</h3>
+                <small>4 de Junio 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia39.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 39</h3>
+                <small>31 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia38.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 38</h3>
+                <small>29 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia37.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 37</h3>
+                <small>27 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia36.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 36</h3>
+                <small>26 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia35.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 35</h3>
+                <small>25 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia34.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 34</h3>
+                <small>24 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia33.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 33</h3>
+                <small>23 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia32.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 32</h3>
+                <small>22 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia31.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 31</h3>
+                <small>21 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia30.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 30</h3>
+                <small>20 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia29.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 29</h3>
+                <small>19 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia28.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 28</h3>
+                <small>18 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia27.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 27</h3>
+                <small>16 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia26.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 26</h3>
+                <small>14 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia25.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 25</h3>
+                <small>13 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia24.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 24</h3>
+                <small>12 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia23.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 23</h3>
+                <small>11 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia22.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 22</h3>
+                <small>10 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia21.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 21</h3>
+                <small>9 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia20.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 20</h3>
+                <small>8 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia19.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 19</h3>
+                <small>7 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia18.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 18</h3>
+                <small>6 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia17.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 17</h3>
+                <small>5 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia16.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 16</h3>
+                <small>4 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia15.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 15</h3>
+                <small>3 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia14.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 14</h3>
+                <small>2 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia13.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 13</h3>
+                <small>1 de Mayo 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia12.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 12</h3>
+                <small>30 de Abril 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia11.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 11</h3>
+                <small>29 de Abril 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia10.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 10</h3>
+                <small>28 de Abril 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia9.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 9</h3>
+                <small>27 de Abril 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia8.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 8</h3>
+                <small>26 de Abril 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia7.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 7</h3>
+                <small>25 de Abril 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia6.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 6</h3>
+                <small>24 de Abril 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia5.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 5</h3>
+                <small>23 de Abril 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia4.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 4</h3>
+                <small>22 de Abril 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia3.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 3</h3>
+                <small>21 de Abril 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia2.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 2</h3>
+                <small>20 de Abril 2026</small>
+            </a>
+            <a href="/NBA/PlayoffDia1.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoffs Dia 1</h3>
+                <small>19 de Abril 2026</small>
+            </a>
+            <a href="/NBA/Temporadaregular.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Temporada regular</h3>
+                <small>15 de Abril 2026</small>
+            </a>
+            <a href="/NBA/Play-inDia3.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Play-in dia 3</h3>
+                <small>18 de Abril 2026</small>
+            </a>
+            <a href="/NBA/Play-inDia2.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Play-in dia 2</h3>
+                <small>16 de Abril 2026</small>
+            </a>
+            <a href="/NBA/Play-inDia1.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Play-in dia 1</h3>
+                <small>15 de Abril 2026</small>
+            </a>
+            <a href="/NBA/Playoff-Playin.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Playoff/Play-in</h3>
+                <small>13 de Abril 2026</small>
+            </a>
+            <a href="/NBA/Noche165.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 165</h3>
+                <small>11 de Abril 2026</small>
+            </a>
+            <a href="/NBA/Noche164.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 164</h3>
+                <small>10 de Abril 2026</small>
+            </a>
+            <a href="/NBA/Noche163.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 163</h3>
+                <small>9 de Abril 2026</small>
+            </a>
+            <a href="/NBA/Noche162.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 162</h3>
+                <small>8 de Abril 2026</small>
+            </a>
+            <a href="/NBA/Noche161.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 161</h3>
+                <small>7 de Abril 2026</small>
+            </a>
+            <a href="/NBA/Noche160.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
                 <h3>Noche 160</h3>
                 <small>6 de Abril 2026</small>
             </a>
-           <a href="/NBA/Noche159.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
+            <a href="/NBA/Noche159.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
                 <h3>Noche 159</h3>
                 <small>5 de Abril 2026</small>
             </a>
-        <a href="/NBA/Noche158.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
+            <a href="/NBA/Noche158.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
                 <h3>Noche 158</h3>
                 <small>4 de Abril 2026</small>
             </a>
-        <a href="/NBA/Noche157.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
+            <a href="/NBA/Noche157.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
                 <h3>Noche 157</h3>
                 <small>3 de Abril 2026</small>
             </a>
-            <a href="/NBA/Noche156.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 156</h3>
-        <small>2 de Abril 2026</small>
-    </a>
-            <a href="/NBA/Noche155.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 155</h3>
-        <small>1 de Abril 2026</small>
-    </a>
-            <a href="/NBA/Noche154.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 154</h3>
-        <small>31 de Marzo 2026</small>
-    </a> 
-        <a href="/NBA/Noche153.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 153</h3>
-        <small>30 de Marzo 2026</small>
-    </a> 
-        <a href="/NBA/Noche152.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 152</h3>
-        <small>29 de Marzo 2026</small>
-    </a> 
-    <a href="/NBA/Noche151.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 151</h3>
-        <small>28 de Marzo 2026</small>
-    </a> 
-    <a href="/NBA/Noche150.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 150</h3>
-        <small>27 de Marzo 2026</small>
-    </a> 
-    <a href="/NBA/Noche149.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 149</h3>
-        <small>26 de Marzo 2026</small>
-    </a> 
-               <a href="/NBA/Noche148.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 148</h3>
-        <small>25 de Marzo 2026</small>
-    </a> 
-           <a href="/NBA/Noche147.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 147</h3>
-        <small>24 de Marzo 2026</small>
-    </a> 
-       <a href="/NBA/Noche146.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 146</h3>
-        <small>23 de Marzo 2026</small>
-    </a> 
-   <a href="/NBA/Noche145.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 145</h3>
-        <small>22 de Marzo 2026</small>
-    </a> 
-    <a href="/NBA/Noche144.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 144</h3>
-        <small>21 de Marzo 2026</small>
-    </a> 
-    <a href="/NBA/Noche143.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 143</h3>
-        <small>20 de Marzo 2026</small>
-    </a>  
-    <a href="/NBA/Noche142.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 142</h3>
-        <small>19 de Marzo 2026</small>
-    </a>  
-    <a href="/NBA/Noche141.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 141</h3>
-        <small>18 de Marzo 2026</small>
-    </a>  
+            <a href="/NBA/Noche156.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 156</h3>
+                <small>2 de Abril 2026</small>
+            </a>
+            <a href="/NBA/Noche155.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 155</h3>
+                <small>1 de Abril 2026</small>
+            </a>
+            <a href="/NBA/Noche154.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 154</h3>
+                <small>31 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche153.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 153</h3>
+                <small>30 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche152.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 152</h3>
+                <small>29 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche151.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 151</h3>
+                <small>28 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche150.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 150</h3>
+                <small>27 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche149.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 149</h3>
+                <small>26 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche148.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 148</h3>
+                <small>25 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche147.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 147</h3>
+                <small>24 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche146.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 146</h3>
+                <small>23 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche145.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 145</h3>
+                <small>22 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche144.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 144</h3>
+                <small>21 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche143.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 143</h3>
+                <small>20 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche142.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 142</h3>
+                <small>19 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche141.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 141</h3>
+                <small>18 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche140.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 140</h3>
+                <small>17 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche139.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 139</h3>
+                <small>17 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche138.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 138</h3>
+                <small>16 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche137.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 137</h3>
+                <small>15 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche136.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 136</h3>
+                <small>14 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche135.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 135</h3>
+                <small>13 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche134.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 134</h3>
+                <small>12 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche133.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 133</h3>
+                <small>11 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche132.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 132</h3>
+                <small>10 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche131.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 131</h3>
+                <small>9 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche130.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 130</h3>
+                <small>8 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche129.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 129</h3>
+                <small>7 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche128.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 128</h3>
+                <small>6 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche127.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 127</h3>
+                <small>5 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche126.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 126</h3>
+                <small>4 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche125.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 125</h3>
+                <small>3 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche124.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 124</h3>
+                <small>2 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche123.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 123</h3>
+                <small>1 de Marzo 2026</small>
+            </a>
+            <a href="/NBA/Noche122.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 122</h3>
+                <small>28 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche121.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 121</h3>
+                <small>27 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche120.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 120</h3>
+                <small>26 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche119.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 119</h3>
+                <small>25 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche118.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 118</h3>
+                <small>24 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche117.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 117</h3>
+                <small>23 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche116.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 116</h3>
+                <small>22 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche115.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 115</h3>
+                <small>21 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche114.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 114</h3>
+                <small>20 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/NocheAllStar.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche AllStar</h3>
+                <small>13 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche113.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 113</h3>
+                <small>12 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche112.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 112</h3>
+                <small>11 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche111.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 111</h3>
+                <small>10 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche110.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 110</h3>
+                <small>9 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche109.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 109</h3>
+                <small>8 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche108.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 108</h3>
+                <small>7 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche107.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 107</h3>
+                <small>6 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche106.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 106</h3>
+                <small>5 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche105.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 105</h3>
+                <small>4 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche104.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 104</h3>
+                <small>3 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche103.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 103</h3>
+                <small>2 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche102.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 102</h3>
+                <small>1 de Febrero 2026</small>
+            </a>
+            <a href="/NBA/Noche101.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 101</h3>
+                <small>31 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche100.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 100</h3>
+                <small>30 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche99.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 99</h3>
+                <small>29 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche98.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 98</h3>
+                <small>28 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche97.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 97</h3>
+                <small>27 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche96.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 96</h3>
+                <small>26 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche95.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 95</h3>
+                <small>25 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche94.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 94</h3>
+                <small>24 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche93.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 93</h3>
+                <small>23 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche92.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 92</h3>
+                <small>22 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche91.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 91</h3>
+                <small>21 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche90.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 90</h3>
+                <small>20 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche89.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 89</h3>
+                <small>19 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche88.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 88</h3>
+                <small>18 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche87.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 87</h3>
+                <small>17 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche86.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 86</h3>
+                <small>16 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche85.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 85</h3>
+                <small>15 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche84.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 84</h3>
+                <small>14 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche83.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 83</h3>
+                <small>13 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche82.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 82</h3>
+                <small>12 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche81.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 81</h3>
+                <small>11 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche80.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 80</h3>
+                <small>10 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche79.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 79</h3>
+                <small>9 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche78.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 78</h3>
+                <small>8 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche77.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 77</h3>
+                <small>7 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche76.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 76</h3>
+                <small>6 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche75.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 75</h3>
+                <small>5 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche74.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 74</h3>
+                <small>4 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche73.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 73</h3>
+                <small>3 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche72.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 72</h3>
+                <small>2 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche71.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 71</h3>
+                <small>1 de Enero 2026</small>
+            </a>
+            <a href="/NBA/Noche70.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 70</h3>
+                <small>31 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche69.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 69</h3>
+                <small>30 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche68.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 68</h3>
+                <small>29 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche67.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 67</h3>
+                <small>28 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche66.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 66</h3>
+                <small>27 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche65.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 65</h3>
+                <small>26 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche64.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 64</h3>
+                <small>25 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche63.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 63</h3>
+                <small>23 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche62.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 62</h3>
+                <small>22 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche61.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 61</h3>
+                <small>21 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche60.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 60</h3>
+                <small>20 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche59.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 59</h3>
+                <small>19 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche58.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 58</h3>
+                <small>18 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche57.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 57</h3>
+                <small>17 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche56.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 56</h3>
+                <small>16 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche55.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 55</h3>
+                <small>15 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche54.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 54</h3>
+                <small>14 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche53.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 53</h3>
+                <small>13 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche52.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 52</h3>
+                <small>12 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche51.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 51</h3>
+                <small>11 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche50.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 50</h3>
+                <small>10 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche49.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 49</h3>
+                <small>9 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche48.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 48</h3>
+                <small>8 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche47.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 47</h3>
+                <small>7 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche46.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 46</h3>
+                <small>6 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche45.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 45</h3>
+                <small>5 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche44.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 44</h3>
+                <small>4 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche43.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 43</h3>
+                <small>3 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche42.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 42</h3>
+                <small>2 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche41.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 41</h3>
+                <small>1 de Diciembre 2025</small>
+            </a>
+            <a href="/NBA/Noche40.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 40</h3>
+                <small>30 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche39.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 39</h3>
+                <small>29 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche38.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 38</h3>
+                <small>28 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche37.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 37</h3>
+                <small>27 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche36.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 36</h3>
+                <small>26 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche35.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 35</h3>
+                <small>25 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche34.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 34</h3>
+                <small>24 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche33.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 33</h3>
+                <small>23 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche32.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 32</h3>
+                <small>22 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche31.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 31</h3>
+                <small>21 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche30.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 30</h3>
+                <small>20 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche29.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 29</h3>
+                <small>19 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche28.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 28</h3>
+                <small>18 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche27.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 27</h3>
+                <small>17 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche26.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 26</h3>
+                <small>16 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche25.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 25</h3>
+                <small>15 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche24.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 24</h3>
+                <small>14 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche23.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 23</h3>
+                <small>13 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche22.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 22</h3>
+                <small>12 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche21.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 21</h3>
+                <small>11 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche20.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 20</h3>
+                <small>10 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche19.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 19</h3>
+                <small>9 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche18.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 18</h3>
+                <small>8 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche17.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 17</h3>
+                <small>7 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche16.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 16</h3>
+                <small>6 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche15.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 15</h3>
+                <small>5 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche14.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 14</h3>
+                <small>4 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche13.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 13</h3>
+                <small>3 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche12.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 12</h3>
+                <small>2 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche11.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 11</h3>
+                <small>1 de Noviembre 2025</small>
+            </a>
+            <a href="/NBA/Noche10.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 10</h3>
+                <small>31 de Octubre 2025</small>
+            </a>
+            <a href="/NBA/Noche9.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 9</h3>
+                <small>30 de Octubre 2025</small>
+            </a>
+            <a href="/NBA/Noche8.html" class="jornada-card-mini">
+                <img src="https://img.icons8.com/color/512/basketball.png" alt="balón">
+                <div class="status-mini">ARCHIVO</div>
+                <h3>Noche 8</h3>
+                <small>29 de Octubre 2025</small>
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <a href="/NBA/Noche140.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 140</h3>
-        <small>17 de Marzo 2026</small>
-    </a>  
-                <a href="/NBA/Noche139.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 139</h3>
-        <small>17 de Marzo 2026</small>
-    </a> 
-                <a href="/NBA/Noche138.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 138</h3>
-        <small>16 de Marzo 2026</small>
-    </a>
-    <a href="/NBA/Noche137.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-        <div class="status">ARCHIVO</div>
-        <h3>Noche 137</h3>
-        <small>15 de Marzo 2026</small>
-    </a>
-    <a href="/NBA/Noche136.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 136</h3>
-    <small>14 de Marzo 2026</small>
-</a>
-    <a href="/NBA/Noche135.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 135</h3>
-    <small>13 de Marzo 2026</small>
-</a>
-
-        <a href="/NBA/Noche134.html" class="jornada-card">
-            <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-            <div class="status">ARCHIVO</div>
-            <h3>Noche 134</h3>
-            <small>12 de Marzo 2026</small>
-        </a>
-
-            <a href="/NBA/Noche133.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 133</h3>
-    <small>11 de Marzo 2026</small>
-</a>
-            <a href="/NBA/Noche132.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 132</h3>
-    <small>10 de Marzo 2026</small>
-</a>
-<a href="/NBA/Noche131.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 131</h3>
-    <small>9 de Marzo 2026</small>
-</a>
-<a href="/NBA/Noche130.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 130</h3>
-    <small>8 de Marzo 2026</small>
-</a>
-<a href="/NBA/Noche129.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 129</h3>
-    <small>7 de Marzo 2026</small>
-</a>
-<a href="/NBA/Noche128.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 128</h3>
-    <small>6 de Marzo 2026</small>
-</a>
-<a href="/NBA/Noche127.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 127</h3>
-    <small>5 de Marzo 2026</small>
-</a>
-<a href="/NBA/Noche126.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 126</h3>
-    <small>4 de Marzo 2026</small>
-</a>
-<a href="/NBA/Noche125.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 125</h3>
-    <small>3 de Marzo 2026</small>
-</a>
-<a href="/NBA/Noche124.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 124</h3>
-    <small>2 de Marzo 2026</small>
-</a>
-<a href="/NBA/Noche123.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 123</h3>
-    <small>1 de Marzo 2026</small>
-</a>
-<a href="/NBA/Noche122.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 122</h3>
-    <small>28 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche121.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 121</h3>
-    <small>27 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche120.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 120</h3>
-    <small>26 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche119.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 119</h3>
-    <small>25 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche118.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 118</h3>
-    <small>24 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche117.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 117</h3>
-    <small>23 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche116.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 116</h3>
-    <small>22 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche115.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 115</h3>
-    <small>21 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche114.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 114</h3>
-    <small>20 de Febrero 2026</small>
-</a>
-<a href="/NBA/NocheAllStar.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche AllStar</h3>
-    <small>13 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche113.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 113</h3>
-    <small>12 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche112.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 112</h3>
-    <small>11 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche111.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 111</h3>
-    <small>10 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche110.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 110</h3>
-    <small>9 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche109.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 109</h3>
-    <small>8 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche108.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 108</h3>
-    <small>7 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche107.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 107</h3>
-    <small>6 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche106.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 106</h3>
-    <small>5 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche105.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 105</h3>
-    <small>4 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche104.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 104</h3>
-    <small>3 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche103.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 103</h3>
-    <small>2 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche102.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 102</h3>
-    <small>1 de Febrero 2026</small>
-</a>
-<a href="/NBA/Noche101.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 101</h3>
-    <small>31 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche100.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 100</h3>
-    <small>30 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche99.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 99</h3>
-    <small>29 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche98.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 98</h3>
-    <small>28 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche97.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 97</h3>
-    <small>27 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche96.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 96</h3>
-    <small>26 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche95.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 95</h3>
-    <small>25 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche94.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 94</h3>
-    <small>24 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche93.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 93</h3>
-    <small>23 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche92.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 92</h3>
-    <small>22 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche91.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 91</h3>
-    <small>21 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche90.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 90</h3>
-    <small>20 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche89.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 89</h3>
-    <small>19 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche88.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 88</h3>
-    <small>18 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche87.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 87</h3>
-    <small>17 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche86.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 86</h3>
-    <small>16 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche85.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 85</h3>
-    <small>15 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche84.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 84</h3>
-    <small>14 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche83.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 83</h3>
-    <small>13 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche82.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 82</h3>
-    <small>12 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche81.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 81</h3>
-    <small>11 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche80.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 80</h3>
-    <small>10 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche79.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 79</h3>
-    <small>9 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche78.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 78</h3>
-    <small>8 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche77.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 77</h3>
-    <small>7 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche76.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 76</h3>
-    <small>6 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche75.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 75</h3>
-    <small>5 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche74.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 74</h3>
-    <small>4 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche73.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 73</h3>
-    <small>3 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche72.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 72</h3>
-    <small>2 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche71.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 71</h3>
-    <small>1 de Enero 2026</small>
-</a>
-<a href="/NBA/Noche70.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 70</h3>
-    <small>31 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche69.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 69</h3>
-    <small>30 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche68.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 68</h3>
-    <small>29 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche67.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 67</h3>
-    <small>28 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche66.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 66</h3>
-    <small>27 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche65.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 65</h3>
-    <small>26 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche64.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 64</h3>
-    <small>25 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche63.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 63</h3>
-    <small>23 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche62.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 62</h3>
-    <small>22 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche61.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 61</h3>
-    <small>21 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche60.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 60</h3>
-    <small>20 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche59.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 59</h3>
-    <small>19 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche58.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 58</h3>
-    <small>18 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche57.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 57</h3>
-    <small>17 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche56.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 56</h3>
-    <small>16 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche55.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 55</h3>
-    <small>15 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche54.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 54</h3>
-    <small>14 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche53.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 53</h3>
-    <small>13 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche52.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 52</h3>
-    <small>12 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche51.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 51</h3>
-    <small>11 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche50.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 50</h3>
-    <small>10 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche49.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 49</h3>
-    <small>9 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche48.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 48</h3>
-    <small>8 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche47.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 47</h3>
-    <small>7 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche46.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 46</h3>
-    <small>6 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche45.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 45</h3>
-    <small>5 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche44.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 44</h3>
-    <small>4 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche43.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 43</h3>
-    <small>3 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche42.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 42</h3>
-    <small>2 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche41.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 41</h3>
-    <small>1 de Diciembre 2025</small>
-</a>
-<a href="/NBA/Noche40.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 40</h3>
-    <small>30 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche39.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 39</h3>
-    <small>29 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche38.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 38</h3>
-    <small>28 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche37.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 37</h3>
-    <small>27 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche36.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 36</h3>
-    <small>26 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche35.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 35</h3>
-    <small>25 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche34.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 34</h3>
-    <small>24 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche33.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 33</h3>
-    <small>23 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche32.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 32</h3>
-    <small>22 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche31.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 31</h3>
-    <small>21 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche30.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 30</h3>
-    <small>20 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche29.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 29</h3>
-    <small>19 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche28.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 28</h3>
-    <small>18 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche27.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 27</h3>
-    <small>17 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche26.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 26</h3>
-    <small>16 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche25.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 25</h3>
-    <small>15 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche24.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 24</h3>
-    <small>14 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche23.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 23</h3>
-    <small>13 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche22.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 22</h3>
-    <small>12 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche21.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 21</h3>
-    <small>11 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche20.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 20</h3>
-    <small>10 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche19.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 19</h3>
-    <small>9 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche18.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 18</h3>
-    <small>8 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche17.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 17</h3>
-    <small>7 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche16.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 16</h3>
-    <small>6 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche15.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 15</h3>
-    <small>5 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche14.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 14</h3>
-    <small>4 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche13.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 13</h3>
-    <small>3 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche12.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 12</h3>
-    <small>2 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche11.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 11</h3>
-    <small>1 de Noviembre 2025</small>
-</a>
-<a href="/NBA/Noche10.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 10</h3>
-    <small>31 de Octubre 2025</small>
-</a>
-<a href="/NBA/Noche9.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 9</h3>
-    <small>30 de Octubre 2025</small>
-</a>
-<a href="/NBA/Noche8.html" class="jornada-card">
-    <img src="https://img.icons8.com/color/512/basketball.png" alt="balon">
-    <div class="status">ARCHIVO</div>
-    <h3>Noche 8</h3>
-    <small>29 de Octubre 2025</small>
-</a> 
-            </div>
     </div>
-<footer style="background:rgba(13,27,42,0.9);border-top:1px solid rgba(255,255,255,0.05);text-align:center;padding:18px;font-size:0.78em;color:#8fa3b8;margin-top:60px;">
-  <p>© 2025 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
-  <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com" style="color:#8fa3b8;">Contacto</a></p>
-</footer>
-    <script>
-        function toggleDropdown() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropbtn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-          function toggleNav() {
-  const menu = document.getElementById('navMenu');
-  menu.classList.toggle('open');
-}
+  </div>
 
-// Cierra al hacer clic fuera
-document.addEventListener('click', function(e) {
-  const nav = document.querySelector('nav');
-  if (!nav.contains(e.target)) {
-    document.getElementById('navMenu').classList.remove('open');
-  }
-});
+  <footer>
+    <p>© 2025 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
+    <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com">Contacto</a></p>
+  </footer>
 
-// Cierra al navegar
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    document.getElementById('navMenu').classList.remove('open');
-  });
-});
-    </script>
+  <script>
+    function toggleNav() {
+      document.getElementById('navMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', function(e) {
+      const nav = document.querySelector('nav');
+      if (!nav.contains(e.target)) {
+        document.getElementById('navMenu').classList.remove('open');
+      }
+    });
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navMenu').classList.remove('open');
+      });
+    });
+  </script>
 </body>
 </html>
