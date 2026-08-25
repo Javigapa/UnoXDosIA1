@@ -1,526 +1,460 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-90WQKBTXN3');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Predicciones Liga Hypermotion generadas por IA, ¿Qué IA es mejor?"/>
+  <title>Uno X Dos IA · Liga Hypermotion</title>
+  <link rel="icon" href="/Imagenes/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent:       #00c896;
+      --gold:         #f0c040;
+      --muted:        #9aaa98;
+      --card-border:  rgba(255,255,255,0.1);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Outfit', sans-serif;
+      --radius:       12px;
+    }
 
-  gtag('config', 'G-90WQKBTXN3');
-</script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Predicciones deportivas generadas por IA, ¿Que IA es mejor?"/>
-    <title>Uno X Dos IA - Hypermotion</title>
-     <link rel="icon" href="/Imagenes/favicon.png">
-    <link rel="stylesheet" href="index.css">
-    <style>
-        /* ESTILOS ESPECÍFICOS TEMÁTICA SEGUNDA DIVISIÓN (EL BARRO) */
-        :root {
-            --hyper-charcoal: #333333;
-            --hyper-silver: #a6a6a6;
-            --mud-green: #4b5320; /* Verde militar / barro */
-            --grass-dead: #8b864e; /* Tono de césped seco */
-        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            /* Fondo de césped descuidado: mezcla de verde oscuro, ocre y textura de tierra */
-            background-color: var(--mud-green);
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(139, 134, 78, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(101, 67, 33, 0.3) 0%, transparent 40%),
-                url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Textura rugosa */
-            background-blend-mode: overlay;
-        }
+    /* ── FONDO: CAMPO DE PUEBLO ── */
+    body {
+      font-family: var(--font-body);
+      color: #e8ecf0;
+      min-height: 100vh;
+      background-color: #5a5228;
+      background-image:
+        radial-gradient(ellipse 60% 30% at 20% 40%, rgba(62,82,28,0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 25% at 75% 20%, rgba(72,90,22,0.45) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 35% at 55% 75%, rgba(55,70,18,0.50) 0%, transparent 65%),
+        radial-gradient(ellipse 35% 20% at 10% 80%, rgba(80,60,20,0.40) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 30% at 85% 60%, rgba(65,85,25,0.45) 0%, transparent 65%),
+        repeating-linear-gradient(90deg, transparent 0px, transparent 98px, rgba(255,255,255,0.04) 98px, rgba(255,255,255,0.04) 100px),
+        repeating-linear-gradient(180deg, transparent 0px, transparent 98px, rgba(255,255,255,0.03) 98px, rgba(255,255,255,0.03) 100px),
+        linear-gradient(135deg, #4a4820 0%, #5c5428 20%, #4e5c20 40%, #62521c 60%, #4a5422 80%, #585024 100%);
+    }
 
-        header {
-            background-color: var(--hyper-charcoal);
-            border-bottom: 5px solid var(--hyper-silver);
-        }
+    /* ── HEADER ── */
+    header {
+      position: relative; z-index: 10;
+      background: linear-gradient(180deg,rgba(13,27,42,0.98),rgba(13,27,42,0.85));
+      border-bottom: 1px solid rgba(0,200,150,0.2);
+      padding: 16px 24px; display: flex; align-items: center;
+      backdrop-filter: blur(10px);
+    }
 
-        .hyper-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    /* ── NAV ── */
+    nav {
+      background: rgba(19,34,56,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 8px 20px; position: relative; z-index: 100;
+      display: flex; justify-content: center;
+    }
+    .nav-hamburger {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      color: #fff; font-size: 1em; font-weight: 600;
+      padding: 10px 18px; border-radius: 8px; cursor: pointer;
+      font-family: var(--font-body); transition: background 0.2s;
+    }
+    .nav-hamburger:hover { background: rgba(255,255,255,0.12); }
+    .ham-icon { font-size: 1.3em; }
+    .ham-label { letter-spacing: 0.5px; }
+    .nav-menu {
+      display: none; flex-direction: column; gap: 4px; margin-top: 8px;
+      background: rgba(13,27,42,0.98); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; padding: 8px; position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      min-width: 220px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); z-index: 200;
+    }
+    .nav-menu.open { display: flex; }
+    .nav-link {
+      display: flex; align-items: center; gap: 10px; padding: 11px 16px;
+      border-radius: 7px; text-decoration: none; font-size: 0.92em; font-weight: 600;
+      color: var(--muted); transition: all 0.2s; border: 1px solid transparent;
+    }
+    .nav-link:hover { color: #fff; background: rgba(255,255,255,0.07); }
+    .nav-link.active { color: var(--accent); background: rgba(0,200,150,0.1); border-color: rgba(0,200,150,0.25); }
+    .nav-emoji { font-size: 1.1em; }
 
-        /* Título con estilo de placa de metal / industrial */
-        .industrial-title {
-            background: linear-gradient(to right, #444, #222);
-            color: #efefef;
-            padding: 25px;
-            text-align: center;
-            border: 2px solid var(--hyper-silver);
-            border-radius: 0; /* Más cuadrado, más rudo */
-            margin-bottom: 30px;
-            box-shadow: 5px 5px 0px rgba(0,0,0,0.5);
-            position: relative;
-        }
+    /* ── CONTAINER ── */
+    .hyper-container {
+      max-width: 1300px; margin: 0 auto; padding: 28px 20px;
+    }
 
-        .industrial-title h2 {
-            margin: 0;
-            font-family: 'Impact', sans-serif;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
+    /* ── TITLE ── */
+    .industrial-title {
+      background: linear-gradient(135deg, rgba(18,24,14,0.92), rgba(40,36,10,0.85));
+      border: 2px solid rgba(240,192,64,0.3);
+      border-left: 6px solid var(--gold);
+      border-radius: var(--radius);
+      padding: 20px 24px; text-align: center; margin-bottom: 28px;
+      backdrop-filter: blur(10px);
+    }
+    .industrial-title h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4em, 3vw, 2em);
+      letter-spacing: 3px; color: #fff;
+    }
 
-        /* Grid de Jornadas */
-        .jornadas-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-        }
+    /* ── TEMPORADAS LAYOUT ── */
+    .temporadas-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 800px) { .temporadas-layout { grid-template-columns: 1fr; } }
 
-        /* Tarjeta de Jornada (Estilo Entrada Antigua de Estadio) */
-        .jornada-card {
-            background: #f0e6d2; /* Papel viejo / amarillento */
-            border-radius: 0;
-            overflow: hidden;
-            position: relative;
-            border: 2px solid #555;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
-        }
+    /* ── TEMPORADA COLUMN ── */
+    .temporada-col {
+      background: rgba(18,24,14,0.82);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px; overflow: hidden; backdrop-filter: blur(8px);
+    }
+    .temporada-col-header {
+      padding: 16px 20px; text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      text-decoration: none; display: block; transition: background 0.2s;
+    }
+    .temporada-col-header:hover { background: rgba(255,255,255,0.04); }
+    .temporada-col-header h2 {
+      font-family: var(--font-display);
+      font-size: 1.6em; letter-spacing: 2px; color: #fff; margin-bottom: 4px;
+    }
+    .temporada-col-header small { font-size: 0.78em; color: var(--muted); }
 
-        .jornada-card:hover {
-            transform: translate(-3px, -3px);
-            box-shadow: 12px 12px 0px rgba(0,0,0,0.3);
-            background-color: #fff;
-        }
+    .temporada-col.next .temporada-col-header {
+      background: rgba(0,200,150,0.08);
+      border-bottom-color: rgba(0,200,150,0.2);
+    }
+    .temporada-col.next .temporada-col-header h2 { color: var(--accent); }
 
-        .card-header {
-            background-color: #333;
-            color: white;
-            width: 100%;
-            padding: 10px 0;
-            font-size: 0.9em;
-            text-align: center;
-            border-bottom: 2px dashed #f0e6d2;
-        }
+    .temporada-col.current .temporada-col-header {
+      background: rgba(240,192,64,0.08);
+      border-bottom-color: rgba(240,192,64,0.25);
+    }
+    .temporada-col.current .temporada-col-header h2 { color: var(--gold); }
 
-        .jornada-card .content {
-            padding: 20px;
-            text-align: center;
-        }
+    .temporada-col-body {
+      padding: 16px;
+      max-height: 600px; overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.15) transparent;
+    }
 
-        .jornada-card h3 {
-            color: #1a1a1a;
-            margin: 10px 0;
-            font-size: 1.5em;
-            text-decoration: underline;
-        }
+    /* ── MINI CARDS ── */
+    .jornadas-mini {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+    }
+    .jornada-card-mini {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 10px; padding: 12px 8px;
+      text-align: center; text-decoration: none; color: #e8ecf0;
+      transition: all 0.2s; display: flex; flex-direction: column;
+      align-items: center; gap: 5px;
+    }
+    .jornada-card-mini:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(240,192,64,0.4);
+      transform: translateY(-2px);
+    }
+    .jornada-card-mini img { width: 34px; height: 34px; object-fit: contain; filter: sepia(0.3); }
+    .jornada-card-mini h3 { font-size: 0.82em; font-weight: 700; color: #fff; line-height: 1.2; }
+    .jornada-card-mini small { font-size: 0.67em; color: var(--muted); }
+    .jornada-card-mini .status-mini {
+      font-size: 0.63em; font-weight: 700; letter-spacing: 0.5px;
+      background: rgba(101,67,33,0.4); color: #c8a870;
+      border-radius: 4px; padding: 2px 6px;
+    }
+    .jornada-card-mini .status-mini.playoff {
+      background: rgba(240,192,64,0.2); color: var(--gold);
+    }
 
-        .jornada-card .mud-label {
-            display: inline-block;
-            background: #654321; /* Color barro */
-            color: white;
-            padding: 5px 12px;
-            font-size: 0.7em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        /* Balones de fútbol antiguos (estilo cuero) */
-        .vintage-ball-bg {
-            position: fixed;
-            opacity: 0.1;
-            z-index: -1;
-            filter: sepia(1);
-        }
-        nav {
-  background: rgba(19,34,56,0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding: 8px 20px;
-  position: relative;
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-}
-
-.nav-hamburger {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: #ffffff;
-  font-size: 1em;
-  font-weight: 600;
-  padding: 10px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: Arial, sans-serif;
-  transition: background 0.2s;
-}
-
-.nav-hamburger:hover {
-  background: rgba(255,255,255,0.12);
-}
-
-.ham-icon { font-size: 1.3em; }
-
-.nav-menu {
-  display: none;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 8px;
-  background: rgba(13,27,42,0.98);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  padding: 8px;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 220px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-  z-index: 200;
-}
-
-.nav-menu.open {
-  display: flex;
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 16px;
-  border-radius: 7px;
-  text-decoration: none;
-  font-size: 0.92em;
-  font-weight: 600;
-  color: #8fa3b8;
-  transition: all 0.2s;
-  border: 1px solid transparent;
-}
-
-.nav-link:hover {
-  color: #ffffff;
-  background: rgba(255,255,255,0.07);
-}
-
-.nav-link.active {
-  color: #00c896;
-  background: rgba(0,200,150,0.1);
-  border-color: rgba(0,200,150,0.25);
-}
-
-.nav-emoji { font-size: 1.1em; }
-    </style>
+    /* ── FOOTER ── */
+    footer {
+      background: rgba(13,27,42,0.9); border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center; padding: 20px; font-size: 0.78em;
+      color: var(--muted); margin-top: 40px;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+  </style>
 </head>
 <body>
 
-    <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" class="vintage-ball-bg" style="top: 20%; left: 10%; width: 150px;">
-    <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" class="vintage-ball-bg" style="top: 65%; left: 75%; width: 220px;">
+  <header>
+    <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+      <div style="width:42px;height:42px;background:linear-gradient(135deg,#00c896,#00a87d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3em;box-shadow:0 0 18px rgba(0,200,150,0.3);">⚽</div>
+      <div>
+        <span style="display:block;font-family:'Bebas Neue',sans-serif;font-size:1.5em;letter-spacing:2px;color:#fff;line-height:1;">UNO X DOS IA</span>
+        <small style="font-size:0.6em;color:#00c896;letter-spacing:1px;font-weight:500;">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+      </div>
+    </a>
+  </header>
 
-<header style="position:relative;z-index:10;background:linear-gradient(180deg,rgba(13,27,42,0.98),rgba(13,27,42,0.85));border-bottom:1px solid rgba(0,200,150,0.2);padding:16px 24px;display:flex;align-items:center;backdrop-filter:blur(10px);">
-  <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
-    <div style="width:42px;height:42px;background:linear-gradient(135deg,#00c896,#00a87d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3em;box-shadow:0 0 18px rgba(0,200,150,0.3);">⚽</div>
-    <div>
-      <span style="display:block;font-family:'Bebas Neue',sans-serif;font-size:1.5em;letter-spacing:2px;color:#ffffff;line-height:1;">UNO X DOS IA</span>
-      <small style="font-size:0.6em;color:#00c896;letter-spacing:1px;font-weight:500;">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+  <nav aria-label="Navegación principal">
+    <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+      <span class="ham-icon">☰</span>
+      <span class="ham-label">Secciones</span>
+    </button>
+    <div class="nav-menu" id="navMenu">
+      <a href="index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
+      <a href="NBA.html"         class="nav-link"><span class="nav-emoji">🏀</span> NBA</a>
+      <a href="LigaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
+      <a href="Hypermotion.html" class="nav-link active"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+      <a href="Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+      <a href="/LigaFantasIA/fantas-ia-v2.html" class="nav-link"><span class="nav-emoji">🏆</span> Liga FantasIA</a>
+      <a href="/Mundial/Mundial2026.html" class="nav-link"><span class="nav-emoji">🏆</span> Mundial 2026</a>
     </div>
-  </a>
-</header>
+  </nav>
 
- <nav aria-label="Navegación principal">
-  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
-    <span class="ham-icon">☰</span>
-    <span class="ham-label">Secciones</span>
-  </button>
-  <div class="nav-menu" id="navMenu">
-    <a href="index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
-    <a href="NBA.html"         class="nav-link"><span class="nav-emoji">🏀</span> NBA</a>
-    <a href="LigaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
-    <a href="Hypermotion.html" class="nav-link active"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
-    <a href="Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
-    <a href="/LigaFantasIA/fantas-ia-v2.html"    class="nav-link "><span class="nav-emoji">🏆</span> Liga FantasIA</a>
-    <a href="/Mundial/Mundial2026.html" class="nav-link"><span>🏆</span> Mundial 2026</a>
-</div>
-</nav>
+  <div class="hyper-container">
 
+    <div class="industrial-title">
+      <h2>📈 Predicciones de Segunda · Jornada a Jornada</h2>
+    </div>
 
-    <div class="hyper-container">
-        <div class="industrial-title">
-            <h2>Predicciones de Segunda - Jornada a Jornada</h2>
+    <div class="temporadas-layout">
+
+      <!-- ── TEMPORADA 2026/2027 (izquierda) ── -->
+      <div class="temporada-col next">
+        <a href="#" class="temporada-col-header">
+          <h2>📈 Temporada 2026/2027</h2>
+        </a>
+        <div class="temporada-col-body">
+          <div class="jornadas-mini">
+            <a href="/Segunda/26-27/Segunda1.html" class="jornada-card-mini">
+              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+              <div class="status-mini">Jugado</div>
+              <h3>Jornada 1</h3>
+            </a>
+             <a href="/Segunda/26-27/Segunda2.html" class="jornada-card-mini">
+              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+              <div class="status-mini">Jugado</div>
+              <h3>Jornada 1</h3>
+            </a>
+             <a href="/Segunda/26-27/Segunda3.html" class="jornada-card-mini">
+              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+              <div class="status-mini">PRÓXIMO</div>
+              <h3>Jornada 1</h3>
+            </a>
+          </div>
         </div>
+      </div>
 
-        <div class="jornadas-grid">
-            
-            <a href="/Segunda/Jornada17Segunda.html" class="jornada-card">
-                <div class="card-header">JORNADA 17</div>
-                <div class="content">
-                    <div class="mud-label">Próximos Partidos</div>
-                    <h3>Duelos Directos</h3>
-                    <small style="color: #444; font-weight: bold;">Finalizado: 6 de Diciembre 2025</small>
-                </div>
-            </a>
+      <!-- ── TEMPORADA 2025/2026 (derecha) ── -->
+      <div class="temporada-col current">
+        <a href="#" class="temporada-col-header">
+          <h2>🏆 Temporada 2025/2026</h2>
+          <small>Archivo completo</small>
+        </a>
+        <div class="temporada-col-body">
+          <div class="jornadas-mini">
 
-            <a href="/Segunda/Jornada18Segunda.html" class="jornada-card">
-                <div class="card-header">JORNADA 18</div>
-                <div class="content">
-                    <div class="mud-label">Próximos Partidos</div>
-                    <h3>Duelos Directos</h3>
-                    <small style="color: #444;">Finalizado: 12 de Diciembre 2025</small>
-                </div>
+            <a href="/Segunda/Jornada17Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 17</h3>
+                <small>6 de Diciembre 2025</small>
             </a>
-
-            <a href="/Segunda/Jornada19Segunda.html" class="jornada-card">
-                <div class="card-header">JORNADA 19</div>
-                <div class="content">
-                    <div class="mud-label">Próximos Partidos</div>
-                    <h3>Duelos Directos</h3>
-                    <small style="color: #444;">Finalizado: 19 de Diciembre 2025 </small>
-                </div>
+            <a href="/Segunda/Jornada18Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 18</h3>
+                <small>12 de Diciembre 2025</small>
             </a>
-             <a href="/Segunda/Jornada20Segunda.html" class="jornada-card">
-                <div class="card-header">JORNADA 20</div>
-                <div class="content">
-                    <div class="mud-label">Próximos Partidos</div>
-                    <h3>Duelos Directos</h3>
-                    <small style="color: #444;">Finalizado: 2 de Enero 2026 </small>
-                </div>
+            <a href="/Segunda/Jornada19Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 19</h3>
+                <small>19 de Diciembre 2025</small>
             </a>
-            <a href="/Segunda/Jornada21Segunda.html" class="jornada-card">
-                <div class="card-header">JORNADA 21</div>
-                <div class="content">
-                    <div class="mud-label">Próximos Partidos</div>
-                    <h3>Duelos Directos</h3>
-                    <small style="color: #444;">Finalizado: 9 de Enero 2026  </small>
-                </div>
+            <a href="/Segunda/Jornada20Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 20</h3>
+                <small>2 de Enero 2026</small>
             </a>
-               <a href="/Segunda/Jornada22Segunda.html" class="jornada-card">
-                <div class="card-header">JORNADA 22</div>
-                <div class="content">
-                    <div class="mud-label">Próximos Partidos</div>
-                    <h3>Duelos Directos</h3>
-                    <small style="color: #444;">Finalizado: 16 de Enero 2026  </small>
-                </div>
+            <a href="/Segunda/Jornada21Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 21</h3>
+                <small>9 de Enero 2026</small>
             </a>
-                 <a href="/Segunda/Jornada23Segunda.html" class="jornada-card">
-                <div class="card-header">JORNADA 23</div>
-                <div class="content">
-                    <div class="mud-label">Próximos Partidos</div>
-                    <h3>Duelos Directos</h3>
-                    <small style="color: #444;">Finalizado: 23 de Enero 2026  </small>
-                </div>
+            <a href="/Segunda/Jornada22Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 22</h3>
+                <small>16 de Enero 2026</small>
             </a>
-            <a href="/Segunda/Jornada24Segunda.html" class="jornada-card">
-                <div class="card-header">JORNADA 24</div>
-                <div class="content">
-                    <div class="mud-label">Próximos Partidos</div>
-                    <h3>Duelos Directos</h3>
-                    <small style="color: #444;">Finalizado: 2 de Febrero 2026 </small>
-                </div>
+            <a href="/Segunda/Jornada23Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 23</h3>
+                <small>23 de Enero 2026</small>
             </a>
-            <a href="/Segunda/Jornada25Segunda.html" class="jornada-card">
-                <div class="card-header">JORNADA 25</div>
-                <div class="content">
-                    <div class="mud-label">Próximos Partidos</div>
-                    <h3>Duelos Directos</h3>
-                    <small style="color: #444;">Finalizado: 9 de Febrero 2026 </small>
-                </div>
+            <a href="/Segunda/Jornada24Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 24</h3>
+                <small>2 de Febrero 2026</small>
             </a>
-             <a href="/Segunda/Jornada26Segunda.html" class="jornada-card">
-                <div class="card-header">JORNADA 26</div>
-                <div class="content">
-                    <div class="mud-label">Próximos Partidos</div>
-                    <h3>Duelos Directos</h3>
-                    <small style="color: #444;">Finalizado: 16 de Febrero 2026 </small>
-                </div>
+            <a href="/Segunda/Jornada25Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 25</h3>
+                <small>9 de Febrero 2026</small>
             </a>
-             <a href="/Segunda/Jornada27Segunda.html" class="jornada-card">
-                <div class="card-header">JORNADA 27</div>
-                <div class="content">
-                    <div class="mud-label">Próximos Partidos</div>
-                    <h3>Duelos Directos</h3>
-                    <small style="color: #444;">Finalizado: 23 de Febrero 2026 </small>
-                </div>
+            <a href="/Segunda/Jornada26Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 26</h3>
+                <small>16 de Febrero 2026</small>
             </a>
-
-              <a href="/Segunda/Jornada28Segunda.html" class="jornada-card">
-                <div class="card-header">JORNADA 28</div>
-                <div class="content">
-                    <div class="mud-label">Próximos Partidos</div>
-                    <h3>Duelos Directos</h3>
-                    <small style="color: #444;">Finalizado: 2 de Marzo 2026 </small>
-                </div>
+            <a href="/Segunda/Jornada27Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 27</h3>
+                <small>23 de Febrero 2026</small>
             </a>
-
-              <a href="/Segunda/Jornada29Segunda.html" class="jornada-card">
-                <div class="card-header">JORNADA 29</div>
-                <div class="content">
-                    <div class="mud-label">Próximos Partidos</div>
-                    <h3>Duelos Directos</h3>
-                    <small style="color: #444;">Finalizado: 9 de Marzo 2026 </small>
-                </div>
+            <a href="/Segunda/Jornada28Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 28</h3>
+                <small>2 de Marzo 2026</small>
             </a>
-            <a href="/Segunda/Jornada30Segunda.html" class="jornada-card">
-    <div class="card-header">JORNADA 30</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">Finalizado: 16 de Marzo 2026 </small>
-    </div>
-</a>
-            <a href="/Segunda/Jornada31Segunda.html" class="jornada-card">
-    <div class="card-header">JORNADA 31</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">Finalizado: 23 de Marzo 2026 </small>
-    </div>
-</a>
-            <a href="/Segunda/Jornada32Segunda.html" class="jornada-card">
-    <div class="card-header">JORNADA 32</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">Finalizado 29 de Marzo 2026 </small>
-    </div>
-</a>
-            <a href="/Segunda/Jornada33Segunda.html" class="jornada-card">
-    <div class="card-header">JORNADA 33</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">Finalizado 2 de Abril 2026 </small>
-    </div>
-</a>
-            <a href="/Segunda/Jornada34Segunda.html" class="jornada-card">
-    <div class="card-header">JORNADA 34</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">Finalizado 6 de Abril 2026 </small>
-    </div>
-</a>
-            <a href="/Segunda/Jornada35Segunda.html" class="jornada-card">
-    <div class="card-header">JORNADA 35</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">Finalizado 12 de Abril 2026</small>
-    </div>
-</a>
-
-            <a href="/Segunda/Jornada36Segunda.html" class="jornada-card">
-    <div class="card-header">JORNADA 36</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">Finalizado 20 de Abril 2026</small>
-    </div>
-</a>
-                    <a href="/Segunda/Jornada37Segunda.html" class="jornada-card">
-    <div class="card-header">JORNADA 37</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">Finalizado 27 de Abril 2026</small>
-    </div>
-</a>
-                    <a href="/Segunda/Jornada38Segunda.html" class="jornada-card">
-    <div class="card-header">JORNADA 38</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">Finalizado 4 de Mayo 2026</small>
+            <a href="/Segunda/Jornada29Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 29</h3>
+                <small>9 de Marzo 2026</small>
+            </a>
+            <a href="/Segunda/Jornada30Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 30</h3>
+                <small>16 de Marzo 2026</small>
+            </a>
+            <a href="/Segunda/Jornada31Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 31</h3>
+                <small>23 de Marzo 2026</small>
+            </a>
+            <a href="/Segunda/Jornada32Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 32</h3>
+                <small>29 de Marzo 2026</small>
+            </a>
+            <a href="/Segunda/Jornada33Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 33</h3>
+                <small>2 de Abril 2026</small>
+            </a>
+            <a href="/Segunda/Jornada34Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 34</h3>
+                <small>6 de Abril 2026</small>
+            </a>
+            <a href="/Segunda/Jornada35Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 35</h3>
+                <small>12 de Abril 2026</small>
+            </a>
+            <a href="/Segunda/Jornada36Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 36</h3>
+                <small>20 de Abril 2026</small>
+            </a>
+            <a href="/Segunda/Jornada37Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 37</h3>
+                <small>27 de Abril 2026</small>
+            </a>
+            <a href="/Segunda/Jornada38Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 38</h3>
+                <small>4 de Mayo 2026</small>
+            </a>
+            <a href="/Segunda/Jornada39Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 39</h3>
+                <small>11 de Mayo 2026</small>
+            </a>
+            <a href="/Segunda/Jornada40Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 40</h3>
+                <small>18 de Mayo 2026</small>
+            </a>
+            <a href="/Segunda/Jornada41Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 41</h3>
+                <small>24 de Mayo 2026</small>
+            </a>
+            <a href="/Segunda/Jornada42Segunda.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini">FINALIZADA</div>
+                <h3>Jornada 42</h3>
+                <small>31 de Mayo 2026</small>
+            </a>
+            <a href="/Segunda/PlayoffAscenso.html" class="jornada-card-mini">
+                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+                <div class="status-mini playoff">PLAYOFF</div>
+                <h3>Playoff Ascenso</h3>
+                <small>Junio 2026</small>
+            </a>
+          </div>
         </div>
-</a>
+      </div>
 
-                    <a href="/Segunda/Jornada39Segunda.html" class="jornada-card">
-    <div class="card-header">JORNADA 39</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">Finalizado 11 de Mayo 2026</small>
-        </div>
-</a>
-                    <a href="/Segunda/Jornada40Segunda.html" class="jornada-card">
-    <div class="card-header">JORNADA 40</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">Finalizado 18 de Mayo 2026</small>
-        </div>
-</a>
     </div>
-                        <a href="/Segunda/Jornada41Segunda.html" class="jornada-card">
-    <div class="card-header">JORNADA 41</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">Finalizado 24 de Mayo 2026</small>
-        </div>
-</a>
-                        <a href="/Segunda/Jornada42Segunda.html" class="jornada-card">
-    <div class="card-header">JORNADA 42</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">Finalizado 31 de Mayo 2026</small>
-        </div>
-</a>
+  </div>
 
-                        <a href="/Segunda/PlayoffAscenso.html" class="jornada-card">
-    <div class="card-header">PLAYOFF ASCENSO</div>
-    <div class="content">
-        <div class="mud-label">Próximos Partidos</div>
-        <h3>Duelos Directos</h3>
-        <small style="color: #444;">En progreso</small>
-        </div>
-</a>
-    </div>
+  <footer>
+    <p>© 2026 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
+    <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com">Contacto</a></p>
+  </footer>
 
+  <script>
+    function toggleNav() {
+      document.getElementById('navMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', function(e) {
+      const nav = document.querySelector('nav');
+      if (!nav.contains(e.target)) {
+        document.getElementById('navMenu').classList.remove('open');
+      }
+    });
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navMenu').classList.remove('open');
+      });
+    });
+  </script>
 
-<footer style="background:rgba(13,27,42,0.9);border-top:1px solid rgba(255,255,255,0.05);text-align:center;padding:18px;font-size:0.78em;color:#8fa3b8;margin-top:60px;">
-  <p>© 2026 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
-  <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com" style="color:#8fa3b8;">Contacto</a></p>
-</footer>
-    <script>
-        function toggleDropdown() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropbtn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-        function toggleNav() {
-  const menu = document.getElementById('navMenu');
-  menu.classList.toggle('open');
-}
-
-// Cierra al hacer clic fuera
-document.addEventListener('click', function(e) {
-  const nav = document.querySelector('nav');
-  if (!nav.contains(e.target)) {
-    document.getElementById('navMenu').classList.remove('open');
-  }
-});
-
-// Cierra al navegar
-document.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    document.getElementById('navMenu').classList.remove('open');
-  });
-});
-    </script>
 </body>
 </html>
