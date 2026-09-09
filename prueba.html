@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Michinis - Aprende a Leer, Escribir y Contar Jugando | Juegos Educativos Infantiles</title>
+    <meta name="description" content="Michinis es la plataforma interactiva para niños. Aprende a leer, escribir, sumar y restar con sopas de letras, sudokus y autodefinidos súper fáciles y divertidos.">
+    <meta name="keywords" content="juegos educativos, aprender a leer, juegos de matemáticas para niños, sopa de letras infantil, sudoku niños, autodefinidos infantiles, michinis">
+    <meta name="author" content="Michinis Team">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph (Para compartir en Redes Sociales y WhatsApp) -->
+    <meta property="og:title" content="Michinis - Aprende a Leer, Escribir y Contar Jugando">
+    <meta property="og:description" content="Juegos clásicos como sopas de letras y sudokus adaptados para niños. ¡Aprender nunca fue tan divertido!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.michinis.com">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=800">
+
+    <!-- Google Fonts (Fuentes infantiles y redondeadas) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Integrado -->
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --yellow: #FFE66D;
+            --purple: #A29BFE;
+            --green: #6C5CE7;
+            --dark: #2D3436;
+            --light: #F7F9FC;
+            --card-radius: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            background-image: radial-gradient(#4ECDC4 0.75px, transparent 0.75px), radial-gradient(#FF6B6B 0.75px, #F7F9FC 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER & NAVBAR */
+        header {
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 5px solid var(--yellow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        .logo-text {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: var(--yellow);
+            transform: translateY(-2px);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            text-align: center;
+            background: white;
+            border-radius: var(--card-radius);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 4px dashed var(--secondary);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #666;
+            font-family: 'Quicksand', sans-serif;
+            max-width: 700px;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        /* SECCIÓN DE JUEGOS Y CATEGORÍAS */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem 2rem;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .game-card.sopa { border-color: #FF6B6B; }
+        .game-card.sudoku { border-color: #4ECDC4; }
+        .game-card.autodefinido { border-color: #FFE66D; }
+        .game-card.mates { border-color: #A29BFE; }
+
+        .game-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .game-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-card p {
+            font-family: 'Quicksand', sans-serif;
+            color: #777;
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--yellow);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* ÁREA DE JUEGO ACTIVO (SOPA DE LETRAS) */
+        .game-area {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sopa-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+
+        #sopa-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            background: #F0F4F8;
+            padding: 15px;
+            border-radius: 16px;
+            user-select: none;
+        }
+
+        .cell {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            cursor: pointer;
+            box-shadow: 0 4px 0 #E2E8F0;
+            transition: all 0.15s ease;
+        }
+
+        .cell:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #E2E8F0;
+        }
+
+        .cell.selected {
+            background: var(--yellow);
+            color: var(--dark);
+            box-shadow: 0 4px 0 #E6C200;
+        }
+
+        .cell.found {
+            background: var(--secondary);
+            color: white;
+            box-shadow: 0 4px 0 #36B3AA;
+            animation: pulse 0.4s ease;
+        }
+
+        /* LISTA DE PALABRAS */
+        .words-list {
+            background: #FFF9E6;
+            border: 2px dashed #FFE66D;
+            padding: 1.5rem;
+            border-radius: 16px;
+            min-width: 250px;
+        }
+
+        .words-list h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #D4A000;
+        }
+
+        .word-item {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .word-item.found {
+            text-decoration: line-through;
+            color: #A0AEC0;
+            opacity: 0.6;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: auto;
+            background: white;
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 4px solid var(--secondary);
+            font-family: 'Quicksand', sans-serif;
+            color: #666;
+        }
+
+        /* ANIMACIONES */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column; gap: 10px; }
+            .hero h1 { font-size: 2rem; }
+            .cell { width: 42px; height: 42px; font-size: 1.2rem; }
+            #sopa-grid { gap: 5px; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER / NAVEGACIÓN -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">🐱</span>
+                <span class="logo-text">Michinis</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#juegos">🎮 Juegos</a></li>
+                    <li><a href="#aprende">📚 Leer y Escribir</a></li>
+                    <li><a href="#mates">🔢 Números</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h1>¡Aprende Jugando con Michinis! 🐾</h1>
+        <p>Juegos de ingenio adaptados para los más pequeños. Sopas de letras, sudokus y pasatiempos súper fáciles para aprender a leer, escribir y sumar sin aburrirse.</p>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-container">
+        
+        <!-- SECCIÓN DE SELECCIÓN DE JUEGOS -->
+        <h2 class="section-title" id="juegos">🌟 Elige tu Juego</h2>
+        <div class="games-grid">
+            
+            <div class="game-card sopa" onclick="scrollToGame()">
+                <span class="badge">¡Jugable!</span>
+                <div class="game-icon">🔤</div>
+                <h3>Sopa de Letras</h3>
+                <p>Encuentra palabras sencillas de animales y frutas.</p>
+            </div>
+
+            <div class="game-card autodefinido">
+                <span class="badge" style="background:#E2E8F0; color:#666;">Próximamente</span>
+                <div class="game-icon">✏️</div>
+                <h3>Autodefinidos</h3>
+                <p>Completa palabras con la ayuda de divertidos dibujos.</p>
+            </div>
+
+            <div class="game-card sudoku">
+                <span class="badge" style="background:#E2E8F0; color:#666;">Próximamente</span>
+                <div class="game-icon">🧩</div>
+                <h3>Sudoku 4x4</h3>
+                <p>Sudokus fáciles usando colores y figuras.</p>
+            </div>
+
+            <div class="game-card mates">
+                <span class="badge" style="background:#E2E8F0; color:#666;">Próximamente</span>
+                <div class="game-icon">➕</div>
+                <h3>Sumas Divertidas</h3>
+                <p>Cuenta manzanas y aprende a sumar jugando.</p>
+            </div>
+
+        </div>
+
+        <!-- ÁREA DE JUEGO INTERACTIVO: SOPA DE LETRAS -->
+        <section class="game-area" id="area-juego">
+            <h2>🔤 Sopa de Letras: Animales Amigos</h2>
+            <p style="font-family: 'Quicksand'; color: #666; margin-top: 5px;">
+                Haz clic en las letras para formar las palabras secretas.
+            </p>
+
+            <div class="sopa-container">
+                <!-- Tablero de juego -->
+                <div id="sopa-grid"></div>
+
+                <!-- Pistas de Palabras -->
+                <div class="words-list">
+                    <h4>Busca estas palabras:</h4>
+                    <div id="words-container"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Michinis - Plataforma Educativa Infantil. Creado para aprender con una sonrisa 😊</p>
+    </footer>
+
+    <!-- JAVASCRIPT DE INTERACTIVIDAD -->
+    <script>
+        // DATOS DEL JUEGO DE SOPA DE LETRAS (Especialmente diseñado en 6x6 para niños)
+        const gridData = [
+            ['G', 'A', 'T', 'O', 'X', 'B'],
+            ['U', 'M', 'P', 'E', 'R', 'R'],
+            ['O', 'L', 'E', 'O', 'N', 'A'],
+            ['S', 'O', 'L', 'F', 'O', 'T'],
+            ['P', 'A', 'T', 'O', 'Z', 'O'],
+            ['M', 'A', 'R', 'I', 'P', 'O']
+        ];
+
+        // Lista de palabras a buscar con sus pistas visuales (Emojis)
+        const wordsToFind = [
+            { word: 'GATO', emoji: '🐱', found: false },
+            { word: 'PAT O', name:'PATO', emoji: '🦆', found: false },
+            { word: 'LEON', emoji: '🦁', found: false },
+            { word: 'PERRO', emoji: '🐶', found: false }
+        ];
+
+        // Corregimos la lista limpia para verificación
+        const wordsList = [
+            { word: 'GATO', emoji: '🐱', found: false },
+            { word: 'PATO', emoji: '🦆', found: false },
+            { word: 'LEON', emoji: '🦁', found: false }
+        ];
+
+        let selectedCells = [];
+        let selectedCoords = [];
+
+        // Inicializar el Tablero
+        function initGame() {
+            const gridElement = document.getElementById('sopa-grid');
+            const wordsContainer = document.getElementById('words-container');
+
+            gridElement.innerHTML = '';
+            wordsContainer.innerHTML = '';
+
+            // Dibujar la cuadrícula 6x6
+            for (let r = 0; r < 6; r++) {
+                for (let c = 0; c < 6; c++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.innerText = gridData[r][c];
+                    cell.dataset.row = r;
+                    cell.dataset.col = c;
+                    cell.addEventListener('click', () => selectCell(cell, r, c));
+                    gridElement.appendChild(cell);
+                }
+            }
+
+            // Renderizar la lista de palabras
+            renderWordList();
+        }
+
+        function renderWordList() {
+            const wordsContainer = document.getElementById('words-container');
+            wordsContainer.innerHTML = '';
+            wordsList.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('word-item');
+                if (item.found) div.classList.add('found');
+                div.innerHTML = `<span>${item.emoji}</span> <span>${item.word}</span>`;
+                wordsContainer.appendChild(div);
+            });
+        }
+
+        // Lógica al seleccionar celdas
+        function selectCell(cellElement, r, c) {
+            // Evitar seleccionar celdas ya encontradas
+            if (cellElement.classList.contains('found')) return;
+
+            // Toggle selección
+            if (cellElement.classList.contains('selected')) {
+                cellElement.classList.remove('selected');
+                selectedCells = selectedCells.filter(item => item.element !== cellElement);
+            } else {
+                cellElement.classList.add('selected');
+                selectedCells.push({ element: cellElement, char: gridData[r][c] });
+            }
+
+            // Comprobar si las celdas seleccionadas forman alguna palabra objetivo
+            checkWord();
+        }
+
+        function checkWord() {
+            const currentString = selectedCells.map(c => c.char).join('');
+            const currentReversed = currentString.split('').reverse().join('');
+
+            wordsList.forEach(item => {
+                if (!item.found && (item.word === currentString || item.word === currentReversed)) {
+                    // ¡Palabra Encontrada!
+                    item.found = true;
+                    selectedCells.forEach(c => {
+                        c.element.classList.remove('selected');
+                        c.element.classList.add('found');
+                    });
+                    selectedCells = [];
+                    renderWordList();
+                    checkWin();
+                }
+            });
+        }
+
+        function checkWin() {
+            const allFound = wordsList.every(w => w.found);
+            if (allFound) {
+                setTimeout(() => {
+                    alert('🎉 ¡LO HAS HECHO GENIAL! 🎉\n¡Has encontrado todas las palabras en Michinis!');
+                }, 300);
+            }
+        }
+
+        function scrollToGame() {
+            document.getElementById('area-juego').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Arrancar el juego al cargar la página
+        window.onload = initGame;
+    </script>
+</body>
+</html>
