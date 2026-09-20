@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-90WQKBTXN3');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Predicciones Liga ACB Endesa generadas por IA — Uno X Dos IA"/>
+  <title>ACB Endesa · Uno X Dos IA</title>
+  <link rel="icon" href="/Imagenes/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── VARIABLES ── */
+    :root {
+      --acb-red:      #d0021b;
+      --acb-blue:     #003087;
+      --acb-orange:   #f5a623;
+      --accent:       #00c896;
+      --navy:         #0d1b2a;
+      --muted:        #8fa3b8;
+      --card-bg:      rgba(0,20,60,0.78);
+      --card-border:  rgba(255,255,255,0.09);
+      --radius:       12px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Outfit', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    /* ── FONDO: SUELO DE PABELLÓN ACB ──
+       Parqué de pabellón con las líneas reglamentarias
+       y el degradado azul marino característico de la ACB
+    ── */
+    body {
+      font-family: var(--font-body);
+      color: #e8ecf0;
+      min-height: 100vh;
+      background-color: #0a1628;
+      background-image:
+        /* Líneas verticales del parqué */
+        repeating-linear-gradient(
+          90deg,
+          transparent           0px,
+          transparent           48px,
+          rgba(255,200,100,0.07) 48px,
+          rgba(255,200,100,0.07) 50px
+        ),
+        /* Franjas horizontales alternadas del parqué */
+        repeating-linear-gradient(
+          180deg,
+          rgba(180,130,60,0.08)  0px,
+          rgba(180,130,60,0.08)  40px,
+          rgba(150,100,40,0.10)  40px,
+          rgba(150,100,40,0.10)  80px
+        ),
+        /* Degradado base azul marino ACB */
+        linear-gradient(
+          160deg,
+          #0a1628 0%,
+          #0d1f42 35%,
+          #0a1a38 65%,
+          #071020 100%
+        );
+    }
+
+    /* Líneas de cancha encima del fondo */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        /* Línea central */
+        linear-gradient(90deg, transparent calc(50% - 1px), rgba(255,255,255,0.06) calc(50% - 1px), rgba(255,255,255,0.06) calc(50% + 1px), transparent calc(50% + 1px)),
+        /* Círculo central (simulado con radial) */
+        radial-gradient(circle 120px at 50% 50%, transparent 118px, rgba(255,255,255,0.05) 119px, rgba(255,255,255,0.05) 121px, transparent 122px),
+        /* Zona de 3 puntos izquierda */
+        radial-gradient(circle 320px at -5% 50%, transparent 318px, rgba(255,255,255,0.04) 319px, rgba(255,255,255,0.04) 321px, transparent 322px),
+        /* Zona de 3 puntos derecha */
+        radial-gradient(circle 320px at 105% 50%, transparent 318px, rgba(255,255,255,0.04) 319px, rgba(255,255,255,0.04) 321px, transparent 322px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: relative; z-index: 10;
+      background: linear-gradient(180deg,rgba(13,27,42,0.98),rgba(13,27,42,0.88));
+      border-bottom: 1px solid rgba(0,200,150,0.2);
+      padding: 16px 24px; display: flex; align-items: center;
+      backdrop-filter: blur(10px);
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: rgba(10,22,56,0.96); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 8px 20px; position: relative; z-index: 100;
+      display: flex; justify-content: center;
+    }
+    .nav-hamburger {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      color: #fff; font-size: 1em; font-weight: 600;
+      padding: 10px 18px; border-radius: 8px; cursor: pointer;
+      font-family: var(--font-body); transition: background 0.2s;
+    }
+    .nav-hamburger:hover { background: rgba(255,255,255,0.12); }
+    .ham-icon { font-size: 1.3em; }
+    .ham-label { letter-spacing: 0.5px; }
+    .nav-menu {
+      display: none; flex-direction: column; gap: 4px; margin-top: 8px;
+      background: rgba(8,16,40,0.98); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; padding: 8px; position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      min-width: 240px; box-shadow: 0 12px 40px rgba(0,0,0,0.5); z-index: 200;
+    }
+    .nav-menu.open { display: flex; }
+    .nav-link {
+      display: flex; align-items: center; gap: 10px; padding: 11px 16px;
+      border-radius: 7px; text-decoration: none; font-size: 0.92em; font-weight: 600;
+      color: var(--muted); transition: all 0.2s; border: 1px solid transparent;
+    }
+    .nav-link:hover { color: #fff; background: rgba(255,255,255,0.07); }
+    .nav-link.active { color: var(--accent); background: rgba(0,200,150,0.1); border-color: rgba(0,200,150,0.25); }
+    .nav-emoji { font-size: 1.1em; }
+
+    /* ── CONTENEDOR ── */
+    .acb-container {
+      position: relative; z-index: 1;
+      max-width: 1300px; margin: 0 auto; padding: 28px 20px;
+    }
+
+    /* ── HERO BADGE ── */
+    .acb-hero {
+      text-align: center; padding: 40px 24px 28px;
+      position: relative; z-index: 1;
+    }
+    .acb-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, rgba(208,2,27,0.15), rgba(0,48,135,0.2));
+      border: 1px solid rgba(208,2,27,0.4);
+      border-radius: 50px; padding: 6px 20px; margin-bottom: 18px;
+      font-size: 0.78em; font-weight: 700; color: #ff6070;
+      letter-spacing: 1.5px; text-transform: uppercase;
+    }
+    .acb-badge::before {
+      content: ''; width: 8px; height: 8px;
+      background: var(--acb-red); border-radius: 50%;
+      animation: pulse 1.6s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:0.4; transform:scale(1.4); }
+    }
+    .acb-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3em, 8vw, 5.5em);
+      letter-spacing: 3px; color: #fff; line-height: 1; margin-bottom: 8px;
+    }
+    .acb-hero h1 .red  { color: var(--acb-red); }
+    .acb-hero h1 .blue { color: #5090ff; }
+    .acb-hero p {
+      color: var(--muted); font-size: 0.95em; margin-top: 6px;
+    }
+
+    /* ── PABELLONES SVG ── */
+    .pabellones-section {
+      position: relative; z-index: 1;
+      max-width: 1240px; margin: 0 auto 36px; padding: 0 24px;
+    }
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 1.5em; letter-spacing: 2px; color: #fff; margin-bottom: 16px;
+    }
+    .pabellones-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
+    }
+    .pabellon-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .pabellon-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+      border-color: rgba(208,2,27,0.35);
+    }
+    .pabellon-svg-wrap {
+      width: 100%; height: 160px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(180deg, rgba(5,12,30,0.9), rgba(10,22,55,0.7));
+      padding: 12px;
+    }
+    .pabellon-svg-wrap svg { width: 100%; height: 100%; }
+    .pabellon-info { padding: 14px 16px; }
+    .pabellon-name {
+      font-family: var(--font-display);
+      font-size: 1.2em; letter-spacing: 1.5px; color: #fff; margin-bottom: 2px;
+    }
+    .pabellon-team { font-size: 0.8em; color: var(--acb-orange); font-weight: 600; }
+    .pabellon-city { font-size: 0.75em; color: var(--muted); margin-top: 2px; }
+
+    /* ── TITLE / SCOREBOARD ── */
+    .scoreboard-title {
+      background: linear-gradient(135deg, rgba(0,48,135,0.5), rgba(208,2,27,0.3));
+      border: 2px solid rgba(208,2,27,0.3);
+      border-radius: var(--radius);
+      padding: 20px 24px; text-align: center; margin-bottom: 28px;
+      backdrop-filter: blur(10px);
+    }
+    .scoreboard-title h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4em, 3vw, 2em);
+      letter-spacing: 3px; color: #fff;
+    }
+
+    /* ── TEMPORADAS LAYOUT ── */
+    .temporadas-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 800px) { .temporadas-layout { grid-template-columns: 1fr; } }
+
+    .temporada-col {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px; overflow: hidden; backdrop-filter: blur(8px);
+    }
+    .temporada-col-header {
+      padding: 16px 20px; text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      text-decoration: none; display: block; transition: background 0.2s;
+    }
+    .temporada-col-header:hover { background: rgba(255,255,255,0.04); }
+    .temporada-col-header h2 {
+      font-family: var(--font-display);
+      font-size: 1.6em; letter-spacing: 2px; color: #fff; margin-bottom: 4px;
+    }
+    .temporada-col-header small { font-size: 0.78em; color: var(--muted); }
+
+    .temporada-col.next .temporada-col-header {
+      background: rgba(0,200,150,0.08);
+      border-bottom-color: rgba(0,200,150,0.2);
+    }
+    .temporada-col.next .temporada-col-header h2 { color: var(--accent); }
+
+    .temporada-col.current .temporada-col-header {
+      background: rgba(0,48,135,0.2);
+      border-bottom-color: rgba(80,144,255,0.3);
+    }
+    .temporada-col.current .temporada-col-header h2 { color: #5090ff; }
+
+    .temporada-col-body {
+      padding: 20px; display: flex; align-items: center; justify-content: center;
+      min-height: 120px;
+    }
+    .empty-msg {
+      text-align: center; color: var(--muted);
+      font-size: 0.88em; line-height: 1.7;
+    }
+    .empty-msg span {
+      display: block; font-family: var(--font-display);
+      font-size: 2em; color: rgba(255,255,255,0.1); margin-bottom: 8px;
+    }
+
+    /* Mini cards para cuando haya jornadas */
+    .jornadas-mini {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px; width: 100%;
+    }
+    .jornada-card-mini {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 10px; padding: 12px 8px;
+      text-align: center; text-decoration: none; color: #e8ecf0;
+      transition: all 0.2s; display: flex; flex-direction: column;
+      align-items: center; gap: 5px;
+    }
+    .jornada-card-mini:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(208,2,27,0.4);
+      transform: translateY(-2px);
+    }
+    .jornada-card-mini .acb-icon { font-size: 1.8em; }
+    .jornada-card-mini h3 { font-size: 0.82em; font-weight: 700; color: #fff; line-height: 1.2; }
+    .jornada-card-mini small { font-size: 0.67em; color: var(--muted); }
+    .jornada-card-mini .status-mini {
+      font-size: 0.63em; font-weight: 700; letter-spacing: 0.5px;
+      background: rgba(208,2,27,0.2); color: #ff6070;
+      border-radius: 4px; padding: 2px 6px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      background: rgba(8,16,40,0.92);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center; padding: 20px;
+      font-size: 0.78em; color: var(--muted); margin-top: 40px;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    @media (max-width: 600px) {
+      .acb-hero { padding: 28px 16px 20px; }
+      .pabellones-section, .acb-container { padding-left: 16px; padding-right: 16px; }
+      .pabellones-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a href="index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+      <div style="width:42px;height:42px;background:linear-gradient(135deg,#00c896,#00a87d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3em;box-shadow:0 0 18px rgba(0,200,150,0.3);">⚽</div>
+      <div>
+        <span style="display:block;font-family:'Bebas Neue',sans-serif;font-size:1.5em;letter-spacing:2px;color:#fff;line-height:1;">UNO X DOS IA</span>
+        <small style="font-size:0.6em;color:#00c896;letter-spacing:1px;font-weight:500;">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+      </div>
+    </a>
+  </header>
+
+  <!-- NAV -->
+  <nav aria-label="Navegación principal">
+    <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+      <span class="ham-icon">☰</span>
+      <span class="ham-label">Secciones</span>
+    </button>
+    <div class="nav-menu" id="navMenu">
+      <a href="index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
+      <a href="NBA.html"         class="nav-link"><span class="nav-emoji">🏀</span> NBA</a>
+      <a href="ACB.html"         class="nav-link active"><span class="nav-emoji">🏀</span> ACB Endesa</a>
+      <a href="LigaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
+      <a href="Hypermotion.html" class="nav-link"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+      <a href="Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+      <a href="/LigaFantasIA/fantas-ia-v2.html" class="nav-link"><span class="nav-emoji">🏆</span> Liga FantasIA</a>
+      <a href="/Mundial/Mundial2026.html" class="nav-link"><span class="nav-emoji">🏆</span> Mundial 2026</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="acb-hero">
+    <div class="acb-badge">Liga ACB Endesa · Baloncesto</div>
+    <h1><span class="red">A</span><span class="blue">C</span>B <span class="red">EN</span>DESA</h1>
+    <p>Predicciones jornada a jornada · ChatGPT vs Gemini vs Copilot</p>
+  </section>
+
+  <!-- PABELLONES -->
+  <section class="pabellones-section">
+    <p class="section-label">🏟️ PABELLONES DE LA ACB</p>
+    <div class="pabellones-grid">
+
+      <!-- 1. Roig Arena (Valencia) -->
+      <div class="pabellon-card">
+        <div class="pabellon-svg-wrap">
+          <svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+            <!-- Cielo nocturno -->
+            <defs>
+              <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#050d20"/>
+                <stop offset="100%" stop-color="#0a1a38"/>
+              </linearGradient>
+              <linearGradient id="court1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#c8922a"/>
+                <stop offset="100%" stop-color="#a06820"/>
+              </linearGradient>
+              <radialGradient id="glow1" cx="50%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="rgba(245,166,35,0.15)"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </radialGradient>
+            </defs>
+            <rect width="280" height="140" fill="url(#sky1)"/>
+            <rect width="280" height="140" fill="url(#glow1)"/>
+            <!-- Estructura exterior — forma cónica característica Roig Arena -->
+            <!-- Base del edificio -->
+            <ellipse cx="140" cy="115" rx="130" ry="18" fill="#1a2540" opacity="0.7"/>
+            <!-- Cuerpo principal: forma de elipse achatada -->
+            <ellipse cx="140" cy="95" rx="118" ry="28" fill="#1e2d52"/>
+            <!-- Anillo inferior -->
+            <rect x="22" y="92" width="236" height="14" rx="2" fill="#172040"/>
+            <!-- Techo curvo blanco característico -->
+            <ellipse cx="140" cy="72" rx="108" ry="32" fill="#0d1830"/>
+            <ellipse cx="140" cy="68" rx="104" ry="28" fill="#1a2850"/>
+            <!-- Membrana de cubierta (blanco azulado) -->
+            <ellipse cx="140" cy="62" rx="98" ry="22" fill="#2a3f70"/>
+            <ellipse cx="140" cy="58" rx="90" ry="18" fill="#d8e4f0" opacity="0.9"/>
+            <ellipse cx="140" cy="55" rx="84" ry="14" fill="#eaf2ff"/>
+            <!-- Punto central de la cubierta -->
+            <circle cx="140" cy="50" r="8" fill="#fff" opacity="0.9"/>
+            <!-- Tirantes radiales -->
+            <line x1="140" y1="50" x2="56" y2="75" stroke="#c0d4f0" stroke-width="1" opacity="0.6"/>
+            <line x1="140" y1="50" x2="224" y2="75" stroke="#c0d4f0" stroke-width="1" opacity="0.6"/>
+            <line x1="140" y1="50" x2="80" y2="62" stroke="#c0d4f0" stroke-width="1" opacity="0.5"/>
+            <line x1="140" y1="50" x2="200" y2="62" stroke="#c0d4f0" stroke-width="1" opacity="0.5"/>
+            <line x1="140" y1="50" x2="100" y2="56" stroke="#c0d4f0" stroke-width="1" opacity="0.4"/>
+            <line x1="140" y1="50" x2="180" y2="56" stroke="#c0d4f0" stroke-width="1" opacity="0.4"/>
+            <!-- Ventanas/entradas iluminadas -->
+            <rect x="30" y="90" width="8" height="6" rx="1" fill="#f5a623" opacity="0.8"/>
+            <rect x="50" y="90" width="8" height="6" rx="1" fill="#f5a623" opacity="0.7"/>
+            <rect x="222" y="90" width="8" height="6" rx="1" fill="#f5a623" opacity="0.8"/>
+            <rect x="242" y="90" width="8" height="6" rx="1" fill="#f5a623" opacity="0.7"/>
+            <rect x="100" y="90" width="8" height="6" rx="1" fill="#f5a623" opacity="0.6"/>
+            <rect x="170" y="90" width="8" height="6" rx="1" fill="#f5a623" opacity="0.6"/>
+            <rect x="135" y="90" width="10" height="6" rx="1" fill="#f5a623" opacity="0.7"/>
+            <!-- Pista interior visible -->
+            <ellipse cx="140" cy="108" rx="60" ry="10" fill="url(#court1)" opacity="0.5"/>
+            <!-- Nombre -->
+            <text x="140" y="130" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="11" fill="#f5a623" letter-spacing="2">ROIG ARENA</text>
+          </svg>
+        </div>
+        <div class="pabellon-info">
+          <div class="pabellon-name">Roig Arena</div>
+          <div class="pabellon-team">Valencia Basket</div>
+          <div class="pabellon-city">📍 Valencia · 15.000 espectadores</div>
+        </div>
+      </div>
+
+      <!-- 2. WiZink Center (Madrid) -->
+      <div class="pabellon-card">
+        <div class="pabellon-svg-wrap">
+          <svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#080d18"/>
+                <stop offset="100%" stop-color="#0f1825"/>
+              </linearGradient>
+              <linearGradient id="wall2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2a3045"/>
+                <stop offset="100%" stop-color="#181f32"/>
+              </linearGradient>
+              <radialGradient id="glow2" cx="50%" cy="45%" r="55%">
+                <stop offset="0%" stop-color="rgba(208,2,27,0.12)"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </radialGradient>
+            </defs>
+            <rect width="280" height="140" fill="url(#sky2)"/>
+            <rect width="280" height="140" fill="url(#glow2)"/>
+            <!-- Sombra base -->
+            <ellipse cx="140" cy="118" rx="120" ry="12" fill="#000" opacity="0.4"/>
+            <!-- Cuerpo principal — cilíndrico con franjas -->
+            <rect x="28" y="72" width="224" height="44" rx="4" fill="url(#wall2)"/>
+            <!-- Franjas horizontales características WiZink -->
+            <rect x="28" y="78" width="224" height="4" fill="#d0021b" opacity="0.7"/>
+            <rect x="28" y="88" width="224" height="3" fill="#d0021b" opacity="0.5"/>
+            <rect x="28" y="98" width="224" height="3" fill="#d0021b" opacity="0.4"/>
+            <rect x="28" y="108" width="224" height="3" fill="#d0021b" opacity="0.3"/>
+            <!-- Techo circular con cúpula -->
+            <ellipse cx="140" cy="72" rx="112" ry="16" fill="#1a2240"/>
+            <ellipse cx="140" cy="66" rx="108" ry="14" fill="#232d50"/>
+            <ellipse cx="140" cy="60" rx="100" ry="12" fill="#2c3860"/>
+            <ellipse cx="140" cy="55" rx="88" ry="10" fill="#364470"/>
+            <ellipse cx="140" cy="50" rx="72" ry="9" fill="#404f80"/>
+            <ellipse cx="140" cy="46" rx="52" ry="8" fill="#4a5a90"/>
+            <ellipse cx="140" cy="43" rx="30" ry="6" fill="#5060a0" opacity="0.9"/>
+            <!-- Aros de estructura metálica -->
+            <ellipse cx="140" cy="72" rx="112" ry="16" fill="none" stroke="#4a5580" stroke-width="1.5"/>
+            <ellipse cx="140" cy="60" rx="100" ry="12" fill="none" stroke="#4a5580" stroke-width="1"/>
+            <ellipse cx="140" cy="50" rx="72" ry="9" fill="none" stroke="#5060a0" stroke-width="1"/>
+            <!-- Luz central de la cúpula -->
+            <circle cx="140" cy="43" r="5" fill="#fff" opacity="0.8"/>
+            <circle cx="140" cy="43" r="10" fill="none" stroke="#fff" stroke-width="0.5" opacity="0.3"/>
+            <!-- Entradas iluminadas -->
+            <rect x="40" y="96" width="12" height="18" rx="2" fill="#f5a623" opacity="0.7"/>
+            <rect x="64" y="96" width="12" height="18" rx="2" fill="#f5a623" opacity="0.6"/>
+            <rect x="88" y="96" width="12" height="18" rx="2" fill="#f5a623" opacity="0.5"/>
+            <rect x="168" y="96" width="12" height="18" rx="2" fill="#f5a623" opacity="0.5"/>
+            <rect x="192" y="96" width="12" height="18" rx="2" fill="#f5a623" opacity="0.6"/>
+            <rect x="216" y="96" width="12" height="18" rx="2" fill="#f5a623" opacity="0.7"/>
+            <!-- Marquesinas -->
+            <rect x="28" y="72" width="224" height="6" fill="#d0021b" opacity="0.6"/>
+            <text x="140" y="132" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="11" fill="#e05060" letter-spacing="2">WIZINK CENTER</text>
+          </svg>
+        </div>
+        <div class="pabellon-info">
+          <div class="pabellon-name">WiZink Center</div>
+          <div class="pabellon-team">Real Madrid Baloncesto</div>
+          <div class="pabellon-city">📍 Madrid · 17.000 espectadores</div>
+        </div>
+      </div>
+
+      <!-- 3. Palau Blaugrana (Barcelona) -->
+      <div class="pabellon-card">
+        <div class="pabellon-svg-wrap">
+          <svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#07091a"/>
+                <stop offset="100%" stop-color="#0d1228"/>
+              </linearGradient>
+              <linearGradient id="wall3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#16244a"/>
+                <stop offset="100%" stop-color="#0e1830"/>
+              </linearGradient>
+              <radialGradient id="glow3" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="rgba(0,80,160,0.15)"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </radialGradient>
+            </defs>
+            <rect width="280" height="140" fill="url(#sky3)"/>
+            <rect width="280" height="140" fill="url(#glow3)"/>
+            <!-- Sombra -->
+            <ellipse cx="140" cy="118" rx="115" ry="10" fill="#000" opacity="0.5"/>
+            <!-- Cuerpo rectangular con detalles -->
+            <rect x="24" y="68" width="232" height="48" rx="3" fill="url(#wall3)"/>
+            <!-- Franjas azulgrana -->
+            <rect x="24" y="68" width="232" height="5" fill="#a50044"/>
+            <rect x="24" y="78" width="232" height="5" fill="#004d98"/>
+            <rect x="24" y="88" width="232" height="5" fill="#a50044"/>
+            <rect x="24" y="98" width="232" height="5" fill="#004d98"/>
+            <rect x="24" y="108" width="232" height="5" fill="#a50044"/>
+            <!-- Techo plano con borde elevado -->
+            <rect x="18" y="56" width="244" height="16" rx="2" fill="#1a2848"/>
+            <rect x="18" y="54" width="244" height="6" rx="2" fill="#22346a"/>
+            <!-- Detalles del techo — vigas -->
+            <line x1="18" y1="57" x2="262" y2="57" stroke="#2c4080" stroke-width="1"/>
+            <line x1="18" y1="62" x2="262" y2="62" stroke="#2c4080" stroke-width="1"/>
+            <!-- Torres en las esquinas -->
+            <rect x="18" y="44" width="18" height="28" rx="1" fill="#1e3060"/>
+            <rect x="244" y="44" width="18" height="28" rx="1" fill="#1e3060"/>
+            <rect x="14" y="42" width="26" height="6" rx="1" fill="#263880"/>
+            <rect x="240" y="42" width="26" height="6" rx="1" fill="#263880"/>
+            <!-- Ventanas fachada -->
+            <rect x="50" y="80" width="16" height="24" rx="2" fill="#c8a030" opacity="0.7"/>
+            <rect x="80" y="80" width="16" height="24" rx="2" fill="#c8a030" opacity="0.6"/>
+            <rect x="112" y="80" width="16" height="24" rx="2" fill="#c8a030" opacity="0.6"/>
+            <rect x="144" y="80" width="16" height="24" rx="2" fill="#c8a030" opacity="0.6"/>
+            <rect x="176" y="80" width="16" height="24" rx="2" fill="#c8a030" opacity="0.6"/>
+            <rect x="206" y="80" width="16" height="24" rx="2" fill="#c8a030" opacity="0.7"/>
+            <!-- Letrero -->
+            <rect x="90" y="60" width="100" height="12" rx="1" fill="#0d1830"/>
+            <text x="140" y="70" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="8" fill="#c8a030" letter-spacing="1">PALAU BLAUGRANA</text>
+            <text x="140" y="133" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="11" fill="#6090e0" letter-spacing="2">PALAU BLAUGRANA</text>
+          </svg>
+        </div>
+        <div class="pabellon-info">
+          <div class="pabellon-name">Palau Blaugrana</div>
+          <div class="pabellon-team">FC Barcelona Basket</div>
+          <div class="pabellon-city">📍 Barcelona · 7.500 espectadores</div>
+        </div>
+      </div>
+
+      <!-- 4. Buesa Arena (Vitoria) -->
+      <div class="pabellon-card">
+        <div class="pabellon-svg-wrap">
+          <svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sky4" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#060b14"/>
+                <stop offset="100%" stop-color="#0a1422"/>
+              </linearGradient>
+              <linearGradient id="wall4" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1e2838"/>
+                <stop offset="100%" stop-color="#131c2a"/>
+              </linearGradient>
+              <radialGradient id="glow4" cx="50%" cy="45%" r="55%">
+                <stop offset="0%" stop-color="rgba(0,100,200,0.12)"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </radialGradient>
+            </defs>
+            <rect width="280" height="140" fill="url(#sky4)"/>
+            <rect width="280" height="140" fill="url(#glow4)"/>
+            <!-- Sombra -->
+            <ellipse cx="140" cy="120" rx="122" ry="10" fill="#000" opacity="0.4"/>
+            <!-- Estructura principal — forma trapezoidal escalonada -->
+            <polygon points="20,116 260,116 252,72 28,72" fill="url(#wall4)"/>
+            <!-- Escalones laterales -->
+            <polygon points="20,116 48,116 42,88 26,88" fill="#1a2432"/>
+            <polygon points="232,116 260,116 254,88 238,88" fill="#1a2432"/>
+            <!-- Techo con curvatura característica Buesa -->
+            <path d="M 28,72 Q 80,42 140,38 Q 200,42 252,72 Z" fill="#1e2c48"/>
+            <path d="M 36,72 Q 86,46 140,42 Q 194,46 244,72 Z" fill="#243456"/>
+            <path d="M 44,72 Q 90,50 140,46 Q 190,50 236,72 Z" fill="#2a3c64"/>
+            <path d="M 52,72 Q 94,54 140,50 Q 186,54 228,72 Z" fill="#304470"/>
+            <!-- Borde del techo iluminado -->
+            <path d="M 28,72 Q 80,42 140,38 Q 200,42 252,72" fill="none" stroke="#4a6090" stroke-width="1.5"/>
+            <!-- Crestería del techo -->
+            <path d="M 90,52 Q 140,34 190,52" fill="none" stroke="#6080b0" stroke-width="1" opacity="0.7"/>
+            <!-- Punto de cima -->
+            <circle cx="140" cy="37" r="4" fill="#80a0d0" opacity="0.8"/>
+            <!-- Ventanas fachada central -->
+            <rect x="70" y="82" width="140" height="20" rx="2" fill="#0d1828" opacity="0.8"/>
+            <rect x="76" y="85" width="20" height="14" rx="1" fill="#f0c040" opacity="0.6"/>
+            <rect x="102" y="85" width="20" height="14" rx="1" fill="#f0c040" opacity="0.5"/>
+            <rect x="130" y="85" width="20" height="14" rx="1" fill="#f0c040" opacity="0.6"/>
+            <rect x="158" y="85" width="20" height="14" rx="1" fill="#f0c040" opacity="0.5"/>
+            <rect x="184" y="85" width="20" height="14" rx="1" fill="#f0c040" opacity="0.6"/>
+            <!-- Entradas laterales -->
+            <rect x="28" y="96" width="22" height="20" rx="2" fill="#f0c040" opacity="0.5"/>
+            <rect x="230" y="96" width="22" height="20" rx="2" fill="#f0c040" opacity="0.5"/>
+            <!-- Texto -->
+            <text x="140" y="132" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="11" fill="#80b0f0" letter-spacing="2">BUESA ARENA</text>
+          </svg>
+        </div>
+        <div class="pabellon-info">
+          <div class="pabellon-name">Buesa Arena</div>
+          <div class="pabellon-team">Baskonia</div>
+          <div class="pabellon-city">📍 Vitoria-Gasteiz · 15.504 espectadores</div>
+        </div>
+      </div>
+
+      <!-- 5. Gran Canaria Arena -->
+      <div class="pabellon-card">
+        <div class="pabellon-svg-wrap">
+          <svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sky5" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#060e1c"/>
+                <stop offset="100%" stop-color="#0c1830"/>
+              </linearGradient>
+              <linearGradient id="wall5" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#203050"/>
+                <stop offset="100%" stop-color="#14203a"/>
+              </linearGradient>
+              <radialGradient id="glow5" cx="50%" cy="45%" r="55%">
+                <stop offset="0%" stop-color="rgba(255,180,0,0.1)"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </radialGradient>
+            </defs>
+            <rect width="280" height="140" fill="url(#sky5)"/>
+            <rect width="280" height="140" fill="url(#glow5)"/>
+            <!-- Sombra -->
+            <ellipse cx="140" cy="118" rx="118" ry="11" fill="#000" opacity="0.4"/>
+            <!-- Estructura — diseño moderno con facetas -->
+            <!-- Cuerpo principal -->
+            <polygon points="26,116 254,116 248,80 32,80" fill="url(#wall5)"/>
+            <!-- Techo facetado estilo Gran Canaria Arena -->
+            <polygon points="32,80 248,80 240,58 40,58" fill="#1c2c4a"/>
+            <polygon points="40,58 240,58 232,44 48,44" fill="#223460"/>
+            <polygon points="48,44 232,44 220,36 60,36" fill="#283c70"/>
+            <polygon points="60,36 220,36 210,30 70,30" fill="#2e4480"/>
+            <!-- Líneas de facetas -->
+            <line x1="32" y1="80" x2="40" y2="58" stroke="#3a5490" stroke-width="1"/>
+            <line x1="248" y1="80" x2="240" y2="58" stroke="#3a5490" stroke-width="1"/>
+            <line x1="40" y1="58" x2="48" y2="44" stroke="#405898" stroke-width="1"/>
+            <line x1="240" y1="58" x2="232" y2="44" stroke="#405898" stroke-width="1"/>
+            <!-- Líneas verticales de facetas -->
+            <line x1="80" y1="80" x2="74" y2="58" stroke="#3050a0" stroke-width="0.8" opacity="0.6"/>
+            <line x1="120" y1="80" x2="114" y2="58" stroke="#3050a0" stroke-width="0.8" opacity="0.6"/>
+            <line x1="160" y1="80" x2="166" y2="58" stroke="#3050a0" stroke-width="0.8" opacity="0.6"/>
+            <line x1="200" y1="80" x2="206" y2="58" stroke="#3050a0" stroke-width="0.8" opacity="0.6"/>
+            <!-- Cima -->
+            <rect x="62" y="28" width="156" height="6" rx="1" fill="#3a5090"/>
+            <line x1="140" y1="22" x2="140" y2="30" stroke="#6080c0" stroke-width="2"/>
+            <!-- Ventanas -->
+            <rect x="40" y="88" width="14" height="20" rx="1" fill="#e0a020" opacity="0.6"/>
+            <rect x="70" y="88" width="14" height="20" rx="1" fill="#e0a020" opacity="0.5"/>
+            <rect x="100" y="88" width="14" height="20" rx="1" fill="#e0a020" opacity="0.5"/>
+            <rect x="130" y="88" width="20" height="20" rx="1" fill="#e0a020" opacity="0.6"/>
+            <rect x="166" y="88" width="14" height="20" rx="1" fill="#e0a020" opacity="0.5"/>
+            <rect x="196" y="88" width="14" height="20" rx="1" fill="#e0a020" opacity="0.5"/>
+            <rect x="226" y="88" width="14" height="20" rx="1" fill="#e0a020" opacity="0.6"/>
+            <text x="140" y="132" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="11" fill="#e0b040" letter-spacing="2">GRAN CANARIA ARENA</text>
+          </svg>
+        </div>
+        <div class="pabellon-info">
+          <div class="pabellon-name">Gran Canaria Arena</div>
+          <div class="pabellon-team">Gran Canaria Basket</div>
+          <div class="pabellon-city">📍 Las Palmas · 9.000 espectadores</div>
+        </div>
+      </div>
+
+      <!-- 6. Fuente de San Luis (UVEX) -->
+      <div class="pabellon-card">
+        <div class="pabellon-svg-wrap">
+          <svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sky6" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#08060e"/>
+                <stop offset="100%" stop-color="#100d1e"/>
+              </linearGradient>
+              <linearGradient id="wall6" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1e1830"/>
+                <stop offset="100%" stop-color="#120f20"/>
+              </linearGradient>
+              <radialGradient id="glow6" cx="50%" cy="45%" r="55%">
+                <stop offset="0%" stop-color="rgba(100,0,200,0.12)"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </radialGradient>
+            </defs>
+            <rect width="280" height="140" fill="url(#sky6)"/>
+            <rect width="280" height="140" fill="url(#glow6)"/>
+            <!-- Sombra -->
+            <ellipse cx="140" cy="118" rx="116" ry="10" fill="#000" opacity="0.5"/>
+            <!-- Cuerpo principal — estructura redonda tipo "caja" -->
+            <rect x="26" y="70" width="228" height="46" rx="5" fill="url(#wall6)"/>
+            <!-- Curva del techo característica -->
+            <ellipse cx="140" cy="70" rx="114" ry="16" fill="#1a1530"/>
+            <ellipse cx="140" cy="64" rx="108" ry="14" fill="#201a38"/>
+            <ellipse cx="140" cy="58" rx="98" ry="12" fill="#261e40"/>
+            <ellipse cx="140" cy="53" rx="84" ry="10" fill="#2c2248"/>
+            <ellipse cx="140" cy="49" rx="66" ry="9" fill="#322850"/>
+            <ellipse cx="140" cy="46" rx="44" ry="7" fill="#382c58"/>
+            <ellipse cx="140" cy="44" rx="26" ry="5" fill="#3e3060" opacity="0.9"/>
+            <!-- Detalles del techo — nervios estructurales -->
+            <ellipse cx="140" cy="70" rx="114" ry="16" fill="none" stroke="#4a3880" stroke-width="1.5"/>
+            <ellipse cx="140" cy="58" rx="98" ry="12" fill="none" stroke="#4a3880" stroke-width="1"/>
+            <ellipse cx="140" cy="49" rx="66" ry="9" fill="none" stroke="#4a3880" stroke-width="0.8"/>
+            <!-- Ventanas iluminadas (morado/naranja Valencia) -->
+            <rect x="36" y="82" width="14" height="22" rx="2" fill="#9b30f0" opacity="0.5"/>
+            <rect x="58" y="82" width="14" height="22" rx="2" fill="#9b30f0" opacity="0.4"/>
+            <rect x="82" y="82" width="14" height="22" rx="2" fill="#ff8c00" opacity="0.5"/>
+            <rect x="130" y="82" width="20" height="22" rx="2" fill="#ff8c00" opacity="0.6"/>
+            <rect x="168" y="82" width="14" height="22" rx="2" fill="#ff8c00" opacity="0.5"/>
+            <rect x="196" y="82" width="14" height="22" rx="2" fill="#9b30f0" opacity="0.4"/>
+            <rect x="220" y="82" width="14" height="22" rx="2" fill="#9b30f0" opacity="0.5"/>
+            <!-- Luz cima -->
+            <circle cx="140" cy="44" r="4" fill="#b070f0" opacity="0.8"/>
+            <text x="140" y="132" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="10" fill="#a060e0" letter-spacing="2">UVEX ARENA · VALÈNCIA</text>
+          </svg>
+        </div>
+        <div class="pabellon-info">
+          <div class="pabellon-name">UVEX Arena</div>
+          <div class="pabellon-team">Valencia Basket</div>
+          <div class="pabellon-city">📍 Valencia · 9.000 espectadores</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HUB DE JORNADAS -->
+  <div class="acb-container">
+
+    <div class="scoreboard-title">
+      <h2>🏀 Archivo de Jornadas · Liga ACB Endesa</h2>
+    </div>
+
+    <div class="temporadas-layout">
+
+      <!-- TEMPORADA 2025/2026 (izquierda — la nueva) -->
+      <div class="temporada-col next">
+        <a href="#" class="temporada-col-header">
+          <h2>🏀 Temporada 2025/2026</h2>
+          <small>Próximamente →</small>
+        </a>
+        <div class="temporada-col-body">
+          <div class="empty-msg">
+            <span>🏀</span>
+            La temporada 2025/2026 de la ACB<br>
+            empieza en octubre de 2026.<br>
+            <br>
+            Aquí aparecerán las jornadas<br>
+            a medida que se vayan jugando.
+          </div>
+        </div>
+      </div>
+
+      <!-- TEMPORADA 2026/2027 (derecha — futura) -->
+      <div class="temporada-col current">
+        <a href="#" class="temporada-col-header">
+          <h2>📅 Temporada 2026/2027</h2>
+          <small>Archivo futuro</small>
+        </a>
+        <div class="temporada-col-body">
+          <div class="empty-msg">
+            <span>📋</span>
+            Las jornadas de la temporada<br>
+            2026/2027 se añadirán aquí<br>
+            cuando empiece la competición.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
+    <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com">Contacto</a></p>
+  </footer>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', function(e) {
+      const nav = document.querySelector('nav');
+      if (!nav.contains(e.target)) {
+        document.getElementById('navMenu').classList.remove('open');
+      }
+    });
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navMenu').classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
