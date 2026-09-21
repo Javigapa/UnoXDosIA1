@@ -274,11 +274,11 @@
       font-size: 2em; color: rgba(255,255,255,0.1); margin-bottom: 8px;
     }
 
-    /* Mini cards para cuando haya jornadas */
+    /* ── MINI CARDS ── */
     .jornadas-mini {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 10px; width: 100%;
+      gap: 10px;
     }
     .jornada-card-mini {
       background: rgba(255,255,255,0.06);
@@ -290,16 +290,18 @@
     }
     .jornada-card-mini:hover {
       background: rgba(255,255,255,0.12);
-      border-color: rgba(208,2,27,0.4);
+      border-color: rgba(240,192,64,0.4);
       transform: translateY(-2px);
     }
-    .jornada-card-mini .acb-icon { font-size: 1.8em; }
     .jornada-card-mini h3 { font-size: 0.82em; font-weight: 700; color: #fff; line-height: 1.2; }
     .jornada-card-mini small { font-size: 0.67em; color: var(--muted); }
     .jornada-card-mini .status-mini {
       font-size: 0.63em; font-weight: 700; letter-spacing: 0.5px;
-      background: rgba(208,2,27,0.2); color: #ff6070;
+      background: rgba(101,67,33,0.4); color: #c8a870;
       border-radius: 4px; padding: 2px 6px;
+    }
+    .jornada-card-mini .status-mini.playoff {
+      background: rgba(240,192,64,0.2); color: var(--gold);
     }
 
     /* ── FOOTER ── */
@@ -428,7 +430,7 @@
         </div>
       </div>
 
-      <!-- 2. WiZink Center (Madrid) -->
+      <!-- 2. Movistar Arena (Madrid) -->
       <div class="pabellon-card">
         <div class="pabellon-svg-wrap">
           <svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
@@ -438,56 +440,62 @@
                 <stop offset="100%" stop-color="#0f1825"/>
               </linearGradient>
               <linearGradient id="wall2" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#2a3045"/>
-                <stop offset="100%" stop-color="#181f32"/>
+                <stop offset="0%" stop-color="#1e2840"/>
+                <stop offset="100%" stop-color="#141c30"/>
               </linearGradient>
-              <radialGradient id="glow2" cx="50%" cy="45%" r="55%">
-                <stop offset="0%" stop-color="rgba(208,2,27,0.12)"/>
+              <radialGradient id="glow2" cx="50%" cy="40%" r="55%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.08)"/>
                 <stop offset="100%" stop-color="transparent"/>
               </radialGradient>
             </defs>
             <rect width="280" height="140" fill="url(#sky2)"/>
             <rect width="280" height="140" fill="url(#glow2)"/>
-            <!-- Sombra base -->
-            <ellipse cx="140" cy="118" rx="120" ry="12" fill="#000" opacity="0.4"/>
-            <!-- Cuerpo principal — cilíndrico con franjas -->
-            <rect x="28" y="72" width="224" height="44" rx="4" fill="url(#wall2)"/>
-            <!-- Franjas horizontales características WiZink -->
-            <rect x="28" y="78" width="224" height="4" fill="#d0021b" opacity="0.7"/>
-            <rect x="28" y="88" width="224" height="3" fill="#d0021b" opacity="0.5"/>
-            <rect x="28" y="98" width="224" height="3" fill="#d0021b" opacity="0.4"/>
-            <rect x="28" y="108" width="224" height="3" fill="#d0021b" opacity="0.3"/>
-            <!-- Techo circular con cúpula -->
-            <ellipse cx="140" cy="72" rx="112" ry="16" fill="#1a2240"/>
-            <ellipse cx="140" cy="66" rx="108" ry="14" fill="#232d50"/>
-            <ellipse cx="140" cy="60" rx="100" ry="12" fill="#2c3860"/>
-            <ellipse cx="140" cy="55" rx="88" ry="10" fill="#364470"/>
-            <ellipse cx="140" cy="50" rx="72" ry="9" fill="#404f80"/>
-            <ellipse cx="140" cy="46" rx="52" ry="8" fill="#4a5a90"/>
-            <ellipse cx="140" cy="43" rx="30" ry="6" fill="#5060a0" opacity="0.9"/>
-            <!-- Aros de estructura metálica -->
-            <ellipse cx="140" cy="72" rx="112" ry="16" fill="none" stroke="#4a5580" stroke-width="1.5"/>
-            <ellipse cx="140" cy="60" rx="100" ry="12" fill="none" stroke="#4a5580" stroke-width="1"/>
-            <ellipse cx="140" cy="50" rx="72" ry="9" fill="none" stroke="#5060a0" stroke-width="1"/>
-            <!-- Luz central de la cúpula -->
-            <circle cx="140" cy="43" r="5" fill="#fff" opacity="0.8"/>
-            <circle cx="140" cy="43" r="10" fill="none" stroke="#fff" stroke-width="0.5" opacity="0.3"/>
-            <!-- Entradas iluminadas -->
-            <rect x="40" y="96" width="12" height="18" rx="2" fill="#f5a623" opacity="0.7"/>
-            <rect x="64" y="96" width="12" height="18" rx="2" fill="#f5a623" opacity="0.6"/>
-            <rect x="88" y="96" width="12" height="18" rx="2" fill="#f5a623" opacity="0.5"/>
-            <rect x="168" y="96" width="12" height="18" rx="2" fill="#f5a623" opacity="0.5"/>
-            <rect x="192" y="96" width="12" height="18" rx="2" fill="#f5a623" opacity="0.6"/>
-            <rect x="216" y="96" width="12" height="18" rx="2" fill="#f5a623" opacity="0.7"/>
-            <!-- Marquesinas -->
-            <rect x="28" y="72" width="224" height="6" fill="#d0021b" opacity="0.6"/>
-            <text x="140" y="132" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="11" fill="#e05060" letter-spacing="2">WIZINK CENTER</text>
+            <!-- Sombra -->
+            <ellipse cx="140" cy="118" rx="118" ry="11" fill="#000" opacity="0.45"/>
+            <!-- Cuerpo principal rectangular moderno -->
+            <rect x="26" y="74" width="228" height="42" rx="3" fill="url(#wall2)"/>
+            <!-- Nivel superior acristalado -->
+            <rect x="26" y="62" width="228" height="16" rx="2" fill="#1a2438"/>
+            <!-- Ventanas corridas nivel superior (azul Movistar) -->
+            <rect x="30" y="65" width="220" height="10" rx="1" fill="#0a1830"/>
+            <rect x="34" y="66" width="30" height="8" rx="1" fill="#0090d0" opacity="0.7"/>
+            <rect x="70" y="66" width="30" height="8" rx="1" fill="#0090d0" opacity="0.6"/>
+            <rect x="106" y="66" width="30" height="8" rx="1" fill="#00c0ff" opacity="0.7"/>
+            <rect x="142" y="66" width="30" height="8" rx="1" fill="#0090d0" opacity="0.6"/>
+            <rect x="178" y="66" width="30" height="8" rx="1" fill="#0090d0" opacity="0.7"/>
+            <rect x="214" y="66" width="30" height="8" rx="1" fill="#0090d0" opacity="0.6"/>
+            <!-- Techo plano con estructura de celosía -->
+            <rect x="20" y="52" width="240" height="14" rx="2" fill="#223050"/>
+            <rect x="20" y="50" width="240" height="6" rx="2" fill="#2a3a60"/>
+            <!-- Celosía del techo -->
+            <line x1="20" y1="53" x2="260" y2="53" stroke="#3a5080" stroke-width="1"/>
+            <line x1="20" y1="57" x2="260" y2="57" stroke="#3a5080" stroke-width="0.8"/>
+            <line x1="60" y1="50" x2="60" y2="66" stroke="#3a5080" stroke-width="0.8" opacity="0.5"/>
+            <line x1="100" y1="50" x2="100" y2="66" stroke="#3a5080" stroke-width="0.8" opacity="0.5"/>
+            <line x1="140" y1="50" x2="140" y2="66" stroke="#3a5080" stroke-width="0.8" opacity="0.5"/>
+            <line x1="180" y1="50" x2="180" y2="66" stroke="#3a5080" stroke-width="0.8" opacity="0.5"/>
+            <line x1="220" y1="50" x2="220" y2="66" stroke="#3a5080" stroke-width="0.8" opacity="0.5"/>
+            <!-- Mástiles -->
+            <rect x="28" y="24" width="3" height="30" fill="#506080"/>
+            <rect x="249" y="24" width="3" height="30" fill="#506080"/>
+            <circle cx="29" cy="23" r="3" fill="#ffe0a0" opacity="0.9"/>
+            <circle cx="251" cy="23" r="3" fill="#ffe0a0" opacity="0.9"/>
+            <!-- Entradas planta baja -->
+            <rect x="36" y="84" width="16" height="30" rx="2" fill="#0090d0" opacity="0.5"/>
+            <rect x="64" y="84" width="16" height="30" rx="2" fill="#0090d0" opacity="0.4"/>
+            <rect x="122" y="82" width="36" height="32" rx="2" fill="#00c0ff" opacity="0.4"/>
+            <rect x="200" y="84" width="16" height="30" rx="2" fill="#0090d0" opacity="0.4"/>
+            <rect x="228" y="84" width="16" height="30" rx="2" fill="#0090d0" opacity="0.5"/>
+            <!-- Letrero Movistar azul -->
+            <rect x="90" y="54" width="100" height="10" rx="1" fill="#0a1020"/>
+            <text x="140" y="62" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="7" fill="#00c0ff" letter-spacing="1">MOVISTAR ARENA</text>
+            <text x="140" y="132" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="11" fill="#40b0f0" letter-spacing="2">MOVISTAR ARENA</text>
           </svg>
         </div>
         <div class="pabellon-info">
-          <div class="pabellon-name">WiZink Center</div>
+          <div class="pabellon-name">Movistar Arena</div>
           <div class="pabellon-team">Real Madrid Baloncesto</div>
-          <div class="pabellon-city">📍 Madrid · 17.000 espectadores</div>
+          <div class="pabellon-city">📍 Madrid · 15.000 espectadores</div>
         </div>
       </div>
 
@@ -611,120 +619,140 @@
         </div>
       </div>
 
-      <!-- 5. Gran Canaria Arena -->
+      <!-- 5. Palacio de los Deportes de Murcia (UCAM) -->
       <div class="pabellon-card">
         <div class="pabellon-svg-wrap">
           <svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="sky5" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#060e1c"/>
-                <stop offset="100%" stop-color="#0c1830"/>
+                <stop offset="0%" stop-color="#080608"/>
+                <stop offset="100%" stop-color="#120e18"/>
               </linearGradient>
               <linearGradient id="wall5" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#203050"/>
-                <stop offset="100%" stop-color="#14203a"/>
+                <stop offset="0%" stop-color="#201828"/>
+                <stop offset="100%" stop-color="#140e1c"/>
               </linearGradient>
-              <radialGradient id="glow5" cx="50%" cy="45%" r="55%">
-                <stop offset="0%" stop-color="rgba(255,180,0,0.1)"/>
+              <radialGradient id="glow5" cx="50%" cy="40%" r="55%">
+                <stop offset="0%" stop-color="rgba(160,0,40,0.12)"/>
                 <stop offset="100%" stop-color="transparent"/>
               </radialGradient>
             </defs>
             <rect width="280" height="140" fill="url(#sky5)"/>
             <rect width="280" height="140" fill="url(#glow5)"/>
             <!-- Sombra -->
-            <ellipse cx="140" cy="118" rx="118" ry="11" fill="#000" opacity="0.4"/>
-            <!-- Estructura — diseño moderno con facetas -->
+            <ellipse cx="140" cy="119" rx="116" ry="10" fill="#000" opacity="0.5"/>
             <!-- Cuerpo principal -->
-            <polygon points="26,116 254,116 248,80 32,80" fill="url(#wall5)"/>
-            <!-- Techo facetado estilo Gran Canaria Arena -->
-            <polygon points="32,80 248,80 240,58 40,58" fill="#1c2c4a"/>
-            <polygon points="40,58 240,58 232,44 48,44" fill="#223460"/>
-            <polygon points="48,44 232,44 220,36 60,36" fill="#283c70"/>
-            <polygon points="60,36 220,36 210,30 70,30" fill="#2e4480"/>
-            <!-- Líneas de facetas -->
-            <line x1="32" y1="80" x2="40" y2="58" stroke="#3a5490" stroke-width="1"/>
-            <line x1="248" y1="80" x2="240" y2="58" stroke="#3a5490" stroke-width="1"/>
-            <line x1="40" y1="58" x2="48" y2="44" stroke="#405898" stroke-width="1"/>
-            <line x1="240" y1="58" x2="232" y2="44" stroke="#405898" stroke-width="1"/>
-            <!-- Líneas verticales de facetas -->
-            <line x1="80" y1="80" x2="74" y2="58" stroke="#3050a0" stroke-width="0.8" opacity="0.6"/>
-            <line x1="120" y1="80" x2="114" y2="58" stroke="#3050a0" stroke-width="0.8" opacity="0.6"/>
-            <line x1="160" y1="80" x2="166" y2="58" stroke="#3050a0" stroke-width="0.8" opacity="0.6"/>
-            <line x1="200" y1="80" x2="206" y2="58" stroke="#3050a0" stroke-width="0.8" opacity="0.6"/>
-            <!-- Cima -->
-            <rect x="62" y="28" width="156" height="6" rx="1" fill="#3a5090"/>
-            <line x1="140" y1="22" x2="140" y2="30" stroke="#6080c0" stroke-width="2"/>
-            <!-- Ventanas -->
-            <rect x="40" y="88" width="14" height="20" rx="1" fill="#e0a020" opacity="0.6"/>
-            <rect x="70" y="88" width="14" height="20" rx="1" fill="#e0a020" opacity="0.5"/>
-            <rect x="100" y="88" width="14" height="20" rx="1" fill="#e0a020" opacity="0.5"/>
-            <rect x="130" y="88" width="20" height="20" rx="1" fill="#e0a020" opacity="0.6"/>
-            <rect x="166" y="88" width="14" height="20" rx="1" fill="#e0a020" opacity="0.5"/>
-            <rect x="196" y="88" width="14" height="20" rx="1" fill="#e0a020" opacity="0.5"/>
-            <rect x="226" y="88" width="14" height="20" rx="1" fill="#e0a020" opacity="0.6"/>
-            <text x="140" y="132" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="11" fill="#e0b040" letter-spacing="2">GRAN CANARIA ARENA</text>
+            <rect x="26" y="76" width="228" height="40" rx="3" fill="url(#wall5)"/>
+            <!-- Techo — cúpula semiesférica característica Murcia -->
+            <ellipse cx="140" cy="76" rx="114" ry="18" fill="#1c1428"/>
+            <ellipse cx="140" cy="70" rx="108" ry="16" fill="#221a30"/>
+            <ellipse cx="140" cy="64" rx="98" ry="14" fill="#281e38"/>
+            <ellipse cx="140" cy="59" rx="84" ry="12" fill="#2e2240"/>
+            <ellipse cx="140" cy="55" rx="68" ry="10" fill="#342648"/>
+            <ellipse cx="140" cy="52" rx="50" ry="8" fill="#3a2a50"/>
+            <ellipse cx="140" cy="49" rx="30" ry="6" fill="#402e58"/>
+            <!-- Nervios de la cúpula -->
+            <line x1="140" y1="49" x2="26" y2="76" stroke="#5a3070" stroke-width="0.8" opacity="0.5"/>
+            <line x1="140" y1="49" x2="254" y2="76" stroke="#5a3070" stroke-width="0.8" opacity="0.5"/>
+            <line x1="140" y1="49" x2="60" y2="66" stroke="#5a3070" stroke-width="0.8" opacity="0.4"/>
+            <line x1="140" y1="49" x2="220" y2="66" stroke="#5a3070" stroke-width="0.8" opacity="0.4"/>
+            <line x1="140" y1="49" x2="90" y2="58" stroke="#5a3070" stroke-width="0.8" opacity="0.3"/>
+            <line x1="140" y1="49" x2="190" y2="58" stroke="#5a3070" stroke-width="0.8" opacity="0.3"/>
+            <!-- Cúpula central -->
+            <ellipse cx="140" cy="76" rx="114" ry="18" fill="none" stroke="#6a3888" stroke-width="1.5"/>
+            <ellipse cx="140" cy="64" rx="98" ry="14" fill="none" stroke="#5a3070" stroke-width="1"/>
+            <ellipse cx="140" cy="55" rx="68" ry="10" fill="none" stroke="#4a2858" stroke-width="0.8"/>
+            <!-- Ápice -->
+            <circle cx="140" cy="48" r="4" fill="#c00030" opacity="0.9"/>
+            <circle cx="140" cy="48" r="8" fill="none" stroke="#c00030" stroke-width="0.8" opacity="0.4"/>
+            <!-- Ventanas fachada con rojo UCAM -->
+            <rect x="36" y="84" width="14" height="24" rx="2" fill="#c00030" opacity="0.55"/>
+            <rect x="60" y="84" width="14" height="24" rx="2" fill="#c00030" opacity="0.45"/>
+            <rect x="86" y="84" width="14" height="24" rx="2" fill="#e0a020" opacity="0.4"/>
+            <rect x="126" y="82" width="28" height="26" rx="2" fill="#c00030" opacity="0.5"/>
+            <rect x="168" y="84" width="14" height="24" rx="2" fill="#e0a020" opacity="0.4"/>
+            <rect x="194" y="84" width="14" height="24" rx="2" fill="#c00030" opacity="0.45"/>
+            <rect x="220" y="84" width="14" height="24" rx="2" fill="#c00030" opacity="0.55"/>
+            <text x="140" y="132" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="10" fill="#e04060" letter-spacing="1">PAL. DEPORTES MURCIA</text>
           </svg>
         </div>
         <div class="pabellon-info">
-          <div class="pabellon-name">Gran Canaria Arena</div>
-          <div class="pabellon-team">Gran Canaria Basket</div>
-          <div class="pabellon-city">📍 Las Palmas · 9.000 espectadores</div>
+          <div class="pabellon-name">Palacio de los Deportes</div>
+          <div class="pabellon-team">UCAM Murcia</div>
+          <div class="pabellon-city">📍 Murcia · 7.500 espectadores</div>
         </div>
       </div>
 
-      <!-- 6. Fuente de San Luis (UVEX) -->
+      <!-- 6. Palau Municipal d'Esports de Badalona (Joventut) -->
       <div class="pabellon-card">
         <div class="pabellon-svg-wrap">
           <svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="sky6" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#08060e"/>
-                <stop offset="100%" stop-color="#100d1e"/>
+                <stop offset="0%" stop-color="#050a08"/>
+                <stop offset="100%" stop-color="#0a1210"/>
               </linearGradient>
               <linearGradient id="wall6" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#1e1830"/>
-                <stop offset="100%" stop-color="#120f20"/>
+                <stop offset="0%" stop-color="#101e14"/>
+                <stop offset="100%" stop-color="#0a140c"/>
               </linearGradient>
-              <radialGradient id="glow6" cx="50%" cy="45%" r="55%">
-                <stop offset="0%" stop-color="rgba(100,0,200,0.12)"/>
+              <radialGradient id="glow6" cx="50%" cy="40%" r="55%">
+                <stop offset="0%" stop-color="rgba(0,160,60,0.12)"/>
                 <stop offset="100%" stop-color="transparent"/>
               </radialGradient>
             </defs>
             <rect width="280" height="140" fill="url(#sky6)"/>
             <rect width="280" height="140" fill="url(#glow6)"/>
             <!-- Sombra -->
-            <ellipse cx="140" cy="118" rx="116" ry="10" fill="#000" opacity="0.5"/>
-            <!-- Cuerpo principal — estructura redonda tipo "caja" -->
-            <rect x="26" y="70" width="228" height="46" rx="5" fill="url(#wall6)"/>
-            <!-- Curva del techo característica -->
-            <ellipse cx="140" cy="70" rx="114" ry="16" fill="#1a1530"/>
-            <ellipse cx="140" cy="64" rx="108" ry="14" fill="#201a38"/>
-            <ellipse cx="140" cy="58" rx="98" ry="12" fill="#261e40"/>
-            <ellipse cx="140" cy="53" rx="84" ry="10" fill="#2c2248"/>
-            <ellipse cx="140" cy="49" rx="66" ry="9" fill="#322850"/>
-            <ellipse cx="140" cy="46" rx="44" ry="7" fill="#382c58"/>
-            <ellipse cx="140" cy="44" rx="26" ry="5" fill="#3e3060" opacity="0.9"/>
-            <!-- Detalles del techo — nervios estructurales -->
-            <ellipse cx="140" cy="70" rx="114" ry="16" fill="none" stroke="#4a3880" stroke-width="1.5"/>
-            <ellipse cx="140" cy="58" rx="98" ry="12" fill="none" stroke="#4a3880" stroke-width="1"/>
-            <ellipse cx="140" cy="49" rx="66" ry="9" fill="none" stroke="#4a3880" stroke-width="0.8"/>
-            <!-- Ventanas iluminadas (morado/naranja Valencia) -->
-            <rect x="36" y="82" width="14" height="22" rx="2" fill="#9b30f0" opacity="0.5"/>
-            <rect x="58" y="82" width="14" height="22" rx="2" fill="#9b30f0" opacity="0.4"/>
-            <rect x="82" y="82" width="14" height="22" rx="2" fill="#ff8c00" opacity="0.5"/>
-            <rect x="130" y="82" width="20" height="22" rx="2" fill="#ff8c00" opacity="0.6"/>
-            <rect x="168" y="82" width="14" height="22" rx="2" fill="#ff8c00" opacity="0.5"/>
-            <rect x="196" y="82" width="14" height="22" rx="2" fill="#9b30f0" opacity="0.4"/>
-            <rect x="220" y="82" width="14" height="22" rx="2" fill="#9b30f0" opacity="0.5"/>
-            <!-- Luz cima -->
-            <circle cx="140" cy="44" r="4" fill="#b070f0" opacity="0.8"/>
-            <text x="140" y="132" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="10" fill="#a060e0" letter-spacing="2">UVEX ARENA · VALÈNCIA</text>
+            <ellipse cx="140" cy="119" rx="116" ry="10" fill="#000" opacity="0.4"/>
+            <!-- Cuerpo principal — pabellón clásico rectangular -->
+            <rect x="26" y="74" width="228" height="42" rx="2" fill="url(#wall6)"/>
+            <!-- Nivel medio acristalado -->
+            <rect x="26" y="62" width="228" height="16" rx="1" fill="#0e1c12"/>
+            <!-- Ventanas corridas (verde Joventut) -->
+            <rect x="30" y="65" width="26" height="10" rx="1" fill="#00a030" opacity="0.65"/>
+            <rect x="62" y="65" width="26" height="10" rx="1" fill="#00a030" opacity="0.55"/>
+            <rect x="96" y="65" width="26" height="10" rx="1" fill="#00c040" opacity="0.65"/>
+            <rect x="128" y="65" width="24" height="10" rx="1" fill="#00c040" opacity="0.7"/>
+            <rect x="158" y="65" width="26" height="10" rx="1" fill="#00a030" opacity="0.65"/>
+            <rect x="192" y="65" width="26" height="10" rx="1" fill="#00a030" opacity="0.55"/>
+            <rect x="222" y="65" width="26" height="10" rx="1" fill="#00a030" opacity="0.65"/>
+            <!-- Techo característico con estructura de vigas expuestas -->
+            <rect x="20" y="48" width="240" height="18" rx="2" fill="#152018"/>
+            <rect x="20" y="46" width="240" height="6" rx="2" fill="#1c2a20"/>
+            <!-- Vigas del techo -->
+            <line x1="20" y1="50" x2="260" y2="50" stroke="#2a4030" stroke-width="1.2"/>
+            <line x1="20" y1="55" x2="260" y2="55" stroke="#2a4030" stroke-width="1"/>
+            <line x1="20" y1="60" x2="260" y2="60" stroke="#2a4030" stroke-width="0.8"/>
+            <line x1="56" y1="46" x2="56" y2="66" stroke="#243828" stroke-width="0.8" opacity="0.6"/>
+            <line x1="96" y1="46" x2="96" y2="66" stroke="#243828" stroke-width="0.8" opacity="0.6"/>
+            <line x1="140" y1="46" x2="140" y2="66" stroke="#243828" stroke-width="0.8" opacity="0.6"/>
+            <line x1="184" y1="46" x2="184" y2="66" stroke="#243828" stroke-width="0.8" opacity="0.6"/>
+            <line x1="224" y1="46" x2="224" y2="66" stroke="#243828" stroke-width="0.8" opacity="0.6"/>
+            <!-- Voladizo del techo -->
+            <rect x="14" y="44" width="252" height="6" rx="1" fill="#223028"/>
+            <rect x="14" y="42" width="252" height="4" rx="1" fill="#2a3a30"/>
+            <!-- Mástiles clásicos -->
+            <rect x="30" y="16" width="3" height="30" fill="#305040"/>
+            <rect x="247" y="16" width="3" height="30" fill="#305040"/>
+            <circle cx="31" cy="15" r="3" fill="#ffe060" opacity="0.8"/>
+            <circle cx="249" cy="15" r="3" fill="#ffe060" opacity="0.8"/>
+            <!-- Entradas planta baja -->
+            <rect x="36" y="82" width="16" height="32" rx="2" fill="#00a030" opacity="0.5"/>
+            <rect x="64" y="82" width="16" height="32" rx="2" fill="#00a030" opacity="0.4"/>
+            <rect x="118" y="80" width="44" height="34" rx="2" fill="#00c040" opacity="0.4"/>
+            <rect x="200" y="82" width="16" height="32" rx="2" fill="#00a030" opacity="0.4"/>
+            <rect x="228" y="82" width="16" height="32" rx="2" fill="#00a030" opacity="0.5"/>
+            <!-- Letrero -->
+            <rect x="80" y="50" width="120" height="10" rx="1" fill="#080e0a"/>
+            <text x="140" y="58" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="6.5" fill="#00c040" letter-spacing="0.8">PALAU MUNICIPAL BADALONA</text>
+            <text x="140" y="132" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="10" fill="#00c848" letter-spacing="1.5">PALAU MUNICIPAL BADALONA</text>
           </svg>
         </div>
         <div class="pabellon-info">
-          <div class="pabellon-name">UVEX Arena</div>
-          <div class="pabellon-team">Valencia Basket</div>
-          <div class="pabellon-city">📍 Valencia · 9.000 espectadores</div>
+          <div class="pabellon-name">Palau Municipal d'Esports</div>
+          <div class="pabellon-team">Joventut Badalona</div>
+          <div class="pabellon-city">📍 Badalona · 8.700 espectadores</div>
         </div>
       </div>
 
@@ -738,38 +766,22 @@
       <h2>🏀 Archivo de Jornadas · Liga ACB Endesa</h2>
     </div>
 
-    <div class="temporadas-layout">
+    <div class="temporadas-layout" style="grid-template-columns:1fr;max-width:600px;margin-left:auto;margin-right:auto;">
 
-      <!-- TEMPORADA 2025/2026 (izquierda — la nueva) -->
+      <!-- TEMPORADA 2026/2027 -->
       <div class="temporada-col next">
         <a href="#" class="temporada-col-header">
-          <h2>🏀 Temporada 2025/2026</h2>
-          <small>Próximamente →</small>
+          <h2>🏀 Temporada 2026/2027</h2>
         </a>
         <div class="temporada-col-body">
           <div class="empty-msg">
             <span>🏀</span>
-            La temporada 2025/2026 de la ACB<br>
-            empieza en octubre de 2026.<br>
-            <br>
-            Aquí aparecerán las jornadas<br>
-            a medida que se vayan jugando.
-          </div>
-        </div>
-      </div>
-
-      <!-- TEMPORADA 2026/2027 (derecha — futura) -->
-      <div class="temporada-col current">
-        <a href="#" class="temporada-col-header">
-          <h2>📅 Temporada 2026/2027</h2>
-          <small>Archivo futuro</small>
-        </a>
-        <div class="temporada-col-body">
-          <div class="empty-msg">
-            <span>📋</span>
-            Las jornadas de la temporada<br>
-            2026/2027 se añadirán aquí<br>
-            cuando empiece la competición.
+            <a href="/LigaACB/Jornada1.html" class="jornada-card-mini">
+                <div class="status-mini">Próxima</div>
+                <h3>Jornada 1</h3>
+                <small>26 y 27 de Septiembre 2026</small>
+            </a>
+            
           </div>
         </div>
       </div>
