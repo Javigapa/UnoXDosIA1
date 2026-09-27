@@ -1118,6 +1118,7 @@
       <button class="tab-btn active" role="tab" aria-selected="true"  onclick="showTab('nba',   this)">🏀 NBA</button>
       <button class="tab-btn"        role="tab" aria-selected="false" onclick="showTab('ea',    this)">⚽ Liga EA Sports</button>
       <button class="tab-btn"        role="tab" aria-selected="false" onclick="showTab('hyper', this)">📈 Liga Hypermotion</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" onclick="showTab('acb',   this)">🏀 ACB Endesa</button>
     </div>
 
     <!-- NBA -->
@@ -1255,6 +1256,38 @@
         </table>
       </div>
       <p style="margin-top:14px; text-align:right;"><a href="Hypermotion.html" style="color:var(--accent);font-size:0.85em;font-weight:700;text-decoration:none;">Ver predicciones Hypermotion completas →</a></p>
+    </div>
+
+    <!-- ACB -->
+    <div class="ranking-panel" id="panel-acb" role="tabpanel">
+      <div class="ranking-table-wrap">
+        <table class="rank-table" aria-label="Ranking ACB Endesa">
+          <thead>
+            <tr><th>#</th><th>Modelo IA</th><th>Jornadas</th><th>Aciertos</th><th>Tasa de Éxito</th></tr>
+          </thead>
+          <tbody id="tbody-acb">
+            <tr data-jornadas="1" data-aciertos="0">
+              <td class="rank-pos">1</td>
+              <td><div class="rank-model"><div class="model-dot chatgpt"></div>Chat GPT</div></td>
+              <td>1</td><td>0</td>
+              <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill"></div></div><span class="tasa-value"></span></div></td>
+            </tr>
+            <tr data-jornadas="1" data-aciertos="0">
+              <td class="rank-pos">2</td>
+              <td><div class="rank-model"><div class="model-dot gemini"></div>Gemini</div></td>
+              <td>1</td><td>0</td>
+              <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill"></div></div><span class="tasa-value"></span></div></td>
+            </tr>
+            <tr data-jornadas="1" data-aciertos="0">
+              <td class="rank-pos">3</td>
+              <td><div class="rank-model"><div class="model-dot copilot"></div>Copilot</div></td>
+              <td>1</td><td>0</td>
+              <td><div class="tasa-bar-wrap"><div class="tasa-bar"><div class="tasa-bar-fill"></div></div><span class="tasa-value"></span></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:14px; text-align:right;"><a href="ACB.html" style="color:var(--accent);font-size:0.85em;font-weight:700;text-decoration:none;">Ver predicciones ACB completas →</a></p>
     </div>
 
   </section>
@@ -1473,7 +1506,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
   });
 });
 function calcularTasas() {
-  const tablas = ['nba', 'nba-playoffs', 'ea', 'hyper'];
+  const tablas = ['nba', 'nba-playoffs', 'ea', 'hyper', 'acb'];
 
   tablas.forEach(id => {
     const tbody = document.getElementById('tbody-' + id);
