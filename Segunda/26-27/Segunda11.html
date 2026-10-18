@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-90WQKBTXN3');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Predicciones Liga Hypermotion generadas por IA, ¿Qué IA es mejor?"/>
+
+  <!-- ═══════════════════════════════════════════════
+       EDITAR: número de jornada en el título
+  ═══════════════════════════════════════════════ -->
+  <title>Jornada 11 · Liga Hypermotion · Uno X Dos IA</title>
+
+  <link rel="icon" href="/Imagenes/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent:      #00c896;
+      --accent-dark: #00a87d;
+      --gold:        #f0c040;
+      --text:        #e8ecf0;
+      --muted:       #9aaa98;
+      --card-bg:     rgba(18,24,14,0.82);
+      --card-border: rgba(255,255,255,0.08);
+      --radius:      12px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Outfit', sans-serif;
+      --chatgpt: #10a37f;
+      --gemini:  #4285f4;
+      --copilot: #7c3aed;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    /* ─────────────────────────────────────────────
+       FONDO: CAMPO DE PUEBLO — tierra marrón verdosa
+       desgastada, con calvas y textura irregular
+    ───────────────────────────────────────────── */
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      min-height: 100vh;
+
+      background-color: #5a5228;
+      background-image:
+        /* Manchas irregulares de hierba/tierra */
+        radial-gradient(ellipse 60% 30% at 20% 40%,  rgba(62,82,28,0.55)  0%, transparent 70%),
+        radial-gradient(ellipse 40% 25% at 75% 20%,  rgba(72,90,22,0.45)  0%, transparent 65%),
+        radial-gradient(ellipse 50% 35% at 55% 75%,  rgba(55,70,18,0.50)  0%, transparent 65%),
+        radial-gradient(ellipse 35% 20% at 10% 80%,  rgba(80,60,20,0.40)  0%, transparent 60%),
+        radial-gradient(ellipse 45% 30% at 85% 60%,  rgba(65,85,25,0.45)  0%, transparent 65%),
+        /* Líneas de campo desgastadas */
+        repeating-linear-gradient(
+          90deg,
+          transparent         0px,
+          transparent         98px,
+          rgba(255,255,255,0.04) 98px,
+          rgba(255,255,255,0.04) 100px
+        ),
+        repeating-linear-gradient(
+          180deg,
+          transparent         0px,
+          transparent         98px,
+          rgba(255,255,255,0.03) 98px,
+          rgba(255,255,255,0.03) 100px
+        ),
+        /* Base tierra-verde */
+        linear-gradient(
+          135deg,
+          #4a4820 0%,
+          #5c5428 20%,
+          #4e5c20 40%,
+          #62521c 60%,
+          #4a5422 80%,
+          #585024 100%
+        );
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: relative; z-index: 10;
+      background: linear-gradient(180deg,rgba(13,27,42,0.98),rgba(13,27,42,0.85));
+      border-bottom: 1px solid rgba(0,200,150,0.2);
+      padding: 16px 24px; display: flex; align-items: center;
+      backdrop-filter: blur(10px);
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      background: rgba(19,34,56,0.95); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 8px 20px; position: relative; z-index: 100;
+      display: flex; justify-content: center;
+    }
+    .nav-hamburger {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+      color: #fff; font-size: 1em; font-weight: 600;
+      padding: 10px 18px; border-radius: 8px; cursor: pointer;
+      font-family: var(--font-body); transition: background 0.2s;
+    }
+    .nav-hamburger:hover { background: rgba(255,255,255,0.12); }
+    .ham-icon { font-size: 1.3em; }
+    .ham-label { letter-spacing: 0.5px; }
+    .nav-menu {
+      display: none; flex-direction: column; gap: 4px; margin-top: 8px;
+      background: rgba(13,27,42,0.98); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; padding: 8px; position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      min-width: 220px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); z-index: 200;
+    }
+    .nav-menu.open { display: flex; }
+    .nav-link {
+      display: flex; align-items: center; gap: 10px; padding: 11px 16px;
+      border-radius: 7px; text-decoration: none; font-size: 0.92em; font-weight: 600;
+      color: var(--muted); transition: all 0.2s; border: 1px solid transparent;
+    }
+    .nav-link:hover { color: #fff; background: rgba(255,255,255,0.07); }
+    .nav-link.active { color: var(--accent); background: rgba(0,200,150,0.1); border-color: rgba(0,200,150,0.25); }
+    .nav-emoji { font-size: 1.1em; }
+
+    /* ─── HERO ─── */
+    .jornada-hero {
+      position: relative; z-index: 1;
+      text-align: center; padding: 48px 24px 32px;
+    }
+    .jornada-hero .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,200,150,0.1); border: 1px solid rgba(0,200,150,0.25);
+      border-radius: 50px; padding: 5px 16px;
+      font-size: 0.75em; font-weight: 700; color: var(--accent);
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 18px;
+    }
+    .jornada-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8em, 7vw, 5em);
+      letter-spacing: 3px; color: #fff; line-height: 1; margin-bottom: 10px;
+    }
+    .jornada-hero h1 .num { color: var(--accent); }
+
+    /* ─── PARTIDOS ─── */
+    .partidos-wrap {
+      position: relative; z-index: 1;
+      max-width: 760px; margin: 0 auto 40px; padding: 0 24px;
+    }
+    .partidos-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .partidos-card-header {
+      background: rgba(0,200,150,0.08); border-bottom: 1px solid rgba(0,200,150,0.15);
+      padding: 14px 20px; font-family: var(--font-display);
+      font-size: 1.3em; letter-spacing: 2px; color: var(--accent);
+    }
+    .partidos-dia-label {
+      padding: 10px 20px 4px;
+      font-size: 0.78em; font-weight: 700; color: var(--gold);
+      text-transform: uppercase; letter-spacing: 1px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .partido-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 20px; border-bottom: 1px solid rgba(255,255,255,0.04); gap: 12px;
+    }
+    .partido-row:last-child { border-bottom: none; }
+    .partido-equipos { font-weight: 600; font-size: 0.92em; color: #fff; }
+    .partido-hora {
+      font-size: 0.78em; font-weight: 700; color: var(--muted);
+      background: rgba(255,255,255,0.06); border-radius: 6px;
+      padding: 3px 9px; white-space: nowrap;
+    }
+
+    /* ─── PREDICCIONES ─── */
+    .section-wrap {
+      position: relative; z-index: 1;
+      max-width: 1240px; margin: 0 auto; padding: 0 24px 40px;
+    }
+    .section-label {
+      font-family: var(--font-display); font-size: 1.6em;
+      letter-spacing: 2px; color: #fff; margin-bottom: 6px;
+    }
+    .section-sub { color: var(--muted); font-size: 0.88em; margin-bottom: 22px; }
+
+    .pred-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    @media (max-width: 900px) { .pred-grid { grid-template-columns: 1fr; } }
+
+    .pred-col {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .pred-col-header {
+      padding: 14px 18px; font-family: var(--font-display);
+      font-size: 1.3em; letter-spacing: 2px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .pred-col.chatgpt .pred-col-header { background: rgba(16,163,127,0.12); color: #10a37f; border-bottom: 1px solid rgba(16,163,127,0.2); }
+    .pred-col.gemini  .pred-col-header { background: rgba(66,133,244,0.12); color: #4285f4; border-bottom: 1px solid rgba(66,133,244,0.2); }
+    .pred-col.copilot .pred-col-header { background: rgba(124,58,237,0.12); color: #7c3aed; border-bottom: 1px solid rgba(124,58,237,0.2); }
+
+    .pred-col-body { padding: 18px; flex: 1; display: flex; flex-direction: column; gap: 16px; }
+    .pred-match { padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .pred-match:last-child { border-bottom: none; padding-bottom: 0; }
+    .pred-match-title {
+      font-size: 0.78em; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px;
+    }
+    .pred-winner {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-weight: 700; font-size: 0.93em; color: #fff; margin-bottom: 5px;
+    }
+    .pred-winner::before { content: '→'; color: var(--accent); font-weight: 900; }
+    .pred-prob { font-size: 0.77em; color: var(--muted); margin-bottom: 5px; }
+    .pred-text { font-size: 0.81em; color: #b8c4a8; line-height: 1.55; }
+
+    /* ─── CONCLUSIÓN ─── */
+    .conclusion-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); padding: 22px 24px;
+      font-size: 0.92em; line-height: 1.7; color: #c0caa8;
+    }
+    .conclusion-card p + p { margin-top: 10px; }
+
+    /* ─── RESULTADOS ─── */
+    .results-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    @media (max-width: 700px) { .results-grid { grid-template-columns: 1fr; } }
+
+    .result-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .result-card-venue {
+      font-size: 0.7em; font-weight: 600; color: var(--muted);
+      letter-spacing: 0.8px; text-transform: uppercase; padding: 9px 16px 0;
+    }
+    table.score-table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
+    .score-table thead tr { background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .score-table th {
+      padding: 8px 10px; font-size: 0.72em; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); text-align: center;
+    }
+    .score-table th:first-child { text-align: left; padding-left: 16px; }
+    .score-table td {
+      padding: 11px 10px; text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.04); color: var(--text); font-weight: 500;
+    }
+    .score-table td:first-child { text-align: left; padding-left: 16px; font-weight: 700; color: #fff; }
+    .col-total {
+      font-family: var(--font-display); font-size: 1.25em;
+      letter-spacing: 1px; color: var(--accent);
+    }
+    .score-table tr.winner td { background: rgba(0,200,150,0.07); }
+    .score-table tr.winner td:first-child { color: var(--accent); }
+    .score-table tr.draw td { background: rgba(240,192,64,0.06); }
+    .score-table tr.draw td:first-child { color: var(--gold); }
+    .result-card-note {
+      font-size: 0.72em; color: var(--muted); padding: 6px 16px 10px; font-style: italic;
+    }
+
+    /* ─── ACIERTOS ─── */
+    .score-banner { display: flex; gap: 14px; flex-wrap: wrap; }
+    .score-chip {
+      flex: 1; min-width: 140px; background: var(--card-bg);
+      border: 1px solid var(--card-border); border-radius: var(--radius);
+      padding: 16px 20px; display: flex; align-items: center; gap: 14px;
+    }
+    .score-chip-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .score-chip-dot.chatgpt { background: #10a37f; }
+    .score-chip-dot.gemini  { background: #4285f4; }
+    .score-chip-dot.copilot { background: #7c3aed; }
+    .score-chip-name { font-size: 0.8em; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+    .score-chip-num { font-family: var(--font-display); font-size: 2em; letter-spacing: 1px; color: #fff; margin-left: auto; }
+    .score-chip-num span { font-size: 0.5em; color: var(--muted); }
+
+    /* ─── MISC ─── */
+    .divider {
+      position: relative; z-index: 1;
+      max-width: 1240px; margin: 0 auto 32px; padding: 0 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--accent); text-decoration: none; font-weight: 700;
+      font-size: 0.88em; transition: gap 0.2s;
+    }
+    .back-link:hover { gap: 12px; }
+    footer {
+      position: relative; z-index: 1;
+      background: rgba(13,27,42,0.92); border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center; padding: 20px; font-size: 0.78em; color: var(--muted); margin-top: 40px;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    @media (max-width: 600px) {
+      .jornada-hero { padding: 32px 16px 24px; }
+      .section-wrap, .partidos-wrap { padding-left: 16px; padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER (no tocar) -->
+  <header>
+    <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+      <div style="width:42px;height:42px;background:linear-gradient(135deg,#00c896,#00a87d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3em;box-shadow:0 0 18px rgba(0,200,150,0.3);">⚽</div>
+      <div>
+        <span style="display:block;font-family:'Bebas Neue',sans-serif;font-size:1.5em;letter-spacing:2px;color:#fff;line-height:1;">UNO X DOS IA</span>
+        <small style="font-size:0.6em;color:#00c896;letter-spacing:1px;font-weight:500;">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+      </div>
+    </a>
+  </header>
+
+  <!-- NAV (no tocar) -->
+  <nav aria-label="Navegación principal">
+    <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+      <span class="ham-icon">☰</span>
+      <span class="ham-label">Secciones</span>
+    </button>
+    <div class="nav-menu" id="navMenu">
+      <a href="../../index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
+      <a href="../../ACB.html"         class="nav-link"><span class="nav-emoji">🏀</span> Liga ACB</a>      
+      <a href="../../NBA.html"         class="nav-link"><span class="nav-emoji">🏀</span> NBA</a>
+      <a href="../../LigaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
+      <a href="../../Hypermotion.html" class="nav-link active"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+      <a href="../../Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+      <a href="/LigaFantasIA/fantas-ia-v2.html"    class="nav-link "><span class="nav-emoji">🏆</span> Liga FantasIA</a>
+    
+    </div>
+  </nav>
+
+  <!-- ████████████████████████████████████████████
+       EMPIEZA LA ZONA EDITABLE — CAMBIAR CADA JORNADA
+  ████████████████████████████████████████████ -->
+
+  <!-- ── HERO ── EDITAR: número de jornada y fecha -->
+  <section class="jornada-hero">
+    <div class="eyebrow">📈 Liga Hypermotion 2026/2027</div>
+    <h1>JORNADA <span class="num">11</span></h1>
+    <p style="color:var(--muted);font-size:0.95em;margin-top:8px;"> Viernes 23, Sábado 24, Domingo 25, Lunes 26 de Octubre de 2026</p>
+  </section>
+
+  <!-- ── PARTIDOS ── EDITAR: añadir/quitar .partido-row -->
+  <div class="partidos-wrap">
+    <div class="partidos-card">
+      <div class="partidos-card-header">📅 Partidos de la jornada</div>
+
+      <div class="partidos-dia-label">★ Viernes 23 de Octubre</div>
+
+      <div class="partido-row">
+        <span class="partido-equipos"> Granada vs Real Valladolid</span>
+        <span class="partido-hora">20:30</span>
+      </div>
+
+     <div class="partidos-dia-label">★ Sábado 24 de Octubre</div>
+
+
+      <div class="partido-row">
+        <span class="partido-equipos"> Córdoba vs Eibar</span>
+        <span class="partido-hora">14:00</span>
+      </div>
+      <div class="partido-row">
+        <span class="partido-equipos">Leganés vs Mallorca</span>
+        <span class="partido-hora">16:15</span>
+      </div>
+
+    <div class="partido-row">
+        <span class="partido-equipos">Girona vs Celta Fortuna</span>
+        <span class="partido-hora">18:30</span>
+      </div>
+
+     <div class="partido-row">
+        <span class="partido-equipos"> Las Palmas vs R. Sociedad B</span>
+        <span class="partido-hora">18:30</span>
+      </div>
+
+      <div class="partido-row">
+        <span class="partido-equipos">Almería vs Oviedo</span>
+        <span class="partido-hora">21:00</span>
+      </div>
+
+      <div class="partidos-dia-label">★ Domingo 25 de Octubre</div>
+
+      <div class="partido-row">
+        <span class="partido-equipos">Sabadell vs Tenerife</span>
+        <span class="partido-hora">14:00</span>
+      </div>
+
+      <div class="partido-row">
+        <span class="partido-equipos">Albacete vs Eldense</span>
+        <span class="partido-hora">16:15</span>
+        </div>
+      <div class="partido-row">
+        <span class="partido-equipos">Cádiz vs A. D. Ceuta</span>
+        <span class="partido-hora">16:15</span>
+      </div>
+    
+      <div class="partido-row">
+        <span class="partido-equipos">Castellón vs Sporting</span>
+        <span class="partido-hora">18:30</span>
+      </div>
+
+    <div class="partidos-dia-label">★ Lunes 26 de Octubre</div>
+
+      <div class="partido-row">
+        <span class="partido-equipos">Andorra vs Burgos CF</span>
+        <span class="partido-hora">20:30</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PREDICCIONES ── -->
+  <section class="section-wrap">
+    <p class="section-label">🤖 PREDICCIONES</p>
+    <p class="section-sub">Lo que dice cada IA antes del pitido inicial</p>
+
+    <div class="pred-grid">
+
+      <!-- CHATGPT -->
+      <div class="pred-col chatgpt">
+        <div class="pred-col-header">
+          <span style="width:10px;height:10px;border-radius:50%;background:#10a37f;display:inline-block;"></span>
+          CHAT GPT
+        </div>
+        <div class="pred-col-body">
+<div class="pred-match">
+  <div class="pred-match-title">Granada vs Real Valladolid</div>
+  <div class="pred-winner">Granada gana</div>
+  <div class="pred-prob">Granada 42% · Empate 31% · Real Valladolid 27%</div>
+  <div class="pred-text">El Granada tiene opciones de imponer su ritmo en casa y cuenta con argumentos ofensivos para generar ocasiones. El Valladolid ha mejorado sus resultados recientemente, por lo que puede ser un rival incómodo.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Córdoba vs Eibar</div>
+  <div class="pred-winner">Eibar gana</div>
+  <div class="pred-prob">Córdoba 25% · Empate 28% · Eibar 47%</div>
+  <div class="pred-text">El Eibar está entre los equipos más fuertes de la competición, con 20 goles marcados en diez jornadas. El Córdoba llega tras ganar al Leganés, pero sus problemas defensivos pueden darle ventaja al conjunto visitante.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Leganés vs Mallorca</div>
+  <div class="pred-winner">Mallorca gana</div>
+  <div class="pred-prob">Leganés 25% · Empate 31% · Mallorca 44%</div>
+  <div class="pred-text">El Mallorca está mostrando una gran solidez defensiva y ha perdido pocos partidos. El Leganés atraviesa una etapa irregular y necesita mejorar su producción ofensiva para frenar a un rival que aspira a los puestos de ascenso.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Las Palmas vs R. Sociedad B</div>
+  <div class="pred-winner">Las Palmas gana</div>
+  <div class="pred-prob">Las Palmas 43% · Empate 30% · R. Sociedad B 27%</div>
+  <div class="pred-text">Las Palmas necesita reaccionar después de encajar tres goles ante el Castellón. La Real Sociedad B también está sufriendo defensivamente, aunque su capacidad para generar ocasiones puede complicar el partido.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Girona vs Celta Fortuna</div>
+  <div class="pred-winner">Girona gana</div>
+  <div class="pred-prob">Girona 49% · Empate 29% · Celta Fortuna 22%</div>
+  <div class="pred-text">El Girona ha mostrado más regularidad y cuenta con un ataque capaz de marcar diferencias en casa. El Celta Fortuna tiene potencial ofensivo, pero puede sufrir si el Girona consigue imponer un ritmo alto.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Almería vs Oviedo</div>
+  <div class="pred-winner">Almería gana</div>
+  <div class="pred-prob">Almería 54% · Empate 27% · Oviedo 19%</div>
+  <div class="pred-text">El Almería llega como líder después de sumar ocho victorias en diez jornadas y ganar 2-4 a la Real Sociedad B. El Oviedo es competitivo, pero el nivel ofensivo y la confianza del conjunto local inclinan el pronóstico.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Sabadell vs Tenerife</div>
+  <div class="pred-winner">Sabadell gana</div>
+  <div class="pred-prob">Sabadell 42% · Empate 32% · Tenerife 26%</div>
+  <div class="pred-text">El Sabadell está realizando un inicio de temporada consistente y ha perdido muy pocos encuentros. El Tenerife puede competir si mantiene el orden defensivo, pero el factor campo favorece al conjunto catalán.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Albacete vs Eldense</div>
+  <div class="pred-winner">Eldense gana</div>
+  <div class="pred-prob">Albacete 27% · Empate 30% · Eldense 43%</div>
+  <div class="pred-text">El Albacete sigue teniendo dificultades para puntuar y ha encajado muchos goles. El Eldense ha demostrado capacidad para competir y remontar partidos, aunque deberá evitar errores defensivos para llevarse la victoria.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Cádiz vs A. D. Ceuta</div>
+  <div class="pred-winner">Cádiz gana</div>
+  <div class="pred-prob">Cádiz 46% · Empate 31% · A. D. Ceuta 23%</div>
+  <div class="pred-text">El Cádiz necesita aprovechar su condición de local para alejarse de la zona baja. El Ceuta está teniendo problemas defensivos y suma pocos puntos, por lo que el equipo gaditano parte con una ventaja moderada.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Castellón vs Sporting</div>
+  <div class="pred-winner">Castellón gana</div>
+  <div class="pred-prob">Castellón 48% · Empate 29% · Sporting 23%</div>
+  <div class="pred-text">El Castellón llega reforzado después de ganar 0-3 a Las Palmas y presenta una de las mejores defensas del campeonato. El Sporting también está en buena dinámica, así que se espera un duelo exigente entre dos equipos de la zona alta.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Andorra vs Burgos CF</div>
+  <div class="pred-winner">Empate</div>
+  <div class="pred-prob">Andorra 32% · Empate 35% · Burgos CF 33%</div>
+  <div class="pred-text">El Andorra intentará aprovechar el factor campo para sumar puntos, mientras que el Burgos ha demostrado que puede competir con equipos de diferentes estilos. Las diferencias son pequeñas y el empate parece un resultado plausible.</div>
+</div>      </div>
+      </div>
+
+    <!-- GEMINI -->
+      <div class="pred-col gemini">
+        <div class="pred-col-header">
+          <span style="width:10px;height:10px;border-radius:50%;background:#4285f4;display:inline-block;"></span>
+          GEMINI
+        </div>
+        <div class="pred-col-body">
+ <div class="pred-match">
+  <div class="pred-match-title">Granada vs Real Valladolid</div>
+  <div class="pred-winner">Empate</div>
+  <div class="pred-prob">Granada 36% · Empate 37% · Real Valladolid 27%</div>
+  <div class="pred-text">Duelo de máxima exigencia en Los Cármenes entre dos aspirantes a la zona alta que primarán el equilibrio táctico.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Córdoba vs Eibar</div>
+  <div class="pred-winner">Eibar gana</div>
+  <div class="pred-prob">Córdoba 25% · Empate 28% · Eibar 47%</div>
+  <div class="pred-text">La presión alta y la intensidad ofensiva del conjunto armero terminarán por imponerse en El Arcángel.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Leganés vs Mallorca</div>
+  <div class="pred-winner">Empate</div>
+  <div class="pred-prob">Leganés 35% · Empate 38% · Mallorca 27%</div>
+  <div class="pred-text">Encuentro muy cerrado en Butarque entre dos estructuras defensivas sólidas donde las tablas son el resultado más probable.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Girona vs Celta Fortuna</div>
+  <div class="pred-winner">Girona gana</div>
+  <div class="pred-prob">Girona 58% · Empate 24% · Celta Fortuna 18%</div>
+  <div class="pred-text">La clara jerarquía de la plantilla gerundense y el caudal de juego en Montilivi impondrán su ritmo ante el descaro del filial celeste.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Las Palmas vs R. Sociedad B</div>
+  <div class="pred-winner">Las Palmas gana</div>
+  <div class="pred-prob">Las Palmas 52% · Empate 27% · R. Sociedad B 21%</div>
+  <div class="pred-text">La madurez colectiva y el apoyo de su afición dan clara ventaja a Las Palmas ante la juventud del filial donostiarra.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Almería vs Oviedo</div>
+  <div class="pred-winner">Almería gana</div>
+  <div class="pred-prob">Almería 48% · Empate 29% · Oviedo 23%</div>
+  <div class="pred-text">El potencial realizador local en los Juegos Mediterráneos inclina el pronóstico frente a un ordenado Oviedo.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Sabadell vs Tenerife</div>
+  <div class="pred-winner">Tenerife gana</div>
+  <div class="pred-prob">Sabadell 23% · Empate 29% · Tenerife 48%</div>
+  <div class="pred-text">El empaque táctico y la mayor solvencia defensiva del Tenerife prevalecerán en la Nova Creu Alta.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Albacete vs Eldense</div>
+  <div class="pred-winner">Albacete gana</div>
+  <div class="pred-prob">Albacete 47% · Empate 30% · Eldense 23%</div>
+  <div class="pred-text">El factor campo en el Carlos Belmonte impulsará al bloque manchego para llevarse un duelo directo muy trabajado.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Cádiz vs A. D. Ceuta</div>
+  <div class="pred-winner">Cádiz gana</div>
+  <div class="pred-prob">Cádiz 51% · Empate 28% · A. D. Ceuta 21%</div>
+  <div class="pred-text">La superioridad en las áreas y el empuje de la grada en el Mirandilla decantarán el choque para los gaditanos.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Castellón vs Sporting</div>
+  <div class="pred-winner">Castellón gana</div>
+  <div class="pred-prob">Castellón 46% · Empate 28% · Sporting 26%</div>
+  <div class="pred-text">El ritmo vertical y la intensidad en Castalia otorgan la delantera al conjunto orellut ante un combativo Sporting.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Andorra vs Burgos CF</div>
+  <div class="pred-winner">Empate</div>
+  <div class="pred-prob">Andorra 34% · Empate 37% · Burgos CF 29%</div>
+  <div class="pred-text">Contraste de estilos entre la posesión tricolor y el muro defensivo del Burgos que presagia máxima igualdad.</div>
+</div>        </div>
+      </div>
+
+
+      <!-- COPILOT -->
+      <div class="pred-col copilot">
+        <div class="pred-col-header">
+          <span style="width:10px;height:10px;border-radius:50%;background:#7c3aed;display:inline-block;"></span>
+          COPILOT
+        </div>
+        <div class="pred-col-body">
+<div class="pred-match">
+  <div class="pred-match-title">Granada vs Real Valladolid</div>
+  <div class="pred-winner">Granada gana</div>
+  <div class="pred-prob">Granada 42% · Empate 32% · Real Valladolid 26%</div>
+  <div class="pred-text">Los Cármenes suele marcar diferencias y el Granada mantiene una ligera ventaja jugando ante su afición.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Córdoba vs Eibar</div>
+  <div class="pred-winner">Eibar gana</div>
+  <div class="pred-prob">Córdoba 29% · Empate 31% · Eibar 40%</div>
+  <div class="pred-text">El Eibar llega con un bloque más sólido y su intensidad puede marcar la diferencia en El Arcángel.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Leganés vs Mallorca</div>
+  <div class="pred-winner">Mallorca gana</div>
+  <div class="pred-prob">Leganés 30% · Empate 33% · Mallorca 37%</div>
+  <div class="pred-text">El Mallorca cuenta con más calidad en ataque y puede aprovechar los espacios que conceda el Leganés.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Girona vs Celta Fortuna</div>
+  <div class="pred-winner">Girona gana</div>
+  <div class="pred-prob">Girona 60% · Empate 23% · Celta Fortuna 17%</div>
+  <div class="pred-text">El Girona parte como claro favorito por calidad de plantilla, experiencia competitiva y fortaleza en Montilivi. El filial celeste suele competir bien con balón, pero puede sufrir ante la presión y el poder ofensivo local.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Las Palmas vs R. Sociedad B</div>
+  <div class="pred-winner">Las Palmas gana</div>
+  <div class="pred-prob">Las Palmas 54% · Empate 27% · R. Sociedad B 19%</div>
+  <div class="pred-text">La UD parte como favorita gracias a su mayor calidad colectiva y fortaleza como local.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Almería vs Oviedo</div>
+  <div class="pred-winner">Almería gana</div>
+  <div class="pred-prob">Almería 45% · Empate 31% · Oviedo 24%</div>
+  <div class="pred-text">El conjunto almeriense dispone de mayor potencia ofensiva y suele rendir bien en su estadio.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Sabadell vs Tenerife</div>
+  <div class="pred-winner">Tenerife gana</div>
+  <div class="pred-prob">Sabadell 27% · Empate 32% · Tenerife 41%</div>
+  <div class="pred-text">El Tenerife llega con más experiencia competitiva y mejores argumentos para llevarse los tres puntos.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Albacete vs Eldense</div>
+  <div class="pred-winner">Albacete gana</div>
+  <div class="pred-prob">Albacete 44% · Empate 33% · Eldense 23%</div>
+  <div class="pred-text">El Belmonte puede ser decisivo en un encuentro donde el Albacete presenta una ligera superioridad.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Cádiz vs A. D. Ceuta</div>
+  <div class="pred-winner">Cádiz gana</div>
+  <div class="pred-prob">Cádiz 49% · Empate 29% · A. D. Ceuta 22%</div>
+  <div class="pred-text">El Cádiz cuenta con una plantilla más competitiva y el factor local le convierte en favorito.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Castellón vs Sporting</div>
+  <div class="pred-winner">Castellón gana</div>
+  <div class="pred-prob">Castellón 39% · Empate 31% · Sporting 30%</div>
+  <div class="pred-text">Castalia suele dar un impulso extra al Castellón, que atraviesa una dinámica muy positiva.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Andorra vs Burgos CF</div>
+  <div class="pred-winner">Andorra gana</div>
+  <div class="pred-prob">Andorra 40% · Empate 34% · Burgos CF 26%</div>
+  <div class="pred-text">El estilo de posesión del Andorra puede imponerse a un Burgos que baja prestaciones lejos de casa.</div>
+</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CONCLUSIÓN INICIAL ── -->
+  <section class="section-wrap" style="padding-top:0;">
+    <p class="section-label">📝 CONCLUSIÓN INICIAL</p>
+    <p class="section-sub">Lo que esperamos antes del pitido inicial</p>
+    <div class="conclusion-card">
+      <p>Decima jornada </p>
+      <p><strong style="color:#10a37f;">ChatGPT</strong> apuesta por Granada, Eibar, Mallorca, Las Palamas, Girona, Almería, Sabadell, Eldense, Cádiz, Castellón y da como empates el Andorra vs Burgos CF.</p>
+      <p><strong style="color:#4285f4;">Gemini</strong> apuesta por Eibar, Girona, Las Palmas, Almería, Tenerife, Albacete, Cádiz, Castellón y da como empates el Granada vs Real Valladolid, el Leganés vs Mallorca y el Andorra vs Burgos CF. </p>
+      <p><strong style="color:#7c3aed;">Copilot</strong> apuesta por Granada, Eibar, Mallorca, Girona, Las Palmas, Almería, Tenerife, Albacete, Cádiz, Castellón y Andorra. </p>
+<p> Predicciones hechas, veremos. </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── RESULTADOS ── -->
+  <section class="section-wrap">
+    <p class="section-label">🏆 RESULTADOS</p>
+    <p class="section-sub">Lo que pasó de verdad sobre el barro</p>
+
+    <div class="results-grid">
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr><td>Granada</td><td class="col-total">0</td></tr>
+            <tr class="winner"><td>Real Valladolid</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr><td>Córdoba</td><td class="col-total">0</td></tr>
+            <tr class="winner"><td>Eibar</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr class="draw"><td>Leganés</td><td class="col-total">0</td></tr>
+            <tr class="draw"><td>Mallorca</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr class="winner"><td>Girona</td><td class="col-total">0</td></tr>
+            <tr><td>Celta Fortuna</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr><td>Las Palmas</td><td class="col-total">0</td></tr>
+            <tr class="winner"><td>R. Sociedad B</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr><td>Almería</td><td class="col-total">0</td></tr>
+            <tr class="winner"><td>Oviedo</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr class="winner"><td>Sabadell</td><td class="col-total">0</td></tr>
+            <tr><td>Tenerife</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr class="winner"><td>Albacete</td><td class="col-total">0</td></tr>
+            <tr><td>Eldense</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr><td>Cádiz</td><td class="col-total">0</td></tr>
+            <tr class="winner"><td>A. D. Ceuta</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr class="draw"><td>Castellón</td><td class="col-total">0</td></tr>
+            <tr class="draw"><td>Sporting</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr  class="winner"><td>Andorra</td><td class="col-total">0</td></tr>
+            <tr><td>Burgos CF</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── ACIERTOS ── -->
+  <section class="section-wrap" style="padding-top:0;">
+    <p class="section-label" style="margin-bottom:14px;">📊 ACIERTOS DE ESTA JORNADA</p>
+    <div class="score-banner">
+      <div class="score-chip">
+        <div class="score-chip-dot chatgpt"></div>
+        <div><div class="score-chip-name">Chat GPT</div></div>
+        <div class="score-chip-num">0<span>/11</span></div>
+      </div>
+      <div class="score-chip">
+        <div class="score-chip-dot gemini"></div>
+        <div><div class="score-chip-name">Gemini</div></div>
+        <div class="score-chip-num">0<span>/11</span></div>
+      </div>
+      <div class="score-chip">
+        <div class="score-chip-dot copilot"></div>
+        <div><div class="score-chip-name">Copilot</div></div>
+        <div class="score-chip-num">0<span>/11</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONCLUSIÓN FINAL ── -->
+  <section class="section-wrap" style="padding-top:0;">
+    <p class="section-label">📝 CONCLUSIÓN FINAL</p>
+    <p class="section-sub">temporada 26/27</p>
+    <div class="conclusion-card">
+      <p></p>
+      <p><strong style="color:#10a37f;">ChatGPT</strong> acierta con <br></p>
+      <p><strong style="color:#4285f4;">Gemini</strong> acierta con  <br></p>
+      <p><strong style="color:#7c3aed;">Copilot</strong> acierta con <br></p>
+      <p> <br></p>
+    </div>
+  </section>
+
+  <!-- ████████████████████████████████████████████
+       FIN DE LA ZONA EDITABLE
+  ████████████████████████████████████████████ -->
+
+  <section class="section-wrap" style="padding-top:0;padding-bottom:24px;">
+    <a href="../Hypermotion.html" class="back-link">← Volver a Liga Hypermotion</a>
+  </section>
+
+  <footer>
+    <p>© 2025 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
+    <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com">Contacto</a></p>
+  </footer>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', function(e) {
+      const nav = document.querySelector('nav');
+      if (!nav.contains(e.target)) {
+        document.getElementById('navMenu').classList.remove('open');
+      }
+    });
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navMenu').classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
