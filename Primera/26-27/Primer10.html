@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+     <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-90WQKBTXN3');
+</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Predicciones LaLiga EA Sports generadas por IA, ¿Qué IA es mejor?"/>
+
+  <!-- ═══════════════════════════════════════════════
+       EDITAR: número de jornada en el título
+  ═══════════════════════════════════════════════ -->
+  <title>Jornada 10 · LaLiga EA Sports · Uno X Dos IA</title>
+
+  <link rel="icon" href="/Imagenes/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─────────────────────────────────────────────
+       VARIABLES GLOBALES
+    ───────────────────────────────────────────── */
+    :root {
+      --accent:      #00c896;
+      --accent-dark: #00a87d;
+      --gold:        #f0c040;
+      --text:        #e8ecf0;
+      --muted:       #8fa3b8;
+      --card-bg:     rgba(10,28,10,0.80);
+      --card-border: rgba(255,255,255,0.09);
+      --radius:      12px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Outfit', sans-serif;
+
+      /* Colores por IA */
+      --chatgpt: #10a37f;
+      --gemini:  #4285f4;
+      --copilot: #7c3aed;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    /* ─────────────────────────────────────────────
+       FONDO: CÉSPED DE CAMPO DE FÚTBOL
+    ───────────────────────────────────────────── */
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      min-height: 100vh;
+
+      /* Franjas horizontales de césped, alternando verde claro/oscuro */
+      background-color: #2d6a1f;
+      background-image:
+        repeating-linear-gradient(
+          180deg,
+          transparent           0px,
+          transparent           60px,
+          rgba(0,0,0,0.12)      60px,
+          rgba(0,0,0,0.12)      120px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent           0px,
+          transparent           200px,
+          rgba(255,255,255,0.02) 200px,
+          rgba(255,255,255,0.02) 201px
+        ),
+        linear-gradient(
+          160deg,
+          #3a8a24 0%,
+          #2f7a1c 30%,
+          #3a8a24 60%,
+          #276618 100%
+        );
+    }
+
+    /* ─────────────────────────────────────────────
+       HEADER
+    ───────────────────────────────────────────── */
+    header {
+      position: relative;
+      z-index: 10;
+      background: linear-gradient(180deg,rgba(13,27,42,0.98),rgba(13,27,42,0.85));
+      border-bottom: 1px solid rgba(0,200,150,0.2);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      backdrop-filter: blur(10px);
+    }
+
+    /* ─────────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────────── */
+    nav {
+      background: rgba(19,34,56,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 8px 20px;
+      position: relative;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+    }
+    .nav-hamburger {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff; font-size: 1em; font-weight: 600;
+      padding: 10px 18px; border-radius: 8px; cursor: pointer;
+      font-family: var(--font-body); transition: background 0.2s;
+    }
+    .nav-hamburger:hover { background: rgba(255,255,255,0.12); }
+    .ham-icon { font-size: 1.3em; }
+    .ham-label { letter-spacing: 0.5px; }
+    .nav-menu {
+      display: none; flex-direction: column; gap: 4px; margin-top: 8px;
+      background: rgba(13,27,42,0.98); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; padding: 8px; position: absolute;
+      top: 100%; left: 50%; transform: translateX(-50%);
+      min-width: 220px; box-shadow: 0 12px 40px rgba(0,0,0,0.4); z-index: 200;
+    }
+    .nav-menu.open { display: flex; }
+    .nav-link {
+      display: flex; align-items: center; gap: 10px; padding: 11px 16px;
+      border-radius: 7px; text-decoration: none; font-size: 0.92em; font-weight: 600;
+      color: var(--muted); transition: all 0.2s; border: 1px solid transparent;
+    }
+    .nav-link:hover { color: #fff; background: rgba(255,255,255,0.07); }
+    .nav-link.active { color: var(--accent); background: rgba(0,200,150,0.1); border-color: rgba(0,200,150,0.25); }
+    .nav-emoji { font-size: 1.1em; }
+
+    /* ─────────────────────────────────────────────
+       HERO DE JORNADA
+    ───────────────────────────────────────────── */
+    .jornada-hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+    .jornada-hero .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,200,150,0.1); border: 1px solid rgba(0,200,150,0.25);
+      border-radius: 50px; padding: 5px 16px;
+      font-size: 0.75em; font-weight: 700; color: var(--accent);
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 18px;
+    }
+    .jornada-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8em, 7vw, 5em);
+      letter-spacing: 3px; color: #fff; line-height: 1; margin-bottom: 10px;
+    }
+    .jornada-hero h1 .num { color: var(--accent); }
+
+    /* ─────────────────────────────────────────────
+       PARTIDOS DEL DÍA
+    ───────────────────────────────────────────── */
+    .partidos-wrap {
+      position: relative; z-index: 1;
+      max-width: 760px; margin: 0 auto 40px; padding: 0 24px;
+    }
+    .partidos-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .partidos-card-header {
+      background: rgba(0,200,150,0.08); border-bottom: 1px solid rgba(0,200,150,0.15);
+      padding: 14px 20px; font-family: var(--font-display);
+      font-size: 1.3em; letter-spacing: 2px; color: var(--accent);
+    }
+    .partidos-dia-label {
+      padding: 10px 20px 4px;
+      font-size: 0.78em; font-weight: 700; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 1px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .partido-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px; border-bottom: 1px solid rgba(255,255,255,0.04); gap: 12px;
+    }
+    .partido-row:last-child { border-bottom: none; }
+    .partido-equipos { font-weight: 600; font-size: 0.95em; color: #fff; }
+    .partido-hora {
+      font-size: 0.8em; font-weight: 700; color: var(--muted);
+      background: rgba(255,255,255,0.06); border-radius: 6px; padding: 4px 10px; white-space: nowrap;
+    }
+
+    /* ─────────────────────────────────────────────
+       PREDICCIONES — 3 COLUMNAS
+    ───────────────────────────────────────────── */
+    .section-wrap {
+      position: relative; z-index: 1;
+      max-width: 1240px; margin: 0 auto; padding: 0 24px 40px;
+    }
+    .section-label {
+      font-family: var(--font-display); font-size: 1.6em;
+      letter-spacing: 2px; color: #fff; margin-bottom: 6px;
+    }
+    .section-sub { color: var(--muted); font-size: 0.88em; margin-bottom: 22px; }
+
+    .pred-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    }
+    @media (max-width: 900px) { .pred-grid { grid-template-columns: 1fr; } }
+
+    .pred-col {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column;
+    }
+    .pred-col-header {
+      padding: 14px 18px; font-family: var(--font-display);
+      font-size: 1.3em; letter-spacing: 2px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .pred-col.chatgpt .pred-col-header { background: rgba(16,163,127,0.12); color: #10a37f; border-bottom: 1px solid rgba(16,163,127,0.2); }
+    .pred-col.gemini  .pred-col-header { background: rgba(66,133,244,0.12); color: #4285f4; border-bottom: 1px solid rgba(66,133,244,0.2); }
+    .pred-col.copilot .pred-col-header { background: rgba(124,58,237,0.12); color: #7c3aed; border-bottom: 1px solid rgba(124,58,237,0.2); }
+
+    .pred-col-body { padding: 18px; flex: 1; display: flex; flex-direction: column; gap: 18px; }
+
+    .pred-match { padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .pred-match:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .pred-match-title {
+      font-size: 0.8em; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 7px;
+    }
+    .pred-winner {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-weight: 700; font-size: 0.95em; color: #fff; margin-bottom: 5px;
+    }
+    .pred-winner::before { content: '→'; color: var(--accent); font-weight: 900; }
+    .pred-prob { font-size: 0.78em; color: var(--muted); margin-bottom: 6px; }
+    .pred-text { font-size: 0.82em; color: #b0c8b0; line-height: 1.55; }
+
+    /* ─────────────────────────────────────────────
+       CONCLUSIÓN
+    ───────────────────────────────────────────── */
+    .conclusion-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); padding: 22px 24px;
+      font-size: 0.92em; line-height: 1.7; color: #c8d8c8;
+    }
+    .conclusion-card p + p { margin-top: 10px; }
+
+    /* ─────────────────────────────────────────────
+       RESULTADOS — GRID DE TABLAS
+    ───────────────────────────────────────────── */
+    .results-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+    }
+    @media (max-width: 700px) { .results-grid { grid-template-columns: 1fr; } }
+
+    .result-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .result-card-venue {
+      font-size: 0.72em; font-weight: 600; color: var(--muted);
+      letter-spacing: 0.8px; text-transform: uppercase; padding: 10px 16px 0;
+    }
+
+    table.score-table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+    .score-table thead tr { background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .score-table th {
+      padding: 9px 10px; font-size: 0.75em; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); text-align: center;
+    }
+    .score-table th:first-child { text-align: left; padding-left: 16px; }
+    .score-table td {
+      padding: 12px 10px; text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.04); color: var(--text); font-weight: 500;
+    }
+    .score-table td:first-child {
+      text-align: left; padding-left: 16px; font-weight: 700; color: #fff;
+    }
+    .col-total {
+      font-family: var(--font-display); font-size: 1.3em;
+      letter-spacing: 1px; color: var(--accent); font-weight: 900;
+    }
+    .score-table tr.winner td { background: rgba(0,200,150,0.07); }
+    .score-table tr.winner td:first-child { color: var(--accent); }
+    .score-table tr.draw td { background: rgba(240,192,64,0.06); }
+    .score-table tr.draw td:first-child { color: var(--gold); }
+
+    .result-card-note {
+      font-size: 0.74em; color: var(--muted);
+      padding: 7px 16px 11px; font-style: italic;
+    }
+
+    /* ─────────────────────────────────────────────
+       MARCADOR DE ACIERTOS
+    ───────────────────────────────────────────── */
+    .score-banner { display: flex; gap: 14px; flex-wrap: wrap; }
+    .score-chip {
+      flex: 1; min-width: 140px; background: var(--card-bg);
+      border: 1px solid var(--card-border); border-radius: var(--radius);
+      padding: 16px 20px; display: flex; align-items: center; gap: 14px;
+    }
+    .score-chip-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .score-chip-dot.chatgpt { background: #10a37f; }
+    .score-chip-dot.gemini  { background: #4285f4; }
+    .score-chip-dot.copilot { background: #7c3aed; }
+    .score-chip-name { font-size: 0.8em; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+    .score-chip-num { font-family: var(--font-display); font-size: 2em; letter-spacing: 1px; color: #fff; margin-left: auto; }
+    .score-chip-num span { font-size: 0.5em; color: var(--muted); letter-spacing: 0; }
+
+    /* ─────────────────────────────────────────────
+       DIVISOR Y VOLVER
+    ───────────────────────────────────────────── */
+    .divider {
+      position: relative; z-index: 1;
+      max-width: 1240px; margin: 0 auto 32px; padding: 0 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--accent); text-decoration: none; font-weight: 700;
+      font-size: 0.88em; transition: gap 0.2s;
+    }
+    .back-link:hover { gap: 12px; }
+
+    /* ─────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────── */
+    footer {
+      position: relative; z-index: 1;
+      background: rgba(13,27,42,0.92); border-top: 1px solid rgba(255,255,255,0.05);
+      text-align: center; padding: 20px; font-size: 0.78em; color: var(--muted); margin-top: 40px;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    @media (max-width: 600px) {
+      .jornada-hero { padding: 32px 16px 24px; }
+      .section-wrap, .partidos-wrap { padding-left: 16px; padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER (no tocar) -->
+  <header>
+    <a href="../../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+      <div style="width:42px;height:42px;background:linear-gradient(135deg,#00c896,#00a87d);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3em;box-shadow:0 0 18px rgba(0,200,150,0.3);">⚽</div>
+      <div>
+        <span style="display:block;font-family:'Bebas Neue',sans-serif;font-size:1.5em;letter-spacing:2px;color:#fff;line-height:1;">UNO X DOS IA</span>
+        <small style="font-size:0.6em;color:#00c896;letter-spacing:1px;font-weight:500;">PREDICCIONES CON INTELIGENCIA ARTIFICIAL</small>
+      </div>
+    </a>
+  </header>
+
+  <!-- NAV (no tocar) -->
+  <nav aria-label="Navegación principal">
+    <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+      <span class="ham-icon">☰</span>
+      <span class="ham-label">Secciones</span>
+    </button>
+    <div class="nav-menu" id="navMenu">
+      <a href="../../index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
+      <a href="../../ACB.html"         class="nav-link"><span class="nav-emoji">🏀</span> Liga ACB</a>
+      <a href="../../NBA.html"         class="nav-link"><span class="nav-emoji">🏀</span> NBA</a>
+      <a href="../../LigaEsports.html" class="nav-link active"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
+      <a href="../../Hypermotion.html" class="nav-link"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+      <a href="../../Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+      <a href="/LigaFantasIA/fantas-ia-v2.html"    class="nav-link "><span class="nav-emoji">🏆</span> Liga FantasIA</a>
+    
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════
+  ██████████████████████████████████████████████████████████
+       EMPIEZA LA ZONA EDITABLE — CAMBIAR CADA JORNADA
+  ██████████████████████████████████████████████████████████
+  ════════════════════════════════════════════════════════ -->
+    <!-- ────────────────────────────────────────
+       HERO: número de jornada y fecha(s)
+       EDITAR: JORNADA_NUM y FECHA
+  ──────────────────────────────────────── -->
+  <section class="jornada-hero">
+    <div class="eyebrow">⚽ LaLiga EA Sports 2026/2027</div>
+    <h1>JORNADA <span class="num">10</span></h1>
+    <p style="color:var(--muted);font-size:0.95em;margin-top:8px;"> Viernes 16, Sabado 17, Domingo 18, Lunes 19 de Octubre de 2026</p>
+  </section>
+
+  <!-- ────────────────────────────────────────
+       PARTIDOS DEL DÍA
+       EDITAR: añadir/quitar .partido-row
+       Añadir .partidos-dia-label para separar
+       días distintos dentro de la misma jornada
+  ──────────────────────────────────────── -->
+  <div class="partidos-wrap">
+    <div class="partidos-card">
+      <div class="partidos-card-header">📅 Partidos de la jornada</div>
+
+      <div class="partidos-dia-label">🔵 Viernes 23 de Octubre</div>
+
+      <div class="partido-row">
+        <span class="partido-equipos"> Alavés vs Málaga</span>
+        <span class="partido-hora">21:00</span>
+      </div>
+
+      <div class="partidos-dia-label">🔵 Sabado 24 de Octubre</div>
+
+    <div class="partido-row">
+        <span class="partido-equipos">Rayo vs Elche</span>
+        <span class="partido-hora">14:00</span>
+      </div>
+      
+      
+      <div class="partido-row">
+        <span class="partido-equipos"> Racing vs Espanyol</span>
+        <span class="partido-hora">16:15</span>
+      </div>
+
+      <div class="partido-row">
+        <span class="partido-equipos">Valencia vs Villarreal</span>
+        <span class="partido-hora">18:30</span>
+      </div>
+
+      <div class="partido-row">
+        <span class="partido-equipos">Atlético vs Deportivo</span>
+        <span class="partido-hora">21:00</span>
+      </div>
+
+
+      <div class="partidos-dia-label">🔵 Domingo 25 de Octubre</div>
+
+
+      <div class="partido-row">
+        <span class="partido-equipos">Athletic vs Getafe</span>
+        <span class="partido-hora">14:00</span>
+      </div>
+
+      <div class="partido-row">
+        <span class="partido-equipos">Celta vs Betis</span>
+        <span class="partido-hora">16:15</span>
+      </div>
+
+
+    <div class="partido-row">
+        <span class="partido-equipos">R. Sociedad vs Levante</span>
+        <span class="partido-hora">18:30</span>
+      </div>
+
+    <div class="partido-row">
+        <span class="partido-equipos">Barcelona vs Real Madrid</span>
+        <span class="partido-hora">21:00</span>
+      </div>
+
+      <div class="partidos-dia-label">🔵 Lunes 26 de Octubre</div>
+
+      <div class="partido-row">
+        <span class="partido-equipos">Sevilla vs Osasuna</span>
+        <span class="partido-hora">21:00</span>
+      </div>
+
+    </div>
+  </div>
+  <!-- ────────────────────────────────────────
+       PREDICCIONES DE LAS 3 IAs
+       EDITAR: .pred-match-title → partido
+                .pred-winner     → ganador
+                .pred-prob       → porcentajes
+                .pred-text       → análisis
+       Para EMPATE usar: → Empate
+  ──────────────────────────────────────── -->
+  <section class="section-wrap">
+    <p class="section-label">🤖 PREDICCIONES</p>
+    <p class="section-sub">Lo que dice cada IA antes de que ruede el balón</p>
+
+    <div class="pred-grid">
+
+      <!-- ── CHATGPT ── -->
+      <div class="pred-col chatgpt">
+        <div class="pred-col-header">
+          <span style="width:10px;height:10px;border-radius:50%;background:#10a37f;display:inline-block;"></span>
+          CHAT GPT
+        </div>
+        <div class="pred-col-body">
+<div class="pred-match">
+  <div class="pred-match-title">Alavés vs Málaga</div>
+  <div class="pred-winner">Alavés gana</div>
+  <div class="pred-prob">Alavés 57% · Empate 27% · Málaga 16%</div>
+  <div class="pred-text">El Alavés parte con ventaja por su mayor solidez y el factor campo. El Málaga necesita mejorar su producción ofensiva después de un inicio de temporada complicado.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Rayo vs Elche</div>
+  <div class="pred-winner">Rayo gana</div>
+  <div class="pred-prob">Rayo 43% · Empate 32% · Elche 25%</div>
+  <div class="pred-text">El Rayo puede aprovechar su condición de local ante un Elche que está compitiendo bien defensivamente, pero al que le cuesta transformar sus ocasiones en victorias.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Racing vs Espanyol</div>
+  <div class="pred-winner">Empate</div>
+  <div class="pred-prob">Racing 34% · Empate 35% · Espanyol 31%</div>
+  <div class="pred-text">Se espera un encuentro equilibrado entre dos equipos capaces de competir con intensidad. El Racing tiene el apoyo de su público, mientras que el Espanyol intentará mejorar sus resultados recientes.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Valencia vs Villarreal</div>
+  <div class="pred-winner">Villarreal gana</div>
+  <div class="pred-prob">Valencia 28% · Empate 29% · Villarreal 43%</div>
+  <div class="pred-text">El Villarreal cuenta con más argumentos ofensivos, aunque su reciente empate sin goles ante el Elche genera algunas dudas. El Valencia necesita aprovechar Mestalla para reaccionar.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Atlético vs Deportivo</div>
+  <div class="pred-winner">Atlético gana</div>
+  <div class="pred-prob">Atlético 68% · Empate 21% · Deportivo 11%</div>
+  <div class="pred-text">El Atlético llega reforzado tras vencer al Espanyol y destaca por su capacidad para resolver partidos ajustados. El Deportivo tendrá que defender con mucha disciplina para sacar algo positivo.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Athletic vs Getafe</div>
+  <div class="pred-winner">Athletic gana</div>
+  <div class="pred-prob">Athletic 47% · Empate 32% · Getafe 21%</div>
+  <div class="pred-text">El Athletic tiene una ligera ventaja por su intensidad y capacidad para presionar arriba. El Getafe intentará cerrar espacios y convertir el partido en un duelo físico.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Celta vs Betis</div>
+  <div class="pred-winner">Betis gana</div>
+  <div class="pred-prob">Celta 29% · Empate 30% · Betis 41%</div>
+  <div class="pred-text">El Betis tiene más potencial ofensivo, aunque deberá recuperarse anímicamente de la derrota ante el Barcelona. El Celta puede aprovechar cualquier desajuste defensivo para puntuar.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">R. Sociedad vs Levante</div>
+  <div class="pred-winner">R. Sociedad gana</div>
+  <div class="pred-prob">R. Sociedad 55% · Empate 27% · Levante 18%</div>
+  <div class="pred-text">La Real Sociedad parte como favorita por su mayor calidad individual y el factor campo. El Levante puede poner dificultades si mantiene el orden defensivo durante los noventa minutos.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Barcelona vs Real Madrid</div>
+  <div class="pred-winner">Barcelona gana</div>
+  <div class="pred-prob">Barcelona 38% · Empate 28% · Real Madrid 34%</div>
+  <div class="pred-text">El Barcelona llega en un momento extraordinario, con nueve victorias consecutivas y una gran capacidad goleadora. El Real Madrid tiene calidad para competir de tú a tú, por lo que se espera un Clásico muy igualado.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Sevilla vs Osasuna</div>
+  <div class="pred-winner">Sevilla gana</div>
+  <div class="pred-prob">Sevilla 44% · Empate 31% · Osasuna 25%</div>
+  <div class="pred-text">El Sevilla puede sacar partido de jugar en casa ante un Osasuna que necesita recuperar confianza tras su derrota frente al Betis. Si los locales controlan el ritmo, tendrán opciones de llevarse los tres puntos.</div>
+</div>
+        </div>
+      </div>
+
+
+<!-- ── GEMINI ── -->
+      <div class="pred-col gemini">
+        <div class="pred-col-header">
+          <span style="width:10px;height:10px;border-radius:50%;background:#4285f4;display:inline-block;"></span>
+          GEMINI
+        </div>
+        <div class="pred-col-body">
+
+<!-- Alavés vs Málaga -->
+<div class="pred-match">
+  <div class="pred-match-title">Alavés vs Málaga</div>
+  <div class="pred-winner">Alavés gana</div>
+  <div class="pred-prob">Alavés 43% · Empate 32% · Málaga 25%</div>
+  <div class="pred-text">La solidez en Mendizorroza y el orden táctico le otorgan una ligera ventaja al Alavés ante un Málaga rocoso.</div>
+</div>
+
+<!-- Rayo vs Elche -->
+<div class="pred-match">
+  <div class="pred-match-title">Rayo vs Elche</div>
+  <div class="pred-winner">Rayo gana</div>
+  <div class="pred-prob">Rayo 46% · Empate 30% · Elche 24%</div>
+  <div class="pred-text">El ritmo intenso y la presión alta en Vallecas posicionan al Rayo como favorito frente al bloque ilicitano.</div>
+</div>
+
+<!-- Racing vs Espanyol -->
+<div class="pred-match">
+  <div class="pred-match-title">Racing vs Espanyol</div>
+  <div class="pred-winner">Empate</div>
+  <div class="pred-prob">Racing 33% · Empate 35% · Espanyol 32%</div>
+  <div class="pred-text">Encuentro de fuerzas muy niveladas en El Sardinero entre dos equipos con planteamientos defensivos muy serios.</div>
+</div>
+
+<!-- Valencia vs Villarreal -->
+<div class="pred-match">
+  <div class="pred-match-title">Valencia vs Villarreal</div>
+  <div class="pred-winner">Empate</div>
+  <div class="pred-prob">Valencia 32% · Empate 34% · Villarreal 34%</div>
+  <div class="pred-text">Derbi autonómico de alta intensidad en Mestalla donde la electricidad local se compensa con la calidad asociativa visitante.</div>
+</div>
+
+<!-- Atlético vs Deportivo -->
+<div class="pred-match">
+  <div class="pred-match-title">Atlético vs Deportivo</div>
+  <div class="pred-winner">Atlético gana</div>
+  <div class="pred-prob">Atlético 64% · Empate 23% · Deportivo 13%</div>
+  <div class="pred-text">La firmeza del Atlético en el Metropolitano y su contundencia en las áreas inclinan con claridad el pronóstico.</div>
+</div>
+
+<!-- Athletic vs Getafe -->
+<div class="pred-match">
+  <div class="pred-match-title">Athletic vs Getafe</div>
+  <div class="pred-winner">Athletic gana</div>
+  <div class="pred-prob">Athletic 52% · Empate 30% · Getafe 18%</div>
+  <div class="pred-text">El empuje físico y el juego por bandas del Athletic en San Mamés buscarán derribar el bloque bajo del Getafe.</div>
+</div>
+
+<!-- Celta vs Betis -->
+<div class="pred-match">
+  <div class="pred-match-title">Celta vs Betis</div>
+  <div class="pred-winner">Empate</div>
+  <div class="pred-prob">Celta 36% · Empate 33% · Betis 31%</div>
+  <div class="pred-text">Duelo vistoso y ofensivo en Balaídos con dos propuestas dinámicas que prometen alternativas en ambas porterías.</div>
+</div>
+
+<!-- R. Sociedad vs Levante -->
+<div class="pred-match">
+  <div class="pred-match-title">R. Sociedad vs Levante</div>
+  <div class="pred-winner">R. Sociedad gana</div>
+  <div class="pred-prob">R. Sociedad 58% · Empate 25% · Levante 17%</div>
+  <div class="pred-text">El control de la posesión y el volumen de juego de la Real Sociedad en Anoeta la perfilan como clara candidata al triunfo.</div>
+</div>
+
+<!-- Barcelona vs Real Madrid -->
+<div class="pred-match">
+  <div class="pred-match-title">Barcelona vs Real Madrid</div>
+  <div class="pred-winner">Empate</div>
+  <div class="pred-prob">Barcelona 36% · Empate 31% · Real Madrid 33%</div>
+  <div class="pred-text">El Clásico por excelencia llega con máxima igualdad: la propuesta asociativa culé frente a la pegada letal madridista.</div>
+</div>
+
+<!-- Sevilla vs Osasuna -->
+<div class="pred-match">
+  <div class="pred-match-title">Sevilla vs Osasuna</div>
+  <div class="pred-winner">Sevilla gana</div>
+  <div class="pred-prob">Sevilla 48% · Empate 29% · Osasuna 23%</div>
+  <div class="pred-text">El impulso de la afición en el Ramón Sánchez-Pizjuán le otorga ventaja al Sevilla frente al entramado rocoso de Osasuna.</div>
+</div>       </div>
+      </div>
+
+      <!-- ── COPILOT ── -->
+      <div class="pred-col copilot">
+        <div class="pred-col-header">
+          <span style="width:10px;height:10px;border-radius:50%;background:#7c3aed;display:inline-block;"></span>
+          COPILOT
+        </div>
+        <div class="pred-col-body">
+ <div class="pred-match">
+  <div class="pred-match-title">Alavés vs Málaga</div>
+  <div class="pred-winner">Alavés gana</div>
+  <div class="pred-prob">Alavés 46% · Empate 31% · Málaga 23%</div>
+  <div class="pred-text">El Alavés suele hacerse fuerte en Mendizorroza y parte con ventaja ante un Málaga irregular como visitante.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Rayo vs Elche</div>
+  <div class="pred-winner">Rayo gana</div>
+  <div class="pred-prob">Rayo 48% · Empate 30% · Elche 22%</div>
+  <div class="pred-text">El empuje de Vallecas y la intensidad del Rayo deberían marcar diferencias ante el Elche.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Racing vs Espanyol</div>
+  <div class="pred-winner">Empate</div>
+  <div class="pred-prob">Racing 33% · Empate 36% · Espanyol 31%</div>
+  <div class="pred-text">Encuentro muy equilibrado entre dos equipos que suelen competir bien en duelos de nivel similar.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Valencia vs Villarreal</div>
+  <div class="pred-winner">Valencia gana</div>
+  <div class="pred-prob">Valencia 41% · Empate 30% · Villarreal 29%</div>
+  <div class="pred-text">Mestalla puede ser decisivo en un derbi muy igualado entre dos equipos de nivel parecido.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Atlético vs Deportivo</div>
+  <div class="pred-winner">Atlético gana</div>
+  <div class="pred-prob">Atlético 63% · Empate 22% · Deportivo 15%</div>
+  <div class="pred-text">La superioridad de plantilla y la fortaleza del Atlético en casa le convierten en favorito claro.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Athletic vs Getafe</div>
+  <div class="pred-winner">Athletic gana</div>
+  <div class="pred-prob">Athletic 55% · Empate 28% · Getafe 17%</div>
+  <div class="pred-text">San Mamés suele impulsar al Athletic, especialmente ante rivales que proponen partidos físicos.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Celta vs Betis</div>
+  <div class="pred-winner">Empate</div>
+  <div class="pred-prob">Celta 34% · Empate 35% · Betis 31%</div>
+  <div class="pred-text">Dos equipos ofensivos y de nivel parecido que podrían repartirse los puntos en Balaídos.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Real Sociedad vs Levante</div>
+  <div class="pred-winner">Real Sociedad gana</div>
+  <div class="pred-prob">Real Sociedad 58% · Empate 25% · Levante 17%</div>
+  <div class="pred-text">La Real cuenta con más calidad colectiva y debería dominar gran parte del encuentro.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Barcelona vs Real Madrid</div>
+  <div class="pred-winner">Barcelona gana</div>
+  <div class="pred-prob">Barcelona 40% · Empate 29% · Real Madrid 31%</div>
+  <div class="pred-text">El factor campo inclina ligeramente un Clásico siempre muy igualado y lleno de detalles.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Sevilla vs Osasuna</div>
+  <div class="pred-winner">Sevilla gana</div>
+  <div class="pred-prob">Sevilla 49% · Empate 30% · Osasuna 21%</div>
+  <div class="pred-text">El Sevilla suele elevar su rendimiento en casa y posee más recursos ofensivos que Osasuna.</div>
+</div>
+
+        </div>
+        </div>
+      </div>
+
+    </div><!-- /pred-grid -->
+  </section>
+
+  <!-- ────────────────────────────────────────
+       CONCLUSIÓN ANTES DE JUGAR
+       EDITAR: texto libre
+  ──────────────────────────────────────── -->
+  <section class="section-wrap" style="padding-top:0;">
+    <p class="section-label">📝 CONCLUSIÓN INICIAL</p>
+    <p class="section-sub">Lo que esperamos antes del pitido inicial</p>
+    <div class="conclusion-card">
+     <p><strong style="color:#10a37f;">ChatGPT</strong> apuesta esta jornada por Alavés, Rayo, Villarreal, Atlético, Athletic, Betis, R. Sociedad, Barcelona, Sevilla y da como empate el Racing vs Espanyol.</p>
+      <p><strong style="color:#4285f4;">Gemini</strong> apuesta esta jornada por Alavés, Rayo, Atlético, Athletic, R. Sociedad, Sevilla y da como empates el Racing vs Espanyol, el Valencia vs Villarreal, el Celta vs Betis y el Barcelona vs Real Madrid</p>
+      <p><strong style="color:#7c3aed;">Copilot</strong> apuesta esta jornada por Alavés, Rayo, Valencia, Atlético, Athletic, R. Sociedad, Barcelona, Sevilla y da como empates el Racing vs Espanyol y el Celta vs Betis.</p>
+<p>Jornada marcada por el clásico Barcelona vs Real Madrid en el camp nou, ChatGPT y Copilot dan como ganador al Barcelona pero Gemini les da un empate, veremos.<br></p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ────────────────────────────────────────
+       RESULTADOS
+       EDITAR: scores en .col-total
+       Añadir class="winner" al ganador
+       Añadir class="draw" a ambos en empate
+       Cambiar .result-card-venue con el estadio
+  ──────────────────────────────────────── -->
+  <section class="section-wrap">
+    <p class="section-label">🏆 RESULTADOS</p>
+    <p class="section-sub">Lo que pasó de verdad sobre el césped</p>
+
+    <div class="results-grid">
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr class="draw"><td>Alavés</td><td class="col-total">0</td></tr>
+            <tr class="draw"><td>Málaga</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr><td>Rayo</td><td class="col-total">0</td></tr>
+            <tr class="winner"><td>Elche</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr class="draw"><td>Racing</td><td class="col-total">0</td></tr>
+            <tr class="draw"><td>Espanyol</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr><td>Valencia</td><td class="col-total">0</td></tr>
+            <tr class="winner"><td>Villarreal</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr class="draw"><td>Atlético</td><td class="col-total">0</td></tr>
+            <tr class="draw"><td>Deportivo</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr><td>Athletic</td><td class="col-total">0</td></tr>
+            <tr><td>Getafe</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr><td>Celta</td><td class="col-total">0</td></tr>
+            <tr ><td>Betis</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+            <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr><td>R. Sociedad</td><td class="col-total">0</td></tr>
+            <tr><td>Levante</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+            <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr><td>Barcelona</td><td class="col-total">0</td></tr>
+            <tr><td>Real Madrid</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th class="col-total">GOL</th></tr></thead>
+          <tbody>
+            <tr><td>Sevilla</td><td class="col-total">0</td></tr>
+            <tr><td>Osasuna</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Próximo</div>
+      </div>
+    </div><!-- /results-grid -->
+  </section>
+
+  <!-- ────────────────────────────────────────
+       ACIERTOS
+       EDITAR: número en .score-chip-num
+  ──────────────────────────────────────── -->
+  <section class="section-wrap" style="padding-top:0;">
+    <p class="section-label" style="margin-bottom:14px;">📊 ACIERTOS DE ESTA JORNADA</p>
+    <div class="score-banner">
+      <div class="score-chip">
+        <div class="score-chip-dot chatgpt"></div>
+        <div><div class="score-chip-name">Chat GPT</div></div>
+        <div class="score-chip-num">0<span>/10</span></div>
+      </div>
+      <div class="score-chip">
+        <div class="score-chip-dot gemini"></div>
+        <div><div class="score-chip-name">Gemini</div></div>
+        <div class="score-chip-num">0<span>/10</span></div>
+      </div>
+      <div class="score-chip">
+        <div class="score-chip-dot copilot"></div>
+        <div><div class="score-chip-name">Copilot</div></div>
+        <div class="score-chip-num">0<span>/10</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ────────────────────────────────────────
+       CONCLUSIÓN FINAL
+       EDITAR: texto libre
+  ──────────────────────────────────────── -->
+  <section class="section-wrap" style="padding-top:0;">
+    <p class="section-label">📝 CONCLUSIÓN FINAL</p>
+    <p class="section-sub">Novena jornada</p>
+    <div class="conclusion-card">
+      <p><strong style="color:#10a37f;">ChatGPT </strong> acierta con </p>
+      <p><strong style="color:#4285f4;">Gemini</strong> acierta con </p>
+      <p><strong style="color:#7c3aed;">Copilot</strong>acierta con </p>
+<p> </p>
+      <p style="margin-top:12px;"></p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════
+  ██████████████████████████████████████████████████████████
+       FIN DE LA ZONA EDITABLE
+  ██████████████████████████████████████████████████████████
+  ════════════════════════════════════════════════════════ -->
+
+  <section class="section-wrap" style="padding-top:0;padding-bottom:24px;">
+    <a href="../LigaEsports.html" class="back-link">← Volver a Liga EA Sports</a>
+  </section>
+
+  <footer>
+    <p>© 2025 Uno X Dos IA · Predicciones generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
+    <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com">Contacto</a></p>
+  </footer>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', function(e) {
+      const nav = document.querySelector('nav');
+      if (!nav.contains(e.target)) {
+        document.getElementById('navMenu').classList.remove('open');
+      }
+    });
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navMenu').classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
