@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-90WQKBTXN3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-90WQKBTXN3');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Predicciones Liga ACB Endesa generadas por IA, ¿Qué IA es mejor?"/>
+
+  <title>Predicciones Jornada 6 · Liga Endesa ACB · Uno X Dos IA</title>
+
+  <link rel="icon" href="/Imagenes/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─────────────────────────────────────────────
+       VARIABLES GLOBALES - LIGA ACB ENDESA
+    ───────────────────────────────────────────── */
+    :root {
+      --acb-orange:   #ff6b00;
+      --acb-blue:     #0088ff;
+      --navy:         #080e14;
+      --navy2:        #0e1722;
+      --accent:       #ff6b00;
+      --accent-dark:  #d95b00;
+      --gold:         #f0c040;
+      --text:         #e8ecf0;
+      --muted:        #94a3b8;
+      --card-bg:      rgba(10, 18, 28, 0.88);
+      --card-border:  rgba(255, 107, 0, 0.22);
+      --radius:       12px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body:    'Outfit', sans-serif;
+
+      /* Colores por IA */
+      --chatgpt: #10a37f;
+      --gemini:  #4285f4;
+      --copilot: #7c3aed;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: #0d0804;
+      color: var(--text);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ─────────────────────────────────────────────
+       FONDO PARQUET NARANJA Y MEDIO CAMPO
+    ───────────────────────────────────────────── */
+    .court-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: 
+        /* Textura Parquet */
+        repeating-linear-gradient(
+          180deg,
+          transparent 0px,
+          transparent 24px,
+          rgba(0, 0, 0, 0.12) 24px,
+          rgba(0, 0, 0, 0.12) 26px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0px,
+          transparent 90px,
+          rgba(0, 0, 0, 0.05) 90px,
+          rgba(0, 0, 0, 0.05) 92px
+        ),
+        linear-gradient(
+          150deg,
+          #e66a15 0%,
+          #d85b0a 25%,
+          #c94d00 50%,
+          #ba4500 75%,
+          #a33900 100%
+        );
+      opacity: 0.88;
+    }
+
+    /* ÚNICAMENTE LÍNEAS DE MEDIO CAMPO */
+    .court-lines {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.45;
+      background-image:
+        /* Círculo Central del Medio Campo */
+        radial-gradient(circle at 50% 50%, transparent 120px, rgba(255,255,255,0.85) 121px, rgba(255,255,255,0.85) 125px, transparent 126px),
+        /* Línea Central de Banda a Banda */
+        linear-gradient(90deg, transparent calc(50% - 2px), rgba(255,255,255,0.85) calc(50% - 2px), rgba(255,255,255,0.85) calc(50% + 2px), transparent calc(50% + 2px));
+    }
+
+    /* ─────────────────────────────────────────────
+       HEADER
+    ───────────────────────────────────────────── */
+    header {
+      position: relative;
+      z-index: 10;
+      background: rgba(8, 14, 20, 0.95);
+      border-bottom: 2px solid var(--acb-orange);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      backdrop-filter: blur(10px);
+    }
+
+    /* ─────────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────────── */
+    nav {
+      background: rgba(12, 20, 30, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 8px 20px;
+      position: relative;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+    }
+
+    .nav-hamburger {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      font-size: 1em;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: background 0.2s;
+    }
+    .nav-hamburger:hover { background: rgba(255,255,255,0.12); }
+    .ham-icon { font-size: 1.3em; }
+
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 8px;
+      background: rgba(8, 14, 20, 0.98);
+      border: 1px solid rgba(255, 107, 0, 0.3);
+      border-radius: 10px;
+      padding: 8px;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      min-width: 220px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+      z-index: 200;
+    }
+    .nav-menu.open { display: flex; }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-size: 0.92em;
+      font-weight: 600;
+      color: var(--muted);
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+    .nav-link:hover { color: #fff; background: rgba(255,255,255,0.07); }
+    .nav-link.active {
+      color: #fff;
+      background: var(--acb-orange);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .nav-emoji { font-size: 1.1em; }
+
+    /* ─────────────────────────────────────────────
+       HERO DE JORNADA
+    ───────────────────────────────────────────── */
+    .jornada-hero {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+
+    .jornada-hero .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 107, 0, 0.15);
+      border: 1px solid rgba(255, 107, 0, 0.4);
+      border-radius: 50px;
+      padding: 6px 18px;
+      font-size: 0.78em;
+      font-weight: 700;
+      color: #ffa35c;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      backdrop-filter: blur(4px);
+    }
+
+    .jornada-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8em, 7vw, 5em);
+      letter-spacing: 3px;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 10px;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    .jornada-hero h1 .num {
+      color: var(--acb-orange);
+    }
+
+    /* ─────────────────────────────────────────────
+       PARTIDOS DEL DÍA
+    ───────────────────────────────────────────── */
+    .partidos-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto 40px;
+      padding: 0 24px;
+    }
+
+    .partidos-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      backdrop-filter: blur(8px);
+    }
+
+    .partidos-card-header {
+      background: rgba(255, 107, 0, 0.15);
+      border-bottom: 1px solid rgba(255, 107, 0, 0.25);
+      padding: 14px 20px;
+      font-family: var(--font-display);
+      font-size: 1.3em;
+      letter-spacing: 2px;
+      color: var(--acb-orange);
+    }
+
+    .partido-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      gap: 12px;
+    }
+    .partido-row:last-child { border-bottom: none; }
+
+    .partido-equipos {
+      font-weight: 600;
+      font-size: 0.95em;
+      color: #fff;
+    }
+
+    .partido-hora {
+      font-size: 0.8em;
+      font-weight: 700;
+      color: #ffca99;
+      background: rgba(255, 107, 0, 0.12);
+      border: 1px solid rgba(255, 107, 0, 0.2);
+      border-radius: 6px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+
+    /* ─────────────────────────────────────────────
+       SECCIÓN PREDICCIONES
+    ───────────────────────────────────────────── */
+    .section-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px 40px;
+    }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 1.7em;
+      letter-spacing: 2px;
+      color: #fff;
+      margin-bottom: 4px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+
+    .section-sub {
+      color: #d0dbe5;
+      font-size: 0.88em;
+      margin-bottom: 22px;
+    }
+
+    .pred-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) { .pred-grid { grid-template-columns: 1fr; } }
+
+    .pred-col {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .pred-col-header {
+      padding: 14px 18px;
+      font-family: var(--font-display);
+      font-size: 1.3em;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pred-col.chatgpt .pred-col-header { background: rgba(16,163,127,0.15); color: #10a37f; border-bottom: 1px solid rgba(16,163,127,0.25); }
+    .pred-col.gemini  .pred-col-header { background: rgba(66,133,244,0.15); color: #4285f4; border-bottom: 1px solid rgba(66,133,244,0.25); }
+    .pred-col.copilot .pred-col-header { background: rgba(124,58,237,0.15); color: #a78bfa; border-bottom: 1px solid rgba(124,58,237,0.25); }
+
+    .pred-col-body {
+      padding: 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .pred-match {
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .pred-match:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .pred-match-title {
+      font-size: 0.82em;
+      font-weight: 700;
+      color: var(--acb-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+    }
+
+    .pred-winner {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      font-size: 0.95em;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .pred-winner::before {
+      content: '→';
+      color: var(--acb-orange);
+      font-weight: 900;
+    }
+
+    .pred-prob {
+      font-size: 0.8em;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+
+    .pred-text {
+      font-size: 0.83em;
+      color: #c4d3e0;
+      line-height: 1.55;
+    }
+
+    /* ─────────────────────────────────────────────
+       CONCLUSIONES
+    ───────────────────────────────────────────── */
+    .conclusion-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      font-size: 0.92em;
+      line-height: 1.7;
+      color: #dce7f2;
+      backdrop-filter: blur(8px);
+    }
+
+    .conclusion-card p + p { margin-top: 10px; }
+
+    /* ─────────────────────────────────────────────
+       RESULTADOS
+    ───────────────────────────────────────────── */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 700px) { .results-grid { grid-template-columns: 1fr; } }
+
+    .result-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+    }
+
+    .result-card-venue {
+      font-size: 0.72em;
+      font-weight: 700;
+      color: var(--acb-orange);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 12px 16px 0;
+    }
+
+    table.score-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88em;
+    }
+
+    .score-table thead tr {
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .score-table th {
+      padding: 9px 10px;
+      font-size: 0.75em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      text-align: center;
+    }
+    .score-table th:first-child { text-align: left; padding-left: 16px; }
+
+    .score-table td {
+      padding: 11px 10px;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      color: var(--text);
+      font-weight: 500;
+    }
+    .score-table td:first-child {
+      text-align: left;
+      padding-left: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .score-table .col-total {
+      font-family: var(--font-display);
+      font-size: 1.25em;
+      letter-spacing: 1px;
+      color: var(--acb-orange);
+      font-weight: 900;
+    }
+
+    .score-table tr.winner td { background: rgba(255, 107, 0, 0.12); }
+    .score-table tr.winner td:first-child { color: #ff9d52; }
+
+    .result-card-note {
+      font-size: 0.75em;
+      color: var(--muted);
+      padding: 8px 16px 12px;
+      font-style: italic;
+    }
+
+    /* ─────────────────────────────────────────────
+       MARCADOR DE ACIERTOS
+    ───────────────────────────────────────────── */
+    .score-banner {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .score-chip {
+      flex: 1;
+      min-width: 140px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      backdrop-filter: blur(8px);
+    }
+
+    .score-chip-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .score-chip-dot.chatgpt { background: #10a37f; }
+    .score-chip-dot.gemini  { background: #4285f4; }
+    .score-chip-dot.copilot { background: #7c3aed; }
+
+    .score-chip-name {
+      font-size: 0.8em;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .score-chip-num {
+      font-family: var(--font-display);
+      font-size: 2em;
+      letter-spacing: 1px;
+      color: #fff;
+      margin-left: auto;
+    }
+
+    .score-chip-num span {
+      font-size: 0.5em;
+      color: var(--muted);
+    }
+
+    .divider {
+      position: relative;
+      z-index: 1;
+      max-width: 1240px;
+      margin: 0 auto 32px;
+      padding: 0 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--acb-orange);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88em;
+      transition: gap 0.2s;
+    }
+    .back-link:hover { gap: 12px; color: #ff9d52; }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      background: rgba(8, 14, 20, 0.95);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+      padding: 20px;
+      font-size: 0.78em;
+      color: var(--muted);
+      margin-top: 40px;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--acb-orange); }
+
+    @media (max-width: 600px) {
+      .jornada-hero { padding: 32px 16px 24px; }
+      .section-wrap, .partidos-wrap { padding-left: 16px; padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Capa de Fondo Parquet Naranja y Líneas de Medio Campo -->
+  <div class="court-bg"></div>
+  <div class="court-lines"></div>
+
+  <!-- HEADER -->
+  <header>
+    <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;">
+      <div style="width:42px;height:42px;background:linear-gradient(135deg,#ff6b00,#d95b00);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3em;box-shadow:0 0 18px rgba(255,107,0,0.4);">🏀</div>
+      <div>
+        <span style="display:block;font-family:'Bebas Neue',sans-serif;font-size:1.5em;letter-spacing:2px;color:#fff;line-height:1;">UNO X DOS IA</span>
+        <small style="font-size:0.6em;color:#ff6b00;letter-spacing:1px;font-weight:600;">LIGA ENDESA ACB</small>
+      </div>
+    </a>
+  </header>
+
+  <!-- NAV -->
+  <nav aria-label="Navegación principal">
+    <button class="nav-hamburger" onclick="toggleNav()" aria-label="Abrir menú">
+      <span class="ham-icon">☰</span>
+      <span class="ham-label">Secciones</span>
+    </button>
+    <div class="nav-menu" id="navMenu">
+      <a href="../../index.html"       class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
+      <a href="../../ACB.html"         class="nav-link active"><span class="nav-emoji">🏀</span> Liga ACB</a>
+      <a href="../../NBA.html"         class="nav-link"><span class="nav-emoji">🇺🇸</span> NBA</a>
+      <a href="../../LigaEsports.html" class="nav-link"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
+      <a href="../../Hypermotion.html" class="nav-link"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+      <a href="../../Loterias.html"    class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+    </div>
+  </nav>
+
+  <!-- HERO DE JORNADA -->
+  <section class="jornada-hero">
+    <div class="eyebrow">🏀 Liga Endesa · Temporada 2026/2027</div>
+    <h1>JORNADA <span class="num">6</span></h1>
+    <p style="color:#d0dbe5;font-size:0.95em;margin-top:8px;">31 de Octubre - 1 de Noviembre</p>
+  </section>
+
+  <!-- PARTIDOS DEL DÍA -->
+  <div class="partidos-wrap">
+    <div class="partidos-card">
+      <div class="partidos-card-header">📅 Partidos de la Jornada 6</div>
+
+      <div class="partido-row">
+        <span class="partido-equipos">Casademont Zaragoza vs. FIATC Girona</span>
+        <span class="partido-hora">Sáb 31/10 · 18:00 h</span>
+      </div>
+      <div class="partido-row">
+        <span class="partido-equipos">UCAM Murcia vs. iLERNA Lleida</span>
+        <span class="partido-hora">Sáb 31/10 · 19:30 h</span>
+      </div>
+      <div class="partido-row">
+        <span class="partido-equipos">Leyma Coruña vs. La Laguna Tenerife</span>
+        <span class="partido-hora">Sáb 31/10 · 21:00 h</span>
+      </div>
+      <div class="partido-row">
+        <span class="partido-equipos">Asisa Joventut vs. Surne Bilbao</span>
+        <span class="partido-hora">Dom 1/11 · 12:00 h</span>
+      </div>
+      <div class="partido-row">
+        <span class="partido-equipos">Monbus Obradoiro vs. Río Breogán </span>
+        <span class="partido-hora">Dom 1/11 · 12:00 h</span>
+      </div>
+      <div class="partido-row">
+        <span class="partido-equipos"> Real Madrid vs. Recoletas Salud San Pablo Burgos</span>
+        <span class="partido-hora">Dom 1/11 · 13:00 h</span>
+      </div>
+      <div class="partido-row">
+        <span class="partido-equipos">Kosner Baskonia vs. Kids&Us Manresa</span>
+        <span class="partido-hora">Dom 1/11 · 17:00 h</span>
+      </div>
+      <div class="partido-row">
+        <span class="partido-equipos">MoraBanc Andorra vs. Valencia Basket</span>
+        <span class="partido-hora">Dom 1/11 · 18:00 h</span>
+      </div>
+      <div class="partido-row">
+        <span class="partido-equipos">Unicaja vs. Barça</span>
+        <span class="partido-hora">Dom 1/11 · 19:00 h</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PREDICCIONES DE LAS 3 IAs -->
+  <section class="section-wrap">
+    <p class="section-label">🤖 PREDICCIONES</p>
+    <p class="section-sub">Lo que dice cada IA antes de que el balón bote en la cancha</p>
+
+    <div class="pred-grid">
+
+      <!-- CHATGPT -->
+      <div class="pred-col chatgpt">
+        <div class="pred-col-header">
+          <span style="width:10px;height:10px;border-radius:50%;background:#10a37f;display:inline-block;"></span>
+          CHAT GPT
+        </div>
+        <div class="pred-col-body">
+<div class="pred-match">
+  <div class="pred-match-title">Casademont Zaragoza vs. FIATC Girona</div>
+  <div class="pred-winner">FIATC Girona gana</div>
+  <div class="pred-prob">Zaragoza 47% · Girona 53%</div>
+  <div class="pred-text">Girona llega reforzado tras vencer al Joventut por 101-87 y está mostrando una capacidad anotadora importante. Zaragoza viene de caer ante el Barça por 99-81. El factor cancha mantiene el duelo muy igualado, pero la dinámica ofensiva gerundense inclina ligeramente el pronóstico hacia los visitantes.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">UCAM Murcia vs. iLERNA Lleida</div>
+  <div class="pred-winner">UCAM Murcia gana</div>
+  <div class="pred-prob">Murcia 68% · Lleida 32%</div>
+  <div class="pred-text">Murcia llega tras superar a Coruña por 88-81 y cuenta con una buena oportunidad para sumar otra victoria en casa. Lleida sufrió una derrota contundente ante el Real Madrid por 86-122 y necesita mejorar su defensa. La mayor estabilidad murciana y el factor local convierten a UCAM en favorito.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Leyma Coruña vs. La Laguna Tenerife</div>
+  <div class="pred-winner">La Laguna Tenerife gana</div>
+  <div class="pred-prob">Coruña 27% · Tenerife 73%</div>
+  <div class="pred-text">Tenerife llega en un gran momento tras aplastar a Obradoiro por 106-76 y acumula cuatro victorias en cinco jornadas. Coruña perdió ante Murcia y está teniendo dificultades para mantener la regularidad defensiva. Aunque jugar en casa puede ayudar al conjunto gallego, Tenerife presenta mejores argumentos colectivos.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Asisa Joventut vs. Surne Bilbao</div>
+  <div class="pred-winner">Surne Bilbao gana</div>
+  <div class="pred-prob">Joventut 47% · Bilbao 53%</div>
+  <div class="pred-text">Bilbao viene de ganar a Andorra por 88-76 y ha demostrado capacidad para controlar partidos desde la defensa. Joventut perdió ante Girona por 101-87 y necesita frenar la anotación rival. El Olímpic puede equilibrar el encuentro, pero la mejor sensación reciente de Bilbao le concede una ligera ventaja.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Monbus Obradoiro vs. Río Breogán</div>
+  <div class="pred-winner">Monbus Obradoiro gana</div>
+  <div class="pred-prob">Obradoiro 52% · Breogán 48%</div>
+  <div class="pred-text">Derbi gallego con mucha incertidumbre. Obradoiro viene de caer con claridad ante Tenerife, mientras Breogán perdió en casa frente a Unicaja por 90-103. Ambos necesitan recuperar sensaciones defensivas. La localía y una mayor capacidad para controlar el ritmo pueden dar a Obradoiro una ventaja mínima.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Real Madrid vs. Recoletas Salud San Pablo Burgos</div>
+  <div class="pred-winner">Real Madrid gana</div>
+  <div class="pred-prob">Real Madrid 81% · Burgos 19%</div>
+  <div class="pred-text">El Madrid llega invicto, con cinco victorias en cinco partidos, y acaba de anotar 122 puntos ante Lleida. Burgos viene de ganar a Manresa por 99-81, una reacción positiva que aumenta su confianza. Sin embargo, la profundidad de plantilla, el rendimiento ofensivo y el factor local hacen que el Madrid sea claramente favorito.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Kosner Baskonia vs. Kids&Us Manresa</div>
+  <div class="pred-winner">Kosner Baskonia gana</div>
+  <div class="pred-prob">Baskonia 78% · Manresa 22%</div>
+  <div class="pred-text">Baskonia buscará reaccionar tras perder ante Valencia, pero sigue contando con un potencial ofensivo considerable. Manresa continúa sin estrenarse en victorias y viene de caer por 81-99 ante Burgos. El Buesa Arena y la diferencia de rendimiento acumulado favorecen claramente al conjunto vitoriano.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">MoraBanc Andorra vs. Valencia Basket</div>
+  <div class="pred-winner">Valencia Basket gana</div>
+  <div class="pred-prob">Andorra 35% · Valencia 65%</div>
+  <div class="pred-text">Valencia llega con confianza después de derrotar a Baskonia por 84-75 y ha mejorado sus prestaciones en las últimas jornadas. Andorra perdió ante Bilbao y sigue buscando regularidad. El equipo local puede competir si impone un ritmo alto, pero la profundidad y el momento de Valencia le dan una ventaja clara.</div>
+</div>
+
+<div class="pred-match">
+  <div class="pred-match-title">Unicaja vs. Barça</div>
+  <div class="pred-winner">Unicaja gana</div>
+  <div class="pred-prob">Unicaja 53% · Barça 47%</div>
+  <div class="pred-text">Partido de máxima igualdad entre dos equipos que llegan tras ganar en la última jornada. Unicaja superó a Breogán por 103-90, mientras el Barça venció a Zaragoza por 99-81. El factor Martín Carpena y la eficacia ofensiva reciente inclinan ligeramente el pronóstico hacia los malagueños, aunque el talento azulgrana puede decidir el encuentro.</div>
+</div>
+        </div>
+      </div>
+
+      <!-- GEMINI -->
+      <div class="pred-col gemini">
+        <div class="pred-col-header">
+          <span style="width:10px;height:10px;border-radius:50%;background:#4285f4;display:inline-block;"></span>
+          GEMINI
+        </div>
+        <div class="pred-col-body">
+
+<!-- PARTIDOS DEL DÍA -->
+  <div class="partidos-wrap">
+    <div class="partidos-card">
+
+      <div class="pred-match"> 
+        <div class="pred-match-title">Casademont Zaragoza vs. FIATC Girona</div> 
+        <div class="pred-winner">Casademont Zaragoza gana</div> 
+        <div class="pred-prob">Zaragoza 61% · Girona 39%</div> 
+        <div class="pred-text">La solidez en el juego interior y el empuje del Príncipe Felipe inclinarán el choque hacia los maños.</div> 
+      </div> 
+
+      <div class="pred-match"> 
+        <div class="pred-match-title">UCAM Murcia vs. iLERNA Lleida</div> 
+        <div class="pred-winner">UCAM Murcia gana</div> 
+        <div class="pred-prob">Murcia 71% · Lleida 29%</div> 
+        <div class="pred-text">La asfixiante presión defensiva universitaria en el Palacio impondrá su ley ante un combativo Lleida.</div> 
+      </div> 
+
+      <div class="pred-match"> 
+        <div class="pred-match-title">Leyma Coruña vs. La Laguna Tenerife</div> 
+        <div class="pred-winner">La Laguna Tenerife gana</div> 
+        <div class="pred-prob">Coruña 37% · Tenerife 63%</div> 
+        <div class="pred-text">La maestría táctica y el control del ritmo de los aurinegros terminarán sofocando el ímpetu de Riazor.</div> 
+      </div> 
+
+      <div class="pred-match"> 
+        <div class="pred-match-title">Asisa Joventut vs. Surne Bilbao</div> 
+        <div class="pred-winner">Asisa Joventut gana</div> 
+        <div class="pred-prob">Joventut 59% · Bilbao 41%</div> 
+        <div class="pred-text">La Penya se apoyará en su efectividad desde el perímetro y la fortaleza del Olímpic para amarrar la victoria.</div> 
+      </div> 
+
+      <div class="pred-match"> 
+        <div class="pred-match-title">Monbus Obradoiro vs. Río Breogán</div> 
+        <div class="pred-winner">Monbus Obradoiro gana</div> 
+        <div class="pred-prob">Obradoiro 54% · Breogán 46%</div> 
+        <div class="pred-text">Derbi gallego de alta tensión defensiva donde la ventaja de Sar y la gestión de los minutos finales serán decisivas.</div> 
+      </div> 
+
+      <div class="pred-match"> 
+        <div class="pred-match-title">Real Madrid vs. Recoletas Salud San Pablo Burgos</div> 
+        <div class="pred-winner">Real Madrid gana</div> 
+        <div class="pred-prob">Real Madrid 86% · Burgos 14%</div> 
+        <div class="pred-text">La amplia diferencia de rotación y el caudal anotador blanco dejarán muy pocas opciones al conjunto burgalés.</div> 
+      </div> 
+
+      <div class="pred-match"> 
+        <div class="pred-match-title">Kosner Baskonia vs. Kids&Us Manresa</div> 
+        <div class="pred-winner">Kosner Baskonia gana</div> 
+        <div class="pred-prob">Baskonia 68% · Manresa 32%</div> 
+        <div class="pred-text">El alto volumen de tiro y el físico vitoriano en el Buesa Arena frenarán las transiciones rápidas del Manresa.</div> 
+      </div> 
+
+      <div class="pred-match"> 
+        <div class="pred-match-title">MoraBanc Andorra vs. Valencia Basket</div> 
+        <div class="pred-winner">Valencia Basket gana</div> 
+        <div class="pred-prob">Andorra 38% · Valencia 62%</div> 
+        <div class="pred-text">Choque exigente en el Principado, pero el fondo de armario y el acierto exterior taronja decantarán la balanza.</div> 
+      </div> 
+
+      <div class="pred-match"> 
+        <div class="pred-match-title">Unicaja vs. Barça</div> 
+        <div class="pred-winner">Unicaja gana</div> 
+        <div class="pred-prob">Unicaja 53% · Barça 47%</div> 
+        <div class="pred-text">El gran partidazo de la jornada; la intensidad asfixiante y el ardor del Carpena otorgarán una ligera ventaja a los cajistas.</div> 
+      </div> 
+    </div></div>
+    </div>
+</div>
+
+
+      <!-- COPILOT -->
+      <div class="pred-col copilot">
+        <div class="pred-col-header">
+          <span style="width:10px;height:10px;border-radius:50%;background:#7c3aed;display:inline-block;"></span>
+          COPILOT
+        </div>
+        <div class="pred-col-body">
+  <div class="pred-match"> 
+  <div class="pred-match-title">Casademont Zaragoza vs. FIATC Girona</div> 
+  <div class="pred-winner">Casademont Zaragoza gana</div> 
+  <div class="pred-prob">Zaragoza 62% · Girona 38%</div> 
+  <div class="pred-text">El factor cancha y una plantilla más profunda sitúan a Zaragoza como favorito en un duelo importante para ambos.</div> 
+</div>
+
+<div class="pred-match"> 
+  <div class="pred-match-title">UCAM Murcia vs. iLERNA Lleida</div> 
+  <div class="pred-winner">UCAM Murcia gana</div> 
+  <div class="pred-prob">Murcia 72% · Lleida 28%</div> 
+  <div class="pred-text">La intensidad defensiva murciana y su fortaleza como local deberían marcar diferencias desde el inicio.</div> 
+</div>
+
+<div class="pred-match"> 
+  <div class="pred-match-title">Leyma Coruña vs. La Laguna Tenerife</div> 
+  <div class="pred-winner">La Laguna Tenerife gana</div> 
+  <div class="pred-prob">Coruña 29% · Tenerife 71%</div> 
+  <div class="pred-text">La experiencia y el equilibrio de Tenerife le otorgan una ventaja clara incluso lejos de su pista.</div> 
+</div>
+
+<div class="pred-match"> 
+  <div class="pred-match-title">Asisa Joventut vs. Surne Bilbao</div> 
+  <div class="pred-winner">Asisa Joventut gana</div> 
+  <div class="pred-prob">Joventut 61% · Bilbao 39%</div> 
+  <div class="pred-text">La Penya suele elevar su nivel en casa y dispone de más recursos ofensivos para resolver los momentos decisivos.</div> 
+</div>
+
+<div class="pred-match"> 
+  <div class="pred-match-title">Monbus Obradoiro vs. Río Breogán</div> 
+  <div class="pred-winner">Monbus Obradoiro gana</div> 
+  <div class="pred-prob">Obradoiro 53% · Breogán 47%</div> 
+  <div class="pred-text">Se espera un derbi muy igualado, con una ligera ventaja local gracias al apoyo de Sar y una mayor regularidad táctica.</div> 
+</div>
+
+<div class="pred-match"> 
+  <div class="pred-match-title">Real Madrid vs. Recoletas Salud San Pablo Burgos</div> 
+  <div class="pred-winner">Real Madrid gana</div> 
+  <div class="pred-prob">Real Madrid 87% · Burgos 13%</div> 
+  <div class="pred-text">La superioridad física y la profundidad de plantilla madridista convierten este partido en uno de los más desequilibrados de la jornada.</div> 
+</div>
+
+<div class="pred-match"> 
+  <div class="pred-match-title">Kosner Baskonia vs. Kids&Us Manresa</div> 
+  <div class="pred-winner">Kosner Baskonia gana</div> 
+  <div class="pred-prob">Baskonia 66% · Manresa 34%</div> 
+  <div class="pred-text">El ritmo ofensivo de Baskonia y su capacidad anotadora deberían imponerse ante un combativo Manresa.</div> 
+</div>
+
+<div class="pred-match"> 
+  <div class="pred-match-title">MoraBanc Andorra vs. Valencia Basket</div> 
+  <div class="pred-winner">Valencia Basket gana</div> 
+  <div class="pred-prob">Andorra 41% · Valencia 59%</div> 
+  <div class="pred-text">Valencia cuenta con más profundidad y calidad en la rotación, aunque el factor pista mantendrá el duelo competido.</div> 
+</div>
+
+<div class="pred-match"> 
+  <div class="pred-match-title">Unicaja vs. Barça</div> 
+  <div class="pred-winner">Unicaja gana</div> 
+  <div class="pred-prob">Unicaja 55% · Barça 45%</div> 
+  <div class="pred-text">Se prevé uno de los mejores partidos de la jornada y el empuje del Carpena puede inclinar la balanza hacia los malagueños.</div> 
+</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONCLUSIÓN INICIAL -->
+  <section class="section-wrap" style="padding-top:0;">
+    <p class="section-label">📝 CONCLUSIÓN INICIAL</p>
+    <p class="section-sub">Perspectivas previas al inicio de la Cuarta jornada</p>
+    <div class="conclusion-card">
+
+Vamos a ver que dicen en esta jornada las IAs.<br><br>
+
+ChatGPT apuesta por Girona, UCAM Murcia, Tenerife, Bilbao, Obradoiro, Real Madrid, Baskonia, Valencia y Unicaja. <br><br>
+Gemini Y Copilot coinciden con Zaragoza, Murcia, Tenerife, Joventud, Obradoiro, Real Madrid, Baskonia, Valencia y Unicaja.<br><br>
+
+Nuevamente coinciden Gemini y Copilot en todos los partidos, veremos si esta vez le ganan a ChatGPT.<br>
+       <br>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- RESULTADOS -->
+  <section class="section-wrap">
+    <p class="section-label">🏆 RESULTADOS</p>
+    <p class="section-sub">Marcadores finales en los pabellones de España</p>
+
+    <div class="results-grid">
+
+      <!-- Partido 1 -->
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr><td>Casademont Zaragoza</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+            <tr class="winner"><td>FIATC Girona</td> <td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Sábado 31/10 · 18:00 h</div>
+      </div>
+
+      <!-- Partido 2 -->
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr class="winner"><td>UCAM Murcia</td> <td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">88</td></tr>
+            <tr><td>iLERNA Lleida</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">81</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Sábado 31/10 · 19:30 h</div>
+      </div>
+
+      <!-- Partido 3 -->
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr class="winner"><td>Leyma Coruña</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">99</td></tr>
+            <tr><td>La Laguna Tenerife</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">81</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Sábado 31/10 · 21:00 h</div>
+      </div>
+
+      <!-- Partido 4 -->
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr class="winner"><td>Asisa Joventut</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+            <tr><td> Surne Bilbao</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Domingo 1/11 · 12:00 h</div>
+      </div>
+
+      <!-- Partido 5 -->
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr class="winner"><td>Monbus Obradoiro</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">88</td></tr>
+            <tr><td>Río Breogán</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">76</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Domingo 1/11 · 12:00 h</div>
+      </div>
+
+      <!-- Partido 6 -->
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr class="winner"><td>Real Madrid</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+            <tr><td>Recoletas Salud San Pablo Burgos</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Domingo 1/11 · 13:00 h</div>
+      </div>
+
+      <!-- Partido 7 -->
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr class="winner"><td>Kosner Baskonia</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+            <tr><td>Kids&Us Manresa</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Domingo 1/11 · 17:00 h</div>
+      </div>
+
+      <!-- Partido 8 -->
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr class="winner"><td>MoraBanc Andorra</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+            <tr><td>Valencia Basket</td> <td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Domingo 1/11 · 18:00 h</div>
+      </div>
+
+      <!-- Partido 9 -->
+      <div class="result-card">
+        <table class="score-table">
+          <thead><tr><th>Equipo</th><th>1C</th><th>2C</th><th>3C</th><th>4C</th><th class="col-total">T</th></tr></thead>
+          <tbody>
+            <tr><td>Unicaja</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+            <tr class="winner"><td>Barça</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="col-total">0</td></tr>
+          </tbody>
+        </table>
+        <div class="result-card-note">Domingo 1/11 · 19:00 h</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MARCADOR DE ACIERTOS -->
+  <section class="section-wrap" style="padding-top:0;">
+    <p class="section-label" style="margin-bottom:14px;">📊 ACIERTOS DE ESTA JORNADA</p>
+    <div class="score-banner">
+      <div class="score-chip">
+        <div class="score-chip-dot chatgpt"></div>
+        <div>
+          <div class="score-chip-name">Chat GPT</div>
+        </div>
+        <div class="score-chip-num">0<span>/9</span></div>
+      </div>
+      <div class="score-chip">
+        <div class="score-chip-dot gemini"></div>
+        <div>
+          <div class="score-chip-name">Gemini</div>
+        </div>
+        <div class="score-chip-num">0<span>/9</span></div>
+      </div>
+      <div class="score-chip">
+        <div class="score-chip-dot copilot"></div>
+        <div>
+          <div class="score-chip-name">Copilot</div>
+        </div>
+        <div class="score-chip-num">0<span>/9</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCLUSIÓN FINAL -->
+  <section class="section-wrap" style="padding-top:0;">
+    <p class="section-label">📝 CONCLUSIÓN FINAL</p>
+    <p class="section-sub">Resumen post-jornada</p>
+    <div class="conclusion-card">
+<p>Después de jugar.
+</p>
+
+    </div>
+  </section>
+
+  <!-- VOLVER -->
+  <section class="section-wrap" style="padding-top:0;padding-bottom:24px;">
+    <a href="../ACB.html" class="back-link">← Volver a Liga ACB</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Uno X Dos IA · Predicciones de la Liga Endesa generadas por inteligencia artificial con fines informativos y de entretenimiento.</p>
+    <p style="margin-top:5px;">Este sitio no fomenta las apuestas. Juega con responsabilidad. · <a href="mailto:unoxdosia@gmail.com">Contacto</a></p>
+  </footer>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navMenu').classList.toggle('open');
+    }
+    document.addEventListener('click', function(e) {
+      const nav = document.querySelector('nav');
+      if (!nav.contains(e.target)) {
+        document.getElementById('navMenu').classList.remove('open');
+      }
+    });
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navMenu').classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
