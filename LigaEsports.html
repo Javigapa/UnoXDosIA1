@@ -27,7 +27,6 @@
       --font-body:    'Outfit', sans-serif;
       --radius:       12px;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     /* ── FONDO: CÉSPED DE ESTADIO ── */
@@ -37,16 +36,8 @@
       min-height: 100vh;
       background-color: #2d6a1f;
       background-image:
-        repeating-linear-gradient(
-          180deg,
-          transparent 0px, transparent 60px,
-          rgba(0,0,0,0.12) 60px, rgba(0,0,0,0.12) 120px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          transparent 0px, transparent 200px,
-          rgba(255,255,255,0.02) 200px, rgba(255,255,255,0.02) 201px
-        ),
+        repeating-linear-gradient(180deg, transparent 0px, transparent 60px, rgba(0,0,0,0.12) 60px, rgba(0,0,0,0.12) 120px),
+        repeating-linear-gradient(90deg, transparent 0px, transparent 200px, rgba(255,255,255,0.02) 200px, rgba(255,255,255,0.02) 201px),
         linear-gradient(160deg, #3a8a24 0%, #2f7a1c 30%, #3a8a24 60%, #276618 100%);
     }
 
@@ -93,10 +84,8 @@
     .nav-link.active { color: var(--accent); background: rgba(0,200,150,0.1); border-color: rgba(0,200,150,0.25); }
     .nav-emoji { font-size: 1.1em; }
 
-    /* ── CONTAINER ── */
-    .soccer-container {
-      max-width: 1300px; margin: 0 auto; padding: 28px 20px;
-    }
+    /* ── CONTAINER (centrado y más estrecho) ── */
+    .soccer-container { max-width: 960px; margin: 0 auto; padding: 28px 20px; }
 
     /* ── TITLE ── */
     .stadium-title {
@@ -113,58 +102,57 @@
       letter-spacing: 3px; color: #fff;
     }
 
-    /* ── TEMPORADAS LAYOUT ── */
-    .temporadas-layout {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-      margin-bottom: 40px;
-    }
-    @media (max-width: 800px) { .temporadas-layout { grid-template-columns: 1fr; } }
-
-    /* ── TEMPORADA COLUMN ── */
-    .temporada-col {
-      background: rgba(10,24,10,0.82);
-      border: 1px solid rgba(255,255,255,0.1);
+    /* ── TEMPORADA PRINCIPAL ── */
+    .temporada-main {
+      background: rgba(10,24,10,0.85);
+      border: 1px solid rgba(0,200,150,0.3);
       border-radius: 14px; overflow: hidden; backdrop-filter: blur(8px);
+      margin-bottom: 28px;
     }
-
-    .temporada-col-header {
-      padding: 16px 20px; text-align: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      text-decoration: none; display: block; transition: background 0.2s;
-    }
-    .temporada-col-header:hover { background: rgba(255,255,255,0.04); }
-    .temporada-col-header h2 {
-      font-family: var(--font-display);
-      font-size: 1.6em; letter-spacing: 2px; color: #fff; margin-bottom: 4px;
-    }
-    .temporada-col-header small { font-size: 0.78em; color: var(--muted); }
-
-    .temporada-col.next .temporada-col-header {
+    .temporada-main-header {
+      padding: 22px 20px; text-align: center;
       background: rgba(0,200,150,0.08);
-      border-bottom-color: rgba(0,200,150,0.2);
+      border-bottom: 1px solid rgba(0,200,150,0.2);
     }
-    .temporada-col.next .temporada-col-header h2 { color: var(--accent); }
+    .temporada-main-header h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8em, 4vw, 2.4em);
+      letter-spacing: 3px; color: var(--accent); margin-bottom: 4px;
+    }
+    .temporada-main-header small { font-size: 0.85em; color: var(--muted); }
+    .temporada-main-body { padding: 20px; }
 
-    .temporada-col.current .temporada-col-header {
-      background: rgba(238,28,46,0.1);
-      border-bottom-color: rgba(238,28,46,0.25);
+    /* ── ENLACE A LA TEMPORADA ANTERIOR ── */
+    .temporada-anterior-btn {
+      display: block;
+      background: rgba(10,24,10,0.82);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px; padding: 18px 24px;
+      text-align: center; text-decoration: none; transition: all 0.25s;
     }
-    .temporada-col.current .temporada-col-header h2 { color: #f07080; }
+    .temporada-anterior-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(238,28,46,0.5); transform: translateY(-2px); }
+    .temporada-anterior-btn strong {
+      display: block; font-family: var(--font-display);
+      font-size: 1.5em; letter-spacing: 2px; color: #fff;
+    }
+    .temporada-anterior-btn small { color: var(--muted); font-size: 0.82em; }
 
-    .temporada-col-body {
-      padding: 16px;
-      max-height: 600px; overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255,255,255,0.15) transparent;
+    .back-link {
+      display: inline-block; color: #fff;
+      background: rgba(13,27,42,0.9);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px; padding: 10px 18px;
+      text-decoration: none; font-weight: 600; margin-bottom: 20px;
+      transition: background 0.2s;
     }
+    .back-link:hover { background: rgba(13,27,42,1); border-color: var(--accent); }
 
     /* ── MINI CARDS ── */
     .jornadas-mini {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
       gap: 10px;
     }
-
     .jornada-card-mini {
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.09);
@@ -215,13 +203,13 @@
       <span class="ham-label">Secciones</span>
     </button>
     <div class="nav-menu" id="navMenu">
-      <a href="index.html"class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
-      <a href="ACB.html"class="nav-link"><span class="nav-emoji">🏀</span> Liga ACB</a>
-      <a href="NBA.html"class="nav-link"><span class="nav-emoji">🏀</span> NBA</a>
-      <a href="LigaEsports.html"class="nav-link active"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
-      <a href="Hypermotion.html"class="nav-link"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
-      <a href="Loterias.html"class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
-      <a href="/Mundial/Mundial2026.html"class="nav-link"><span class="nav-emoji">🏆</span> Mundial 2026</a>
+      <a href="index.html" class="nav-link"><span class="nav-emoji">🏠</span> Inicio</a>
+      <a href="ACB.html" class="nav-link"><span class="nav-emoji">🏀</span> Liga ACB</a>
+      <a href="NBA.html" class="nav-link"><span class="nav-emoji">🏀</span> NBA</a>
+      <a href="LigaEsports.html" class="nav-link active"><span class="nav-emoji">⚽</span> Liga EA Sports</a>
+      <a href="Hypermotion.html" class="nav-link"><span class="nav-emoji">📈</span> Liga Hypermotion</a>
+      <a href="Loterias.html" class="nav-link"><span class="nav-emoji">🎲</span> Loterías</a>
+      <a href="/Mundial/Mundial2026.html" class="nav-link"><span class="nav-emoji">🏆</span> Mundial 2026</a>
     </div>
   </nav>
 
@@ -231,269 +219,95 @@
       <h2>⚽ Panel de Análisis · Primera División</h2>
     </div>
 
-    <div class="temporadas-layout">
-
-      <!-- ── TEMPORADA 2026/2027 (izquierda) ── -->
-      <div class="temporada-col next">
-        <a href="#" class="temporada-col-header">
-          <h2>⚽ Temporada 2026/2027</h2>
-          
-        </a>
-        <div class="temporada-col-body">
-          <div class="jornadas-mini">
-
-            <a href="/Primera/26-27/Primera1.html" class="jornada-card-mini">
-              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-              <div class="status-mini">Finalizada</div>
-              <h3>Jornada 1</h3>
-              <small>27 de Agosto 2026</small>
-            </a>
-            <a href="/Primera/26-27/Primera2.html" class="jornada-card-mini">
-              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-              <div class="status-mini">Finalizada</div>
-              <h3>Jornada 2</h3>
-              <small>24 de Agosto 2026</small>
-            </a>
-            <a href="/Primera/26-27/Primera3.html" class="jornada-card-mini">
-              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-              <div class="status-mini">Finalizada</div>
-              <h3>Jornada 3</h3>
-              <small>31 de Agosto 2026</small>
-            </a>
-            <a href="/Primera/26-27/Primera4.html" class="jornada-card-mini">
-              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-              <div class="status-mini">PROXIMO</div>
-              <h3>Jornada 4</h3>
-              <small>07/09/2026</small>
-            </a>
-            <a href="/Primera/26-27/Primera5.html" class="jornada-card-mini">
-              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-              <div class="status-mini">Finalizada</div>
-              <h3>Jornada 5</h3>
-              <small>14/09/2026</small>
-            </a>
-            <a href="/Primera/26-27/Primera6.html" class="jornada-card-mini">
-              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-              <div class="status-mini">PROXIMO</div>
-              <h3>Jornada 6</h3>
-              <small>Próxima</small>
-            </a>
-            <a href="/Primera/26-27/Primera7.html" class="jornada-card-mini">
-              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-              <div class="status-mini">Finalizada</div>
-              <h3>Jornada 7</h3>
-              <small>20/9/2026</small>
-            </a>
-            <a href="/Primera/26-27/Primera8.html" class="jornada-card-mini">
-              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-              <div class="status-mini">Finalizada</div>
-              <h3>Jornada 8</h3>
-              <small>12/10/2026</small>
-            </a>
-            <a href="/Primera/26-27/Primera9.html" class="jornada-card-mini">
-              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-              <div class="status-mini">Finalizada</div>
-              <h3>Jornada 9</h3>
-              <small>19/10/26</small>
-            </a>
-            <a href="/Primera/26-27/Primera10.html" class="jornada-card-mini">
-              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-              <div class="status-mini">Finalizada</div>
-              <h3>Jornada 10</h3>
-              <small>26/10/26</small>
-            </a>
-            <a href="/Primera/26-27/Primera11.html" class="jornada-card-mini">
-              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-              <div class="status-mini">Finalizada</div>
-              <h3>Jornada 11</h3>
-              <small>2/11/26</small>
-            </a>
-            <a href="/Primera/26-27/Primera12.html" class="jornada-card-mini">
-              <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-              <div class="status-mini">PROXIMO</div>
-              <h3>Jornada 12</h3>
-              <small>Próxima</small>
-            </a>
-          </div>
+    <!-- TEMPORADA ACTUAL (principal) -->
+    <section class="temporada-main">
+      <div class="temporada-main-header">
+        <h2>⚽ Temporada 2026/2027</h2>
+        <small>Jornadas (la más reciente primero)</small>
+      </div>
+      <div class="temporada-main-body">
+        <div class="jornadas-mini">
+          <a href="/Primera/26-27/Primera12.html" class="jornada-card-mini">
+            <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+            <div class="status-mini">PROXIMO</div>
+            <h3>Jornada 12</h3>
+            <small>Próxima</small>
+          </a>
+          <a href="/Primera/26-27/Primera11.html" class="jornada-card-mini">
+            <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+            <div class="status-mini">Finalizada</div>
+            <h3>Jornada 11</h3>
+            <small>2/11/26</small>
+          </a>
+          <a href="/Primera/26-27/Primera10.html" class="jornada-card-mini">
+            <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+            <div class="status-mini">Finalizada</div>
+            <h3>Jornada 10</h3>
+            <small>26/10/26</small>
+          </a>
+          <a href="/Primera/26-27/Primera9.html" class="jornada-card-mini">
+            <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+            <div class="status-mini">Finalizada</div>
+            <h3>Jornada 9</h3>
+            <small>19/10/26</small>
+          </a>
+          <a href="/Primera/26-27/Primera8.html" class="jornada-card-mini">
+            <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+            <div class="status-mini">Finalizada</div>
+            <h3>Jornada 8</h3>
+            <small>12/10/2026</small>
+          </a>
+          <a href="/Primera/26-27/Primera7.html" class="jornada-card-mini">
+            <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+            <div class="status-mini">Finalizada</div>
+            <h3>Jornada 7</h3>
+            <small>20/9/2026</small>
+          </a>
+          <a href="/Primera/26-27/Primera6.html" class="jornada-card-mini">
+            <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+            <div class="status-mini">PROXIMO</div>
+            <h3>Jornada 6</h3>
+            <small>Próxima</small>
+          </a>
+          <a href="/Primera/26-27/Primera5.html" class="jornada-card-mini">
+            <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+            <div class="status-mini">Finalizada</div>
+            <h3>Jornada 5</h3>
+            <small>14/09/2026</small>
+          </a>
+          <a href="/Primera/26-27/Primera4.html" class="jornada-card-mini">
+            <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+            <div class="status-mini">PROXIMO</div>
+            <h3>Jornada 4</h3>
+            <small>07/09/2026</small>
+          </a>
+          <a href="/Primera/26-27/Primera3.html" class="jornada-card-mini">
+            <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+            <div class="status-mini">Finalizada</div>
+            <h3>Jornada 3</h3>
+            <small>31 de Agosto 2026</small>
+          </a>
+          <a href="/Primera/26-27/Primera2.html" class="jornada-card-mini">
+            <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+            <div class="status-mini">Finalizada</div>
+            <h3>Jornada 2</h3>
+            <small>24 de Agosto 2026</small>
+          </a>
+          <a href="/Primera/26-27/Primera1.html" class="jornada-card-mini">
+            <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
+            <div class="status-mini">Finalizada</div>
+            <h3>Jornada 1</h3>
+            <small>27 de Agosto 2026</small>
+          </a>
         </div>
       </div>
+    </section>
 
-      <!-- ── TEMPORADA 2025/2026 (derecha) ── -->
-      <div class="temporada-col current">
-        <a href="#" class="temporada-col-header">
-          <h2>🏆 Temporada 2025/2026</h2>
-          <small>Archivo completo</small>
-        </a>
-        <div class="temporada-col-body">
-          <div class="jornadas-mini">
-
-            <a href="/Primera/Jornada12Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 12</h3>
-                <small>7 Noviembre 2025</small>
-            </a>
-            <a href="/Primera/Jornada13Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 13</h3>
-                <small>21 de Noviembre 2025</small>
-            </a>
-            <a href="/Primera/Jornada14Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 14</h3>
-                <small>28 de Noviembre 2025</small>
-            </a>
-            <a href="/Primera/Jornada15Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 15</h3>
-                <small>05 de Diciembre 2025</small>
-            </a>
-            <a href="/Primera/Jornada16Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 16</h3>
-                <small>12 Diciembre 2025</small>
-            </a>
-            <a href="/Primera/Jornada17Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 17</h3>
-                <small>19 Diciembre 2025</small>
-            </a>
-            <a href="/Primera/Jornada18Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 18</h3>
-                <small>2 Enero 2026</small>
-            </a>
-            <a href="/Primera/Jornada19Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 19</h3>
-                <small>9 Enero 2026</small>
-            </a>
-            <a href="/Primera/Jornada20Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 20</h3>
-                <small>16 Enero 2026</small>
-            </a>
-            <a href="/Primera/Jornada21Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 21</h3>
-                <small>24 Enero 2026</small>
-            </a>
-            <a href="/Primera/Jornada22Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 22</h3>
-                <small>30 Enero 2026</small>
-            </a>
-            <a href="/Primera/Jornada23Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 23</h3>
-                <small>6 Febrero 2026</small>
-            </a>
-            <a href="/Primera/Jornada24Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 24</h3>
-                <small>13 Febrero 2026</small>
-            </a>
-            <a href="/Primera/Jornada25Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 25</h3>
-                <small>20 Febrero 2026</small>
-            </a>
-            <a href="/Primera/Jornada26Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 26</h3>
-                <small>27 Febrero 2026</small>
-            </a>
-            <a href="/Primera/Jornada27Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 27</h3>
-                <small>6 Marzo 2026</small>
-            </a>
-            <a href="/Primera/Jornada28Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 28</h3>
-                <small>13 Marzo 2026</small>
-            </a>
-            <a href="/Primera/Jornada29Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 29</h3>
-                <small>20 Marzo 2026</small>
-            </a>
-            <a href="/Primera/Jornada30Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 30</h3>
-                <small>3 Abril 2026</small>
-            </a>
-            <a href="/Primera/Jornada31Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 31</h3>
-                <small>10 Abril 2026</small>
-            </a>
-            <a href="/Primera/Jornada32Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 32</h3>
-                <small>24 Abril 2026</small>
-            </a>
-            <a href="/Primera/Jornada33Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 33</h3>
-                <small>21 Abril 2026</small>
-            </a>
-            <a href="/Primera/Jornada34Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 34</h3>
-                <small>1 Mayo 2026</small>
-            </a>
-            <a href="/Primera/Jornada35Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 35</h3>
-                <small>8 Mayo 2026</small>
-            </a>
-            <a href="/Primera/Jornada36Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 36</h3>
-                <small>12 Mayo 2026</small>
-            </a>
-            <a href="/Primera/Jornada37Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 37</h3>
-                <small>17 Mayo 2026</small>
-            </a>
-            <a href="/Primera/Jornada38Primera.html" class="jornada-card-mini">
-                <img src="https://cdn-icons-png.flaticon.com/512/33/33736.png" alt="balón de fútbol">
-                <div class="status-mini">FINALIZADA</div>
-                <h3>Jornada 38</h3>
-                <small>23 Mayo 2026</small>
-            </a>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /temporadas-layout -->
+    <!-- Enlace a la temporada anterior (página aparte) -->
+    <a href="/Primera/TemporadaEAsportes25-26.html" class="temporada-anterior-btn">
+      <strong>🏆 Temporada 2025/2026</strong>
+      <small>Ver archivo completo de jornadas →</small>
+    </a>
 
   </div>
 
